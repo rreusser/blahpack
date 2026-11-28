@@ -59,12 +59,12 @@ ztrexc( order, compq, N, T, LDT, Q, LDQ, ifst, ilst ) → integer
 - `RangeError` ninth argument is invalid (rejected when `( ilst < 1 \|\| ilst > N ) && N > 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrexc.ndarray(
+ztrexc.strided(
     compq,
     N,
     T, strideT1, strideT2, offsetT,
@@ -172,10 +172,10 @@ let Q = new Complex128Array( Q0 );
 let info = ztrexc( 'column-major', 'update', N, T, N, Q, N, 1, 3 );
 console.log( info, reinterpret( T, 0 ), reinterpret( Q, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 T = new Complex128Array( T0 );
 Q = new Complex128Array( Q0 );
-info = ztrexc.ndarray( 'update', N, T, 1, N, 0, Q, 1, N, 0, 1, 3 );
+info = ztrexc.strided( 'update', N, T, 1, N, 0, Q, 1, N, 0, 1, 3 );
 console.log( info, reinterpret( T, 0 ), reinterpret( Q, 0 ) );
 ```
 

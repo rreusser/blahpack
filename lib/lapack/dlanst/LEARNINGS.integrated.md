@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The Fortran reference uses LSAME for case-insensitive character comparison, but the JS implementation uses direct string comparison with uppercase chars ('M', 'O', '1', 'I', 'F', 'E'). The ndarray.js wrapper should handle normalization.
+- The Fortran reference uses LSAME for case-insensitive character comparison, but the JS implementation uses direct string comparison with uppercase chars ('M', 'O', '1', 'I', 'F', 'E'). The strided.js wrapper should handle normalization.
 - For the max norm, Fortran initializes `anorm = abs(d(N))` then loops `i=1..N-1`, checking both d(i) and e(i). The JS translation initializes from `d[N-1]` and loops `i=0..N-2` with the same structure.
 - The one-norm / infinity-norm are identical for symmetric tridiagonal matrices, so they share the same code path. The interior loop computes column sums `|e[i-1]| + |d[i]| + |e[i]|`.
 - The Frobenius norm path uses dlassq with `SUM = 2*SUM` to account for the symmetric off-diagonal elements being counted twice. The Fortran does this after the first dlassq call on E, before calling dlassq on D.

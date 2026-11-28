@@ -93,12 +93,12 @@ zptrfs(
 - `RangeError` sixteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zptrfs.ndarray(
+zptrfs.strided(
     uplo,
     N, nrhs,
     d, strideD, offsetD,
@@ -256,8 +256,8 @@ const RWORK = new Float64Array( N );
 let info = zptrfs( 'column-major', 'lower', N, nrhs, d, 1, e, 1, DF, 1, EF, 1, B, N, X, N, FERR, 1, BERR, 1, WORK, RWORK );
 console.log( info, reinterpret( X, 0 ), FERR, BERR );
 
-// Using the ndarray interface:
-info = zptrfs.ndarray( 'lower', N, nrhs, d, 1, 0, e, 1, 0, DF, 1, 0, EF, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+// Using the strided interface:
+info = zptrfs.strided( 'lower', N, nrhs, d, 1, 0, e, 1, 0, DF, 1, 0, EF, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, reinterpret( X, 0 ), FERR, BERR );
 ```
 

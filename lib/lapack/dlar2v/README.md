@@ -48,12 +48,12 @@ dlar2v( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS ) → Floa
 
 **Returns** `Float64Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlar2v.ndarray(
+dlar2v.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,
@@ -133,8 +133,8 @@ const s = discreteUniform( N, -10, 10, opts );
 let out = dlar2v( N, x, 1, y, 1, z, 1, c, 1, s, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlar2v.ndarray( N, x, 1, 0, y, 1, 0, z, 1, 0, c, 1, 0, s, 1, 0 );
+// Using the strided interface:
+out = dlar2v.strided( N, x, 1, 0, y, 1, 0, z, 1, 0, c, 1, 0, s, 1, 0 );
 console.log( out );
 ```
 

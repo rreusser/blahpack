@@ -76,12 +76,12 @@ zlatdf(
 - `TypeError` first argument must be a valid order
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatdf.ndarray(
+zlatdf.strided(
     ijob,
     N,
     Z, strideZ1, strideZ2, offsetZ,

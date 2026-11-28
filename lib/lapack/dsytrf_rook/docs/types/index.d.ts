@@ -59,7 +59,7 @@ interface Routine {
 	* @param offsetWork - starting index for `WORK`
 	* @returns `info` (0 on success; k>0 if `D(k,k)` is exactly zero)
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
+	strided( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**

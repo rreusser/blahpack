@@ -116,7 +116,7 @@
     0
 
 
-{{alias}}.ndarray( rvec, howmny, select, strideSelect, offsetSelect, d, strideD, offsetD, z, strideZ1, strideZ2, offsetZ, sigma, bmat, N, which, nev, tol, resid, strideResid, offsetResid, ncv, v, strideV1, strideV2, offsetV, iparam, strideIparam, offsetIparam, ipntr, strideIpntr, offsetIpntr, workd, strideWorkd, offsetWorkd, workl, strideWorkl, offsetWorkl, lworkl )
+{{alias}}.strided( rvec, howmny, select, strideSelect, offsetSelect, d, strideD, offsetD, z, strideZ1, strideZ2, offsetZ, sigma, bmat, N, which, nev, tol, resid, strideResid, offsetResid, ncv, v, strideV1, strideV2, offsetV, iparam, strideIparam, offsetIparam, ipntr, strideIpntr, offsetIpntr, workd, strideWorkd, offsetWorkd, workl, strideWorkl, offsetWorkl, lworkl )
     Returns the converged Ritz values and (optionally) Ritz vectors, using
     alternative indexing semantics.
 
@@ -255,7 +255,7 @@
     > var resid = new {{alias:@stdlib/array/float64}}( 2 );
     > var workd = new {{alias:@stdlib/array/float64}}( 4 );
     > var workl = new {{alias:@stdlib/array/float64}}( 48 );
-    > {{alias}}.ndarray( true, 'all', select, 1, 0, d, 1, 0, z, 1, 2, 0, 0.0, 'standard', 2, 'LM', 2, 0.0, resid, 1, 0, 4, v, 1, 2, 0, iparam, 1, 0, ipntr, 1, 0, workd, 1, 0, workl, 1, 0, 48 )
+    > {{alias}}.strided( true, 'all', select, 1, 0, d, 1, 0, z, 1, 2, 0, 0.0, 'standard', 2, 'LM', 2, 0.0, resid, 1, 0, 4, v, 1, 2, 0, iparam, 1, 0, ipntr, 1, 0, workd, 1, 0, workl, 1, 0, 48 )
     0
 
     See Also

@@ -74,12 +74,12 @@ zlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW ) → Com
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, nb )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatrd.ndarray(
+zlatrd.strided(
     uplo,
     N, nb,
     A, strideA1, strideA2, offsetA,
@@ -186,12 +186,12 @@ let W = new Complex128Array( N * nb );
 zlatrd( 'row-major', 'upper', N, nb, A, N, e, 1, TAU, 1, W, nb );
 console.log( e );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( A0 );
 e = new Float64Array( N - 1 );
 TAU = new Complex128Array( N - 1 );
 W = new Complex128Array( N * nb );
-zlatrd.ndarray( 'upper', N, nb, A, N, 1, 0, e, 1, 0, TAU, 1, 0, W, nb, 1, 0 );
+zlatrd.strided( 'upper', N, nb, A, N, 1, 0, e, 1, 0, TAU, 1, 0, W, nb, 1, 0 );
 console.log( e );
 ```
 

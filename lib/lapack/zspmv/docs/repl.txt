@@ -44,7 +44,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, alpha, AP, strideAP, offsetAP, x, strideX, offsetX, beta, y, strideY, offsetY )
+{{alias}}.strided( uplo, N, alpha, AP, strideAP, offsetAP, x, strideX, offsetX, beta, y, strideY, offsetY )
     Perform the symmetric packed matrix-vector operation y := alpha*A*x +
     beta*y where A is a complex symmetric matrix stored in packed format
     using alternative indexing semantics.

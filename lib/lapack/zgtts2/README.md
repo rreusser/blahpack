@@ -74,12 +74,12 @@ zgtts2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgtts2.ndarray(
+zgtts2.strided(
     itrans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -190,9 +190,9 @@ let B = new Complex128Array( [ 6.0, -2.0, 12.0, -2.0, 18.0, -2.0, 19.0, 3.0 ] );
 zgtts2( 'column-major', 0, N, nrhs, DL, 1, d, 1, DU, 1, DU2, 1, IPIV, 1, B, N );
 console.log( 'X:', reinterpret( B, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( [ 6.0, -2.0, 12.0, -2.0, 18.0, -2.0, 19.0, 3.0 ] );
-zgtts2.ndarray( 0, N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
+zgtts2.strided( 0, N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( 'X:', reinterpret( B, 0 ) );
 ```
 

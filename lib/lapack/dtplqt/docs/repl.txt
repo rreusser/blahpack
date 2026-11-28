@@ -53,7 +53,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, l, mb, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, T, strideT1, strideT2, offsetT, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( M, N, l, mb, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, T, strideT1, strideT2, offsetT, WORK, strideWORK, offsetWORK )
     blocked LQ factorization of a triangular-pentagonal matrix using compact WY representation, using alternative indexing semantics.
 
     Parameters

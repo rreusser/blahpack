@@ -22,8 +22,8 @@ function analyze(p, name){
   return {params, checks, quick, vals};
 }
 for(const pkg of pkgs){ const dir=path.join(ROOT,pkg); for(const r of fs.readdirSync(dir).sort()){
-  const lib=path.join(dir,r,'lib'); if(!fs.existsSync(path.join(lib,'ndarray.js'))) continue;
-  out.push({pkg,r, strided:analyze(path.join(lib,r+'.js'),r), ndarray:analyze(path.join(lib,'ndarray.js'),r), base:analyze(path.join(lib,'base.js'),r)});
+  const lib=path.join(dir,r,'lib'); if(!fs.existsSync(path.join(lib,'strided.js'))) continue;
+  out.push({pkg,r, wrapper:analyze(path.join(lib,r+'.js'),r), strided:analyze(path.join(lib,'strided.js'),r), base:analyze(path.join(lib,'base.js'),r)});
 }}
 fs.writeFileSync(process.argv[5], JSON.stringify(out));
 console.log(out.length,'modules');

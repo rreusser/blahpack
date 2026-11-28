@@ -54,7 +54,7 @@ interface Routine {
 	* @param offsetSEP - starting index for `SEP`
 	* @returns result
 	*/
-	ndarray( job: string, M: number, N: number, d: Float64Array, strideD: number, offsetD: number, SEP: Float64Array, strideSEP: number, offsetSEP: number ): Float64Array;
+	strided( job: string, M: number, N: number, d: Float64Array, strideD: number, offsetD: number, SEP: Float64Array, strideSEP: number, offsetSEP: number ): Float64Array;
 }
 
 /**

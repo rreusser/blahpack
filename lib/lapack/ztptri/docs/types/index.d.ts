@@ -48,7 +48,7 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number, stride: number, offset: number ): Float64Array;
+	strided( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number, stride: number, offset: number ): Float64Array;
 }
 
 /**

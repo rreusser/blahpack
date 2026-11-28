@@ -55,12 +55,12 @@ zppcon( order, uplo, N, AP, anorm, rcond, WORK, RWORK ) → info: integer
 - `RangeError` fifth argument is invalid (rejected when `anorm < 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zppcon.ndarray(
+zppcon.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -167,7 +167,7 @@ const AP = new Complex128Array([
 	0.0
 ]);
 
-const info = zppcon.ndarray( 'upper', 3, AP, 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = zppcon.strided( 'upper', 3, AP, 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info: %d', info ); // eslint-disable-line no-console
 console.log( 'rcond: %d', rcond[ 0 ] ); // eslint-disable-line no-console

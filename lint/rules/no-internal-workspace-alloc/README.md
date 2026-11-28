@@ -2,7 +2,7 @@
 
 Disallow internal workspace-array allocation in base.js (the caller must own the buffer).
 
-**Files:** `base.js`, `ndarray.js`
+**Files:** `base.js`, `strided.js`
 
 When the reference Fortran declares a caller-provided workspace array
 (`WORK`/`RWORK`/`IWORK`/`SWORK`/`BWORK`, read from `data/fortran-signatures.json`

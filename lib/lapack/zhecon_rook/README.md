@@ -58,12 +58,12 @@ zhecon_rook( order, uplo, N, A, LDA, IPIV, strideIPIV, anorm, rcond, WORK ) → 
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` eighth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhecon_rook.ndarray(
+zhecon_rook.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -167,7 +167,7 @@ const ipiv = new Int32Array( [ 0, 1, 2 ] );
 const work = new Complex128Array( 2 * N );
 const rcond = new Float64Array( 1 );
 
-zheconRook.ndarray( 'upper', N, A, 1, N, 0, ipiv, 1, 0, 1.0, rcond, work, 1, 0 );
+zheconRook.strided( 'upper', N, A, 1, N, 0, ipiv, 1, 0, 1.0, rcond, work, 1, 0 );
 console.log( rcond[ 0 ] ); // eslint-disable-line no-console
 ```
 

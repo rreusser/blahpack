@@ -5,7 +5,7 @@
 - **`mb` exposed as a JS parameter, not workspace-queried.** The Fortran
   reference takes `MB` directly (no ILAENV inquiry), so we mirror that:
   `mb` is the 4th positional arg in both `dtplqt` (layout wrapper) and
-  `dtplqt.ndarray`. No `DEFAULT_NB` constant in `base.js`. This keeps
+  `dtplqt.strided`. No `DEFAULT_NB` constant in `base.js`. This keeps
   the routine's behavior fully deterministic and lets callers tune the
   block size for the surrounding driver. The wrapper validates
   `1 <= mb` and (if `M > 0`) `mb <= M`.

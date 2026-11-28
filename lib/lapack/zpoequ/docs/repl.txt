@@ -30,7 +30,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, scond, amax )
+{{alias}}.strided( N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, scond, amax )
     Computes row and column scalings intended to equilibrate a Hermitian
     positive definite matrix A and reduce its condition number (with respect
     to the two-norm), using alternative indexing semantics.

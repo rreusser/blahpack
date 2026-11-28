@@ -31,12 +31,12 @@ import dseigt from './index';
 	dseigt(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dseigt.ndarray( 0.5, 2, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 6 ), 1, 0 ); // $ExpectType number
+	dseigt.strided( 0.5, 2, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 6 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dseigt.ndarray(); // $ExpectError
+	dseigt.strided(); // $ExpectError
 }

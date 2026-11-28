@@ -93,12 +93,12 @@ dlarfb_gett( order, ident, M, N, K, T, LDT, A, LDA, B, LDB, WORK, LDWORK ) → F
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, K )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarfb_gett.ndarray(
+dlarfb_gett.strided(
     ident,
     M, N, K,
     T, strideT1, strideT2, offsetT,

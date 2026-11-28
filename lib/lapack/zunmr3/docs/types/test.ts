@@ -31,12 +31,12 @@ import zunmr3 = require( './index' );
 	zunmr3(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zunmr3.ndarray( 'left', 'no-transpose', 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zunmr3.strided( 'left', 'no-transpose', 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zunmr3.ndarray(); // $ExpectError
+	zunmr3.strided(); // $ExpectError
 }

@@ -35,7 +35,7 @@
 - `dlarfb` requires the WORK leading dimension equal to the
   trailing column count of `C`, NOT the row count. Easy to invert
   by reflex when copying from the symmetric `dgeqrf` pattern.
-- Tests must require `lib/ndarray.js` (not `lib/base.js`) to
+- Tests must require `lib/strided.js` (not `lib/base.js`) to
   exercise the validator layer, per project convention.
 
 ## Coverage notes

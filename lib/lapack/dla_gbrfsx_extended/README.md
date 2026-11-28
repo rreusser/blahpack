@@ -215,12 +215,12 @@ Improves the computed solution `Y` to a banded system of linear equations using 
 - `RangeError` twentieth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` twentieth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_gbrfsx_extended.ndarray(
+dla_gbrfsx_extended.strided(
     prec_type,
     trans_type,
     N, kl,
@@ -483,7 +483,7 @@ const AYB = new Float64Array( N );
 const DY = new Float64Array( N );
 const YT = new Float64Array( N );
 
-dla_gbrfsx_extended.ndarray( 2, 'no-transpose', N, kl, ku, 1, AB, 1, 3, 0, AFB, 1, 4, 0, IPIV, 1, 0, false, C, 1, 0, b, 1, N, 0, y, 1, N, 0, BERR_OUT, 1, 0, 2, EBN, 1, 1, 0, EBC, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, YT, 1, 0, 1e-2, 10, 0.5, 0.25, false );
+dla_gbrfsx_extended.strided( 2, 'no-transpose', N, kl, ku, 1, AB, 1, 3, 0, AFB, 1, 4, 0, IPIV, 1, 0, false, C, 1, 0, b, 1, N, 0, y, 1, N, 0, BERR_OUT, 1, 0, 2, EBN, 1, 1, 0, EBC, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, YT, 1, 0, 1e-2, 10, 0.5, 0.25, false );
 
 console.log( y ); // eslint-disable-line no-console
 console.log( BERR_OUT ); // eslint-disable-line no-console

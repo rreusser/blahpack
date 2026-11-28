@@ -16,7 +16,7 @@
 * by the probe and emitted into the benchmark, so a wrong template fails at
 * generation time rather than producing a benchmark that measures nothing.
 * Setup code calls the routine's LAPACK *producer* (`xGEQRF` for `xORGQR`,
-* `xHETRF` + `xHETRS` for `xHERFS`) through its ndarray form, column-major
+* `xHETRF` + `xHETRS` for `xHERFS`) through its strided form, column-major
 * with leading dimension `N`. Each recipe therefore requires that layout for
 * the arrays it touches (checked by `dense`/`vec`), and every dimension `N`.
 *

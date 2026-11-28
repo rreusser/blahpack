@@ -62,12 +62,12 @@ zlaqsy( order, uplo, N, A, LDA, s, strideS, scond, amax, equed ) → Complex128A
 - `TypeError` second argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqsy.ndarray(
+zlaqsy.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -161,7 +161,7 @@ const s = new Float64Array( [ 0.5, 0.25 ] );
 
 // Equilibrate with poor scaling condition:
 const equed = [ '' ];
-zlaqsy.ndarray( 'upper', 2, A, 1, 2, 0, s, 1, 0, 0.05, 9.0, equed );
+zlaqsy.strided( 'upper', 2, A, 1, 2, 0, s, 1, 0, 0.05, 9.0, equed );
 
 console.log( 'equed:', equed[ 0 ] );
 // => equed: yes

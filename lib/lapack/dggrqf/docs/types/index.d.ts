@@ -62,7 +62,7 @@ interface Routine {
 	* @param offsetTAUB - starting index for `TAUB`
 	* @returns result
 	*/
-	ndarray( M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number ): Float64Array;
+	strided( M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number ): Float64Array;
 }
 
 /**

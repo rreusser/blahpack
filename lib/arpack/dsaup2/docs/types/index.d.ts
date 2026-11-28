@@ -109,7 +109,7 @@ interface Routine {
 	* @param infoIn - nonzero on the first call to signal a user-supplied initial residual
 	* @returns INFO
 	*/
-	ndarray( state: State, ido: Int32Array, bmat: string, N: number, which: string, nev: Int32Array, np: Int32Array, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, mode: number, iupd: number, ishift: number, mxiter: Int32Array, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, ritz: Float64Array, strideRitz: number, offsetRitz: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, infoIn: number ): number;
+	strided( state: State, ido: Int32Array, bmat: string, N: number, which: string, nev: Int32Array, np: Int32Array, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, mode: number, iupd: number, ishift: number, mxiter: Int32Array, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, ritz: Float64Array, strideRitz: number, offsetRitz: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, infoIn: number ): number;
 }
 
 /**

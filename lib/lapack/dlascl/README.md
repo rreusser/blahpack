@@ -65,12 +65,12 @@ dlascl( order, type, kl, ku, cfrom, cto, M, N, A, LDA ) → integer
 - `RangeError` tenth argument is invalid (column-major: rejected when `( type === "general" ? 0 : ( type === "lower" ? 1 : ( type === "upper" ? 2 : ( type === "upper-hessenberg" ? 3 : ( type === "lower-band" ? 4 : ( type === "upper-band" ? 5 : 6 ) ) ) ) ) ) <= 3 && LDA < max( 1, M )`)
 - `RangeError` tenth argument is invalid (row-major: rejected when `( type === "general" ? 0 : ( type === "lower" ? 1 : ( type === "upper" ? 2 : ( type === "upper-hessenberg" ? 3 : ( type === "lower-band" ? 4 : ( type === "upper-band" ? 5 : 6 ) ) ) ) ) ) <= 3 && LDA < max( 1, N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlascl.ndarray(
+dlascl.strided(
     type,
     kl, ku, cfrom, cto,
     M, N,
@@ -167,8 +167,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 dlascl( 'row-major', 'general', 0, 0, 1.0, 2.0, N, N, A, N );
 console.log( A ); // eslint-disable-line no-console
 
-// Undo the scaling (ndarray interface):
-dlascl.ndarray( 'general', 0, 0, 2.0, 1.0, N, N, A, N, 1, 0 );
+// Undo the scaling (strided interface):
+dlascl.strided( 'general', 0, 0, 2.0, 1.0, N, N, A, N, 1, 0 );
 console.log( A ); // eslint-disable-line no-console
 ```
 

@@ -98,12 +98,12 @@ zher2k( order, uplo, trans, N, K, alpha, A, LDA, B, LDB, beta, C, LDC ) → Comp
 - `RangeError` tenth argument must be greater than or equal to `max( 1, trans === 'no-transpose' ? K : N )` (row-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zher2k.ndarray(
+zher2k.strided(
     uplo, trans,
     N, K,
     alpha,
@@ -225,7 +225,7 @@ const B = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 const C = new Complex128Array( 4 );
 const alpha = new Complex128( 1.0, 0.0 );
 
-zher2k.ndarray( 'upper', 'no-transpose', 2, 2, alpha, A, 2, 1, 0, B, 2, 1, 0, 0.0, C, 2, 1, 0 );
+zher2k.strided( 'upper', 'no-transpose', 2, 2, alpha, A, 2, 1, 0, B, 2, 1, 0, 0.0, C, 2, 1, 0 );
 console.log( reinterpret( C, 0 ) ); // eslint-disable-line no-console
 ```
 

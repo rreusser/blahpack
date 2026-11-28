@@ -40,7 +40,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( i0, n0, z, stride, offset, pp, tau, sigma, dmin, dmin1, dmin2, dn, dnm1, dnm2, ieee, eps )
+{{alias}}.strided( i0, n0, z, stride, offset, pp, tau, sigma, dmin, dmin1, dmin2, dn, dnm1, dnm2, ieee, eps )
     Computes one dqds transform in ping-pong form with a shift using
     alternative indexing semantics.
 

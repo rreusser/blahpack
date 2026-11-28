@@ -57,12 +57,12 @@ zlarcm( order, M, N, A, LDA, B, LDB, C, LDC, RWORK ) → Complex128Array
 - `RangeError` ninth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarcm.ndarray(
+zlarcm.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

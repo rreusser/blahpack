@@ -74,12 +74,12 @@ dtbtrs( order, uplo, trans, diag, N, kd, nrhs, AB, LDAB, B, LDB ) → info: inte
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtbtrs.ndarray(
+dtbtrs.strided(
     uplo, trans, diag,
     N, kd, nrhs,
     AB, strideAB1, strideAB2, offsetAB,

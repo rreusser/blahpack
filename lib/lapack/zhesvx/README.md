@@ -105,12 +105,12 @@ zhesvx(
 - `RangeError` fifteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhesvx.ndarray(
+zhesvx.strided(
     fact, uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -267,7 +267,7 @@ let info = zhesvx( 'column-major', 'not-factored', 'upper', N, nrhs, A, N, AF, N
 console.log( info, rcond[ 0 ] );
 console.log( reinterpret( X, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 AF = new Complex128Array( N * N );
 X = new Complex128Array( N * nrhs );
 IPIV = new Int32Array( N );
@@ -276,7 +276,7 @@ FERR = new Float64Array( nrhs );
 BERR = new Float64Array( nrhs );
 const WORK = new Complex128Array( 2 * N );
 const RWORK = new Float64Array( N );
-info = zhesvx.ndarray( 'not-factored', 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+info = zhesvx.strided( 'not-factored', 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 console.log( reinterpret( X, 0 ) );
 ```

@@ -16,13 +16,13 @@ If the user provides just a routine name, determine the package by checking whet
 
 The scaffold generates the full file set (CONVENTIONS F1):
 - `lib/base.js` — stub with correct signature (implement this)
-- `lib/ndarray.js` — validation wrapper for stdlib string params (uplo, trans, diag, side)
-- `lib/<routine>.js` — strided wrapper with string, dimension, and LD validation, plus `order`/`isLayout` when D1 applies
-- `lib/index.js` — entry point: attaches `.ndarray` and exports both forms (there is no `main.js`)
+- `lib/strided.js` — validation wrapper for stdlib string params (uplo, trans, diag, side)
+- `lib/<routine>.js` — wrapper with string, dimension, and LD validation, plus `order`/`isLayout` when D1 applies
+- `lib/index.js` — entry point: attaches `.strided` and exports both forms (there is no `main.js`)
 - `test/test.js` — export/arity checks
 - `test/test.<routine>.js` — layout wrapper validation tests
-- `test/test.ndarray.js` — scaffold for ndarray computation tests
-- `benchmark/benchmark.js`, `benchmark/benchmark.ndarray.js`
+- `test/test.strided.js` — scaffold for strided computation tests
+- `benchmark/benchmark.js`, `benchmark/benchmark.strided.js`
 - `docs/types/index.d.ts` — dual signatures with @stdlib/types imports
 - `docs/types/test.ts` — TypeScript compile-time tests
 - `docs/repl.txt`, `README.md`, `examples/index.js`, `package.json` (with keywords)
@@ -30,6 +30,6 @@ The scaffold generates the full file set (CONVENTIONS F1):
 
 After scaffolding, the translator only needs to:
 1. Implement `lib/base.js`
-2. Write real tests in `test/test.ndarray.js`
-3. Add whitelist validation in `ndarray.js` and `<routine>.js` for nonstandard option params (job, norm, etc.; CONVENTIONS V3, N8)
+2. Write real tests in `test/test.strided.js`
+3. Add whitelist validation in `strided.js` and `<routine>.js` for nonstandard option params (job, norm, etc.; CONVENTIONS V3, N8)
 4. Fill in LEARNINGS.md

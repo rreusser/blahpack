@@ -68,12 +68,12 @@ dlasq4(
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasq4.ndarray(
+dlasq4.strided(
     i0,
     n0,
     z, strideZ, offsetZ,
@@ -167,11 +167,11 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 tau[ 0 ] = 0.0;
 ttype[ 0 ] = 0;
 g[ 0 ] = 0.0;
-dlasq4.ndarray( 1, 4, z, 1, 0, 0, 4, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, tau, ttype, g );
+dlasq4.strided( 1, 4, z, 1, 0, 0, 4, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, tau, ttype, g );
 out = {
 	'tau': tau[ 0 ],
 	'ttype': ttype[ 0 ],

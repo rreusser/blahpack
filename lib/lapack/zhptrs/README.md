@@ -67,12 +67,12 @@ zhptrs( order, uplo, N, nrhs, AP, IPIV, strideIPIV, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhptrs.ndarray(
+zhptrs.strided(
     uplo,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -163,7 +163,7 @@ const AP = new Complex128Array( [ 4.0, 0.0, 1.0, -1.0, 5.0, 0.0 ] );
 const IPIV = new Int32Array( [ 0, 1 ] );
 const B = new Complex128Array( [ 1.0, 0.0, 2.0, 0.0 ] );
 
-const info = zhptrs.ndarray( 'upper', 2, 1, AP, 1, 0, IPIV, 1, 0, B, 1, 2, 0 );
+const info = zhptrs.strided( 'upper', 2, 1, AP, 1, 0, IPIV, 1, 0, B, 1, 2, 0 );
 const Bv = reinterpret( B, 0 );
 
 console.log( 'info = %d', info );

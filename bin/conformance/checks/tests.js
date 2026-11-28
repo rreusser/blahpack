@@ -14,8 +14,8 @@ function check( mod, opts ) {
 
 	// Aggregate assertions across all test/*.js files. The export-shape file
 	// `test.js` conventionally only has 2 assertions ("exports a function",
-	// "has .ndarray"); the substantive routine tests live in
-	// `test.<routine>.js` and `test.ndarray.js`. Treating just `test.js`
+	// "has .strided"); the substantive routine tests live in
+	// `test.<routine>.js` and `test.strided.js`. Treating just `test.js`
 	// caused ~665 fully-implemented modules to misclassify as `scaffold`.
 	var fs = require( 'fs' );
 	var assertCalls = 0;
@@ -81,7 +81,7 @@ function check( mod, opts ) {
 	}
 
 	// 3. Coverage (opt-in, expensive). Measured by bin/coverage.mjs over ALL
-	// of the module's tests, per file in lib/ (wrapper and ndarray included;
+	// of the module's tests, per file in lib/ (wrapper and strided included;
 	// ticket 0064). It used to run only test/test.js (two export-shape tests)
 	// and read only the base.js row, so it never measured anything real.
 	if ( opts && opts.coverage ) {

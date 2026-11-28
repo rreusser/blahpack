@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
-// Codemod: make the JSDoc of base.js / ndarray.js / <routine>.js agree with
+// Codemod: make the JSDoc of base.js / strided.js / <routine>.js agree with
 // the spec (lint/lib/jsdoc-spec.cjs) — the fix for the `spec-jsdoc` rule.
 //
 // - `@param`: one per parameter in order, with the spec's type and the code's
 //   name. An existing tag's description is kept; a missing one is borrowed
 //   from the same parameter in the module's other forms, else derived from
 //   its role (stride/offset/leading dimension of an array).
-// - `@throws`: the generated prologue's (ndarray.js, <routine>.js), followed
+// - `@throws`: the generated prologue's (strided.js, <routine>.js), followed
 //   by any existing `@throws` that is not an argument check (workspace ones).
 // - `@returns`: the S11 type (description kept), or removed when the spec
 //   returns nothing.
@@ -66,7 +66,7 @@ function paramInfo( block ) {
 // Descriptions of every @param in a module's three forms, by lower-cased name.
 function borrowed( mod ) {
 	var out = {};
-	[ 'base', 'ndarray', 'strided' ].forEach( function each( form ) {
+	[ 'base', 'strided', 'wrapper' ].forEach( function each( form ) {
 		var src;
 		var ast;
 		var fn;
@@ -157,7 +157,7 @@ function rewrite( src, spec, form, mod, borrow ) {
 		return null;
 	}
 	params = lib.params( fn );
-	if ( !sameNames( params, ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec ) ) ) {
+	if ( !sameNames( params, ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec ) ) ) {
 		return null;
 	}
 	doc = lib.leadingJSDoc( ast, fn );
@@ -269,7 +269,7 @@ function main() {
 			return;
 		}
 		borrow = borrowed( mod );
-		[ 'base', 'ndarray', 'strided' ].forEach( function each( form ) {
+		[ 'base', 'strided', 'wrapper' ].forEach( function each( form ) {
 			var file = mod.files[ form ];
 			var src;
 			var out;

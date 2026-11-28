@@ -45,10 +45,10 @@ interface Routine {
 	* @returns `1` if the arithmetic is safe, `0` otherwise
 	*
 	* @example
-	* var v = ieeeck.ndarray( 1, 0.0, 1.0 );
+	* var v = ieeeck.strided( 1, 0.0, 1.0 );
 	* // returns 1
 	*/
-	ndarray( ispec: number, zero: number, one: number ): number;
+	strided( ispec: number, zero: number, one: number ): number;
 }
 
 /**

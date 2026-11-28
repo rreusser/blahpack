@@ -60,12 +60,12 @@ zher( order, uplo, N, alpha, x, strideX, A, LDA ) → Complex128Array
 - `RangeError` sixth argument must be non-zero
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zher.ndarray(
+zher.strided(
     uplo,
     N,
     alpha,
@@ -145,7 +145,7 @@ import zher from '@rreusser/blahpack/blas/zher';
 const x = new Complex128Array( [ 1.0, 0.0, 0.0, 1.0 ] );
 const A = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 
-zher.ndarray( 'upper', 2, 1.0, x, 1, 0, A, 2, 1, 0 );
+zher.strided( 'upper', 2, 1.0, x, 1, 0, A, 2, 1, 0 );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

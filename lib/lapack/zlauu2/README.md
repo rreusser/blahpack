@@ -49,12 +49,12 @@ zlauu2( order, uplo, N, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlauu2.ndarray( uplo, N, A, strideA1, strideA2, offsetA ) → info: integer
+zlauu2.strided( uplo, N, A, strideA1, strideA2, offsetA ) → info: integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -128,9 +128,9 @@ let A = new Complex128Array( U );
 let out = zlauu2( 'row-major', 'upper', N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( U );
-out = zlauu2.ndarray( 'upper', N, A, N, 1, 0 );
+out = zlauu2.strided( 'upper', N, A, N, 1, 0 );
 console.log( out );
 ```
 

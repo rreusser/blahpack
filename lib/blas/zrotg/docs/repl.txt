@@ -19,7 +19,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( a, offsetA, b, offsetB, c, offsetC, s, offsetS )
+{{alias}}.strided( a, offsetA, b, offsetB, c, offsetC, s, offsetS )
     Computes the parameters for a Givens rotation using alternative indexing
     semantics.
 

@@ -182,12 +182,12 @@ with optional balancing (LAPACK-style interface).
 - `RangeError` N must be a nonnegative integer
 - `RangeError` LDA, LDB, LDVL, LDVR must be valid
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggevx.ndarray(
+zggevx.strided(
     balanc, jobvl, jobvr, sense,
     N,
     A, strideA1, strideA2, offsetA,
@@ -213,7 +213,7 @@ zggevx.ndarray(
 
 Computes, for a pair of N-by-N complex matrices (A, B), the generalized.
 eigenvalues and, optionally, the left and/or right generalized eigenvectors,
-with optional balancing. Strides and offsets follow `ndarray` conventions.
+with optional balancing. Strides and offsets follow `strided` conventions.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 

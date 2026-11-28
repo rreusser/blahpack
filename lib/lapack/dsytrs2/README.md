@@ -62,12 +62,12 @@ dsytrs2( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → inte
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsytrs2.ndarray(
+dsytrs2.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -194,9 +194,9 @@ let info = dsytrs2( 'column-major', 'upper', N, nrhs, A, N, IPIV, 1, B, N, WORK 
 console.log( info ); // eslint-disable-line no-console
 console.log( B ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Float64Array( [ 6.0, 3.0, 14.0 ] );
-info = dsytrs2.ndarray( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
+info = dsytrs2.strided( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( B ); // eslint-disable-line no-console
 ```

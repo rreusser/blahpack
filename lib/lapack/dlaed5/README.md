@@ -59,12 +59,12 @@ dlaed5( i, D, strideD, Z, strideZ, DELTA, strideDELTA, rho, dlam ) → Float64Ar
 
 **Returns** `Float64Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaed5.ndarray(
+dlaed5.strided(
     i,
     D, strideD, offsetD,
     Z, strideZ, offsetZ,
@@ -139,8 +139,8 @@ dlaed5( 1, D, 1, Z, 1, DELTA, 1, rho, dlam );
 console.log( 'lambda1 = %d', dlam[ 0 ] );
 console.log( DELTA );
 
-// Using the ndarray interface (second updated eigenvalue):
-dlaed5.ndarray( 2, D, 1, 0, Z, 1, 0, DELTA, 1, 0, rho, dlam );
+// Using the strided interface (second updated eigenvalue):
+dlaed5.strided( 2, D, 1, 0, Z, 1, 0, DELTA, 1, 0, rho, dlam );
 console.log( 'lambda2 = %d', dlam[ 0 ] );
 console.log( DELTA );
 ```

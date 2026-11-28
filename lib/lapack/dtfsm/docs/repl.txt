@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( transr, side, uplo, trans, diag, M, N, alpha, A, strideA, offsetA, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( transr, side, uplo, trans, diag, M, N, alpha, A, strideA, offsetA, B, strideB1, strideB2, offsetB )
     Solves a matrix equation with a triangular matrix in Rectangular Full
     Packed format using alternative indexing semantics.
 

@@ -85,12 +85,12 @@ zhbgst(
 - `RangeError` twelfth argument is invalid (rejected when `LDX < 1 \|\| ( vect === "update" && LDX < max( 1, N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhbgst.ndarray(
+zhbgst.strided(
     vect, uplo,
     N, ka, kb,
     AB, strideAB1, strideAB2, offsetAB,
@@ -229,7 +229,7 @@ const WORK = new Complex128Array( N );
 const RWORK = new Float64Array( N );
 const X = new Complex128Array( 1 );
 
-const info = zhbgst.ndarray( 'none', 'upper', N, ka, kb, AB, 1, LDAB, 0, BB, 1, LDBB, 0, X, 1, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+const info = zhbgst.strided( 'none', 'upper', N, ka, kb, AB, 1, LDAB, 0, BB, 1, LDBB, 0, X, 1, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 
 console.log( 'info: %d', info );
 ```

@@ -61,12 +61,12 @@ dgbsv( order, N, kl, ku, nrhs, AB, LDAB, IPIV, strideIPIV, B, LDB ) → integer
 - `RangeError` eleventh argument must be greater than or equal to `max( N, 1 )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgbsv.ndarray(
+dgbsv.strided(
     N, kl, ku, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
     IPIV, strideIPIV, offsetIPIV,
@@ -169,7 +169,7 @@ let IPIV = new Int32Array( N );
 let info = dgbsv( 'column-major', N, kl, ku, 1, AB, LDAB, IPIV, 1, B, N );
 console.log( info, B ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 AB = new Float64Array( [
 	0.0, 0.0, 4.0, -1.0,
 	0.0, -1.0, 4.0, -1.0,
@@ -178,7 +178,7 @@ AB = new Float64Array( [
 ] );
 B = new Float64Array( [ 3.0, 2.0, 2.0, 3.0 ] );
 IPIV = new Int32Array( N );
-info = dgbsv.ndarray( N, kl, ku, 1, AB, 1, LDAB, 0, IPIV, 1, 0, B, 1, N, 0 );
+info = dgbsv.strided( N, kl, ku, 1, AB, 1, LDAB, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( info, B ); // eslint-disable-line no-console
 ```
 

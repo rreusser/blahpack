@@ -18,12 +18,12 @@
 
 - The scaffolder generated the dppsv.js LAPACK-style wrapper as a stub.
   For simple drivers, the LAPACK-style wrapper could be auto-generated
-  since it just maps (uplo, N, nrhs, AP, B, LDB) to ndarray form.
+  since it just maps (uplo, N, nrhs, AP, B, LDB) to strided form.
 
 ## Coverage gaps
 
 - base.js has 100% line and branch coverage.
-- ndarray.js line 72 (N<0 combined with nrhs<0) is the only uncovered
+- strided.js line 72 (N<0 combined with nrhs<0) is the only uncovered
   branch, which is a validation edge case.
 
 ## Complex number handling

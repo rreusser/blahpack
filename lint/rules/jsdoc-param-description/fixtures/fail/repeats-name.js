@@ -1,4 +1,4 @@
-// target: lib/lapack/dgesv/lib/ndarray.js
+// target: lib/lapack/dgesv/lib/strided.js
 // expect: placeholder
 /**
 * Solves a linear system.

@@ -65,12 +65,12 @@ dgttrf(
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgttrf.ndarray(
+dgttrf.strided(
     N,
     DL, strideDL, offsetDL,
     d, strideD, offsetD,
@@ -183,13 +183,13 @@ console.log( 'info:', info );
 console.log( 'd:', d );
 console.log( 'IPIV:', IPIV );
 
-// Using the ndarray interface:
+// Using the strided interface:
 DL = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 d = new Float64Array( [ 4.0, 4.0, 4.0, 4.0 ] );
 DU = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 DU2 = new Float64Array( N - 2 );
 IPIV = new Int32Array( N );
-info = dgttrf.ndarray( N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0 );
+info = dgttrf.strided( N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0 );
 console.log( 'info:', info );
 console.log( 'd:', d );
 console.log( 'IPIV:', IPIV );

@@ -1,4 +1,4 @@
-// target: lib/lapack/dsyevx/lib/ndarray.js
+// target: lib/lapack/dsyevx/lib/strided.js
 // WORK's spec minimum is the reference's LWKMIN check (`minLength.js` null): this rule asks only for IWORK's guard (WORK's is conf:work-assert's).
 /* eslint-disable max-len, max-params */
 

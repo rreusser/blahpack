@@ -2,7 +2,7 @@
 
 // ESLint rule: spec-jsdoc
 //
-// The JSDoc of the exported function of base.js / ndarray.js / <routine>.js
+// The JSDoc of the exported function of base.js / strided.js / <routine>.js
 // agrees with the spec (lint/lib/jsdoc-spec.cjs; CONVENTIONS J2, C1, C4, W5,
 // S10, S11):
 //
@@ -10,7 +10,7 @@
 //   type the spec implies (arrays by dtype, `integer` strides,
 //   `NonNegativeInteger` offsets and dimensions, `PositiveInteger` leading
 //   dimensions, `(T|null)` wrapper workspace, …).
-// - `@throws` (ndarray.js, <routine>.js): the leading `@throws` tags are the
+// - `@throws` (strided.js, <routine>.js): the leading `@throws` tags are the
 //   generated prologue's, in order (`{TypeError} first argument must be a valid
 //   order`). Further `@throws` (workspace checks) may follow.
 // - `@returns`: the S11 type, or no `@returns` when nothing is returned.

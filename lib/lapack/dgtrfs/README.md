@@ -110,12 +110,12 @@ dgtrfs(
 - `RangeError` twenty-fourth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgtrfs.ndarray(
+dgtrfs.strided(
     trans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -288,8 +288,8 @@ const IWORK = new Int32Array( N );
 let info = dgtrfs( 'column-major', 'no-transpose', N, nrhs, DL, 1, d, 1, DU, 1, DLF, 1, DF, 1, DUF, 1, DU2, 1, IPIV, 1, B, N, X, N, FERR, 1, BERR, 1, WORK, IWORK );
 console.log( 'info:', info, 'X:', X, 'FERR:', FERR, 'BERR:', BERR );
 
-// Using the ndarray interface:
-info = dgtrfs.ndarray( 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DLF, 1, 0, DF, 1, 0, DUF, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dgtrfs.strided( 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DLF, 1, 0, DF, 1, 0, DUF, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( 'info:', info, 'X:', X, 'FERR:', FERR, 'BERR:', BERR );
 ```
 

@@ -55,12 +55,12 @@ zungrq( order, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zungrq.ndarray(
+zungrq.strided(
     M, N, K,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,
@@ -150,8 +150,8 @@ const WORK = new Complex128Array( M * 32 );
 let out = zungrq( 'column-major', M, N, K, A, M, TAU, 1, WORK );
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-out = zungrq.ndarray( M, N, K, A, 1, M, 0, TAU, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zungrq.strided( M, N, K, A, 1, M, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( out ); // eslint-disable-line no-console
 ```
 

@@ -53,12 +53,12 @@ Computes a complex QR factorization with non-negative diagonal elements (unblock
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeqr2p.ndarray(
+zgeqr2p.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,

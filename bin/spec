@@ -4,7 +4,7 @@
 // Inspect specs and compare them with the code.
 //
 //   bin/spec show <routine>       the spec summary and its three derived
-//                                 signatures (base.js, ndarray.js, <routine>.js)
+//                                 signatures (base.js, strided.js, <routine>.js)
 //   bin/spec xcheck [--list]      compare every spec projection with the code;
 //                                 print categorized discrepancies
 //   bin/spec xcheck <routine>     one routine, verbose
@@ -71,8 +71,8 @@ function show( routine ) {
 	console.log( '  ' + spec.signature );
 	console.log( '' );
 	console.log( '  base.js      ' + fmt( specLib.base( spec ) ) );
-	console.log( '  ndarray.js   ' + fmt( specLib.ndarray( spec ) ) );
-	console.log( '  ' + ( routine + '.js' ).padEnd( 12 ) + ' ' + fmt( specLib.strided( spec ) ) );
+	console.log( '  strided.js   ' + fmt( specLib.strided( spec ) ) );
+	console.log( '  ' + ( routine + '.js' ).padEnd( 12 ) + ' ' + fmt( specLib.wrapper( spec ) ) );
 	console.log( '' );
 	console.log( '  params:' );
 	spec.params.forEach( function each( p ) {
@@ -189,13 +189,13 @@ function xcheck( only, list ) {
 		}
 		var code = {
 			'base': params( path.join( mod.dir, 'base.js' ) ),
-			'ndarray': params( path.join( mod.dir, 'ndarray.js' ) ),
-			'strided': params( path.join( mod.dir, r + '.js' ) )
+			'strided': params( path.join( mod.dir, 'strided.js' ) ),
+			'wrapper': params( path.join( mod.dir, r + '.js' ) )
 		};
 		forms = {
 			'base': specLib.base( spec ),
-			'ndarray': specLib.ndarray( spec ),
-			'strided': specLib.strided( spec )
+			'strided': specLib.strided( spec ),
+			'wrapper': specLib.wrapper( spec )
 		};
 		Object.keys( forms ).forEach( function eachForm( f ) {
 			var c;

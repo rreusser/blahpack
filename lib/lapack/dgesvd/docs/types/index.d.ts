@@ -80,7 +80,7 @@ interface Routine {
 	* @param offsetVT - starting index for `VT`
 	* @returns info status code
 	*/
-	ndarray( jobu: JobU, jobvt: JobVT, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number ): number;
+	strided( jobu: JobU, jobvt: JobVT, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number ): number;
 }
 
 /**

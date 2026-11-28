@@ -54,12 +54,12 @@ zptts2( order, iuplo, N, nrhs, d, strideD, e, strideE, B, LDB ) → Complex128Ar
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zptts2.ndarray(
+zptts2.strided(
     iuplo,
     N, nrhs,
     d, strideD, offsetD,
@@ -153,9 +153,9 @@ zptts2( 'column-major', 0, N, 1, d, 1, e, 1, B, N );
 console.log( reinterpret( B, 0 ) );
 // => <Float64Array>[ ~1, ~0, ~1, ~0, ~1, ~0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( rhs );
-zptts2.ndarray( 0, N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
+zptts2.strided( 0, N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
 console.log( reinterpret( B, 0 ) );
 ```
 

@@ -73,12 +73,12 @@ dtgex2(
 - `TypeError` first argument must be a valid order
 - `RangeError` fourth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgex2.ndarray(
+dtgex2.strided(
     wantq, wantz,
     N,
     A, strideA1, strideA2, offsetA,
@@ -223,7 +223,7 @@ const Z = new Float64Array([
 const WORK = new Float64Array( 200 );
 
 // Swap 1x1 blocks at positions 1 and 2 (0-based j1=0):
-const info = dtgex2.ndarray( true, true, N, A, 1, N, 0, B, 1, N, 0, Q, 1, N, 0, Z, 1, N, 0, 0, 1, 1, WORK, 1, 0 );
+const info = dtgex2.strided( true, true, N, A, 1, N, 0, B, 1, N, 0, Q, 1, N, 0, Z, 1, N, 0, 0, 1, 1, WORK, 1, 0 );
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'A:', A ); // eslint-disable-line no-console
 console.log( 'Q:', Q ); // eslint-disable-line no-console

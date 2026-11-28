@@ -52,12 +52,12 @@ zlacpy( order, uplo, M, N, A, LDA, B, LDB ) → Complex128Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "upper", "lower", "all"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacpy.ndarray(
+zlacpy.strided(
     uplo,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -139,9 +139,9 @@ let B = new Complex128Array( N * N );
 zlacpy( 'row-major', 'upper', N, N, A, N, B, N );
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface (copy all of `A`):
+// Using the strided interface (copy all of `A`):
 B = new Complex128Array( N * N );
-zlacpy.ndarray( 'all', N, N, A, N, 1, 0, B, N, 1, 0 );
+zlacpy.strided( 'all', N, N, A, N, 1, 0, B, N, 1, 0 );
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```
 

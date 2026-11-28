@@ -60,12 +60,12 @@ zsytrs( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytrs.ndarray(
+zsytrs.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -168,8 +168,8 @@ zsytrf( 'column-major', 'upper', N, A, N, IPIV, 1, null );
 let out = zsytrs( 'column-major', 'upper', N, N, A, N, IPIV, 1, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = zsytrs.ndarray( 'upper', N, N, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
+// Using the strided interface:
+out = zsytrs.strided( 'upper', N, N, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( out );
 ```
 

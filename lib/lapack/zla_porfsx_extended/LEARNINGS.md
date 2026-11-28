@@ -8,7 +8,7 @@
   (`DO J = 1, NRHS`). It must be added back manually as an
   explicit `nrhs` parameter right after `N`. The scaffolded
   `*la_*rfsx_extended` stubs all inherit this bug — the wrappers
-  (`ndarray.js`, `<routine>.js`) also needed the parameter threaded.
+  (`strided.js`, `<routine>.js`) also needed the parameter threaded.
 - **Duplicate parameter names.** The scaffold produces `Y, strideY2, offsetY`
   for the 2-D solution matrix *and* `y, strideY, offsetY` for the
   `DY` workspace, which is a syntax error under strict mode. Renamed

@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( i, d, strideD, offsetD, z, strideZ, offsetZ, DELTA, strideDELTA, offsetDELTA, rho, dsigma, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( i, d, strideD, offsetD, z, strideZ, offsetZ, DELTA, strideDELTA, offsetDELTA, rho, dsigma, WORK, strideWORK, offsetWORK )
     Compute the square root of the i-th eigenvalue of a positive symmetric
     rank-one modification of a 2-by-2 diagonal matrix using alternative
     indexing semantics.

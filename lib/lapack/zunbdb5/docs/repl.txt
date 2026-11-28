@@ -64,7 +64,7 @@
     > {{alias}}( 'column-major', 2, 2, 1, X1, 1, X2, 1, Q1, 2, Q2, 2, WORK, 1 )
 
 
-{{alias}}.ndarray( m1, m2, N, X1, strideX1, offsetX1, X2, strideX2, offsetX2, Q1, strideQ11, strideQ12, offsetQ1, Q2, strideQ21, strideQ22, offsetQ2, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( m1, m2, N, X1, strideX1, offsetX1, X2, strideX2, offsetX2, Q1, strideQ11, strideQ12, offsetQ1, Q2, strideQ21, strideQ22, offsetQ2, WORK, strideWORK, offsetWORK )
     Same as `{{alias}}` above, but with explicit per-array stride and offset
     parameters in place of the layout/leading-dimension convention.
 
@@ -142,7 +142,7 @@
     > var X1 = new {{alias:@stdlib/array/complex128}}( [ 3.0, 0.0, 4.0, 0.0 ] );
     > var X2 = new {{alias:@stdlib/array/complex128}}( [ 5.0, 0.0, 6.0, 0.0 ] );
     > var WORK = new {{alias:@stdlib/array/complex128}}( 1 );
-    > {{alias}}.ndarray( 2, 2, 1, X1, 1, 0, X2, 1, 0, Q1, 1, 2, 0, Q2, 1, 2, 0, WORK, 1, 0 )
+    > {{alias}}.strided( 2, 2, 1, X1, 1, 0, X2, 1, 0, Q1, 1, 2, 0, Q2, 1, 2, 0, WORK, 1, 0 )
 
     See Also
     --------

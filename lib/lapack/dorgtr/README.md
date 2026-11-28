@@ -54,12 +54,12 @@ dorgtr( order, uplo, N, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorgtr.ndarray(
+dorgtr.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -150,8 +150,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dorgtr( 'row-major', 'upper', N, A, N, TAU, 1, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dorgtr.ndarray( 'upper', N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dorgtr.strided( 'upper', N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

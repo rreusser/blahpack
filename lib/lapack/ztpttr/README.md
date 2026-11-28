@@ -51,12 +51,12 @@ ztpttr( order, uplo, N, AP, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztpttr.ndarray(
+ztpttr.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -145,9 +145,9 @@ let A = new Complex128Array( N * N );
 ztpttr( 'row-major', 'upper', N, AP, A, N );
 console.log( reinterpret( A, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( N * N );
-ztpttr.ndarray( 'upper', N, AP, 1, 0, A, N, 1, 0 );
+ztpttr.strided( 'upper', N, AP, 1, 0, A, N, 1, 0 );
 console.log( reinterpret( A, 0 ) );
 ```
 

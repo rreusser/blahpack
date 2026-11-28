@@ -51,7 +51,7 @@ interface Routine {
 	* @param offsetSCALE - starting index for `SCALE`
 	* @returns result
 	*/
-	ndarray( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number ): Float64Array;
+	strided( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number ): Float64Array;
 }
 
 /**

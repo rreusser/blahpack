@@ -149,15 +149,15 @@ var rule = {
 				var generated;
 				var lds;
 				var nm;
-				if ( !r || r.form !== 'strided' || !r.matches ) {
+				if ( !r || r.form !== 'wrapper' || !r.matches ) {
 					return;
 				}
-				nm = P.nameMap( r.spec, 'strided', r.params );
+				nm = P.nameMap( r.spec, 'wrapper', r.params );
 				lds = ldArgs( r.spec, nm, r.params );
 				if ( Object.keys( lds ).length === 0 ) {
 					return;
 				}
-				generated = P.prologue( r.spec, 'strided', r.params ).map( function m( c ) {
+				generated = P.prologue( r.spec, 'wrapper', r.params ).map( function m( c ) {
 					return P.unwrap( c.test );
 				});
 

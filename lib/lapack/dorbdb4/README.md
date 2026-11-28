@@ -95,12 +95,12 @@ Simultaneously bidiagonalizes the blocks of a tall and skinny matrix `[X11; X21]
 - `RangeError` `LDX11` must satisfy the leading-dimension constraint
 - `RangeError` `LDX21` must satisfy the leading-dimension constraint
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorbdb4.ndarray(
+dorbdb4.strided(
     M,
     P,
     Q,

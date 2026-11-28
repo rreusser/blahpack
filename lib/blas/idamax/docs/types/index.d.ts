@@ -41,7 +41,7 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	strided( N: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
 }
 
 /**

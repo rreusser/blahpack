@@ -31,12 +31,12 @@ import dla_gbrcond = require( './index' );
 	dla_gbrcond(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	dla_gbrcond.ndarray( 'no-transpose', 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
+	dla_gbrcond.strided( 'no-transpose', 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dla_gbrcond.ndarray(); // $ExpectError
+	dla_gbrcond.strided(); // $ExpectError
 }

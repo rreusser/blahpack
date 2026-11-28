@@ -31,12 +31,12 @@ import zlaunhr_col_getrfnp = require( './index' );
 	zlaunhr_col_getrfnp(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zlaunhr_col_getrfnp.ndarray( 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zlaunhr_col_getrfnp.strided( 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zlaunhr_col_getrfnp.ndarray(); // $ExpectError
+	zlaunhr_col_getrfnp.strided(); // $ExpectError
 }

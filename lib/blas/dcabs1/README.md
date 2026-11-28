@@ -26,12 +26,12 @@ dcabs1( z ) → number
 
 **Returns** `number`: result
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dcabs1.ndarray( z ) → number
+dcabs1.strided( z ) → number
 ```
 
 | Parameter | Type | Description |

@@ -21,7 +21,7 @@
 
 ## Coverage gaps
 
-- Coverage on lib/base.js, lib/ndarray.js, and lib/ztzrzf.js is 100% line / 100% branch (per `node --test --experimental-test-coverage`). All 28 tests pass.
+- Coverage on lib/base.js, lib/strided.js, and lib/ztzrzf.js is 100% line / 100% branch (per `node --test --experimental-test-coverage`). All 28 tests pass.
 
 ## Process / automation notes
 

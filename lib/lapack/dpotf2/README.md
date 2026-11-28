@@ -51,12 +51,12 @@ dpotf2( order, uplo, N, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpotf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA ) → integer
+dpotf2.strided( uplo, N, A, strideA1, strideA2, offsetA ) → integer
 ```
 
 Computes the Cholesky factorization of a real symmetric positive definite matrix `A` (unblocked algorithm).
@@ -136,8 +136,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = dpotf2( 'row-major', 'upper', N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dpotf2.ndarray( 'upper', N, A, N, 1, 0 );
+// Using the strided interface:
+out = dpotf2.strided( 'upper', N, A, N, 1, 0 );
 console.log( out );
 ```
 

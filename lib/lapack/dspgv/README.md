@@ -82,12 +82,12 @@ dspgv( order, itype, jobz, uplo, N, AP, BP, w, strideW, Z, LDZ, WORK ) → info:
 - `RangeError` fifth argument must be a nonnegative integer
 - `RangeError` eleventh argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspgv.ndarray(
+dspgv.strided(
     itype,
     jobz, uplo,
     N,

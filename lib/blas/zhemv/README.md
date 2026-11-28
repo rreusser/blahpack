@@ -66,12 +66,12 @@ zhemv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Complex
 - `RangeError` eighth argument must be non-zero
 - `RangeError` eleventh argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhemv.ndarray(
+zhemv.strided(
     uplo,
     N,
     alpha,
@@ -164,7 +164,7 @@ const y = new Complex128Array( [ 0.0, 0.0, 0.0, 0.0 ] );
 const alpha = new Complex128( 1.0, 0.0 );
 const beta = new Complex128( 0.0, 0.0 );
 
-zhemv.ndarray( 'upper', 2, alpha, A, 2, 1, 0, x, 1, 0, beta, y, 1, 0 );
+zhemv.strided( 'upper', 2, alpha, A, 2, 1, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( reinterpret( y, 0 ) ); // eslint-disable-line no-console
 ```
 

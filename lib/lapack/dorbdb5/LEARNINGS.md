@@ -45,7 +45,7 @@
 
 - Sister-routine pattern reuse paid off: lifted `buildQ`,
   `assertArrayClose`, layout-invariance and offset-honored test
-  helpers nearly verbatim from dorbdb6's `test.ndarray.js`. These are
+  helpers nearly verbatim from dorbdb6's `test.strided.js`. These are
   small enough not to merit extraction yet, but a third routine in this
   family would warrant a shared `test/_helpers.js`.
 - Fortran fixture cases are nine, with one extra JS-only case for
@@ -60,7 +60,7 @@
   dorbdb5 is 14, scaffold guessed 16. Recommend either dropping
   `incx*` from signature.py before counting, or surfacing the choice
   in init output. (Same gap dorbdb6 flagged — still unfixed.)
-- `gen_test.py` produced a high-quality scaffold for `test.ndarray.js`
+- `gen_test.py` produced a high-quality scaffold for `test.strided.js`
   this time around, including data-driven `findCase` lookup. The
   inputs (Q layouts, X buffers, WORK sizes) still needed to be
   hand-reconstructed from the Fortran test source — the fixture only

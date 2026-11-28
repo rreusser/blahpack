@@ -83,12 +83,12 @@ zggbak(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, M )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggbak.ndarray(
+zggbak.strided(
     job, side,
     N,
     ilo, ihi,
@@ -204,9 +204,9 @@ let V = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 let out = zggbak( 'column-major', 'scale', 'left', N, 1, N, LSCALE, 1, RSCALE, 1, N, V, N );
 console.log( out, reinterpret( V, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 V = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
-out = zggbak.ndarray( 'scale', 'left', N, 1, N, LSCALE, 1, 0, RSCALE, 1, 0, N, V, 1, N, 0 );
+out = zggbak.strided( 'scale', 'left', N, 1, N, LSCALE, 1, 0, RSCALE, 1, 0, N, V, 1, N, 0 );
 console.log( out, reinterpret( V, 0 ) ); // eslint-disable-line no-console
 ```
 

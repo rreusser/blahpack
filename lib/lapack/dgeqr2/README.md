@@ -51,12 +51,12 @@ dgeqr2( order, M, N, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeqr2.ndarray(
+dgeqr2.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,
@@ -142,8 +142,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dgeqr2( 'row-major', N, N, A, N, TAU, 1, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dgeqr2.ndarray( N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dgeqr2.strided( N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

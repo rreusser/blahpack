@@ -73,7 +73,7 @@ interface Routine {
 	* @param smlnum - smlnum
 	* @returns result
 	*/
-	ndarray( rightv: boolean, noinit: boolean, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: any, v: Float64Array, strideV: number, offsetV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, eps3: number, smlnum: number ): Float64Array;
+	strided( rightv: boolean, noinit: boolean, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: any, v: Float64Array, strideV: number, offsetV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, eps3: number, smlnum: number ): Float64Array;
 }
 
 /**

@@ -31,7 +31,7 @@ if ( ri !== -1 ) {
 
 // Find every module source file the lint rules care about: any directory that
 // contains a base.js is a module `lib/` directory, and we lint all of its
-// signature-bearing files (base.js, ndarray.js, <routine>.js,
+// signature-bearing files (base.js, strided.js, <routine>.js,
 // index.js). Each rule self-selects by filename, so feeding all of them is
 // correct — a rule ignores files it does not handle.
 function findModuleFiles( dir, out ) {

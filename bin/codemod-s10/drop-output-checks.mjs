@@ -24,7 +24,7 @@ export function dropOutputChecks( routine, dry ) {
 	const outs = spec.params.filter( ( p ) => p.role === 'scalar' && p.intent === 'out' ).map( ( p ) => p.name );
 	const dir = path.join( ROOT, 'lib', spec.package, routine );
 	const changed = [];
-	for ( const f of [ routine + '.js', 'ndarray.js' ] ) {
+	for ( const f of [ routine + '.js', 'strided.js' ] ) {
 		const file = path.join( dir, 'lib', f );
 		if ( !fs.existsSync( file ) ) {
 			continue;

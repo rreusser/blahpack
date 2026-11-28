@@ -1,6 +1,6 @@
 /**
 * Preloaded (`--import`) by `test/harness/replay.js` in a child test process.
-* Wraps the default export of ONE module's `ndarray.js` (`REPLAY_TARGET`) so
+* Wraps the default export of ONE module's `strided.js` (`REPLAY_TARGET`) so
 * that every call returning normally is recorded with a copy of its
 * arguments as they were on entry. Records are written with `v8.serialize`
 * to `REPLAY_OUT/<pid>.bin` at exit (ticket 0065).
@@ -23,7 +23,7 @@ function encode( x ) {
 	if ( typeof x === 'function' ) {
 		// A callback (dgees's `select`, zgges's `selctg`) is recorded as its
 		// source and rebuilt on replay. One that needs its closure throws
-		// when called there, and the replay skips calls ndarray.js rejects.
+		// when called there, and the replay skips calls strided.js rejects.
 		return { 'f': x.toString() };
 	}
 	const name = x.constructor && x.constructor.name;
@@ -57,11 +57,11 @@ function encode( x ) {
 	return void 0;
 }
 
-// The module's own wrapper calls ndarray.js (CONVENTIONS D5d), but the record
+// The module's own wrapper calls strided.js (CONVENTIONS D5d), but the record
 // is of the calls the TESTS make: a call from the wrapper would be replayed
 // through the wrapper again, and would crowd the tests' own calls out of the
 // sample. A call whose caller frame is in `lib/<routine>.js` is not recorded.
-const WRAPPER = process.env.REPLAY_TARGET ? process.env.REPLAY_TARGET.replace( /\/lib\/ndarray\.js$/, ( m, i, str ) => '/lib/' + path.basename( path.dirname( path.dirname( str ) ) ) + '.js:' ) : null;
+const WRAPPER = process.env.REPLAY_TARGET ? process.env.REPLAY_TARGET.replace( /\/lib\/strided\.js$/, ( m, i, str ) => '/lib/' + path.basename( path.dirname( path.dirname( str ) ) ) + '.js:' ) : null;
 
 function fromWrapper( recorded ) {
 	const o = {};

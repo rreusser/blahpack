@@ -66,12 +66,12 @@ dgebal( order, job, N, A, LDA, ilo, ihi, SCALE, strideSCALE ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgebal.ndarray(
+dgebal.strided(
     job,
     N,
     A, strideA1, strideA2, offsetA,
@@ -180,10 +180,10 @@ let SCALE = new Float64Array( N );
 let info = dgebal( 'column-major', 'both', N, A, N, ilo, ihi, SCALE, 1 );
 console.log( info, ilo[ 0 ], ihi[ 0 ], SCALE, A ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 1.0, 0.01, 0.0, 100.0, 2.0, 0.0, 3.0, 4.0, 5.0 ] );
 SCALE = new Float64Array( N );
-info = dgebal.ndarray( 'both', N, A, 1, N, 0, ilo, ihi, SCALE, 1, 0 );
+info = dgebal.strided( 'both', N, A, 1, N, 0, ilo, ihi, SCALE, 1, 0 );
 console.log( info, ilo[ 0 ], ihi[ 0 ], SCALE, A ); // eslint-disable-line no-console
 ```
 

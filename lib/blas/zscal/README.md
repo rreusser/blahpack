@@ -37,12 +37,12 @@ zscal( N, alpha, x, strideX ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zscal.ndarray( N, alpha, x, strideX, offsetX ) → Complex128Array
+zscal.strided( N, alpha, x, strideX, offsetX ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -100,9 +100,9 @@ zscal( 2, alpha, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 // => <Float64Array>[ 2.0, 4.0, 6.0, 8.0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Complex128Array( [ 1.0, 2.0, 3.0, 4.0 ] );
-zscal.ndarray( 2, alpha, x, 1, 0 );
+zscal.strided( 2, alpha, x, 1, 0 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 // => <Float64Array>[ 2.0, 4.0, 6.0, 8.0 ]
 ```

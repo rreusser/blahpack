@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Generate docs/repl.txt for each module from routine.js and ndarray.js signatures.
+ * Generate docs/repl.txt for each module from routine.js and strided.js signatures.
  *
  * Usage:
  *   node bin/gen_repl_txt.js [--all | module-path...]
@@ -184,34 +184,34 @@ function paramDescription( name ) {
 
 function generateReplTxt( routine, mod ) {
 	var routinePath = path.join( mod.dir, 'lib', routine + '.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var baseContent = fs.existsSync( path.join( mod.dir, 'lib', 'base.js' ) ) ?
 		fs.readFileSync( path.join( mod.dir, 'lib', 'base.js' ), 'utf8' ) : null;
 	var routineContent = fs.existsSync( routinePath ) ?
 		fs.readFileSync( routinePath, 'utf8' ) : null;
-	var ndarrayContent = fs.existsSync( ndarrayPath ) ?
-		fs.readFileSync( ndarrayPath, 'utf8' ) : null;
+	var stridedContent = fs.existsSync( stridedPath ) ?
+		fs.readFileSync( stridedPath, 'utf8' ) : null;
 
 	var layoutParams = extractExportedSignature( routineContent );
-	var ndarrayParams = extractExportedSignature( ndarrayContent ) ||
+	var stridedParams = extractExportedSignature( stridedContent ) ||
 		extractExportedSignature( baseContent );
 
-	if ( !ndarrayParams ) {
+	if ( !stridedParams ) {
 		return null;
 	}
 
-	var desc = CLEAN_DESCS[ routine.toLowerCase() ] || getDescription( ndarrayContent ) || getDescription( baseContent ) ||
+	var desc = CLEAN_DESCS[ routine.toLowerCase() ] || getDescription( stridedContent ) || getDescription( baseContent ) ||
 		getDescription( routineContent ) || routine;
 
-	// Detect arrays from ndarray strides
+	// Detect arrays from strided strides
 	var arraySet = new Set();
 	var i, p;
-	for ( i = 0; i < ndarrayParams.length; i++ ) {
-		p = ndarrayParams[ i ];
+	for ( i = 0; i < stridedParams.length; i++ ) {
+		p = stridedParams[ i ];
 		var sm = p.match( /^stride(.+?)([12])?$/ );
 		if ( sm ) {
 			var arrName = sm[ 1 ];
-			ndarrayParams.forEach( function( np ) {
+			stridedParams.forEach( function( np ) {
 				if ( np.toLowerCase() === arrName.toLowerCase() ) {
 					arraySet.add( np );
 				}
@@ -233,7 +233,7 @@ function generateReplTxt( routine, mod ) {
 		for ( i = 0; i < layoutParams.length; i++ ) {
 			p = layoutParams[ i ];
 			var pt = paramType( p );
-			// Check if this is an array from the ndarray detection
+			// Check if this is an array from the strided detection
 			if ( arraySet.has( p ) || arraySet.has( p.toUpperCase() ) || arraySet.has( p.toLowerCase() ) ) {
 				if ( /^(IPIV|JPIV|IWORK|ISUPPZ|IBLOCK|ISPLIT|IDX|IDXP|IDXQ|PERM|GIVCOL|BWORK|SELECT)$/.test( p ) ) {
 					pt = 'Int32Array';
@@ -258,14 +258,14 @@ function generateReplTxt( routine, mod ) {
 		lines.push( '' );
 	}
 
-	// ── ndarray section ──
-	var ndarraySig;
+	// ── strided section ──
+	var stridedSig;
 	if ( layoutParams ) {
-		ndarraySig = '{{alias}}.ndarray( ' + ndarrayParams.join( ', ' ) + ' )';
+		stridedSig = '{{alias}}.strided( ' + stridedParams.join( ', ' ) + ' )';
 	} else {
-		ndarraySig = '{{alias}}( ' + ndarrayParams.join( ', ' ) + ' )';
+		stridedSig = '{{alias}}( ' + stridedParams.join( ', ' ) + ' )';
 	}
-	lines.push( ndarraySig );
+	lines.push( stridedSig );
 	if ( layoutParams ) {
 		lines.push( wrapText( desc + ' using alternative indexing semantics.', '    ', MAX_WIDTH ) );
 	} else {
@@ -275,8 +275,8 @@ function generateReplTxt( routine, mod ) {
 	lines.push( '    Parameters' );
 	lines.push( '    ----------' );
 
-	for ( i = 0; i < ndarrayParams.length; i++ ) {
-		p = ndarrayParams[ i ];
+	for ( i = 0; i < stridedParams.length; i++ ) {
+		p = stridedParams[ i ];
 		var npt = paramType( p );
 		if ( arraySet.has( p ) ) {
 			if ( /^(IPIV|JPIV|IWORK|ISUPPZ|IBLOCK|ISPLIT|IDX|IDXP|IDXQ|PERM|GIVCOL|BWORK|SELECT)$/.test( p ) ) {

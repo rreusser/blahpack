@@ -69,12 +69,12 @@ zhetrd(
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetrd.ndarray(
+zhetrd.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -176,12 +176,12 @@ let info = zhetrd( 'column-major', 'upper', N, A, N, d, 1, e, 1, TAU, 1, null );
 console.log( info );
 console.log( d, e );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( Avals );
 d = new Float64Array( N );
 e = new Float64Array( N - 1 );
 TAU = new Complex128Array( N - 1 );
-info = zhetrd.ndarray( 'upper', N, A, 1, N, 0, d, 1, 0, e, 1, 0, TAU, 1, 0, new Complex128Array( N ), 1, 0 );
+info = zhetrd.strided( 'upper', N, A, 1, N, 0, d, 1, 0, e, 1, 0, TAU, 1, 0, new Complex128Array( N ), 1, 0 );
 console.log( info );
 console.log( d, e );
 ```

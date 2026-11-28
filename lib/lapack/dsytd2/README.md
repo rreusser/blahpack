@@ -58,12 +58,12 @@ dsytd2( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU ) → int
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsytd2.ndarray(
+dsytd2.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -160,8 +160,8 @@ const TAU = discreteUniform( N, -10, 10, opts );
 let out = dsytd2( 'row-major', 'upper', N, A, N, d, 1, e, 1, TAU, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dsytd2.ndarray( 'upper', N, A, N, 1, 0, d, 1, 0, e, 1, 0, TAU, 1, 0 );
+// Using the strided interface:
+out = dsytd2.strided( 'upper', N, A, N, 1, 0, d, 1, 0, e, 1, 0, TAU, 1, 0 );
 console.log( out );
 ```
 

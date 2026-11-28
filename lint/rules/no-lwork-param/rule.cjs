@@ -8,7 +8,7 @@
 // its `.length`, so a caller-owned WORK array fully determines the available
 // workspace — `WORK.length - offsetWork`. A separate length parameter is not only
 // redundant, it is a proven source of signature-drift bugs: args shift, base.js
-// and ndarray.js disagree, callers pass it in the wrong slot (the dposvx/zgesvx
+// and strided.js disagree, callers pass it in the wrong slot (the dposvx/zgesvx
 // rcond-arg crashes were exactly this class).
 //
 // Where reference LAPACK genuinely CONSUMES lwork, the fix is still to drop the

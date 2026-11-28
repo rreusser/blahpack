@@ -63,12 +63,12 @@ dpftrs( order, transr, uplo, N, nrhs, A, strideA, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpftrs.ndarray(
+dpftrs.strided(
     transr, uplo,
     N, nrhs,
     A, strideA, offsetA,
@@ -165,11 +165,11 @@ console.log( 'info:', info );
 // => info: 0
 console.log( 'Solution:', B );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( data );
 B = new Float64Array( rhs );
-dpftrf.ndarray( 'no-transpose', 'lower', N, A, 1, 0 );
-info = dpftrs.ndarray( 'no-transpose', 'lower', N, 1, A, 1, 0, B, 1, N, 0 );
+dpftrf.strided( 'no-transpose', 'lower', N, A, 1, 0 );
+info = dpftrs.strided( 'no-transpose', 'lower', N, 1, A, 1, 0, B, 1, N, 0 );
 console.log( 'info:', info );
 // => info: 0
 console.log( 'Solution:', B );

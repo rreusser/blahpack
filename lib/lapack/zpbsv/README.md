@@ -64,12 +64,12 @@ zpbsv( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpbsv.ndarray(
+zpbsv.strided(
     uplo,
     N, kd, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
@@ -182,10 +182,10 @@ console.log( info );
 console.log( reinterpret( B, 0 ) );
 // => <Float64Array>[ ~1, ~0, ~1, ~0, ~1, ~0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 AB = new Complex128Array( data );
 B = new Complex128Array( rhs );
-info = zpbsv.ndarray( 'upper', N, kd, 1, AB, 1, LDAB, 0, B, 1, N, 0 );
+info = zpbsv.strided( 'upper', N, kd, 1, AB, 1, LDAB, 0, B, 1, N, 0 );
 console.log( info );
 // => 0
 console.log( reinterpret( B, 0 ) );

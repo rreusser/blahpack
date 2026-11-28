@@ -56,7 +56,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, p, N, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( M, p, N, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB, WORK, strideWORK, offsetWORK, lwork )
     Computes a generalized RQ factorization of an M-by-N complex matrix A
     and a P-by-N complex matrix B using alternative indexing semantics.
 

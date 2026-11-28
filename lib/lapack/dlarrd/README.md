@@ -126,12 +126,12 @@ Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 - `TypeError` second argument must be one of the following: "block", "entire"
 - `TypeError` order argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarrd.ndarray(
+dlarrd.strided(
     range, order,
     N,
     vl, vu, il, iu,

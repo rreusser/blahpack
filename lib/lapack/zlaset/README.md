@@ -57,12 +57,12 @@ zlaset( order, uplo, M, N, alpha, beta, A, LDA ) → Complex128Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "upper", "lower", "all"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Complex128Array
+zlaset.strided( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Complex128Array
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -139,8 +139,8 @@ const beta = new Complex128( 1.0, 0.0 ); // diagonal value
 zlaset( 'row-major', 'upper', N, N, alpha, beta, A, N );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface (set the full matrix):
-zlaset.ndarray( 'all', N, N, alpha, beta, A, N, 1, 0 );
+// Using the strided interface (set the full matrix):
+zlaset.strided( 'all', N, N, alpha, beta, A, N, 1, 0 );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

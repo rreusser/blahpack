@@ -117,12 +117,12 @@ Computes a partial factorization of a complex symmetric matrix using the bounded
 - `TypeError` second argument must be a valid matrix triangle
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlasyf_rk.ndarray(
+zlasyf_rk.strided(
     uplo,
     N, nb,
     kb,

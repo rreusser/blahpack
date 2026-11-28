@@ -69,12 +69,12 @@ zgesc2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgesc2.ndarray(
+zgesc2.strided(
     N,
     A, strideA1, strideA2, offsetA,
     RHS, strideRHS, offsetRHS,
@@ -156,7 +156,7 @@ const IPIV = new Int32Array( [ 0, 1 ] );
 const JPIV = new Int32Array( [ 0, 1 ] );
 const scale = new Float64Array( 1 );
 
-zgesc2.ndarray( 2, A, 1, 2, 0, RHS, 1, 0, IPIV, 1, 0, JPIV, 1, 0, scale ); // eslint-disable-line max-len
+zgesc2.strided( 2, A, 1, 2, 0, RHS, 1, 0, IPIV, 1, 0, JPIV, 1, 0, scale ); // eslint-disable-line max-len
 
 const view = reinterpret( RHS, 0 );
 console.log( 'Solution (re/im interleaved):', Array.prototype.slice.call( view ) ); // eslint-disable-line no-console, max-len

@@ -67,12 +67,12 @@ zspmv( order, uplo, N, alpha, AP, x, strideX, beta, y, strideY ) → Complex128A
 - `RangeError` tenth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zspmv.ndarray(
+zspmv.strided(
     uplo,
     N,
     alpha,
@@ -169,9 +169,9 @@ let y = new Complex128Array( N );
 zspmv( 'column-major', 'upper', N, alpha, AP, x, 1, beta, y, 1 );
 console.log( reinterpret( y, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 y = new Complex128Array( N );
-zspmv.ndarray( 'upper', N, alpha, AP, 1, 0, x, 1, 0, beta, y, 1, 0 );
+zspmv.strided( 'upper', N, alpha, AP, 1, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( reinterpret( y, 0 ) );
 ```
 

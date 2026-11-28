@@ -51,10 +51,10 @@ interface Routine {
 	* @returns parameter value
 	*
 	* @example
-	* var v = iparmq.ndarray( 15, 'DLAQR0', 'SV', 200, 1, 200 );
+	* var v = iparmq.strided( 15, 'DLAQR0', 'SV', 200, 1, 200 );
 	* // returns 24
 	*/
-	ndarray( ispec: number, name: string, opts: string, N: number, ilo: number, ihi: number ): number;
+	strided( ispec: number, name: string, opts: string, N: number, ilo: number, ihi: number ): number;
 }
 
 /**

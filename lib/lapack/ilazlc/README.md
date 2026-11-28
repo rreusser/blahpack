@@ -43,12 +43,12 @@ ilazlc( order, M, N, A, LDA ) → integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ilazlc.ndarray( M, N, A, strideA1, strideA2, offsetA ) → integer
+ilazlc.strided( M, N, A, strideA1, strideA2, offsetA ) → integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -110,8 +110,8 @@ const A = new Complex128Array( [ 1.0, 1.0, 2.0, 0.0, 0.0, 0.0, 3.0, -1.0, 4.0, 2
 let out = ilazlc( 'row-major', M, N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = ilazlc.ndarray( M, N, A, N, 1, 0 );
+// Using the strided interface:
+out = ilazlc.strided( M, N, A, N, 1, 0 );
 console.log( out );
 ```
 

@@ -26,7 +26,7 @@
     <Float64Array>[ 0.6, 0.8, 5.0 ]
 
 
-{{alias}}.ndarray( f, g, cs, sn, r )
+{{alias}}.strided( f, g, cs, sn, r )
     Generates a plane rotation with non-negative diagonal, using alternative indexing
     semantics.
 
@@ -50,7 +50,7 @@
     Examples
     --------
     > var out = new {{alias:@stdlib/array/float64}}( 3 );
-    > {{alias}}.ndarray( 3.0, 4.0, out )
+    > {{alias}}.strided( 3.0, 4.0, out )
     <Float64Array>[ 0.6, 0.8, 5.0 ]
 
     See Also

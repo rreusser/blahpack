@@ -36,12 +36,12 @@ zlacgv( N, x, strideX ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacgv.ndarray( N, x, strideX, offsetX ) → Complex128Array
+zlacgv.strided( N, x, strideX, offsetX ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -95,9 +95,9 @@ let x = new Complex128Array( [ 1.0, 2.0, 3.0, -4.0, 5.0, 6.0 ] );
 zlacgv( N, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface (conjugate every other element, starting at the second):
+// Using the strided interface (conjugate every other element, starting at the second):
 x = new Complex128Array( [ 1.0, 2.0, 3.0, -4.0, 5.0, 6.0, 7.0, 8.0 ] );
-zlacgv.ndarray( 2, x, 2, 1 );
+zlacgv.strided( 2, x, 2, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 ```
 

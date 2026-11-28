@@ -3,13 +3,13 @@
 
 // Makes each JSDoc @example self-contained: it must import the routine it calls.
 //
-// - An example that calls `<routine>(` or `<routine>.ndarray(` without
+// - An example that calls `<routine>(` or `<routine>.strided(` without
 //   importing `<routine>` gets `import <routine> from '<public path>';`.
-// - In ndarray.js and base.js, an example documents the strided form, so its
-//   bare `<routine>(` calls become `<routine>.ndarray(`.
-// - `import { ndarray as <routine> } from '<path>';` (only valid for modules
-//   that export `ndarray` by name, see lint/rules/module-exports) becomes a
-//   default import plus `.ndarray(` calls, which works for every module.
+// - In strided.js and base.js, an example documents the wrapper form, so its
+//   bare `<routine>(` calls become `<routine>.strided(`.
+// - `import { strided as <routine> } from '<path>';` (only valid for modules
+//   that export `strided` by name, see lint/rules/module-exports) becomes a
+//   default import plus `.strided(` calls, which works for every module.
 //
 // Usage: node bin/codemod-spec/example-imports.cjs [routine ...]
 
@@ -19,25 +19,25 @@ var path = require( 'path' );
 var ROOT = path.join( __dirname, '..', '..' );
 var PKG = JSON.parse( fs.readFileSync( path.join( ROOT, 'package.json' ), 'utf8' ) );
 
-function fixExample( lines, routine, pub, strided ) {
+function fixExample( lines, routine, pub, wrapper ) {
 	var body = lines.join( '\n' );
 	var callRe = new RegExp( '(^|[^\\w$.])' + routine + '\\s*\\(', 'g' );
-	var namedRe = new RegExp( '^(\\s*\\*\\s*)import \\{ ndarray as ' + routine + ' \\} from (\'[^\']+\');$' );
+	var namedRe = new RegExp( '^(\\s*\\*\\s*)import \\{ strided as ' + routine + ' \\} from (\'[^\']+\');$' );
 	var declared;
 	var lastImport;
 	var i;
 	for ( i = 0; i < lines.length; i++ ) {
 		if ( namedRe.test( lines[ i ] ) ) {
 			lines[ i ] = lines[ i ].replace( namedRe, '$1import ' + routine + ' from $2;' );
-			strided = true;
+			wrapper = true;
 		}
 	}
 	body = lines.join( '\n' );
-	if ( !new RegExp( '(^|[^\\w$.])' + routine + '(\\s*\\(|\\.ndarray)' ).test( body ) ) {
+	if ( !new RegExp( '(^|[^\\w$.])' + routine + '(\\s*\\(|\\.strided)' ).test( body ) ) {
 		return lines;
 	}
-	if ( strided ) {
-		body = body.replace( callRe, '$1' + routine + '.ndarray(' );
+	if ( wrapper ) {
+		body = body.replace( callRe, '$1' + routine + '.strided(' );
 	}
 	lines = body.split( '\n' );
 	declared = new RegExp( '(import\\s+' + routine + '\\s+from|(var|const|let)\\s+' + routine + '\\b)' ).test( body );
@@ -58,7 +58,7 @@ function fixExample( lines, routine, pub, strided ) {
 	return lines;
 }
 
-function rewrite( file, routine, pub, strided ) {
+function rewrite( file, routine, pub, wrapper ) {
 	var src = fs.readFileSync( file, 'utf8' );
 	var lines = src.split( '\n' );
 	var out = [];
@@ -71,7 +71,7 @@ function rewrite( file, routine, pub, strided ) {
 			while ( ex.length && /^\s*\*\s*$/.test( ex[ 0 ] ) ) {
 				out.push( ex.shift() );
 			}
-			fixed = ex.length ? fixExample( ex, routine, pub, strided ) : ex;
+			fixed = ex.length ? fixExample( ex, routine, pub, wrapper ) : ex;
 			out.push.apply( out, fixed );
 			ex = null;
 		}
@@ -111,8 +111,8 @@ function main() {
 			fs.readdirSync( dir ).filter( function g( x ) {
 				return x.endsWith( '.js' ) && x !== 'main.js';
 			}).forEach( function g( x ) {
-				var strided = ( x === 'ndarray.js' || x === 'base.js' );
-				if ( rewrite( path.join( dir, x ), routine, pub, strided ) ) {
+				var wrapper = ( x === 'strided.js' || x === 'base.js' );
+				if ( rewrite( path.join( dir, x ), routine, pub, wrapper ) ) {
 					n += 1;
 				}
 			});

@@ -64,7 +64,7 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	ndarray( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, scale: number ): Float64Array;
+	strided( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, scale: number ): Float64Array;
 }
 
 /**

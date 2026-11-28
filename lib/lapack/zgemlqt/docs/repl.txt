@@ -59,7 +59,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( side, trans, M, N, K, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
     Overwrite a complex M-by-N matrix C with op(Q)*C or C*op(Q), where Q is a complex unitary matrix defined by the compact-WY representation produced by zgelqt., using alternative indexing semantics.
 
     Parameters

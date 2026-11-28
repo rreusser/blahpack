@@ -22,7 +22,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, ZX, strideZX, offsetZX )
+{{alias}}.strided( N, ZX, strideZX, offsetZX )
     Finds the index of the first vector element of maximum absolute value
     using alternative indexing semantics.
 

@@ -32,7 +32,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, alpha, x, strideX, offsetX, y, strideY, offsetY )
+{{alias}}.strided( N, alpha, x, strideX, offsetX, y, strideY, offsetY )
     Multiplies a vector `x` by a constant `alpha` and adds the result to `y`
     using alternative indexing semantics.
 

@@ -65,12 +65,12 @@ zpteqr( order, compz, N, d, strideD, e, strideE, Z, LDZ, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` ninth argument is invalid (rejected when `LDZ < 1 \|\| ( ( compz === "none" ? 0 : ( compz === "update" ? 1 : 2 ) ) > 0 && LDZ < max( 1, N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpteqr.ndarray(
+zpteqr.strided(
     compz,
     N,
     d, strideD, offsetD,

@@ -36,17 +36,17 @@ import dgesv = require( './index' );
 	dgesv( 'row-major' ); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
 	const A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0 ] );
 	const IPIV = new Int32Array( 2 );
 	const B = new Float64Array( [ 1.0, 2.0 ] );
 
-	dgesv.ndarray( 2, 1, A, 1, 2, 0, IPIV, 1, 0, B, 1, 2, 0 ); // $ExpectType number
+	dgesv.strided( 2, 1, A, 1, 2, 0, IPIV, 1, 0, B, 1, 2, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dgesv.ndarray(); // $ExpectError
-	dgesv.ndarray( 2 ); // $ExpectError
+	dgesv.strided(); // $ExpectError
+	dgesv.strided( 2 ); // $ExpectError
 }

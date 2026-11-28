@@ -52,12 +52,12 @@ dsyswapr( order, uplo, N, A, LDA, i1, i2 ) → Float64Array
 - `TypeError` second argument must be a valid matrix triangle
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyswapr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, i1, i2 ) → Float64Array
+dsyswapr.strided( uplo, N, A, strideA1, strideA2, offsetA, i1, i2 ) → Float64Array
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.

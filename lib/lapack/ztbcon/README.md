@@ -69,12 +69,12 @@ ztbcon( order, norm, uplo, diag, N, kd, AB, LDAB, RCOND, WORK, RWORK ) → info:
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztbcon.ndarray(
+ztbcon.strided(
     norm, uplo, diag,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,
@@ -177,7 +177,7 @@ const RCOND = new Float64Array( 1 );
 const WORK = new Complex128Array( 6 );
 const RWORK = new Float64Array( 3 );
 
-const info = ztbcon.ndarray( 'one-norm', 'upper', 'non-unit', 3, 0, AB, 1, 1, 0, RCOND, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = ztbcon.strided( 'one-norm', 'upper', 'non-unit', 3, 0, AB, 1, 1, 0, RCOND, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'info:', info, 'rcond:', RCOND[ 0 ] ); // eslint-disable-line no-console
 ```
 

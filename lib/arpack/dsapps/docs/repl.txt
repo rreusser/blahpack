@@ -74,7 +74,7 @@
     > {{alias}}( 5, 2, 1, shift, 1, v, 5, h, 3, resid, 1, q, 3, workd, 1 );
 
 
-{{alias}}.ndarray( n, kev, np, shift, strideShift, offsetShift, v, strideV1, strideV2, offsetV, h, strideH1, strideH2, offsetH, resid, strideResid, offsetResid, q, strideQ1, strideQ2, offsetQ, workd, strideWorkd, offsetWorkd )
+{{alias}}.strided( n, kev, np, shift, strideShift, offsetShift, v, strideV1, strideV2, offsetV, h, strideH1, strideH2, offsetH, resid, strideResid, offsetResid, q, strideQ1, strideQ2, offsetQ, workd, strideWorkd, offsetWorkd )
     Applies `np` implicit shifts, using alternative indexing semantics.
 
     Parameters
@@ -167,7 +167,7 @@
     > var shift = new {{alias:@stdlib/array/float64}}( [ 1.75 ] );
     > var q = new {{alias:@stdlib/array/float64}}( 9 );
     > var workd = new {{alias:@stdlib/array/float64}}( 10 );
-    > {{alias}}.ndarray( 5, 2, 1, shift, 1, 0, v, 1, 5, 0, h, 1, 3, 0, resid, 1, 0, q, 1, 3, 0, workd, 1, 0 );
+    > {{alias}}.strided( 5, 2, 1, shift, 1, 0, v, 1, 5, 0, h, 1, 3, 0, resid, 1, 0, q, 1, 3, 0, workd, 1, 0 );
 
     See Also
     --------

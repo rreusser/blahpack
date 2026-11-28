@@ -57,12 +57,12 @@ dspgst( order, itype, uplo, N, AP, BP ) → info: integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspgst.ndarray(
+dspgst.strided(
     itype,
     uplo,
     N,

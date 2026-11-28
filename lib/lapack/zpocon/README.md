@@ -56,12 +56,12 @@ zpocon( order, uplo, N, A, LDA, anorm, rcond, WORK, RWORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` sixth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpocon.ndarray(
+zpocon.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -170,10 +170,10 @@ zpotrf( 'column-major', 'upper', N, A, N );
 let info = zpocon( 'column-major', 'upper', N, A, N, anorm, rcond, WORK, RWORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( data );
-zpotrf.ndarray( 'upper', N, A, 1, N, 0 );
-info = zpocon.ndarray( 'upper', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
+zpotrf.strided( 'upper', N, A, 1, N, 0 );
+info = zpocon.strided( 'upper', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

@@ -36,12 +36,12 @@ izmax1( N, x, strideX ) → integer
 
 **Returns** `integer`: 0-based index of the element with maximum absolute value
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-izmax1.ndarray( N, x, strideX, offsetX ) → integer
+izmax1.strided( N, x, strideX, offsetX ) → integer
 ```
 
 Finds the index of the first vector element of maximum absolute value.
@@ -98,8 +98,8 @@ let out = izmax1( 3, x, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => 2
 
-// Using the ndarray interface (last two elements only):
-out = izmax1.ndarray( 2, x, 1, 1 );
+// Using the strided interface (last two elements only):
+out = izmax1.strided( 2, x, 1, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => 1
 ```

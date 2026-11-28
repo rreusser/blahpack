@@ -41,12 +41,12 @@ dlas2( f, g, h, ssmin, ssmax ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlas2.ndarray( f, g, h, ssmin, ssmax ) → void
+dlas2.strided( f, g, h, ssmin, ssmax ) → void
 ```
 
 Computes singular values of a 2-by-2 triangular matrix, using alternative indexing semantics.
@@ -101,8 +101,8 @@ dlas2( 1, 1, 1, ssmin, ssmax );
 let out = new Float64Array( [ ssmin[ 0 ], ssmax[ 0 ] ] );
 console.log( out );
 
-// Using the ndarray interface:
-dlas2.ndarray( 1, 1, 1, ssmin, ssmax );
+// Using the strided interface:
+dlas2.strided( 1, 1, 1, ssmin, ssmax );
 out = new Float64Array( [ ssmin[ 0 ], ssmax[ 0 ] ] );
 console.log( out );
 ```

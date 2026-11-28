@@ -87,12 +87,12 @@ dporfs(
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dporfs.ndarray(
+dporfs.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -232,8 +232,8 @@ const IWORK = new Int32Array( N );
 let info = dporfs( 'column-major', 'upper', N, nrhs, A, N, AF, N, B, N, X, N, FERR, 1, BERR, 1, WORK, IWORK );
 console.log( info, X, FERR, BERR );
 
-// Using the ndarray interface:
-info = dporfs.ndarray( 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dporfs.strided( 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, X, FERR, BERR );
 ```
 

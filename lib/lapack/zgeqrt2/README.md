@@ -53,12 +53,12 @@ Computes a QR factorization of a complex M-by-N matrix using the compact WY repr
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeqrt2.ndarray(
+zgeqrt2.strided(
     M,
     N,
     A, strideA1, strideA2, offsetA,
@@ -151,8 +151,8 @@ const T = new Complex128Array( N * N );
 let out = zgeqrt2( 'column-major', M, N, A, M, T, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = zgeqrt2.ndarray( M, N, A, 1, M, 0, T, 1, N, 0 );
+// Using the strided interface:
+out = zgeqrt2.strided( M, N, A, 1, M, 0, T, 1, N, 0 );
 console.log( out );
 ```
 

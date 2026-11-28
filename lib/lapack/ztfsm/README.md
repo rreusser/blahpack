@@ -108,12 +108,12 @@ ztfsm(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztfsm.ndarray(
+ztfsm.strided(
     transr, side, uplo, trans, diag,
     M, N,
     alpha,

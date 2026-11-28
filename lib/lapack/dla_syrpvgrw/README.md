@@ -66,12 +66,12 @@ dla_syrpvgrw(
 - `TypeError` second argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_syrpvgrw.ndarray(
+dla_syrpvgrw.strided(
     uplo,
     N,
     info,
@@ -163,8 +163,8 @@ const info = dsytrf( 'column-major', 'upper', N, AF, N, IPIV, 1, null );
 let out = dla_syrpvgrw( 'column-major', 'upper', N, info, A, N, AF, N, IPIV, 1, WORK );
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-out = dla_syrpvgrw.ndarray( 'upper', N, info, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dla_syrpvgrw.strided( 'upper', N, info, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
 console.log( out ); // eslint-disable-line no-console
 ```
 

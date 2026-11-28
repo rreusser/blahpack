@@ -67,7 +67,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, ncvt, nru, ncc, d, strideD, offsetD, e, strideE, offsetE, VT, strideVT1, strideVT2, offsetVT, U, strideU1, strideU2, offsetU, C, strideC1, strideC2, offsetC, RWORK, strideRWORK, offsetRWORK )
+{{alias}}.strided( uplo, N, ncvt, nru, ncc, d, strideD, offsetD, e, strideE, offsetE, VT, strideVT1, strideVT2, offsetVT, U, strideU1, strideU2, offsetU, C, strideC1, strideC2, offsetC, RWORK, strideRWORK, offsetRWORK )
     Returns |a| with the sign of b (Fortran SIGN intrinsic) using
     alternative indexing semantics.
 

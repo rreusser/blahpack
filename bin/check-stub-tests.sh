@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Check for git-tracked modules whose test files are still scaffolded stubs.
-# A stub test has only "is a function" / "has .ndarray" assertions and no
+# A stub test has only "is a function" / "has .strided" assertions and no
 # real test cases. Exit 1 if any are found.
 #
 # Detection: a file is a stub if ANY of:

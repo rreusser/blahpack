@@ -92,12 +92,12 @@ dlatrs(
 - `RangeError` sixth argument must be a nonnegative integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlatrs.ndarray(
+dlatrs.strided(
     uplo, trans, diag, normin,
     N,
     A, strideA1, strideA2, offsetA,
@@ -218,11 +218,11 @@ let CNORM = new Float64Array( N );
 let info = dlatrs( 'row-major', 'upper', 'no-transpose', 'non-unit', 'no', N, A, N, x, 1, scale, CNORM, 1 );
 console.log( info, x, scale );
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Float64Array( b );
 scale = new Float64Array( 1 );
 CNORM = new Float64Array( N );
-info = dlatrs.ndarray( 'upper', 'no-transpose', 'non-unit', 'no', N, A, N, 1, 0, x, 1, 0, scale, CNORM, 1, 0 );
+info = dlatrs.strided( 'upper', 'no-transpose', 'non-unit', 'no', N, A, N, 1, 0, x, 1, 0, scale, CNORM, 1, 0 );
 console.log( info, x, scale );
 ```
 

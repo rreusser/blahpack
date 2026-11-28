@@ -2,12 +2,12 @@
 'use strict';
 
 // Codemod: type each lib/index.js default export as the routine together with
-// the `ndarray` method `setReadOnly` attaches (ticket 0094). `tsc` cannot see a
-// property added by a call, so without the type every `routine.ndarray( … )`
+// the `strided` method `setReadOnly` attaches (ticket 0094). `tsc` cannot see a
+// property added by a call, so without the type every `routine.strided( … )`
 // in a caller is unchecked (or an error under `tsc -p tsconfig.callers.json`).
 //
-//   setReadOnly( dgetrf, 'ndarray', ndarray );
-//   export default /** @type {typeof dgetrf & { ndarray: typeof ndarray }} */ ( dgetrf );
+//   setReadOnly( dgetrf, 'strided', strided );
+//   export default /** @type {typeof dgetrf & { strided: typeof strided }} */ ( dgetrf );
 //
 //   node bin/codemod-spec/main-type.cjs [--dry] [--check] [routine ...]
 
@@ -23,13 +23,13 @@ var only = argv.filter( function f( a ) {
 });
 
 // The typed export statement for index.js source `src`, or null when the file
-// does not attach an ndarray method.
+// does not attach an strided method.
 function typedExport( src ) {
-	var m = /setReadOnly\(\s*([\w$]+)\s*,\s*'ndarray'\s*,\s*([\w$]+)\s*\);/.exec( src );
+	var m = /setReadOnly\(\s*([\w$]+)\s*,\s*'strided'\s*,\s*([\w$]+)\s*\);/.exec( src );
 	if ( !m ) {
 		return null;
 	}
-	return { 'fn': m[ 1 ], 'stmt': 'export default /** @type {typeof ' + m[ 1 ] + ' & { ndarray: typeof ' + m[ 2 ] + ' }} */ ( ' + m[ 1 ] + ' );' };
+	return { 'fn': m[ 1 ], 'stmt': 'export default /** @type {typeof ' + m[ 1 ] + ' & { strided: typeof ' + m[ 2 ] + ' }} */ ( ' + m[ 1 ] + ' );' };
 }
 
 function files() {
@@ -68,14 +68,14 @@ files().forEach( function each( f ) {
 	}
 });
 if ( missing.length ) {
-	console.error( 'no setReadOnly( <routine>, \'ndarray\', … ): ' + missing.join( ', ' ) );
+	console.error( 'no setReadOnly( <routine>, \'strided\', … ): ' + missing.join( ', ' ) );
 }
 if ( CHECK ) {
 	if ( changed.length ) {
 		console.error( changed.length + ' index.js default exports untyped (fix: node bin/codemod-spec/main-type.cjs):\n  ' + changed.join( '\n  ' ) );
 		process.exit( 1 );
 	}
-	console.log( 'index.js: every default export carries its ndarray type' );
+	console.log( 'index.js: every default export carries its strided type' );
 } else {
 	console.log( ( DRY ? 'would write: ' : 'written: ' ) + changed.length );
 }

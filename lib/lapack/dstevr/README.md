@@ -112,12 +112,12 @@ dstevr(
 - `RangeError` eighteenth argument is invalid (row-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < max( 1, range === "index" ? iu - il + 1 : N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dstevr.ndarray(
+dstevr.strided(
     jobz, range,
     N,
     d, strideD, offsetD,
@@ -286,11 +286,11 @@ const IWORK = new Int32Array( 10 * N );
 let info = dstevr( 'column-major', 'compute-vectors', 'all', N, d, 1, e, 1, 0.0, 0.0, 1, N, 0.0, M, w, 1, Z, N, ISUPPZ, 1, WORK, IWORK );
 console.log( info, M[ 0 ], w, Z );
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 4.0, 4.0 ] );
 e = new Float64Array( [ 1.0, 1.0 ] );
 Z = new Float64Array( N * N );
-info = dstevr.ndarray( 'compute-vectors', 'all', N, d, 1, 0, e, 1, 0, 0.0, 0.0, 1, N, 0.0, M, w, 1, 0, Z, 1, N, 0, ISUPPZ, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+info = dstevr.strided( 'compute-vectors', 'all', N, d, 1, 0, e, 1, 0, 0.0, 0.0, 1, N, 0.0, M, w, 1, 0, Z, 1, N, 0, ISUPPZ, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, M[ 0 ], w, Z );
 ```
 

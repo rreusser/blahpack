@@ -107,12 +107,12 @@ ztgsen(
 - `RangeError` nineteenth argument is invalid (rejected when `LDZ < 1 \|\| ( wantz && LDZ < N )`)
 - `RangeError` twentieth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgsen.ndarray(
+ztgsen.strided(
     ijob, wantq, wantz,
     SELECT, strideSELECT, offsetSELECT,
     N,

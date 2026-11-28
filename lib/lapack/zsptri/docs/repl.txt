@@ -30,7 +30,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
     Computes the inverse of a complex symmetric matrix in packed storage
     using the factorization `A = U * D * U^T` or `A = L * D * L^T` computed
     by `zsptrf` using alternative indexing semantics.

@@ -83,7 +83,7 @@ interface Routine {
 	* @param offsetZ - starting index for `Z`
 	* @returns result
 	*/
-	ndarray( ilq: boolean, ilz: boolean, K: number, istartm: number, istopm: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, nq: number, qstart: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, nz: number, zstart: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
+	strided( ilq: boolean, ilz: boolean, K: number, istartm: number, istopm: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, nq: number, qstart: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, nz: number, zstart: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
 }
 
 /**

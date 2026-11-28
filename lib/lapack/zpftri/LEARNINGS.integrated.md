@@ -4,13 +4,13 @@
 
 - zpftri is structurally identical to the real dpftri, but with complex data types (Complex128Array) and Hermitian operations (zherk with conjugate-transpose) instead of symmetric operations (dsyrk with transpose).
 - The Fortran code uses `DOUBLE PRECISION ONE` and `COMPLEX*16 CONE` as separate constants. In the JS translation, zherk takes real scalars (plain numbers) for alpha/beta, while ztrmm takes a Complex128 for alpha. Mixing these up would be a subtle bug.
-- Array offsets in the Fortran use 0-based indexing (`A(0:*)`), which maps directly to the ndarray offset convention. Each offset like `A(N1)` becomes `offsetA + (sa * n1)` in complex element units.
+- Array offsets in the Fortran use 0-based indexing (`A(0:*)`), which maps directly to the strided offset convention. Each offset like `A(N1)` becomes `offsetA + (sa * n1)` in complex element units.
 
 ## Dependency interface surprises
 
-- zherk uses 2D ndarray strides (strideA1, strideA2, strideC1, strideC2) and real scalars for alpha/beta, not Complex128.
-- ztrmm uses 2D ndarray strides and a Complex128 scalar for alpha.
-- zlauum uses 2D ndarray strides (strideA1, strideA2) and returns an info integer.
+- zherk uses 2D strided strides (strideA1, strideA2, strideC1, strideC2) and real scalars for alpha/beta, not Complex128.
+- ztrmm uses 2D strided strides and a Complex128 scalar for alpha.
+- zlauum uses 2D strided strides (strideA1, strideA2) and returns an info integer.
 - ztftri has an extra `diag` parameter ('unit'/'non-unit') that zpftri always passes as 'non-unit'.
 
 ## Automation opportunities

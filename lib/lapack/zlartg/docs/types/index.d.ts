@@ -54,7 +54,7 @@ interface Routine {
 	* @param offsetR - starting index for `R`
 	* @returns result
 	*/
-	ndarray( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): void;
+	strided( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): void;
 }
 
 /**

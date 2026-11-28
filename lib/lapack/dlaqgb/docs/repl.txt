@@ -54,7 +54,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax )
+{{alias}}.strided( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax )
     Equilibrates a general M-by-N band matrix A with KL sub-diagonals and KU
     super-diagonals using the row and column scaling factors in the vectors
     R and C using alternative indexing semantics.

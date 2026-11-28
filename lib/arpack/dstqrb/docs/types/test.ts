@@ -31,12 +31,12 @@ import dstqrb from './index';
 	dstqrb(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dstqrb.ndarray( 2, new Float64Array( 2 ), 1, 0, new Float64Array( 1 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0 ); // $ExpectType number
+	dstqrb.strided( 2, new Float64Array( 2 ), 1, 0, new Float64Array( 1 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dstqrb.ndarray(); // $ExpectError
+	dstqrb.strided(); // $ExpectError
 }

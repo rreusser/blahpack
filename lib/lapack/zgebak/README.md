@@ -70,12 +70,12 @@ zgebak( order, job, side, N, ilo, ihi, SCALE, strideSCALE, M, V, LDV ) → integ
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgebak.ndarray(
+zgebak.strided(
     job, side,
     N,
     ilo, ihi,
@@ -196,9 +196,9 @@ let V = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
 zgebak( 'column-major', 'both', 'right', N, ilo[ 0 ], ihi[ 0 ], SCALE, 1, N, V, N );
 console.log( reinterpret( V, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 V = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
-zgebak.ndarray( 'both', 'right', N, ilo[ 0 ], ihi[ 0 ], SCALE, 1, 0, N, V, 1, N, 0 );
+zgebak.strided( 'both', 'right', N, ilo[ 0 ], ihi[ 0 ], SCALE, 1, 0, N, V, 1, N, 0 );
 console.log( reinterpret( V, 0 ) ); // eslint-disable-line no-console
 ```
 

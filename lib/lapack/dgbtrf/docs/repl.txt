@@ -41,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
+{{alias}}.strided( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
     Computes an LU factorization of a real m-by-n band matrix A using
     partial pivoting with row interchanges, using alternative indexing
     semantics.

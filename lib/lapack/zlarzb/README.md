@@ -94,12 +94,12 @@ zlarzb(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (row-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarzb.ndarray(
+zlarzb.strided(
     side, trans, direct, storev,
     M,
     N, K, l,
@@ -220,7 +220,7 @@ for ( i = 0; i < M * N; i += 1 ) {
 	Cv[ ( i * 2 ) + 1 ] = 0.1 * i;
 }
 
-zlarzb.ndarray( 'left', 'no-transpose', 'backward', 'rowwise', M, N, K, L, V, 1, K, 0, T, 1, K, 0, C, 1, M, 0, WORK, 1, N, 0 );
+zlarzb.strided( 'left', 'no-transpose', 'backward', 'rowwise', M, N, K, L, V, 1, K, 0, T, 1, K, 0, C, 1, M, 0, WORK, 1, N, 0 );
 
 console.log( reinterpret( C, 0 ) ); // eslint-disable-line no-console
 ```

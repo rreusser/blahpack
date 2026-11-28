@@ -1,7 +1,7 @@
 /**
 * Run by `bin/coverage.mjs` alongside a module's own tests, under coverage
 * (ticket 0065; CONVENTIONS T3/T4): replays the module's recorded
-* `ndarray.js` calls through its wrapper IN THIS PROCESS (exact, null-work
+* `strided.js` calls through its wrapper IN THIS PROCESS (exact, null-work
 * and transposed variants; no probing), so the wrapper lines those calls
 * reach (both `order` branches, `WORK = null` allocations, the base call)
 * count toward the wrapper's coverage.

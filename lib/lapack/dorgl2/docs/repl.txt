@@ -45,7 +45,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
     Generates an m by n real matrix Q with orthonormal rows, which is
     defined as the first m rows of a product of k elementary reflectors of
     order n Q = H(k), using alternative indexing semantics.

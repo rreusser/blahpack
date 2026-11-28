@@ -37,12 +37,12 @@ dlarmm( anorm, bnorm, cnorm ) → number
 
 **Returns** `number`: result
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarmm.ndarray( anorm, bnorm, cnorm ) → number
+dlarmm.strided( anorm, bnorm, cnorm ) → number
 ```
 
 | Parameter | Type | Description |

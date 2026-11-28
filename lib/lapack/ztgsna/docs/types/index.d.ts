@@ -101,7 +101,7 @@ interface Routine {
 	* @param offsetIWORK - starting index for `IWORK`
 	* @returns result
 	*/
-	ndarray( job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, s: Float64Array, strideS: number, offsetS: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	strided( job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, s: Float64Array, strideS: number, offsetS: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

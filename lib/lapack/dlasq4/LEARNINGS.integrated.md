@@ -1,7 +1,7 @@
 # LEARNINGS — dlasq4
 
 ## Translation Pitfalls
-- String parameters (`norm`, `type`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`norm`, `type`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 - Quick-return conditions must be preserved exactly as in Fortran reference to handle edge cases (N=0, alpha=0, etc.) correctly.
 
 ## Dependency Interface Surprises

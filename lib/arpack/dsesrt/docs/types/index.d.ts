@@ -55,7 +55,7 @@ interface Routine {
 	* @param strideA2 - stride of the second (column) dimension of `A`
 	* @param offsetA - starting index for `A`
 	*/
-	ndarray( which: string, apply: boolean, N: number, x: Float64Array, strideX: number, offsetX: number, na: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): void;
+	strided( which: string, apply: boolean, N: number, x: Float64Array, strideX: number, offsetX: number, na: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): void;
 }
 
 /**

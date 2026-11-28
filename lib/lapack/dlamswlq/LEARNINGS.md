@@ -41,7 +41,7 @@
   via three structurally distinct factor cases (genuine partition, trailing
   partial block, even-divide) plus a degenerate fall-through case.
 - Quick-return paths (`M=0`, `N=0`, `K=0`) are tested directly via the
-  ndarray entry point.
+  strided entry point.
 
 ## Process notes
 

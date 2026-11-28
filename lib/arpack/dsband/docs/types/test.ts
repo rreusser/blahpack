@@ -31,12 +31,12 @@ import dsband = require( './index' );
 	dsband(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dsband.ndarray( true, 'all', new Int32Array( 6 ), 1, 0, new Float64Array( 6 ), 1, 0, new Float64Array( 48 ), 1, 8, 0, 0.0, 8, new Float64Array( 32 ), 1, 4, 0, new Float64Array( 32 ), 1, 4, 0, new Float64Array( 32 ), 1, 4, 0, 1, 1, 'LM', 'generalized', 2, 0.0, new Float64Array( 8 ), 1, 0, 6, new Float64Array( 48 ), 1, 8, 0, new Int32Array( 11 ), 1, 0, new Float64Array( 24 ), 1, 0, new Float64Array( 84 ), 1, 0, 84, new Int32Array( 8 ), 1, 0, 1 ); // $ExpectType number
+	dsband.strided( true, 'all', new Int32Array( 6 ), 1, 0, new Float64Array( 6 ), 1, 0, new Float64Array( 48 ), 1, 8, 0, 0.0, 8, new Float64Array( 32 ), 1, 4, 0, new Float64Array( 32 ), 1, 4, 0, new Float64Array( 32 ), 1, 4, 0, 1, 1, 'LM', 'generalized', 2, 0.0, new Float64Array( 8 ), 1, 0, 6, new Float64Array( 48 ), 1, 8, 0, new Int32Array( 11 ), 1, 0, new Float64Array( 24 ), 1, 0, new Float64Array( 84 ), 1, 0, 84, new Int32Array( 8 ), 1, 0, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsband.ndarray(); // $ExpectError
+	dsband.strided(); // $ExpectError
 }

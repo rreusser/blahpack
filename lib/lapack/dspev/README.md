@@ -63,12 +63,12 @@ dspev( order, jobz, uplo, N, AP, w, strideW, Z, LDZ, WORK ) → info: integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` ninth argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspev.ndarray(
+dspev.strided(
     jobz, uplo,
     N,
     AP, strideAP, offsetAP,
@@ -165,7 +165,7 @@ const w = new Float64Array( 3 );
 const Z = new Float64Array( 9 );
 const WORK = new Float64Array( 9 );
 
-dspev.ndarray( 'compute-vectors', 'lower', 3, AP, 1, 0, w, 1, 0, Z, 1, 3, 0, WORK, 1, 0 );
+dspev.strided( 'compute-vectors', 'lower', 3, AP, 1, 0, w, 1, 0, Z, 1, 3, 0, WORK, 1, 0 );
 
 console.log( 'eigenvalues:', w ); // eslint-disable-line no-console
 console.log( 'eigenvectors (column-major):', Z ); // eslint-disable-line no-console

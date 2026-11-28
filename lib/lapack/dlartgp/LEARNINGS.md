@@ -5,7 +5,7 @@
 - The Fortran signature `DLARTGP(F, G, CS, SN, R)` has three scalar
   output arguments. JavaScript cannot return values via scalar
   parameters, so the JS module follows the existing `dlartg`
-  precedent: the low-level `base.js` / `ndarray.js` takes `(f, g, out)`
+  precedent: the low-level `base.js` / `strided.js` takes `(f, g, out)`
   where `out` is a `Float64Array` of length 3 written as
   `out[0]=cs`, `out[1]=sn`, `out[2]=r`; the main export wraps this
   and returns `{ c, s, r }`.

@@ -97,12 +97,12 @@ Converts the factorization output format used in zsytrf_rook for complex symmetr
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsyconvf_rook.ndarray(
+zsyconvf_rook.strided(
     uplo, way,
     N,
     A, strideA1, strideA2, offsetA,
@@ -234,7 +234,7 @@ const A = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 3.0, 0.5, 2.0, 0.0 ] );
 const E = new Complex128Array( 2 );
 const IPIV = new Int32Array( [ -1, -1 ] );
 
-const info = zsyconvf_rook.ndarray( 'upper', 'convert', 2, A, 1, 2, 0, E, 1, 0, IPIV, 1, 0 );
+const info = zsyconvf_rook.strided( 'upper', 'convert', 2, A, 1, 2, 0, E, 1, 0, IPIV, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 ```
 

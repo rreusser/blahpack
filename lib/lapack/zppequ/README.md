@@ -55,12 +55,12 @@ zppequ( order, uplo, N, AP, s, strideS, scond, amax ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zppequ.ndarray(
+zppequ.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -156,9 +156,9 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': zppequ.ndarray( 'upper', N, AP, 1, 0, s, 1, 0, scond, amax ),
+	'info': zppequ.strided( 'upper', N, AP, 1, 0, s, 1, 0, scond, amax ),
 	's': Array.prototype.slice.call( s ),
 	'scond': scond[ 0 ],
 	'amax': amax[ 0 ]

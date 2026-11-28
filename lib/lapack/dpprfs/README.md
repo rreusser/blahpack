@@ -92,12 +92,12 @@ dpprfs(
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpprfs.ndarray(
+dpprfs.strided(
     uplo,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -213,14 +213,14 @@ const AP = new Float64Array( [ 4.0, 2.0, 5.0, 1.0, 3.0, 6.0 ] );
 const AFP = new Float64Array( AP );
 
 // Factorize
-dpptrf.ndarray( 'upper', 3, AFP, 1, 0 );
+dpptrf.strided( 'upper', 3, AFP, 1, 0 );
 
 // Right-hand side
 const B = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 
 // Solve
 const X = new Float64Array( B );
-dpptrs.ndarray( 'upper', 3, 1, AFP, 1, 0, X, 1, 3, 0 );
+dpptrs.strided( 'upper', 3, 1, AFP, 1, 0, X, 1, 3, 0 );
 
 // Refine solution
 const FERR = new Float64Array( 1 );
@@ -228,7 +228,7 @@ const BERR = new Float64Array( 1 );
 const WORK = new Float64Array( 9 );
 const IWORK = new Int32Array( 3 );
 
-const info = dpprfs.ndarray( 'upper', 3, 1, AP, 1, 0, AFP, 1, 0, B, 1, 3, 0, X, 1, 3, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
+const info = dpprfs.strided( 'upper', 3, 1, AP, 1, 0, AFP, 1, 0, B, 1, 3, 0, X, 1, 3, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'X:', X ); // eslint-disable-line no-console

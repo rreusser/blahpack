@@ -3,7 +3,7 @@
 ## Translation Pitfalls
 - Complex arrays use `reinterpret()` at function entry for Float64Array views; strides and offsets are multiplied by 2 for Float64 indexing.
 - INFO return value remains 1-based (matching Fortran convention): 0 = success, k > 0 = algorithmic outcome at position k.
-- String parameters (`direct`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`direct`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 
 ## Dependency Interface Surprises
 - Dependencies: `reinterpret-complex128`. No unexpected interface issues encountered.

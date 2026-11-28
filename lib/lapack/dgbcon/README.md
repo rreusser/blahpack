@@ -76,12 +76,12 @@ dgbcon(
 - `RangeError` tenth argument is invalid (rejected when `anorm < 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgbcon.ndarray(
+dgbcon.strided(
     norm,
     N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
@@ -202,7 +202,7 @@ dgbtrf( 'column-major', N, N, kl, ku, AB, LDAB, IPIV, 1 );
 let info = dgbcon( 'column-major', 'one-norm', N, kl, ku, AB, LDAB, IPIV, 1, anorm, rcond, null, null );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 AB = new Float64Array( [
 	0.0, 0.0, 4.0, -1.0,
 	0.0, -1.0, 4.0, -1.0,
@@ -212,8 +212,8 @@ AB = new Float64Array( [
 IPIV = new Int32Array( N );
 const WORK = new Float64Array( 3 * N );
 const IWORK = new Int32Array( N );
-dgbtrf.ndarray( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
-info = dgbcon.ndarray( 'one-norm', N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
+dgbtrf.strided( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
+info = dgbcon.strided( 'one-norm', N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 ```
 

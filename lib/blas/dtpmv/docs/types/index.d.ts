@@ -56,7 +56,7 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	strided( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
 }
 
 /**

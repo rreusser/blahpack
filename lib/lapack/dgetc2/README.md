@@ -47,12 +47,12 @@ dgetc2( order, N, A, LDA, IPIV, strideIPIV, JPIV, strideJPIV ) → integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetc2.ndarray(
+dgetc2.strided(
     N,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV,
@@ -140,11 +140,11 @@ let JPIV = new Int32Array( N );
 let out = dgetc2( 'column-major', N, A, N, IPIV, 1, JPIV, 1 );
 console.log( out, A, IPIV, JPIV ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( A0 );
 IPIV = new Int32Array( N );
 JPIV = new Int32Array( N );
-out = dgetc2.ndarray( N, A, 1, N, 0, IPIV, 1, 0, JPIV, 1, 0 );
+out = dgetc2.strided( N, A, 1, N, 0, IPIV, 1, 0, JPIV, 1, 0 );
 console.log( out, A, IPIV, JPIV ); // eslint-disable-line no-console
 ```
 

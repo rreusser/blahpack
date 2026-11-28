@@ -57,12 +57,12 @@ dlaset( order, uplo, M, N, alpha, beta, A, LDA ) → Float64Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "upper", "lower", "all"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Float64Array
+dlaset.strided( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Float64Array
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -139,8 +139,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = dlaset( 'row-major', 'upper', N, N, 1.0, 1.0, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlaset.ndarray( 'upper', N, N, 1.0, 1.0, A, N, 1, 0 );
+// Using the strided interface:
+out = dlaset.strided( 'upper', N, N, 1.0, 1.0, A, N, 1, 0 );
 console.log( out );
 ```
 

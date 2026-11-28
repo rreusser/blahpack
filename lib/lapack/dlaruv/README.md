@@ -39,12 +39,12 @@ dlaruv( iseed, strideISEED, N, x, strideX ) → Float64Array
 
 **Returns** `Float64Array`: `x`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaruv.ndarray( iseed, strideISEED, offsetISEED, N, x, strideX, offsetX ) → Float64Array
+dlaruv.strided( iseed, strideISEED, offsetISEED, N, x, strideX, offsetX ) → Float64Array
 ```
 
 Returns a vector of n random real numbers from a uniform (0,1) distribution.
@@ -105,8 +105,8 @@ const x = new Float64Array( N );
 dlaruv( iseed, 1, N, x, 1 );
 console.log( x ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-dlaruv.ndarray( iseed, 1, 0, N, x, 1, 0 );
+// Using the strided interface:
+dlaruv.strided( iseed, 1, 0, N, x, 1, 0 );
 console.log( x ); // eslint-disable-line no-console
 ```
 

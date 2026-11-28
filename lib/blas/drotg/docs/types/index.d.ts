@@ -44,7 +44,7 @@ interface Routine {
 	* @param offsetCS - starting index for `CS`
 	* @returns result
 	*/
-	ndarray( ab: Float64Array, strideAB: number, offsetAB: number, cs: Float64Array, strideCS: number, offsetCS: number ): void;
+	strided( ab: Float64Array, strideAB: number, offsetAB: number, cs: Float64Array, strideCS: number, offsetCS: number ): void;
 }
 
 /**

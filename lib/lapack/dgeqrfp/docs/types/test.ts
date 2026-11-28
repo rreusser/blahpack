@@ -31,12 +31,12 @@ import dgeqrfp = require( './index' );
 	dgeqrfp(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dgeqrfp.ndarray( 2, 2, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 4 ), 1, 0 ); // $ExpectType number
+	dgeqrfp.strided( 2, 2, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 4 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dgeqrfp.ndarray(); // $ExpectError
+	dgeqrfp.strided(); // $ExpectError
 }

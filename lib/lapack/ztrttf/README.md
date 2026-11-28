@@ -58,12 +58,12 @@ ztrttf( order, transr, uplo, N, A, LDA, ARF, strideARF ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrttf.ndarray(
+ztrttf.strided(
     transr, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -160,8 +160,8 @@ let info = ztrttf( 'column-major', 'no-transpose', 'upper', N, A, N, ARF, 1 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( ARF, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface, in conjugate-transposed RFP format:
-info = ztrttf.ndarray( 'conjugate-transpose', 'upper', N, A, 1, N, 0, ARF, 1, 0 );
+// Using the strided interface, in conjugate-transposed RFP format:
+info = ztrttf.strided( 'conjugate-transpose', 'upper', N, A, 1, N, 0, ARF, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( ARF, 0 ) ); // eslint-disable-line no-console
 ```

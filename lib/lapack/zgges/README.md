@@ -120,12 +120,12 @@ buffers for batched use.
 - `RangeError` LDVSL must be >= max(1,N)
 - `RangeError` LDVSR must be >= max(1,N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgges.ndarray(
+zgges.strided(
     jobvsl, jobvsr, sort,
     selctg,
     N,
@@ -335,7 +335,7 @@ result = zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', no
 console.log( 'info:', result ); // eslint-disable-line no-console
 console.log( 'sdim:', sdim[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( Adata.slice() );
 B = new Complex128Array( Bdata.slice() );
 ALPHA = new Complex128Array( 3 );
@@ -347,7 +347,7 @@ VSR = new Complex128Array( 9 );
 const WORK = new Complex128Array( 6 );
 const RWORK = new Float64Array( 24 );
 const BWORK = new Uint8Array( 3 );
-result = zgges.ndarray( 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 1, 3, 0, B, 1, 3, 0, sdim, ALPHA, 1, 0, BETA, 1, 0, VSL, 1, 3, 0, VSR, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0, BWORK, 1, 0 ); // eslint-disable-line max-len
+result = zgges.strided( 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 1, 3, 0, B, 1, 3, 0, sdim, ALPHA, 1, 0, BETA, 1, 0, VSL, 1, 3, 0, VSR, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0, BWORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'info:', result ); // eslint-disable-line no-console
 console.log( 'sdim:', sdim[ 0 ] ); // eslint-disable-line no-console
 ```

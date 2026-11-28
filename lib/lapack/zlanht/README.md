@@ -46,12 +46,12 @@ zlanht( norm, N, d, strideD, e, strideE ) → number
 - `TypeError` first argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlanht.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE ) → number
+zlanht.strided( norm, N, d, strideD, offsetD, e, strideE, offsetE ) → number
 ```
 
 | Parameter | Type | Description |
@@ -108,16 +108,16 @@ import zlanht from '@rreusser/blahpack/lapack/zlanht';
 const d = new Float64Array( [ 2.0, -4.0, 6.0, -1.0, 3.0 ] );
 const e = new Complex128Array( [ 1.0, 2.0, -2.0, 3.0, 3.0, -1.0, 5.0, 4.0 ] );
 
-const maxNorm = zlanht.ndarray( 'max', 5, d, 1, 0, e, 1, 0 );
+const maxNorm = zlanht.strided( 'max', 5, d, 1, 0, e, 1, 0 );
 console.log( 'Max norm: %d', maxNorm ); // eslint-disable-line no-console
 
-const oneNorm = zlanht.ndarray( 'one-norm', 5, d, 1, 0, e, 1, 0 );
+const oneNorm = zlanht.strided( 'one-norm', 5, d, 1, 0, e, 1, 0 );
 console.log( 'One norm: %d', oneNorm ); // eslint-disable-line no-console
 
-const infNorm = zlanht.ndarray( 'inf-norm', 5, d, 1, 0, e, 1, 0 );
+const infNorm = zlanht.strided( 'inf-norm', 5, d, 1, 0, e, 1, 0 );
 console.log( 'Infinity norm: %d', infNorm ); // eslint-disable-line no-console
 
-const frobNorm = zlanht.ndarray( 'frobenius', 5, d, 1, 0, e, 1, 0 );
+const frobNorm = zlanht.strided( 'frobenius', 5, d, 1, 0, e, 1, 0 );
 console.log( 'Frobenius norm: %d', frobNorm ); // eslint-disable-line no-console
 ```
 

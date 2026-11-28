@@ -72,12 +72,12 @@ dsaupd(
 - `RangeError` workd array must have sufficient length
 - `RangeError` workl array must have sufficient length
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsaupd.ndarray(
+dsaupd.strided(
     state,
     ido,
     bmat,

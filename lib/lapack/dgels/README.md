@@ -66,12 +66,12 @@ dgels( order, trans, M, N, nrhs, A, LDA, B, LDB, work ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( max( 1, M ), N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgels.ndarray(
+dgels.strided(
     trans,
     M, N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -178,10 +178,10 @@ const WORK = new Float64Array( N + ( N * 32 ) );
 let out = dgels( 'row-major', 'no-transpose', N, N, N, A, N, B, N, null );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = discreteUniform( N * N, -10, 10, opts );
 B = discreteUniform( N * N, -10, 10, opts );
-out = dgels.ndarray( 'no-transpose', N, N, N, A, N, 1, 0, B, N, 1, 0, WORK, 1, 0 );
+out = dgels.strided( 'no-transpose', N, N, N, A, N, 1, 0, B, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

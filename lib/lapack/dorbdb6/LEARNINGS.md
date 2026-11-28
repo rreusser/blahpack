@@ -10,7 +10,7 @@
   for routines whose Fortran already carries an `INCX`-style increment.
 - The Fortran's `LWORK` parameter is dropped in JS (workspace is
   caller-supplied with stride/offset). Drop it from both the wrapper and
-  the ndarray API to stay consistent with the rest of the codebase.
+  the strided API to stay consistent with the rest of the codebase.
 - `DLAMCH('Precision')` (used here) is *not* the same as `DLAMCH('Epsilon')`.
   `Precision = Epsilon * Base = 2^-53 * 2 = 2^-52 = Number.EPSILON`. The
   SKILL.md "Fortran Idioms" table only covers `'E'` (which maps to

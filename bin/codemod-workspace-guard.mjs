@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
-* Codemod (ticket 0107; CONVENTIONS W3): insert into `ndarray.js` the length
+* Codemod (ticket 0107; CONVENTIONS W3): insert into `strided.js` the length
 * guard of every workspace whose minimum the spec knows (a param of role
 * `workspace` with a non-null `minLength.js`) and that has no guard yet.
 * Enforced by the lint rule `workspace-length-guard`.
@@ -115,7 +115,7 @@ function modules( only ) {
 			if ( only.length && !only.includes( r ) ) {
 				return;
 			}
-			const file = path.join( dir, r, 'lib', 'ndarray.js' );
+			const file = path.join( dir, r, 'lib', 'strided.js' );
 			if ( fs.existsSync( file ) ) {
 				out.push( { 'routine': r, 'file': file } );
 			}
@@ -129,7 +129,7 @@ function guard( p, params, src, declared ) {
 	const lname = p.name.toLowerCase();
 	const at = params.findIndex( ( q ) => q.toLowerCase() === lname );
 	if ( at < 0 ) {
-		return { 'why': p.name + ' is not a parameter of ndarray.js' };
+		return { 'why': p.name + ' is not a parameter of strided.js' };
 	}
 	const W = params[ at ];
 	const off = params[ at + 2 ];
@@ -245,7 +245,7 @@ function transform( m ) {
 	out = out.slice( 0, docStart ) + lines.join( '\n' ) + out.slice( docEnd );
 	if ( !/^import\s+format\s+from/m.test( out ) ) {
 		if ( !/^import base from '\.\/base\.js';$/m.test( out ) ) {
-			return { 'why': 'ndarray.js imports neither `format` nor `./base.js` as expected' };
+			return { 'why': 'strided.js imports neither `format` nor `./base.js` as expected' };
 		}
 		out = out.replace( /^import base from '\.\/base\.js';$/m, 'import format from \'@stdlib/string/format/lib/index.js\';\n$&' );
 	}

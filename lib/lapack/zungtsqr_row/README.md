@@ -80,12 +80,12 @@ Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from the out
 - `RangeError` ninth argument must be greater than or equal to `max( 1, min( nb, N ) )` (column-major)
 - `RangeError` `LDA` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zungtsqr_row.ndarray(
+zungtsqr_row.strided(
     M, N,
     mb, nb,
     A, strideA1, strideA2, offsetA,

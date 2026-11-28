@@ -50,12 +50,12 @@ dlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlags2.ndarray(
+dlags2.strided(
     upper, a1, a2, a3, b1, b2, b3,
     csu,
     snu,
@@ -155,8 +155,8 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
-dlags2.ndarray( true, 4.0, 1.0, 3.0, 2.0, 1.0, 1.0, csu, snu, csv, snv, csq, snq );
+// Using the strided interface:
+dlags2.strided( true, 4.0, 1.0, 3.0, 2.0, 1.0, 1.0, csu, snu, csv, snv, csq, snq );
 out = {
 	'csu': csu[ 0 ],
 	'snu': snu[ 0 ],

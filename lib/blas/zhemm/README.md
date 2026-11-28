@@ -82,12 +82,12 @@ zhemm( order, side, uplo, M, N, alpha, A, LDA, B, LDB, beta, C, LDC ) → Comple
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhemm.ndarray(
+zhemm.strided(
     side, uplo,
     M, N,
     alpha,
@@ -194,7 +194,7 @@ const C = new Complex128Array( 4 );
 const alpha = new Complex128( 1.0, 0.0 );
 const beta = new Complex128( 0.0, 0.0 );
 
-zhemm.ndarray( 'left', 'upper', 2, 2, alpha, A, 2, 1, 0, B, 2, 1, 0, beta, C, 2, 1, 0 );
+zhemm.strided( 'left', 'upper', 2, 2, alpha, A, 2, 1, 0, B, 2, 1, 0, beta, C, 2, 1, 0 );
 console.log( reinterpret( C, 0 ) ); // eslint-disable-line no-console
 ```
 

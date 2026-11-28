@@ -65,7 +65,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, mb, nb, A, strideA1, strideA2, offsetA, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( side, trans, M, N, K, mb, nb, A, strideA1, strideA2, offsetA, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
     applies a complex unitary matrix Q (or its conjugate-transpose Q^H) from a TSQR factorization to a complex M-by-N matrix C, using alternative indexing semantics.
 
     Parameters

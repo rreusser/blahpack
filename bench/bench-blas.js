@@ -12,10 +12,10 @@
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
-import zgemm from '../lib/blas/zgemm/lib/ndarray.js';
-import ztrmm from '../lib/blas/ztrmm/lib/ndarray.js';
-import zgemv from '../lib/blas/zgemv/lib/ndarray.js';
-import zrot from '../lib/lapack/zrot/lib/ndarray.js';
+import zgemm from '../lib/blas/zgemm/lib/strided.js';
+import ztrmm from '../lib/blas/ztrmm/lib/strided.js';
+import zgemv from '../lib/blas/zgemv/lib/strided.js';
+import zrot from '../lib/lapack/zrot/lib/strided.js';
 
 // The tables below use LAPACK's single-letter flags; these are the names the
 // library takes.

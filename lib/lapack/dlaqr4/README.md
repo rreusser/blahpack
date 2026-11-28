@@ -75,12 +75,12 @@ dlaqr4(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqr4.ndarray(
+dlaqr4.strided(
     wantt, wantz,
     N,
     ilo,
@@ -230,14 +230,14 @@ console.log( info );
 console.log( WR );
 console.log( WI );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Float64Array( [ 4.0, 1.0, 0.0, 0.0, 3.0, 2.0, 1.0, 0.0, 2.0, 1.0, 3.0, 2.0, 1.0, 2.0, 1.0, 1.0 ] );
 Z = new Float64Array( N * N );
 WR = new Float64Array( N );
 WI = new Float64Array( N );
 WORK = new Float64Array( N );
 setIdentity( Z, 1 );
-info = dlaqr4.ndarray( true, true, N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, 1, N, Z, 1, N, 0, WORK, 1, 0 );
+info = dlaqr4.strided( true, true, N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, 1, N, Z, 1, N, 0, WORK, 1, 0 );
 console.log( info );
 console.log( WR );
 console.log( WI );

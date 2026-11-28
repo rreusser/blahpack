@@ -68,12 +68,12 @@ ztptrs( order, uplo, trans, diag, N, nrhs, AP, B, LDB ) → info: integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztptrs.ndarray(
+ztptrs.strided(
     uplo, trans, diag,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -172,7 +172,7 @@ import ztptrs from '@rreusser/blahpack/lapack/ztptrs';
 const AP = new Complex128Array( [ 2.0, 1.0, 1.0, 2.0, 4.0, 1.0, 3.0, 0.0, 5.0, -1.0, 6.0, 2.0 ] ); // eslint-disable-line max-len
 const B = new Complex128Array( [ 1.0, 1.0, 2.0, -1.0, 3.0, 0.5 ] );
 
-const info = ztptrs.ndarray( 'upper', 'no-transpose', 'non-unit', 3, 1, AP, 1, 0, B, 1, 3, 0 ); // eslint-disable-line max-len
+const info = ztptrs.strided( 'upper', 'no-transpose', 'non-unit', 3, 1, AP, 1, 0, B, 1, 3, 0 ); // eslint-disable-line max-len
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'x:', B ); // eslint-disable-line no-console
 ```

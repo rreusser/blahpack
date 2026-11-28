@@ -39,12 +39,12 @@ zaxpy( N, alpha, x, strideX, y, strideY ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zaxpy.ndarray( N, alpha, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
+zaxpy.strided( N, alpha, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -105,8 +105,8 @@ const alpha = new Complex128( 1.0, 0.0 );
 zaxpy( 2, alpha, zx, 1, zy, 1 );
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zaxpy.ndarray( 2, alpha, zx, 1, 0, zy, 1, 0 );
+// Using the strided interface:
+zaxpy.strided( 2, alpha, zx, 1, 0, zy, 1, 0 );
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 ```
 

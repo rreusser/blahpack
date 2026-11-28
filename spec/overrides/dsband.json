@@ -6,7 +6,7 @@
 			"set": { "package": "arpack", "params.LDA.role": "ld", "params.LDA.of": "AB" }
 		},
 		{
-			"reason": "IWORK is declared IWORK( * ), so the spec has no extent from the source, but the doc gives \"Integer array of dimension at least N\" (dsband.f:250) and dsband passes it to DGBTRF as the N-element IPIV (dsband.f:463, 480, 506). Without a minimum, ndarray.js had no length check and a short IWORK dropped pivots silently (ticket 0107).",
+			"reason": "IWORK is declared IWORK( * ), so the spec has no extent from the source, but the doc gives \"Integer array of dimension at least N\" (dsband.f:250) and dsband passes it to DGBTRF as the N-element IPIV (dsband.f:463, 480, 506). Without a minimum, strided.js had no length check and a short IWORK dropped pivots silently (ticket 0107).",
 			"set": { "params.IWORK.minLength": { "fortran": "N", "js": "N", "source": "doc" } }
 		}
 	]

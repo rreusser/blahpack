@@ -1,7 +1,7 @@
 # LEARNINGS — dlacn2
 
 ## Translation Pitfalls
-- String parameters (`norm`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`norm`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 
 ## Dependency Interface Surprises
 - Dependencies: `dasum`, `dcopy`, `idamax`. No unexpected interface issues encountered.

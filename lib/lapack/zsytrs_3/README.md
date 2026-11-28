@@ -76,12 +76,12 @@ zsytrs_3(
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytrs_3.ndarray(
+zsytrs_3.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,

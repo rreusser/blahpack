@@ -97,12 +97,12 @@ zhfrk( order, transr, uplo, trans, N, K, alpha, A, LDA, beta, C, strideC ) → C
 - `RangeError` ninth argument must be greater than or equal to `max( 1, trans === 'no-transpose' ? K : N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhfrk.ndarray(
+zhfrk.strided(
     transr, uplo, trans,
     N, K,
     alpha,
@@ -213,7 +213,7 @@ const A = new Complex128Array( [ 1.0, 0.5, 2.0, 0.5, 3.0, 0.5, 1.0, 1.0, 2.0, 1.
 const C = new Complex128Array( [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ] );
 
 // Compute C := 1.0 * A * A^H + 0.0 * C
-zhfrk.ndarray( 'no-transpose', 'lower', 'no-transpose', 3, 2, 1.0, A, 1, 3, 0, 0.0, C, 1, 0 );
+zhfrk.strided( 'no-transpose', 'lower', 'no-transpose', 3, 2, 1.0, A, 1, 3, 0, 0.0, C, 1, 0 );
 
 console.log( reinterpret( C, 0 ) );
 ```

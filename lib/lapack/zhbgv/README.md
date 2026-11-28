@@ -90,12 +90,12 @@ zhbgv(
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` fourteenth argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhbgv.ndarray(
+zhbgv.strided(
     jobz, uplo,
     N, ka, kb,
     AB, strideAB1, strideAB2, offsetAB,
@@ -228,7 +228,7 @@ v[ 0 ] = 2.0;
 v[ 2 ] = 3.0;
 v[ 4 ] = 4.0;
 
-const info = zhbgv.ndarray( 'compute-vectors', 'upper', 3, 0, 0, AB, 1, 1, 0, BB, 1, 1, 0, W, 1, 0, Z, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = zhbgv.strided( 'compute-vectors', 'upper', 3, 0, 0, AB, 1, 1, 0, BB, 1, 1, 0, W, 1, 0, Z, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'Eigenvalues (W):', W ); // eslint-disable-line no-console

@@ -71,12 +71,12 @@ zhetri_3( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV, WORK ) → integ
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetri_3.ndarray(
+zhetri_3.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -184,7 +184,7 @@ const e = new Complex128Array( [ 0.0, 0.0 ] );
 const ipiv = new Int32Array( [ 0 ] );
 const work = new Complex128Array( 12 );
 
-const info = zhetri3.ndarray( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0 );
+const info = zhetri3.strided( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```

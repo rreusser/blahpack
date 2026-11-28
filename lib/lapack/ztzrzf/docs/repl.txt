@@ -37,7 +37,7 @@
         Status code (`0` = success).
 
 
-{{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
     Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via the unitary RZ factorization (blocked driver), using alternative indexing semantics.
 
     Parameters

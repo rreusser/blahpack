@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax, equed )
+{{alias}}.strided( M, N, A, strideA1, strideA2, offsetA, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax, equed )
     Scales a general rectangular matrix, using row and column scaling
     factors computed by sgeequ, using alternative indexing semantics.
 

@@ -39,12 +39,12 @@ dsdot( N, x, strideX, y, strideY ) → number
 
 **Returns** `number`: dot product
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsdot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → number
+dsdot.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → number
 ```
 
 Computes the dot product of two vectors with extended precision accumulation.

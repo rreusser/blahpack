@@ -57,12 +57,12 @@ zgeru( order, M, N, alpha, x, strideX, y, strideY, A, LDA ) → Complex128Array
 - `RangeError` tenth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeru.ndarray(
+zgeru.strided(
     M, N,
     alpha,
     x, strideX, offsetX,
@@ -143,9 +143,9 @@ const alpha = new Complex128( 1.0, 0.0 );
 zgeru( 'column-major', 2, 2, alpha, x, 1, y, 1, A, 2 );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 const B = new Complex128Array( 4 );
-zgeru.ndarray( 2, 2, alpha, x, 1, 0, y, 1, 0, B, 1, 2, 0 );
+zgeru.strided( 2, 2, alpha, x, 1, 0, y, 1, 0, B, 1, 2, 0 );
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```
 

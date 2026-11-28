@@ -49,12 +49,12 @@ dptcon( N, d, strideD, e, strideE, anorm, rcond, WORK ) → integer
 - `RangeError` first argument must be a nonnegative integer
 - `RangeError` sixth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dptcon.ndarray(
+dptcon.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -154,8 +154,8 @@ const WORK = new Float64Array( N );
 let info = dptcon( N, d, 1, e, 1, anorm, rcond, WORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = dptcon.ndarray( N, d, 1, 0, e, 1, 0, anorm, rcond, WORK, 1, 0 );
+// Using the strided interface:
+info = dptcon.strided( N, d, 1, 0, e, 1, 0, anorm, rcond, WORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

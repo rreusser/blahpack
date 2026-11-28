@@ -99,12 +99,12 @@ zspsvx(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zspsvx.ndarray(
+zspsvx.strided(
     fact, uplo,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -248,7 +248,7 @@ const BERR = new Float64Array( 1 );
 const WORK = new Complex128Array( 6 );
 const RWORK = new Float64Array( 3 );
 
-const info = zspsvx.ndarray( 'not-factored', 'lower', 3, 1, AP, 1, 0, AFP, 1, 0, IPIV, 1, 0, B, 1, 3, 0, X, 1, 3, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = zspsvx.strided( 'not-factored', 'lower', 3, 1, AP, 1, 0, AFP, 1, 0, IPIV, 1, 0, B, 1, 3, 0, X, 1, 3, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info );
 console.log( 'X:', X );

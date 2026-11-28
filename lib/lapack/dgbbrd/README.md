@@ -95,12 +95,12 @@ dgbbrd(
 - `RangeError` nineteenth argument is invalid (column-major: rejected when `LDC < 1 \|\| ( ncc > 0 && LDC < max( 1, M ) )`)
 - `RangeError` nineteenth argument is invalid (row-major: rejected when `LDC < 1 \|\| ( ncc > 0 && LDC < max( 1, ncc ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgbbrd.ndarray(
+dgbbrd.strided(
     vect,
     M, N, ncc, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,

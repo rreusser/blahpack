@@ -25,7 +25,7 @@
 
 ## Dependency interface surprises
 
-- dlaneg `base.js` already uses ndarray-style arguments `(N, d, strideD,
+- dlaneg `base.js` already uses strided-style arguments `(N, d, strideD,
   offsetD, LLD, strideLLD, offsetLLD, sigma, pivmin, r)`, so the parent
   passes its own offsets through directly — no `stride2offset` needed.
 - Needed to add `dlamch` to `test/fortran/deps_dlarrb.txt`. `deps.py`

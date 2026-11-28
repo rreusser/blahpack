@@ -77,12 +77,12 @@ dlagtf(
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlagtf.ndarray(
+dlagtf.strided(
     N,
     a, strideA, offsetA,
     lambda,
@@ -201,11 +201,11 @@ let info = dlagtf( N, a, 1, lambda, b, 1, c, 1, tol, d, 1, IN, 1 );
 console.log( 'info = %d', info );
 console.log( a, b, c, d, IN );
 
-// Using the ndarray interface:
+// Using the strided interface:
 a = new Float64Array( [ 4.0, 4.0, 4.0, 4.0 ] );
 b = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 c = new Float64Array( [ 2.0, 2.0, 2.0 ] );
-info = dlagtf.ndarray( N, a, 1, 0, lambda, b, 1, 0, c, 1, 0, tol, d, 1, 0, IN, 1, 0 );
+info = dlagtf.strided( N, a, 1, 0, lambda, b, 1, 0, c, 1, 0, tol, d, 1, 0, IN, 1, 0 );
 console.log( 'info = %d', info );
 console.log( a, b, c, d, IN );
 ```

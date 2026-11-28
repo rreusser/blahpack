@@ -4,7 +4,7 @@
 
 - WORK partitioning: Fortran uses 1-based INDE=1, INDTAU=INDE+N, INDWRK=INDTAU+N. In JS with 0-based offsets: inde=offsetWORK, indtau=inde+N*strideWORK, indwrk=indtau+N*strideWORK. The llwork calculation must subtract 2*N from lwork to account for the E and TAU segments.
 - Removed all LWORK query logic (LQUERY) and ILAENV calls. WORK is allocated externally; the driver just uses whatever size is provided.
-- Removed parameter validation (INFO=-1..-8 checks) per stdlib convention — validation belongs in ndarray.js wrapper.
+- Removed parameter validation (INFO=-1..-8 checks) per stdlib convention — validation belongs in strided.js wrapper.
 - The N=1 quick return copies A[offsetA] to W[offsetW] and sets A[offsetA]=1.0 if WANTZ, matching Fortran exactly.
 
 ## Dependency interface surprises

@@ -53,12 +53,12 @@ zunghr( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` fourth argument is invalid (rejected when `ihi < min( ilo, N ) \|\| ihi > N`)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zunghr.ndarray(
+zunghr.strided(
     N,
     ilo, ihi,
     A, strideA1, strideA2, offsetA,
@@ -177,11 +177,11 @@ let info = zunghr( 'column-major', N, ilo, ihi, A, N, TAU, 1, WORK );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( data );
 TAU = new Complex128Array( N - 1 );
 zgehrd( 'column-major', N, ilo, ihi, A, N, TAU, 1, WORK );
-info = zunghr.ndarray( N, ilo, ihi, A, 1, N, 0, TAU, 1, 0, WORK, 1, 0 );
+info = zunghr.strided( N, ilo, ihi, A, 1, N, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```

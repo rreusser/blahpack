@@ -31,12 +31,12 @@ import zgbbrd = require( './index' );
 	zgbbrd(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zgbbrd.ndarray( 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zgbbrd.strided( 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zgbbrd.ndarray(); // $ExpectError
+	zgbbrd.strided(); // $ExpectError
 }

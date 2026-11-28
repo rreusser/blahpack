@@ -19,7 +19,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( wantt, wantz, N, ilo, ihi, H, strideH1, strideH2, offsetH, W, strideW, offsetW, iloz, ihiz, Z, strideZ1, strideZ2, offsetZ )
+{{alias}}.strided( wantt, wantz, N, ilo, ihi, H, strideH1, strideH2, offsetH, W, strideW, offsetW, iloz, ihiz, Z, strideZ1, strideZ2, offsetZ )
     CABS1(z) = |Re(z)| + |Im(z)| using alternative indexing semantics.
 
     Parameters

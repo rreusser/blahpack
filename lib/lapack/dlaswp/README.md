@@ -59,12 +59,12 @@ Performs a series of row interchanges on a matrix `A` using pivot indices stored
 - `RangeError` second argument must be a nonnegative integer
 - `RangeError` fourth argument must be greater than or equal to max(1,N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaswp.ndarray(
+dlaswp.strided(
     N,
     A, strideA1, strideA2, offsetA,
     k1, k2,
@@ -145,8 +145,8 @@ const IPIV = new Int32Array( [ 2, 2, 2 ] );
 dlaswp( 'row-major', N, A, N, 0, 2, 1, IPIV, 1 );
 console.log( A ); // eslint-disable-line no-console
 
-// Using the ndarray interface (apply the interchanges in reverse order, restoring `A`):
-dlaswp.ndarray( N, A, N, 1, 0, 0, 2, -1, IPIV, 1, 0 );
+// Using the strided interface (apply the interchanges in reverse order, restoring `A`):
+dlaswp.strided( N, A, N, 1, 0, 0, 2, -1, IPIV, 1, 0 );
 console.log( A ); // eslint-disable-line no-console
 ```
 

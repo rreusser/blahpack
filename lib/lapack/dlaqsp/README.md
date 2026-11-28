@@ -60,12 +60,12 @@ dlaqsp( order, uplo, N, AP, S, strideS, scond, amax, equed ) → Float64Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be a valid matrix triangle
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqsp.ndarray(
+dlaqsp.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,

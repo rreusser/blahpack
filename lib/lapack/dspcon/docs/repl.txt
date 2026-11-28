@@ -38,7 +38,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
     Estimates the reciprocal condition number of a real symmetric packed
     matrix using alternative indexing semantics.
 

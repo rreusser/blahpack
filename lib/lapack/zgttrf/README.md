@@ -65,12 +65,12 @@ zgttrf(
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgttrf.ndarray(
+zgttrf.strided(
     N,
     DL, strideDL, offsetDL,
     d, strideD, offsetD,
@@ -184,13 +184,13 @@ console.log( 'info:', info );
 console.log( 'd:', reinterpret( d, 0 ) );
 console.log( 'IPIV:', IPIV );
 
-// Using the ndarray interface:
+// Using the strided interface:
 DL = new Complex128Array( [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ] );
 d = new Complex128Array( [ 4.0, 0.0, 4.0, 0.0, 4.0, 0.0, 4.0, 0.0 ] );
 DU = new Complex128Array( [ 1.0, -1.0, 1.0, -1.0, 1.0, -1.0 ] );
 DU2 = new Complex128Array( N - 2 );
 IPIV = new Int32Array( N );
-info = zgttrf.ndarray( N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0 );
+info = zgttrf.strided( N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0 );
 console.log( 'info:', info );
 console.log( 'd:', reinterpret( d, 0 ) );
 console.log( 'IPIV:', IPIV );

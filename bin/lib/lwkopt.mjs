@@ -19,8 +19,8 @@
 * - `letters( spec, F )`: an option's Fortran letters and their JS strings.
 * - `jsScope`, `evalJs`: evaluate a spec's JS size expressions for a row.
 * - `callArgs( spec, pl, row, form, workspace )`: a cache row as the JS
-*   argument list of the wrapper (`form` 'strided') or of ndarray.js
-*   ('ndarray'), with each workspace from `workspace( param )`.
+*   argument list of the wrapper (`form` 'wrapper') or of strided.js
+*   ('strided'), with each workspace from `workspace( param )`.
 */
 
 import fs from 'node:fs';
@@ -406,8 +406,8 @@ function jsArray( p, n ) {
 
 /**
 * The JS argument list for one cache row (`vals`: Fortran name -> value):
-* the spec's `strided` projection (the wrapper, `form` 'strided') or its
-* `ndarray` projection (ndarray.js, `form` 'ndarray'), lint/lib/spec.cjs.
+* the spec's `wrapper` projection (the wrapper, `form` 'wrapper') or its
+* `strided` projection (strided.js, `form` 'strided'), lint/lib/spec.cjs.
 * Column-major, the row's leading dimensions, unit strides, offsets 0,
 * zero-filled arrays of the sizes the spec gives, options translated from
 * the Fortran letters to the JS strings. Each workspace is
@@ -415,7 +415,7 @@ function jsArray( p, n ) {
 * array); `onArray( param, array )`, when given, sees every other array.
 */
 function callArgs( spec, pl, vals, form, workspace, onArray ) {
-	const nd = ( form === 'ndarray' );
+	const nd = ( form === 'strided' );
 	const scope = jsScope( spec, pl, vals );
 	const big = maxDim( pl, vals );
 	const kinds = new Map( pl.params.map( ( e ) => [ e.p.fortran, e ] ) );

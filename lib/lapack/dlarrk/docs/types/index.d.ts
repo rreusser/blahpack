@@ -64,7 +64,7 @@ interface Routine {
 	* @param werr - werr
 	* @returns result
 	*/
-	ndarray( N: number, iw: number, gl: number, gu: number, d: Float64Array, strideD: number, offsetD: number, E2: Float64Array, strideE2: number, offsetE2: number, pivmin: number, reltol: number, w: number, werr: number ): Float64Array;
+	strided( N: number, iw: number, gl: number, gu: number, d: Float64Array, strideD: number, offsetD: number, E2: Float64Array, strideE2: number, offsetE2: number, pivmin: number, reltol: number, w: number, werr: number ): Float64Array;
 }
 
 /**

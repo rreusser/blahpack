@@ -31,12 +31,12 @@ import dsconv from './index';
 	dsconv(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dsconv.ndarray( 2, new Float64Array( 4 ), 1, 0, new Float64Array( 4 ), 1, 0, 1.0e-6 ); // $ExpectType number
+	dsconv.strided( 2, new Float64Array( 4 ), 1, 0, new Float64Array( 4 ), 1, 0, 1.0e-6 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsconv.ndarray(); // $ExpectError
+	dsconv.strided(); // $ExpectError
 }

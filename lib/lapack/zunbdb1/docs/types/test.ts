@@ -31,12 +31,12 @@ import zunbdb1 = require( './index' );
 	zunbdb1(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zunbdb1.ndarray( 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zunbdb1.strided( 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zunbdb1.ndarray(); // $ExpectError
+	zunbdb1.strided(); // $ExpectError
 }

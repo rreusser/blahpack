@@ -41,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, AP, strideAP, offsetAP )
+{{alias}}.strided( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, AP, strideAP, offsetAP )
     Performs the Hermitian packed rank-2 update `A := alpha*x*y**H +
     conj(alpha)*y*x**H + A` using alternative indexing semantics.
 

@@ -73,12 +73,12 @@ dormr2( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK ) → 
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dormr2.ndarray(
+dormr2.strided(
     side, trans,
     M, N, K,
     A, strideA1, strideA2, offsetA,
@@ -194,8 +194,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dormr2( 'column-major', 'left', 'no-transpose', N, N, N, A, N, TAU, 1, C, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dormr2.ndarray( 'left', 'no-transpose', N, N, N, A, N, 1, 0, TAU, 1, 0, C, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dormr2.strided( 'left', 'no-transpose', N, N, N, A, N, 1, 0, TAU, 1, 0, C, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

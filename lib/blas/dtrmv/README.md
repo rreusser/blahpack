@@ -78,12 +78,12 @@ dtrmv( order, uplo, trans, diag, N, A, LDA, x, strideX ) → Float64Array
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 - `RangeError` ninth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrmv.ndarray(
+dtrmv.strided(
     uplo, trans, diag,
     N,
     A, strideA1, strideA2, offsetA,

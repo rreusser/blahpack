@@ -104,12 +104,12 @@ Pre-processor for dgesvj performing Jacobi rotations.
 - `RangeError` sixteenth argument is invalid (rejected when `tol <= eps`)
 - `RangeError` seventeenth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgsvj0.ndarray(
+dgsvj0.strided(
     jobv,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -264,7 +264,7 @@ let info = dgsvj0( 'column-major', 'no-v', M, N, A, M, d, 1, sva, 1, 0, V, M, EP
 console.log( 'info =', info );
 console.log( 'sva =', sva );
 
-// Using the ndarray interface (offsets, arbitrary strides):
+// Using the strided interface (offsets, arbitrary strides):
 A = new Float64Array( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] );
 d = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 sva = new Float64Array( N );
@@ -277,7 +277,7 @@ for ( j = 0; j < N; j++ ) {
 }
 V = new Float64Array( 1 );
 work = new Float64Array( M );
-info = dgsvj0.ndarray( 'no-v', M, N, A, 1, M, 0, d, 1, 0, sva, 1, 0, 0, V, 1, 1, 0, EPS, SFMIN, TOL, 5, work, 1, 0 );
+info = dgsvj0.strided( 'no-v', M, N, A, 1, M, 0, d, 1, 0, sva, 1, 0, 0, V, 1, 1, 0, EPS, SFMIN, TOL, 5, work, 1, 0 );
 
 console.log( 'info =', info );
 console.log( 'sva =', sva );

@@ -35,12 +35,12 @@ zladiv( x, y, out ) → Complex128Array
 
 **Returns** `Complex128Array`: result
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zladiv.ndarray( x, offsetX, y, offsetY, out, offsetOut ) → Complex128Array
+zladiv.strided( x, offsetX, y, offsetY, out, offsetOut ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -93,11 +93,11 @@ const out = new Complex128Array( 1 );
 zladiv( x, y, out );
 console.log( reinterpret( out, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface (operands stored at complex offsets):
+// Using the strided interface (operands stored at complex offsets):
 const xs = new Complex128Array( [ 0.0, 0.0, 1.0, 2.0 ] );
 const ys = new Complex128Array( [ 3.0, -4.0 ] );
 const outs = new Complex128Array( 2 );
-zladiv.ndarray( xs, 1, ys, 0, outs, 1 );
+zladiv.strided( xs, 1, ys, 0, outs, 1 );
 console.log( reinterpret( outs, 0 ) ); // eslint-disable-line no-console
 ```
 

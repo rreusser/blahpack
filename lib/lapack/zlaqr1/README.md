@@ -48,12 +48,12 @@ zlaqr1( order, N, H, LDH, s1, s2, v, strideV ) → Complex128Array
 - `TypeError` first argument must be a valid order
 - `RangeError` fourth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqr1.ndarray(
+zlaqr1.strided(
     N,
     H, strideH1, strideH2, offsetH,
     s1, s2,
@@ -131,8 +131,8 @@ const v = new Complex128Array( N );
 zlaqr1( 'column-major', N, H, N, s1, s2, v, 1 );
 console.log( reinterpret( v, 0 ) );
 
-// Using the ndarray interface:
-zlaqr1.ndarray( N, H, 1, N, 0, s1, s2, v, 1, 0 );
+// Using the strided interface:
+zlaqr1.strided( N, H, 1, N, 0, s1, s2, v, 1, 0 );
 console.log( reinterpret( v, 0 ) );
 ```
 

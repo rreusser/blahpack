@@ -104,12 +104,12 @@ dtbmv( order, uplo, trans, diag, N, K, A, LDA, x, strideX ) → Float64Array
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` tenth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtbmv.ndarray(
+dtbmv.strided(
     uplo, trans, diag,
     N, K,
     A, strideA1, strideA2, offsetA,

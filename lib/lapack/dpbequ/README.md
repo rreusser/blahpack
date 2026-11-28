@@ -61,12 +61,12 @@ dpbequ( order, uplo, N, kd, AB, LDAB, s, strideS, scond, amax ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpbequ.ndarray(
+dpbequ.strided(
     uplo,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,
@@ -169,9 +169,9 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': dpbequ.ndarray( 'upper', N, 1, AB, N, 1, 0, s, 1, 0, scond, amax ),
+	'info': dpbequ.strided( 'upper', N, 1, AB, N, 1, 0, s, 1, 0, scond, amax ),
 	'scond': scond[ 0 ],
 	'amax': amax[ 0 ]
 };

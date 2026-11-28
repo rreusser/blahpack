@@ -57,7 +57,7 @@ interface Routine {
 	* @param msub - `msub`
 	* @returns result
 	*/
-	ndarray( N: number, lvl: number, nd: number, INODE: Float64Array, strideINODE: number, offsetINODE: number, NDIML: Float64Array, strideNDIML: number, offsetNDIML: number, NDIMR: Float64Array, strideNDIMR: number, offsetNDIMR: number, msub: number ): void;
+	strided( N: number, lvl: number, nd: number, INODE: Float64Array, strideINODE: number, offsetINODE: number, NDIML: Float64Array, strideNDIML: number, offsetNDIML: number, NDIMR: Float64Array, strideNDIMR: number, offsetNDIMR: number, msub: number ): void;
 }
 
 /**

@@ -103,12 +103,12 @@ dlaqr5(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqr5.ndarray(
+dlaqr5.strided(
     wantt, wantz, kacc22,
     N,
     ktop, kbot,
@@ -271,11 +271,11 @@ setIdentity( Z, N, 1 );
 dlaqr5( 'column-major', true, true, 0, N, 0, N - 1, NSHFTS, SR, 1, SI, 1, H, N, 0, N - 1, Z, N, V, 3, U, NU, N, WV, N, N, WH, NU );
 console.log( H );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Float64Array( [ 6.5, 1.2, 0.0, 0.0, 0.0, 0.0, 1.0, 3.1, 1.8, 0.0, 0.0, 0.0, 1.6, -0.1, 4.2, -1.9, 0.0, 0.0, -0.9, 1.1, 1.2, 3.5, -2.0, 0.0, -1.2, 1.9, -0.8, 0.2, 0.8, 0.8, 1.6, -0.6, -1.4, -0.8, -2.0, 0.4 ] );
 Z = new Float64Array( N * N );
 setIdentity( Z, N, 1 );
-dlaqr5.ndarray( true, true, 0, N, 0, N - 1, NSHFTS, SR, 1, 0, SI, 1, 0, H, 1, N, 0, 0, N - 1, Z, 1, N, 0, V, 1, 3, 0, U, 1, NU, 0, N, WV, 1, N, 0, N, WH, 1, NU, 0 );
+dlaqr5.strided( true, true, 0, N, 0, N - 1, NSHFTS, SR, 1, 0, SI, 1, 0, H, 1, N, 0, 0, N - 1, Z, 1, N, 0, V, 1, 3, 0, U, 1, NU, 0, N, WV, 1, N, 0, N, WH, 1, NU, 0 );
 console.log( H );
 ```
 

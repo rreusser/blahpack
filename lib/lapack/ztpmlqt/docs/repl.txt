@@ -68,7 +68,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, l, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( side, trans, M, N, K, l, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK )
     Apply complex unitary Q from triangular-pentagonal compact-WY (ztplqt) to a stacked matrix C = [A; B] or [A B]., using alternative indexing semantics.
 
     Parameters

@@ -82,12 +82,12 @@ zla_gbrcond_x(
 - `RangeError` ninth argument must be greater than or equal to `2 * kl + ku + 1` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_gbrcond_x.ndarray(
+zla_gbrcond_x.strided(
     trans,
     N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
@@ -210,9 +210,9 @@ for ( j = 0; j < N; j++ ) {
 	}
 }
 
-zgbtrf.ndarray( N, N, KL, KU, AFB, 1, LDAFB, 0, IPIV, 1, 0 );
+zgbtrf.strided( N, N, KL, KU, AFB, 1, LDAFB, 0, IPIV, 1, 0 );
 
-const rcond = zla_gbrcond_x.ndarray( 'no-transpose', N, KL, KU, AB, 1, LDAB, 0, AFB, 1, LDAFB, 0, IPIV, 1, 0, x, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+const rcond = zla_gbrcond_x.strided( 'no-transpose', N, KL, KU, AB, 1, LDAB, 0, AFB, 1, LDAFB, 0, IPIV, 1, 0, x, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( rcond ); // eslint-disable-line no-console
 ```
 

@@ -11,9 +11,9 @@ var STALE_FORTRAN = /\bLDA\b|\bLDB\b|\bLDC\b|\bINCX\b|\bINCY\b|\bLDZ\b|\bLDQ\b|\
 function check( mod ) {
 	var results = [];
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var baseContent = util.readFile( basePath );
-	var ndarrayContent = util.readFile( ndarrayPath );
+	var stridedContent = util.readFile( stridedPath );
 	var hits;
 	var locs;
 	var i;
@@ -29,15 +29,15 @@ function check( mod ) {
 		results.push( util.skip( ID + '.base-example', 'No base.js' ) );
 	}
 
-	// 2. @example in ndarray.js
-	if ( ndarrayContent ) {
-		if ( /@example/.test( ndarrayContent ) ) {
-			results.push( util.pass( ID + '.ndarray-example', 'ndarray.js has @example' ) );
+	// 2. @example in strided.js
+	if ( stridedContent ) {
+		if ( /@example/.test( stridedContent ) ) {
+			results.push( util.pass( ID + '.strided-example', 'strided.js has @example' ) );
 		} else {
-			results.push( util.warn( ID + '.ndarray-example', 'ndarray.js has @example', 1, [ 'ndarray.js' ] ) );
+			results.push( util.warn( ID + '.strided-example', 'strided.js has @example', 1, [ 'strided.js' ] ) );
 		}
 	} else {
-		results.push( util.skip( ID + '.ndarray-example', 'No ndarray.js' ) );
+		results.push( util.skip( ID + '.strided-example', 'No strided.js' ) );
 	}
 
 	// 3. No stale Fortran names in JSDoc

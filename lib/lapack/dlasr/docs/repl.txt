@@ -50,7 +50,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, pivot, direct, M, N, c, strideC, offsetC, s, strideS, offsetS, A, strideA1, strideA2, offsetA )
+{{alias}}.strided( side, pivot, direct, M, N, c, strideC, offsetC, s, strideS, offsetS, A, strideA1, strideA2, offsetA )
     Applies a sequence of real plane rotations to a real general rectangular
     matrix using alternative indexing semantics.
 

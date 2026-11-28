@@ -95,12 +95,12 @@ dsyconvf_rook( order, uplo, way, N, A, LDA, e, strideE, IPIV, strideIPIV ) → i
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyconvf_rook.ndarray(
+dsyconvf_rook.strided(
     uplo, way,
     N,
     A, strideA1, strideA2, offsetA,
@@ -228,7 +228,7 @@ const A = new Float64Array( [ 1.0, 0.0, 3.0, 2.0 ] );
 const E = new Float64Array( 2 );
 const IPIV = new Int32Array( [ -1, -2 ] );
 
-const info = dsyconvf_rook.ndarray( 'upper', 'convert', 2, A, 1, 2, 0, E, 1, 0, IPIV, 1, 0 );
+const info = dsyconvf_rook.strided( 'upper', 'convert', 2, A, 1, 2, 0, E, 1, 0, IPIV, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 ```
 

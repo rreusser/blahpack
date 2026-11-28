@@ -6,7 +6,7 @@
   signature.** The declarations use `DOUBLE PRECISION RES(N, NRHS)`, so the
   leading dimension is implicitly `N`. The scaffolder's auto-generated signature
   treated each matrix as a 1D strided vector (single stride). This is wrong for
-  matrices: the ndarray form was rewritten to take `strideRES1`, `strideRES2`,
+  matrices: the strided form was rewritten to take `strideRES1`, `strideRES2`,
   `offsetRES` (and likewise for `ayb`), matching the convention in sibling
   routines such as `dla_gerpvgrw`. The layout wrapper `dla_lin_berr.js` takes
   `LDRES` and `LDAYB` and calls into base as `1, LDRES, 0` / `1, LDAYB, 0`.
@@ -35,7 +35,7 @@
 ## Benchmark notes
 
 - The scaffolded benchmark used a wrong argument count for the layout wrapper
-  (12 args for a 14-arg ndarray call). Rewrote both `benchmark.js` and
-  `benchmark.ndarray.js` to allocate `len * nrhs` sized vectors (nrhs = 1)
+  (12 args for a 14-arg strided call). Rewrote both `benchmark.js` and
+  `benchmark.strided.js` to allocate `len * nrhs` sized vectors (nrhs = 1)
   and call the correct signature. No N*N allocation risk — the buffers are
   O(N) even at `len = 1e6`.

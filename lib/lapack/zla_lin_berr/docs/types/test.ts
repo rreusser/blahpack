@@ -31,12 +31,12 @@ import zla_lin_berr = require( './index' );
 	zla_lin_berr(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zla_lin_berr.ndarray( 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zla_lin_berr.strided( 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zla_lin_berr.ndarray(); // $ExpectError
+	zla_lin_berr.strided(); // $ExpectError
 }

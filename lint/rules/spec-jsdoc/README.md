@@ -1,6 +1,6 @@
 # `spec-jsdoc`
 
-**The JSDoc of the exported function of `base.js`, `ndarray.js` and
+**The JSDoc of the exported function of `base.js`, `strided.js` and
 `<routine>.js` agrees with the spec** ([`lint/lib/jsdoc-spec.cjs`](../../lib/jsdoc-spec.cjs);
 CONVENTIONS J2, C1, C4, S10, S11):
 
@@ -19,7 +19,7 @@ CONVENTIONS J2, C1, C4, S10, S11):
   | input scalar | `number`, `integer`, `boolean`, `Complex128`, `Function` |
   | reverse-communication state | `Object`, or the name of a `@typedef {Object}` declared in the same file (its properties) |
 
-- **`@throws`** (`ndarray.js`, `<routine>.js`): the leading `@throws` tags are
+- **`@throws`** (`strided.js`, `<routine>.js`): the leading `@throws` tags are
   the generated prologue's, one per check, in order
   (`{TypeError} first argument must be a valid order`). Further `@throws`
   (workspace checks) may follow.

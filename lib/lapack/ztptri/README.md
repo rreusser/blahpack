@@ -53,12 +53,12 @@ ztptri( order, uplo, diag, N, AP ) → integer
 - `TypeError` third argument must be a valid diagonal type
 - `RangeError` fourth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztptri.ndarray( uplo, diag, N, AP, strideAP, offsetAP ) → integer
+ztptri.strided( uplo, diag, N, AP, strideAP, offsetAP ) → integer
 ```
 
 Computes the inverse of a complex triangular matrix in packed storage.

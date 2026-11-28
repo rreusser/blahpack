@@ -4,7 +4,7 @@
  * Generate examples/index.js for modules that currently have TODO stubs.
  *
  * Generates a basic example that creates random arrays and calls
- * both the layout wrapper and ndarray APIs.
+ * both the layout wrapper and strided APIs.
  *
  * Usage:
  *   node bin/gen_examples.js [--all | module-path...]
@@ -135,21 +135,21 @@ function detectArrays( params ) {
 
 function generateExample( routine, mod ) {
 	var routinePath = path.join( mod.dir, 'lib', routine + '.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
 
 	var routineContent = fs.existsSync( routinePath ) ? fs.readFileSync( routinePath, 'utf8' ) : null;
-	var ndarrayContent = fs.existsSync( ndarrayPath ) ? fs.readFileSync( ndarrayPath, 'utf8' ) : null;
+	var stridedContent = fs.existsSync( stridedPath ) ? fs.readFileSync( stridedPath, 'utf8' ) : null;
 	var baseContent = fs.existsSync( basePath ) ? fs.readFileSync( basePath, 'utf8' ) : null;
 
 	var layoutParams = extractExportedSignature( routineContent );
-	var ndarrayParams = extractExportedSignature( ndarrayContent ) || extractExportedSignature( baseContent );
+	var stridedParams = extractExportedSignature( stridedContent ) || extractExportedSignature( baseContent );
 
-	if ( !ndarrayParams ) {
+	if ( !stridedParams ) {
 		return null;
 	}
 
-	var arrays = detectArrays( ndarrayParams );
+	var arrays = detectArrays( stridedParams );
 	var allArrays = Array.from( arrays.arrays2D ).concat( Array.from( arrays.arrays1D ) );
 	var pkgName = '@rreusser/blahpack/' + mod.pkg + '/' + routine;
 
@@ -210,11 +210,11 @@ function generateExample( routine, mod ) {
 		lines.push( '' );
 	}
 
-	// ndarray call
+	// strided call
 	if ( layoutParams ) {
-		lines.push( '// Using the ndarray interface:' );
+		lines.push( '// Using the strided interface:' );
 	}
-	var ndarrayArgs = ndarrayParams.map( function( p ) {
+	var stridedArgs = stridedParams.map( function( p ) {
 		var lower = p.toLowerCase();
 		if ( STRING_DEFAULTS[ lower ] ) {
 			return STRING_DEFAULTS[ lower ];
@@ -240,9 +240,9 @@ function generateExample( routine, mod ) {
 		return '1';
 	});
 	if ( layoutParams ) {
-		lines.push( 'out = ' + routine + '.ndarray( ' + ndarrayArgs.join( ', ' ) + ' );' );
+		lines.push( 'out = ' + routine + '.strided( ' + stridedArgs.join( ', ' ) + ' );' );
 	} else {
-		lines.push( 'var out = ' + routine + '( ' + ndarrayArgs.join( ', ' ) + ' );' );
+		lines.push( 'var out = ' + routine + '( ' + stridedArgs.join( ', ' ) + ' );' );
 	}
 	lines.push( 'console.log( out );' );
 	lines.push( '' );

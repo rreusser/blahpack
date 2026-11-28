@@ -1,4 +1,4 @@
-// target: lib/lapack/dgetrf/lib/ndarray.js
+// target: lib/lapack/dgetrf/lib/strided.js
 import base from './base.js';
 function dgetrf( M, N ) {
 	return base( M, N );

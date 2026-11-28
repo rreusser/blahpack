@@ -61,12 +61,12 @@ dtftri( transr, uplo, diag, N, A, strideA ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtftri.ndarray( transr, uplo, diag, N, A, strideA, offsetA ) → integer
+dtftri.strided( transr, uplo, diag, N, A, strideA, offsetA ) → integer
 ```
 
 | Parameter | Type | Description |

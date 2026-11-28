@@ -20,7 +20,7 @@
 ## Dependency interface surprises
 
 - `zlaunhr_col_getrfnp2`'s base is invoked with the same `(M, N, A,
-  strideA1, strideA2, offsetA, D, strideD, offsetD)` ndarray-style
+  strideA1, strideA2, offsetA, D, strideD, offsetD)` strided-style
   signature, so the blocked driver simply offsets into `A` and `D` for
   each block: `oAjj = offsetA + j*strideA1 + j*strideA2`, etc.
 - `ztrsm` and `zgemm` here use `'left'/'lower'/'no-transpose'/'unit'` and

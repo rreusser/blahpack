@@ -43,12 +43,12 @@ dlamrg( n1, n2, a, strideA, dtrd1, dtrd2, INDEX, strideINDEX ) → Int32Array
 
 **Returns** `Int32Array`: `INDEX`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlamrg.ndarray(
+dlamrg.strided(
     n1, n2,
     a, strideA, offsetA,
     dtrd1, dtrd2,
@@ -124,8 +124,8 @@ const INDEX = new Int32Array( 6 );
 let out = dlamrg( 3, 3, a, 1, 1, -1, INDEX, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlamrg.ndarray( 3, 3, a, 1, 0, 1, -1, INDEX, 1, 0 );
+// Using the strided interface:
+out = dlamrg.strided( 3, 3, a, 1, 0, 1, -1, INDEX, 1, 0 );
 console.log( out );
 ```
 

@@ -68,12 +68,12 @@ dtbcon( order, norm, uplo, diag, N, kd, AB, LDAB, rcond, WORK, IWORK ) → info:
 - `RangeError` eighth argument must be greater than or equal to `kd + 1` (column-major)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtbcon.ndarray(
+dtbcon.strided(
     norm, uplo, diag,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,

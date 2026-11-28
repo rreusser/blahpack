@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * Gate check: ndarray.js must validate WORK array size.
+ * Gate check: strided.js must validate WORK array size.
  *
  * Any module whose base.js takes a caller-provided workspace array (WORK,
- * RWORK, IWORK) must have a corresponding size assertion in ndarray.js before
+ * RWORK, IWORK) must have a corresponding size assertion in strided.js before
  * calling base().  Without this, an undersized WORK silently reads past the
  * end of the typed array (returning `undefined`), which propagates as NaN
  * through every subsequent arithmetic operation.
@@ -24,7 +24,7 @@ var util = require( '../util.js' );
 
 var ID = 'work-assert';
 
-// Matches the canonical WORK-size assertion pattern in ndarray.js.
+// Matches the canonical WORK-size assertion pattern in strided.js.
 // We look for a RangeError throw alongside a WORK/RWORK/IWORK length check.
 // Names compare case-insensitively (CONVENTIONS S7): `work` is WORK.
 var ASSERT_RE = /\bWORK\b.*\.length|\.length.*\bWORK\b/i;
@@ -126,54 +126,54 @@ function misplacedEarlyReturns( content ) {
 }
 
 /**
- * Check that ndarray.js asserts WORK size when the routine takes workspace.
+ * Check that strided.js asserts WORK size when the routine takes workspace.
  */
 function check( mod ) {
 	var results = [];
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var baseContent = util.readFile( basePath );
-	var ndarrayContent = util.readFile( ndarrayPath );
+	var stridedContent = util.readFile( stridedPath );
 
 	if ( !baseContent ) {
 		results.push( util.skip( ID, 'No base.js' ) );
 		return results;
 	}
-	if ( !ndarrayContent ) {
-		results.push( util.skip( ID, 'No ndarray.js' ) );
+	if ( !stridedContent ) {
+		results.push( util.skip( ID, 'No strided.js' ) );
 		return results;
 	}
 
-	// Only applies to routines whose ndarray.js accepts a WORK parameter.
-	if ( !takesWork( ndarrayContent ) ) {
-		results.push( util.skip( ID, 'ndarray.js takes no WORK parameter' ) );
+	// Only applies to routines whose strided.js accepts a WORK parameter.
+	if ( !takesWork( stridedContent ) ) {
+		results.push( util.skip( ID, 'strided.js takes no WORK parameter' ) );
 		return results;
 	}
 
-	if ( hasWorkAssert( ndarrayContent ) ) {
-		results.push( util.pass( ID, 'ndarray.js asserts WORK array size' ) );
+	if ( hasWorkAssert( stridedContent ) ) {
+		results.push( util.pass( ID, 'strided.js asserts WORK array size' ) );
 
-		var misplaced = misplacedEarlyReturns( ndarrayContent );
+		var misplaced = misplacedEarlyReturns( stridedContent );
 		if ( misplaced.length > 0 ) {
 			results.push( util.fail(
 				ID + '.early-return-order',
-				'ndarray.js zero-dim early return precedes WORK check',
+				'strided.js zero-dim early return precedes WORK check',
 				misplaced.length,
 				misplaced.map( function( ln ) {
-					return path.relative( util.ROOT, ndarrayPath ) + ':' + ln + ' (return appears after WORK assertion)';
+					return path.relative( util.ROOT, stridedPath ) + ':' + ln + ' (return appears after WORK assertion)';
 				}),
-				'ndarray.js has quick return(s) AFTER the WORK.length assertion (line(s) ' + misplaced.join( ', ' ) + '). Move zero-dim early returns before the WORK check — an empty matrix must not require a valid workspace buffer.'
+				'strided.js has quick return(s) AFTER the WORK.length assertion (line(s) ' + misplaced.join( ', ' ) + '). Move zero-dim early returns before the WORK check — an empty matrix must not require a valid workspace buffer.'
 			));
 		} else {
-			results.push( util.pass( ID + '.early-return-order', 'ndarray.js zero-dim early return precedes WORK check' ) );
+			results.push( util.pass( ID + '.early-return-order', 'strided.js zero-dim early return precedes WORK check' ) );
 		}
 	} else {
 		results.push( util.fail(
 			ID,
-			'ndarray.js asserts WORK array size',
+			'strided.js asserts WORK array size',
 			1,
-			[ path.relative( util.ROOT, ndarrayPath ) ],
-			'ndarray.js accepts a WORK parameter but contains no WORK.length assertion before calling base(). Add a minWork check that throws RangeError on undersized input — without it, out-of-bounds reads return `undefined`, which silently produces NaN.'
+			[ path.relative( util.ROOT, stridedPath ) ],
+			'strided.js accepts a WORK parameter but contains no WORK.length assertion before calling base(). Add a minWork check that throws RangeError on undersized input — without it, out-of-bounds reads return `undefined`, which silently produces NaN.'
 		) );
 	}
 	return results;

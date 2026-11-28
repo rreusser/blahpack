@@ -50,12 +50,12 @@ zlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx ) → Complex128Array
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaswp.ndarray(
+zlaswp.strided(
     N,
     A, strideA1, strideA2, offsetA,
     k1, k2,
@@ -134,9 +134,9 @@ let A = new Complex128Array( A0 );
 let out = zlaswp( 'row-major', N, A, N, 0, N - 1, IPIV, 1, 1 );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( A0 );
-out = zlaswp.ndarray( N, A, N, 1, 0, 0, N - 1, IPIV, 1, 0, 1 );
+out = zlaswp.strided( N, A, N, 1, 0, 0, N - 1, IPIV, 1, 0, 1 );
 console.log( out );
 ```
 

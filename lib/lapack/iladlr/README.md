@@ -43,12 +43,12 @@ iladlr( order, M, N, A, LDA ) → integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-iladlr.ndarray( M, N, A, strideA1, strideA2, offsetA ) → integer
+iladlr.strided( M, N, A, strideA1, strideA2, offsetA ) → integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -111,8 +111,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = iladlr( 'row-major', N, N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = iladlr.ndarray( N, N, A, N, 1, 0 );
+// Using the strided interface:
+out = iladlr.strided( N, N, A, N, 1, 0 );
 console.log( out );
 ```
 

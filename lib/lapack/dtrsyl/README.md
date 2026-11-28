@@ -77,12 +77,12 @@ dtrsyl( order, trana, tranb, isgn, M, N, A, LDA, B, LDB, C, LDC, scale ) → int
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrsyl.ndarray(
+dtrsyl.strided(
     trana, tranb,
     isgn,
     M, N,
@@ -206,9 +206,9 @@ let C = new Float64Array( C0 );
 let info = dtrsyl( 'column-major', 'no-transpose', 'no-transpose', 1, N, N, A, N, B, N, C, N, scale );
 console.log( info, scale[ 0 ], C );
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Float64Array( C0 );
-info = dtrsyl.ndarray( 'no-transpose', 'no-transpose', 1, N, N, A, 1, N, 0, B, 1, N, 0, C, 1, N, 0, scale );
+info = dtrsyl.strided( 'no-transpose', 'no-transpose', 1, N, N, A, 1, N, 0, B, 1, N, 0, C, 1, N, 0, scale );
 console.log( info, scale[ 0 ], C );
 ```
 

@@ -63,12 +63,12 @@ dlarzt( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Float6
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` fifth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarzt.ndarray(
+dlarzt.strided(
     direct, storev,
     N, K,
     V, strideV1, strideV2, offsetV,

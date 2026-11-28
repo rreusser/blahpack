@@ -60,12 +60,12 @@ zpbcon( order, uplo, N, kd, AB, LDAB, anorm, rcond, WORK, RWORK ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpbcon.ndarray(
+zpbcon.strided(
     uplo,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,
@@ -177,8 +177,8 @@ const rcond = new Float64Array( 1 );
 let info = zpbcon( 'column-major', 'upper', N, kd, AB, kd + 1, anorm, rcond, WORK, RWORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = zpbcon.ndarray( 'upper', N, kd, AB, 1, kd + 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
+// Using the strided interface:
+info = zpbcon.strided( 'upper', N, kd, AB, 1, kd + 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

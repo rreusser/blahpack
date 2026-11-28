@@ -2,7 +2,7 @@
 'use strict';
 
 // One-off codemod (CONVENTIONS D1/D2, ratified 2026-11-19): a packed matrix
-// in the strided wrapper takes no stride, and the wrapper takes `order`.
+// in the wrapper takes no stride, and the wrapper takes `order`.
 // Packed storage is LAPACK column-major packed, so — like the other packed
 // wrappers — a wrapper that gains `order` rejects 'row-major'.
 //
@@ -12,7 +12,7 @@ var fs = require( 'fs' );
 var lib = require( './lib.cjs' );
 
 lib.modules( process.argv.slice( 2 ) ).forEach( function each( mod ) {
-	var file = mod.files.strided;
+	var file = mod.files.wrapper;
 	var src = fs.readFileSync( file, 'utf8' );
 	var fn = lib.exported( lib.parse( src ) );
 	var params = lib.params( fn );

@@ -4,7 +4,7 @@
 
 - The Fortran TRANSR parameter uses 'N'/'C' (not 'N'/'T' as in dtpttf). In JS this maps to 'no-transpose'/'conjugate-transpose'. The dtpttf d-prefix counterpart uses 'no-transpose'/'transpose' -- do not copy its string comparisons blindly.
 - DCONJG in the Fortran source translates to simply negating the imaginary part of the Float64 pair (copy real, negate imag). No need for stdlib complex conjugate functions since this is a pure data shuffle with conjugation, not arithmetic.
-- The scaffolder only detected uplo validation for ndarray.js but missed transr. Had to manually add isTransposeOperation validation.
+- The scaffolder only detected uplo validation for strided.js but missed transr. Had to manually add isTransposeOperation validation.
 
 ## Dependency interface surprises
 
@@ -12,7 +12,7 @@
 
 ## Automation opportunities
 
-- The scaffold generator should detect the TRANSR parameter and auto-add isTransposeOperation validation to ndarray.js. Currently it only recognizes uplo/trans/side/diag but not transr specifically.
+- The scaffold generator should detect the TRANSR parameter and auto-add isTransposeOperation validation to strided.js. Currently it only recognizes uplo/trans/side/diag but not transr specifically.
 
 ## Coverage gaps
 

@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
     Computes the solution to system of linear equations A·X = B for general
     band matrices (simple driver), using alternative indexing semantics.
 

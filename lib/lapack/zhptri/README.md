@@ -57,12 +57,12 @@ zhptri( order, uplo, N, AP, IPIV, strideIPIV, WORK ) → integer
 - `TypeError` second argument must be a valid matrix triangle
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhptri.ndarray(
+zhptri.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,

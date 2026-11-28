@@ -52,7 +52,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( job, side, N, ilo, ihi, LSCALE, strideLSCALE, offsetLSCALE, RSCALE, strideRSCALE, offsetRSCALE, M, V, strideV1, strideV2, offsetV )
+{{alias}}.strided( job, side, N, ilo, ihi, LSCALE, strideLSCALE, offsetLSCALE, RSCALE, strideRSCALE, offsetRSCALE, M, V, strideV1, strideV2, offsetV )
     @license Apache-2.0 using alternative indexing semantics.
 
     Parameters

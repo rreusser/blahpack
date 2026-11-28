@@ -53,12 +53,12 @@ dpttrs( order, N, nrhs, d, strideD, e, strideE, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpttrs.ndarray(
+dpttrs.strided(
     N, nrhs,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -148,8 +148,8 @@ const e = discreteUniform( N, -10, 10, opts );
 let out = dpttrs( 'column-major', N, N, d, 1, e, 1, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dpttrs.ndarray( N, N, d, 1, 0, e, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dpttrs.strided( N, N, d, 1, 0, e, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

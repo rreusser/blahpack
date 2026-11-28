@@ -77,12 +77,12 @@ zlaqgb(
 - `TypeError` first argument must be a valid order
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqgb.ndarray(
+zlaqgb.strided(
     M, N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
     r, strideR, offsetR,
@@ -171,7 +171,7 @@ const r = new Float64Array( [ 0.5, 2.0 ] );
 const c = new Float64Array( [ 1.0, 1.0 ] );
 
 const equed = [ '' ];
-zlaqgb.ndarray( 2, 2, 1, 0, AB, 1, 2, 0, r, 1, 0, c, 1, 0, 0.01, 1.0, 5.0, equed ); // eslint-disable-line max-len
+zlaqgb.strided( 2, 2, 1, 0, AB, 1, 2, 0, r, 1, 0, c, 1, 0, 0.01, 1.0, 5.0, equed ); // eslint-disable-line max-len
 console.log( 'equed:', equed[ 0 ] ); // eslint-disable-line no-console
 // => equed: row
 

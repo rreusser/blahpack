@@ -34,7 +34,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, zx, strideX, offsetX, zy, strideY, offsetY, c, s )
+{{alias}}.strided( N, zx, strideX, offsetX, zy, strideY, offsetY, c, s )
     Applies a plane rotation, using alternative indexing semantics.
 
     Parameters

@@ -53,12 +53,12 @@ dlangb( order, norm, N, KL, KU, AB, LDAB, WORK ) → number
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, KL + KU + 1 )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlangb.ndarray(
+dlangb.strided(
     norm,
     N, KL, KU,
     AB, strideAB1, strideAB2, offsetAB,
@@ -126,11 +126,11 @@ import dlangb from '@rreusser/blahpack/lapack/dlangb';
 const AB = new Float64Array( [ 3.0, -1.0, 2.0 ] );
 const WORK = new Float64Array( 3 );
 
-let v = dlangb.ndarray( 'max', 3, 0, 0, AB, 1, 1, 0, WORK, 1, 0 );
+let v = dlangb.strided( 'max', 3, 0, 0, AB, 1, 1, 0, WORK, 1, 0 );
 console.log( 'Max norm (diagonal): ' + v ); // eslint-disable-line no-console
 // => 3.0
 
-v = dlangb.ndarray( 'frobenius', 3, 0, 0, AB, 1, 1, 0, WORK, 1, 0 );
+v = dlangb.strided( 'frobenius', 3, 0, 0, AB, 1, 1, 0, WORK, 1, 0 );
 console.log( 'Frobenius norm (diagonal): ' + v ); // eslint-disable-line no-console
 // => ~3.74
 ```

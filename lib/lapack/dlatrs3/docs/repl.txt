@@ -65,7 +65,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, trans, diag, normin, N, nrhs, A, strideA1, strideA2, offsetA, X, strideX1, strideX2, offsetX, SCALE, strideSCALE, offsetSCALE, CNORM, strideCNORM, offsetCNORM, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( uplo, trans, diag, normin, N, nrhs, A, strideA1, strideA2, offsetA, X, strideX1, strideX2, offsetX, SCALE, strideSCALE, offsetSCALE, CNORM, strideCNORM, offsetCNORM, WORK, strideWORK, offsetWORK )
     solves a triangular system of equations with the scale factors set to prevent overflow., using alternative indexing semantics.
 
     Parameters

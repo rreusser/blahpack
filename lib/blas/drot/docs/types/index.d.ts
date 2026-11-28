@@ -50,7 +50,7 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: number, s: number ): Float64Array;
+	strided( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: number, s: number ): Float64Array;
 }
 
 /**

@@ -10,7 +10,7 @@ defaults (`max( 1, M )` / `max( 1, N )`). Those can be wrong in either
 direction:
 
 - **Too strict.** `dlangb` rejected `LDAB < max( 1, N )`, but band storage has
-  `KL+KU+1` rows, so it refused calls LAPACK accepts. The `.ndarray` form took
+  `KL+KU+1` rows, so it refused calls LAPACK accepts. The `.strided` form took
   the same data without complaint.
 - **Too lax.** `zlarcm` checked row-major `LDB < max( 1, M )`, but row-major B
   (M by N) needs N.

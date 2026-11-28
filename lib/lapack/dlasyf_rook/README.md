@@ -74,12 +74,12 @@ dlasyf_rook( order, uplo, N, nb, kb, A, LDA, IPIV, strideIPIV, W, LDW ) → inte
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fourth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasyf_rook.ndarray(
+dlasyf_rook.strided(
     uplo,
     N, nb,
     kb,

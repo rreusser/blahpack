@@ -50,7 +50,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, K, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
+{{alias}}.strided( uplo, N, K, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
     Performs the Hermitian banded matrix-vector operation `y := alpha*A*x +
     beta*y` using alternative indexing semantics.
 

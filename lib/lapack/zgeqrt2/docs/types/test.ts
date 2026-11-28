@@ -31,12 +31,12 @@ import zgeqrt2 = require( './index' );
 	zgeqrt2(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zgeqrt2.ndarray( 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
+	zgeqrt2.strided( 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zgeqrt2.ndarray(); // $ExpectError
+	zgeqrt2.strided(); // $ExpectError
 }

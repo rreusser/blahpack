@@ -95,12 +95,12 @@ dlasq3(
 
 **Returns** `Float64Array`: `z`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasq3.ndarray(
+dlasq3.strided(
     i0,
     n0,
     z, strideZ, offsetZ,
@@ -257,7 +257,7 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 z = new Float64Array( [ 4.0, 1.0, 4.0, 1.0, 3.0, 0.5, 3.0, 0.5, 2.0, 0.3, 2.0, 0.3, 1.0, 0.0, 1.0, 0.0 ] );
 n0[ 0 ] = 4;
 pp[ 0 ] = 0;
@@ -276,7 +276,7 @@ dn1[ 0 ] = 2.0;
 dn2[ 0 ] = 3.0;
 g[ 0 ] = 0.0;
 tau[ 0 ] = 0.0;
-dlasq3.ndarray( 1, n0, z, 1, 0, pp, dmin, sigma, desig, qmax, nfail, iter, ndiv, true, ttype, dmin1, dmin2, dn, dn1, dn2, g, tau );
+dlasq3.strided( 1, n0, z, 1, 0, pp, dmin, sigma, desig, qmax, nfail, iter, ndiv, true, ttype, dmin1, dmin2, dn, dn1, dn2, g, tau );
 out = {
 	'n0': n0[ 0 ],
 	'pp': pp[ 0 ],

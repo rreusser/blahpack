@@ -61,12 +61,12 @@ dsygs2( order, itype, uplo, N, A, LDA, B, LDB ) → integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsygs2.ndarray(
+dsygs2.strided(
     itype,
     uplo,
     N,
@@ -171,8 +171,8 @@ const B = discreteUniform( N * N, -10, 10, opts );
 let out = dsygs2( 'column-major', N, 'upper', N, A, N, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dsygs2.ndarray( N, 'upper', N, A, N, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dsygs2.strided( N, 'upper', N, A, N, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

@@ -44,12 +44,12 @@ zlassq( N, x, strideX, scale, sumsq ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlassq.ndarray( N, x, strideX, offsetX, scale, sumsq ) → void
+zlassq.strided( N, x, strideX, offsetX, scale, sumsq ) → void
 ```
 
 | Parameter | Type | Description |
@@ -122,10 +122,10 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 scale[ 0 ] = 1.0;
 sumsq[ 0 ] = 0.0;
-zlassq.ndarray( N, x, 1, 0, scale, sumsq );
+zlassq.strided( N, x, 1, 0, scale, sumsq );
 out = {
 	'scl': scale[ 0 ],
 	'sumsq': sumsq[ 0 ]

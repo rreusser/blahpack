@@ -65,12 +65,12 @@ zhesv( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → intege
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhesv.ndarray(
+zhesv.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -189,12 +189,12 @@ let info = zhesv( 'column-major', 'upper', N, nrhs, A, N, IPIV, 1, B, N, WORK );
 console.log( info );
 console.log( reinterpret( B, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( Avals );
 B = new Complex128Array( Bvals );
 IPIV = new Int32Array( N );
 WORK = new Complex128Array( N );
-info = zhesv.ndarray( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
+info = zhesv.strided( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
 console.log( info );
 console.log( reinterpret( B, 0 ) );
 ```

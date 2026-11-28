@@ -58,12 +58,12 @@ dlarfx( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Float64Array
 - `TypeError` if a string argument is not a valid option
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarfx.ndarray(
+dlarfx.strided(
     side,
     M, N,
     v, strideV, offsetV,
@@ -160,8 +160,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dlarfx( 'column-major', 'left', N, N, v, 1, 1.0, C, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlarfx.ndarray( 'left', N, N, v, 1, 0, 1.0, C, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dlarfx.strided( 'left', N, N, v, 1, 0, 1.0, C, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

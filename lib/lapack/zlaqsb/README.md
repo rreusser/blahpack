@@ -65,12 +65,12 @@ zlaqsb( order, uplo, N, KD, AB, LDAB, S, strideS, scond, amax, equed ) → Compl
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, KD + 1 )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqsb.ndarray(
+zlaqsb.strided(
     uplo,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,
@@ -155,7 +155,7 @@ const S = new Float64Array( [ 0.5, 0.25, 0.2, 0.1 ] );
 
 // Poor scond triggers equilibration:
 const equed = [ '' ];
-zlaqsb.ndarray( 'upper', 4, 1, AB, 1, 2, 0, S, 1, 0, 0.02, 25.0, equed );
+zlaqsb.strided( 'upper', 4, 1, AB, 1, 2, 0, S, 1, 0, 0.02, 25.0, equed );
 
 console.log( 'equed:', equed[ 0 ] ); // eslint-disable-line no-console
 // => 'yes'

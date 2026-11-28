@@ -52,7 +52,7 @@ interface Routine {
 	* @param dlam - `dlam`
 	* @returns result
 	*/
-	ndarray( i: number, D: Float64Array, strideD: number, offsetD: number, Z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dlam: number ): Float64Array;
+	strided( i: number, D: Float64Array, strideD: number, offsetD: number, Z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dlam: number ): Float64Array;
 }
 
 /**

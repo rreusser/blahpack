@@ -104,12 +104,12 @@ ztgsna(
 - `RangeError` N must be a nonnegative integer
 - `RangeError` leading dimensions must be compatible with matrix dimensions
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgsna.ndarray(
+ztgsna.strided(
     job, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -257,7 +257,7 @@ const WORK = new Complex128Array( 2 * N * N );
 const IWORK = new Int32Array( N + 2 );
 
 m[ 0 ] = 0;
-ztgsna.ndarray( 'both', 'all', SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, s, 1, 0, DIF, 1, 0, N, m, WORK, 1, 0, IWORK, 1, 0 );
+ztgsna.strided( 'both', 'all', SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, s, 1, 0, DIF, 1, 0, N, m, WORK, 1, 0, IWORK, 1, 0 );
 console.log( 's[0]   =', s[ 0 ] ); // eslint-disable-line no-console
 console.log( 'DIF[0] =', DIF[ 0 ] ); // eslint-disable-line no-console
 console.log( 'm      =', m[ 0 ] ); // eslint-disable-line no-console

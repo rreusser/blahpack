@@ -38,7 +38,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, nrhs, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( uplo, N, nrhs, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
     Computes the solution to a complex system of linear equations A * X = B
     where A is symmetric in packed storage using alternative indexing
     semantics.

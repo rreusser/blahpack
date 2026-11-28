@@ -44,7 +44,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, l, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, T, strideT1, strideT2, offsetT )
+{{alias}}.strided( M, N, l, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, T, strideT1, strideT2, offsetT )
     Computes a QR factorization of a real triangular-pentagonal matrix using the compact WY representation for Q., using alternative indexing semantics.
 
     Parameters

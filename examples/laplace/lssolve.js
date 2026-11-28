@@ -2,7 +2,7 @@
 // (blocked Householder QR). Solves the overdetermined system A*x ≈ b in the
 // least-squares sense.
 
-import dgels from '../../lib/lapack/dgels/lib/ndarray.js';
+import dgels from '../../lib/lapack/dgels/lib/strided.js';
 
 // A: column-major Float64Array of size m*n (A[i + j*m] = A_{ij}); overwritten
 //    with its QR factorization

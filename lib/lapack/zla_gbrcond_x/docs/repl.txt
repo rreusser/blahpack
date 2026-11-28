@@ -68,7 +68,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( trans, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, AFB, strideAFB1, strideAFB2, offsetAFB, IPIV, strideIPIV, offsetIPIV, x, strideX, offsetX, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
+{{alias}}.strided( trans, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, AFB, strideAFB1, strideAFB2, offsetAFB, IPIV, strideIPIV, offsetIPIV, x, strideX, offsetX, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
     Estimates the infinity norm condition number for a complex general banded matrix with x scaling, using alternative indexing semantics.
 
     Parameters

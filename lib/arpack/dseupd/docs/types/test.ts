@@ -34,15 +34,15 @@ import dseupd from './index';
 	dseupd(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
 	const select = [ false, false, false, false ];
 	const iparam = [ 0, 0, 0, 0, 0, 0, 1 ];
 	const ipntr = [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1 ];
-	dseupd.ndarray( true, 'all', select, 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 8 ), 1, 2, 0, 0.0, 'standard', 2, 'LM', 2, 0.0, new Float64Array( 2 ), 1, 0, 4, new Float64Array( 8 ), 1, 2, 0, iparam, 1, 0, ipntr, 1, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 48 ), 1, 0, 48 ); // $ExpectType number
+	dseupd.strided( true, 'all', select, 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 8 ), 1, 2, 0, 0.0, 'standard', 2, 'LM', 2, 0.0, new Float64Array( 2 ), 1, 0, 4, new Float64Array( 8 ), 1, 2, 0, iparam, 1, 0, ipntr, 1, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 48 ), 1, 0, 48 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dseupd.ndarray(); // $ExpectError
+	dseupd.strided(); // $ExpectError
 }

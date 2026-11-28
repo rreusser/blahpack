@@ -77,12 +77,12 @@ zsyrk( order, uplo, trans, N, K, alpha, A, LDA, beta, C, LDC ) → Complex128Arr
 - `RangeError` eighth argument must be greater than or equal to `max( 1, trans === 'no-transpose' ? K : N )` (row-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsyrk.ndarray(
+zsyrk.strided(
     uplo, trans,
     N, K,
     alpha,
@@ -191,9 +191,9 @@ const beta = new Complex128( 0.0, 0.0 );
 zsyrk( 'column-major', 'upper', 'no-transpose', 2, 2, alpha, A, 2, beta, C, 2 );
 console.log( C ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Complex128Array( 4 );
-zsyrk.ndarray( 'upper', 'no-transpose', 2, 2, alpha, A, 1, 2, 0, beta, C, 1, 2, 0 );
+zsyrk.strided( 'upper', 'no-transpose', 2, 2, alpha, A, 1, 2, 0, beta, C, 1, 2, 0 );
 console.log( C ); // eslint-disable-line no-console
 ```
 

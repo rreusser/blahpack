@@ -16,12 +16,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe as describeCall, replayModule } from './replay.js';
 
-import dpotrf from '../../lib/lapack/dpotrf/lib/ndarray.js';
-import zpotrf from '../../lib/lapack/zpotrf/lib/ndarray.js';
-import dpbtrf from '../../lib/lapack/dpbtrf/lib/ndarray.js';
-import zpbtrf from '../../lib/lapack/zpbtrf/lib/ndarray.js';
-import dspmv from '../../lib/blas/dspmv/lib/ndarray.js';
-import zhpmv from '../../lib/blas/zhpmv/lib/ndarray.js';
+import dpotrf from '../../lib/lapack/dpotrf/lib/strided.js';
+import zpotrf from '../../lib/lapack/zpotrf/lib/strided.js';
+import dpbtrf from '../../lib/lapack/dpbtrf/lib/strided.js';
+import zpbtrf from '../../lib/lapack/zpbtrf/lib/strided.js';
+import dspmv from '../../lib/blas/dspmv/lib/strided.js';
+import zhpmv from '../../lib/blas/zhpmv/lib/strided.js';
 
 var LogicalMatrix = logical.LogicalMatrix;
 
@@ -274,8 +274,8 @@ test( 'replay describe(): a recorded callback or options object is described, no
 	assert.match( out, /WORK=Float64Array\(2\)\[0,0\]$/ );
 });
 
-test( 'replay short-work: a wrapper that skips ndarray.js\'s workspace check is reported (ticket 0077)', async function t() {
-	// One recorded dormql call: Q (4-by-2 reflectors) applied from the left to a 4-by-3 C; ndarray.js demands WORK >= max( 1, N ) = 3.
+test( 'replay short-work: a wrapper that skips strided.js\'s workspace check is reported (ticket 0077)', async function t() {
+	// One recorded dormql call: Q (4-by-2 reflectors) applied from the left to a 4-by-3 C; strided.js demands WORK >= max( 1, N ) = 3.
 	const M = 4;
 	const N = 3;
 	const K = 2;
@@ -294,7 +294,7 @@ test( 'replay short-work: a wrapper that skips ndarray.js\'s workspace check is 
 	assert.equal( short( old ).length, 1, JSON.stringify( old.mismatches ) );
 	assert.match( short( old )[ 0 ].detail, /accepted a workspace shorter than the minimum/ );
 
-	// The real wrapper (calls ndarray.js, D5d): RangeError, no finding.
+	// The real wrapper (calls strided.js, D5d): RangeError, no finding.
 	const cur = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'dormql' ), { 'probe': false, 'recs': [ rec ] } );
 	assert.equal( cur.replayed, 1 );
 	assert.deepEqual( cur.mismatches, [] );

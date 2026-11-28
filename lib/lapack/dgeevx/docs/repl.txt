@@ -107,7 +107,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( balanc, jobvl, jobvr, sense, N, A, strideA1, strideA2, offsetA, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, ilo, ihi, SCALE, strideSCALE, offsetSCALE, abnrm, RCONDE, strideRCONDE, offsetRCONDE, RCONDV, strideRCONDV, offsetRCONDV, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
+{{alias}}.strided( balanc, jobvl, jobvr, sense, N, A, strideA1, strideA2, offsetA, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, ilo, ihi, SCALE, strideSCALE, offsetSCALE, abnrm, RCONDE, strideRCONDE, offsetRCONDE, RCONDV, strideRCONDV, offsetRCONDV, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
     Computes eigenvalues, eigenvectors, and reciprocal condition numbers for a real nonsymmetric matrix, using alternative indexing semantics.
 
     Parameters

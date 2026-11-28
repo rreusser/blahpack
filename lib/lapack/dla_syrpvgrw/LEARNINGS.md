@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The INFO parameter is an input (not output) in this routine -- it tells the function which column had a zero pivot from dsytrf. The signature generator consumed INFO as a return value, so it had to be manually added back to the signature in base.js, ndarray.js, and dla_syrpvgrw.js.
+- The INFO parameter is an input (not output) in this routine -- it tells the function which column had a zero pivot from dsytrf. The signature generator consumed INFO as a return value, so it had to be manually added back to the signature in base.js, strided.js, and dla_syrpvgrw.js.
 - The Fortran 2x2 pivot loop `DO I = K+1, N` (1-based) requires careful 0-based translation. Initially wrote `for (i = k+2; ...)` which is incorrect; the correct translation is `for (i = k+1; ...)` because k is already 0-based (k = K-1). Similarly, `DO I = 1, K-1` (1-based) maps to `for (i = 0; i < k; ...)` in 0-based, not `for (i = 0; i <= k-2; ...)`.
 - The IPIV conversion from Fortran to JS: positive values subtract 1 (1-based to 0-based), negative values are unchanged because Fortran `-p` (1-based) equals JS `~(p-1) = -p`.
 

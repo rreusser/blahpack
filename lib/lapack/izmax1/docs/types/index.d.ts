@@ -41,7 +41,7 @@ interface Routine {
 	* @param offsetZX - starting index for `ZX`
 	* @returns result
 	*/
-	ndarray( N: number, ZX: Float64Array, strideZX: number, offsetZX: number ): Float64Array;
+	strided( N: number, ZX: Float64Array, strideZX: number, offsetZX: number ): Float64Array;
 }
 
 /**

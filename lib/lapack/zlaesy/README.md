@@ -46,12 +46,12 @@ zlaesy( a, b, c, rt1, rt2, evscal, cs1, sn1 ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaesy.ndarray(
+zlaesy.strided(
     a, b, c,
     rt1, offsetRt1,
     rt2, offsetRt2,
@@ -142,8 +142,8 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
-zlaesy.ndarray( 1, 1, 1.0, rt1, 0, rt2, 0, evscal, 0, cs1, 0, sn1, 0 );
+// Using the strided interface:
+zlaesy.strided( 1, 1, 1.0, rt1, 0, rt2, 0, evscal, 0, cs1, 0, sn1, 0 );
 out = {
 	'rt1r': rt1v[ 0 ],
 	'rt1i': rt1v[ 1 ],

@@ -45,12 +45,12 @@ zlartv( N, x, strideX, y, strideY, c, strideC, s, strideS ) → Complex128Array
 
 **Returns** `Complex128Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlartv.ndarray(
+zlartv.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,
@@ -127,8 +127,8 @@ const s = new Complex128Array( discreteUniform( 2 * N, -10, 10, opts ) );
 let out = zlartv( N, x, 1, y, 1, c, 1, s, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = zlartv.ndarray( N, x, 1, 0, y, 1, 0, c, 1, 0, s, 1, 0 );
+// Using the strided interface:
+out = zlartv.strided( N, x, 1, 0, y, 1, 0, c, 1, 0, s, 1, 0 );
 console.log( out );
 ```
 

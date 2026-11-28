@@ -98,8 +98,8 @@ function rfpAlloc( sc, npk, layout ) {
 * Build the check-runner bundle for one scalar type.
 *
 * @param {Object} sc - scalar trait (S.real | S.complex)
-* @param {Object} conv - { trttf, tfttr } RFP<->TR ndarray converters
-* @param {Object} ops - { pftrf, pftri, pftrs } ndarray routines
+* @param {Object} conv - { trttf, tfttr } RFP<->TR strided converters
+* @param {Object} ops - { pftrf, pftri, pftrs } strided routines
 * @param {Array<string>} transrs - RFP variants ('no-transpose' + 'transpose'|'conjugate-transpose')
 * @returns {Object} per-routine test drivers
 */

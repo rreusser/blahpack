@@ -78,12 +78,12 @@ dlagtm(
 - `TypeError` second argument must be a valid transpose operation
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlagtm.ndarray(
+dlagtm.strided(
     trans,
     N, nrhs,
     alpha,
@@ -198,8 +198,8 @@ const DU = discreteUniform( N, -10, 10, opts );
 let out = dlagtm( 'column-major', 'no-transpose', N, N, 1.0, DL, 1, d, 1, DU, 1, X, N, 1.0, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlagtm.ndarray( 'no-transpose', N, N, 1.0, DL, 1, 0, d, 1, 0, DU, 1, 0, X, N, 1, 0, 1.0, B, N, 1, 0 );
+// Using the strided interface:
+out = dlagtm.strided( 'no-transpose', N, N, 1.0, DL, 1, 0, d, 1, 0, DU, 1, 0, X, N, 1, 0, 1.0, B, N, 1, 0 );
 console.log( out );
 ```
 

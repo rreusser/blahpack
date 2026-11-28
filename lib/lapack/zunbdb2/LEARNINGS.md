@@ -60,7 +60,7 @@
   EQUIVALENCE-padding trap noted in SKILL.md. The packed buffer is
   itself `complex*16`, equivalenced to a `2*NMAX*NMAX` Float64 array
   for `print_array`.
-- 100% line and branch coverage on `base.js`, `ndarray.js`, `main.js`,
+- 100% line and branch coverage on `base.js`, `strided.js`, `main.js`,
   `index.js`. The wrapper `zunbdb2.js` has explicit tests for every
   `RangeError` and `TypeError` branch, including both row-major and
   column-major LDX validation.

@@ -96,12 +96,12 @@ iparmq( ispec, name, opts, N, ilo, ihi ) → integer
 - `TypeError` second argument must be a string
 - `TypeError` third argument must be a string
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-iparmq.ndarray( ispec, name, opts, N, ilo, ihi ) → integer
+iparmq.strided( ispec, name, opts, N, ilo, ihi ) → integer
 ```
 
 Returns the tuning parameters of the multishift QR algorithm, using alternative indexing semantics (the routine takes no arrays).
@@ -206,7 +206,7 @@ import iparmq from '@rreusser/blahpack/lapack/iparmq';
 console.log( iparmq( 15, 'DLAQR0', 'SV', 200, 1, 200 ) );
 // => 24
 
-console.log( iparmq.ndarray( 15, 'DLAQR0', 'SV', 200, 1, 200 ) );
+console.log( iparmq.strided( 15, 'DLAQR0', 'SV', 200, 1, 200 ) );
 // => 24
 ```
 

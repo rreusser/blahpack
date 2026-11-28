@@ -81,7 +81,7 @@ interface Routine {
 	* @param bignum - bignum
 	* @returns result
 	*/
-	ndarray( rightv: boolean, noinit: boolean, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, wr: number, wi: number, VR: Float64Array, strideVR: number, offsetVR: number, VI: Float64Array, strideVI: number, offsetVI: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, eps3: number, smlnum: number, bignum: number ): Float64Array;
+	strided( rightv: boolean, noinit: boolean, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, wr: number, wi: number, VR: Float64Array, strideVR: number, offsetVR: number, VI: Float64Array, strideVI: number, offsetVI: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, eps3: number, smlnum: number, bignum: number ): Float64Array;
 }
 
 /**

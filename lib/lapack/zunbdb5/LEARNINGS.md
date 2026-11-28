@@ -6,7 +6,7 @@
   alongside `strideX1, strideX2` (a recurring `bin/signature.py` gap
   that has now bitten both `dorbdb5` and `zunbdb6`). The Fortran's
   `INCX*` should consume into `stride*` only; the extra slot must be
-  removed by hand from `base.js`, `ndarray.js`, and `zunbdb5.js`. The
+  removed by hand from `base.js`, `strided.js`, and `zunbdb5.js`. The
   scaffolded `test.zunbdb5.js` then has the wrong arity (16 instead
   of 14) and must be rewritten.
 - `DLAMCH('Precision')` → `Number.EPSILON` (= `@stdlib/constants/float64/eps`),
@@ -49,7 +49,7 @@
 
 ## Coverage gaps
 
-- 100% line and branch coverage on `base.js`, `ndarray.js`, `main.js`.
+- 100% line and branch coverage on `base.js`, `strided.js`, `main.js`.
   All three return paths are exercised: the unit-projection branch
   (basic tests), the X1 basis-search branch (`zero_x_finds_e3_in_x1`),
   and the X2 basis-search branch (`zero_x_finds_e_first_in_x2`).
@@ -64,7 +64,7 @@
 ## Test-design notes
 
 - Reused the `buildQ`/`assertArrayClose` helpers verbatim from
-  zunbdb6's `test.ndarray.js`. These are now a clear candidate for a
+  zunbdb6's `test.strided.js`. These are now a clear candidate for a
   shared `test/_helpers.js` in the orbdb/unbdb family (3+ routines
   use them).
 - The Fortran test mostly mirrors `test_dorbdb5.f90` with `complex*16`

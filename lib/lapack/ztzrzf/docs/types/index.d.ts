@@ -60,7 +60,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK` (in complex elements)
 	* @returns status code (`0` = success)
 	*/
-	ndarray( M: number, N: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, TAU: Complex128Array, strideTAU: number, offsetTAU: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
+	strided( M: number, N: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, TAU: Complex128Array, strideTAU: number, offsetTAU: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
 }
 
 /**

@@ -45,12 +45,12 @@ Generates a plane rotation with non-negative diagonal.
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlartgp.ndarray( f, g, cs, sn, r ) → void
+dlartgp.strided( f, g, cs, sn, r ) → void
 ```
 
 Generates a plane rotation with non-negative diagonal.

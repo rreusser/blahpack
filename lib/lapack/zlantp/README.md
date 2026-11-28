@@ -57,12 +57,12 @@ zlantp( order, norm, uplo, diag, N, AP, WORK ) → number
 - `TypeError` third argument must be a valid matrix triangle
 - `TypeError` fourth argument must be a valid diagonal type
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlantp.ndarray(
+zlantp.strided(
     norm, uplo, diag,
     N,
     AP, strideAP, offsetAP,

@@ -58,12 +58,12 @@ dstev( order, jobz, N, d, strideD, e, strideE, Z, LDZ, WORK ) → integer
 - `RangeError` ninth argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dstev.ndarray(
+dstev.strided(
     jobz,
     N,
     d, strideD, offsetD,
@@ -171,11 +171,11 @@ const WORK = new Float64Array( 2 * ( N - 1 ) );
 let info = dstev( 'column-major', 'compute-vectors', N, d, 1, e, 1, Z, N, WORK );
 console.log( info, d, Z );
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 4.0, 4.0 ] );
 e = new Float64Array( [ 1.0, 1.0 ] );
 Z = new Float64Array( N * N );
-info = dstev.ndarray( 'compute-vectors', N, d, 1, 0, e, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
+info = dstev.strided( 'compute-vectors', N, d, 1, 0, e, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
 console.log( info, d, Z );
 ```
 

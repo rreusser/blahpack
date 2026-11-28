@@ -23,7 +23,7 @@
   },
   "types": "./docs/types",
   "scripts": {
-    "test": "node --test test/test.js test/test.dseigt.js test/test.ndarray.js"
+    "test": "node --test test/test.js test/test.dseigt.js test/test.strided.js"
   },
   "homepage": "https://github.com/stdlib-js/stdlib",
   "repository": {
@@ -62,7 +62,7 @@
     "algebra",
     "subroutines",
     "array",
-    "ndarray",
+    "strided",
     "float64",
     "double",
     "float64array"

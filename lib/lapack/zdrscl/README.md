@@ -38,12 +38,12 @@ zdrscl( N, sa, x, strideX ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zdrscl.ndarray( N, sa, x, strideX, offsetX ) → Complex128Array
+zdrscl.strided( N, sa, x, strideX, offsetX ) → Complex128Array
 ```
 
 Scales a complex vector by the reciprocal of a real scalar, performing the.
@@ -101,8 +101,8 @@ const x = new Complex128Array( [ 2.0, 4.0, 6.0, 8.0, 10.0, 12.0 ] );
 zdrscl( N, 2.0, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zdrscl.ndarray( N, 2.0, x, 1, 0 );
+// Using the strided interface:
+zdrscl.strided( N, 2.0, x, 1, 0 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 ```
 

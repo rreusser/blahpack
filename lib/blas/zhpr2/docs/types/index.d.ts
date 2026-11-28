@@ -59,7 +59,7 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	strided( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
 }
 
 /**

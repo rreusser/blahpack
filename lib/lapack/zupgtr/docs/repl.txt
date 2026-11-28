@@ -38,7 +38,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP, TAU, strideTAU, offsetTAU, Q, strideQ1, strideQ2, offsetQ, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP, TAU, strideTAU, offsetTAU, Q, strideQ1, strideQ2, offsetQ, WORK, strideWORK, offsetWORK )
     Generates an orthogonal matrix Q which is defined as the product of n-1
     elementary reflectors of order n, as returned by zhptrd using
     alternative indexing semantics.

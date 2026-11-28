@@ -58,12 +58,12 @@ dgeqrt( order, M, N, nb, A, LDA, T, LDT, WORK ) → integer
 - `RangeError` `LDA` must be valid for the chosen order
 - `RangeError` `LDT` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeqrt.ndarray(
+dgeqrt.strided(
     M, N, nb,
     A, strideA1, strideA2, offsetA,
     T, strideT1, strideT2, offsetT,
@@ -153,8 +153,8 @@ const WORK = new Float64Array( 12 );
 let info = dgeqrt( 'column-major', 4, 3, 2, A, 4, T, 2, WORK );
 console.log( info );
 
-// Using the ndarray interface:
-info = dgeqrt.ndarray( 4, 3, 2, A, 1, 4, 0, T, 1, 2, 0, WORK, 1, 0 );
+// Using the strided interface:
+info = dgeqrt.strided( 4, 3, 2, A, 1, 4, 0, T, 1, 2, 0, WORK, 1, 0 );
 console.log( info );
 ```
 

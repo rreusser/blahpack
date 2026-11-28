@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The signature generator produced `incx`/`incy` parameters, but the stdlib convention already encodes direction via negative `strideX`/`strideY` and starting position via `offsetX`/`offsetY`. Removed `incx`/`incy` to match the daxpy pattern. The ndarray.js wrapper also needed updating to match.
+- The signature generator produced `incx`/`incy` parameters, but the stdlib convention already encodes direction via negative `strideX`/`strideY` and starting position via `offsetX`/`offsetY`. Removed `incx`/`incy` to match the daxpy pattern. The strided.js wrapper also needed updating to match.
 - The Fortran DCABS1 early return (`IF (DCABS1(ZA).EQ.0.0d0) RETURN`) was simplified to `zaR === 0.0 && zaI === 0.0` since DCABS1 computes `|Re| + |Im|`, which is zero iff both parts are zero.
 
 ## Dependency interface surprises

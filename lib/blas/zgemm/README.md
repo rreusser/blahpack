@@ -94,12 +94,12 @@ zgemm( order, transa, transb, M, N, K, alpha, A, LDA, B, LDB, beta, C, LDC ) →
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgemm.ndarray(
+zgemm.strided(
     transa, transb,
     M, N, K,
     alpha,
@@ -220,9 +220,9 @@ const beta = new Complex128( 0.0, 0.0 );
 zgemm( 'column-major', 'no-transpose', 'no-transpose', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2 );
 console.log( C ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Complex128Array( 4 );
-zgemm.ndarray( 'no-transpose', 'no-transpose', 2, 2, 2, alpha, A, 1, 2, 0, B, 1, 2, 0, beta, C, 1, 2, 0 );
+zgemm.strided( 'no-transpose', 'no-transpose', 2, 2, 2, alpha, A, 1, 2, 0, B, 1, 2, 0, beta, C, 1, 2, 0 );
 console.log( C ); // eslint-disable-line no-console
 ```
 

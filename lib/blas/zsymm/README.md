@@ -82,12 +82,12 @@ zsymm( order, side, uplo, M, N, alpha, A, LDA, B, LDB, beta, C, LDC ) → Comple
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsymm.ndarray(
+zsymm.strided(
     side, uplo,
     M, N,
     alpha,
@@ -197,9 +197,9 @@ const beta = new Complex128( 0.0, 0.0 );
 zsymm( 'column-major', 'left', 'upper', 2, 2, alpha, A, 2, B, 2, beta, C, 2 );
 console.log( C ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Complex128Array( 4 );
-zsymm.ndarray( 'left', 'upper', 2, 2, alpha, A, 1, 2, 0, B, 1, 2, 0, beta, C, 1, 2, 0 );
+zsymm.strided( 'left', 'upper', 2, 2, alpha, A, 1, 2, 0, B, 1, 2, 0, beta, C, 1, 2, 0 );
 console.log( C ); // eslint-disable-line no-console
 ```
 

@@ -45,6 +45,8 @@ jobs:
         run: npm run test:lint-rules
       - name: "No module path keeps the retired base level (ticket 0125; fix: node bin/codemod-flatten.mjs --all)"
         run: node bin/codemod-flatten.mjs --check
+      - name: "Nothing still calls the offset form ndarray (ticket 0126; fix: node bin/codemod-strided.mjs --all)"
+        run: node bin/codemod-strided.mjs --check
       - name: No escape hatches (no continue-on-error, baselines, skips, disabled rules)
         run: npm run lint:escape-hatches
       - name: Run ESLint
@@ -146,11 +148,11 @@ jobs:
       - name: Every WORK = null allocation reaches the reference's optimum
         run: npm run check:workspace-optimum
 
-  # CONVENTIONS W3/W5 (ticket 0016): ndarray.js demands exactly the
+  # CONVENTIONS W3/W5 (ticket 0016): strided.js demands exactly the
   # reference's workspace minimum. Every row of the committed
   # data/fortran-lwmin.json (the smallest LWORK/LRWORK/LIWORK the reference
   # does not reject with INFO = -k, and each declared workspace extent) is
-  # replayed through ndarray.js with base.js stopped: a RangeError at the
+  # replayed through strided.js with base.js stopped: a RangeError at the
   # minimum, or reaching base.js at the minimum - 1, fails. The cache is
   # checked against the specs it was generated from.
   minimum:
@@ -166,12 +168,12 @@ jobs:
       - run: npm ci
       - name: The workspace-minimum cache matches the specs
         run: npm run lwmin:check
-      - name: Every ndarray.js workspace check demands the reference's minimum
+      - name: Every strided.js workspace check demands the reference's minimum
         run: npm run check:workspace-minimum
 
   # CONVENTIONS T3/T4 (tickets 0033, 0064): every changed module's lib/ files
   # meet their per-file coverage floor under the module's own tests. The
-  # wrapper and ndarray.js must be fully covered (both orders, the
+  # wrapper and strided.js must be fully covered (both orders, the
   # WORK = null branch, every validation throw); base.js >= 90% lines and
   # >= 85% branches.
   coverage:
@@ -190,7 +192,7 @@ jobs:
       - name: Every lib/ file of a changed module meets its coverage floor
         run: node bin/coverage.mjs --changed --check --uncovered
 
-  # Tickets 0065/0068: every valid ndarray.js call a changed module's tests
+  # Tickets 0065/0068: every valid strided.js call a changed module's tests
   # make is replayed through its <routine>.js wrapper (recorded workspaces:
   # bit-identical; WORK = null: same up to rounding), and every vector
   # length the wrapper assumes is checked against what the call touches and
@@ -208,7 +210,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Every changed wrapper computes what its ndarray.js computes
+      - name: Every changed wrapper computes what its strided.js computes
         run: node bin/wrapper-replay.mjs --changed --check
 
   conformance:

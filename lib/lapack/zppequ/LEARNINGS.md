@@ -12,7 +12,7 @@
 ## Automation opportunities
 
 - The scaffold generator (`init_routine.py`) could detect when the d-prefix counterpart already exists and auto-generate a closer initial `base.js` (e.g., pre-fill the reinterpret pattern for z-prefix variants of existing d-prefix routines).
-- The `ndarray.js` template should not include `scond`/`amax` as parameters when the return convention is an object. This is a signature.py issue -- it maps all Fortran output scalars as params even when the d-prefix reference returns them in an object.
+- The `strided.js` template should not include `scond`/`amax` as parameters when the return convention is an object. This is a signature.py issue -- it maps all Fortran output scalars as params even when the d-prefix reference returns them in an object.
 
 ## Coverage gaps
 

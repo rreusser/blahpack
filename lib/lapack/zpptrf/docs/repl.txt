@@ -22,7 +22,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP )
     @license Apache-2.0 using alternative indexing semantics.
 
     Parameters

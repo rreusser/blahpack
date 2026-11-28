@@ -1,4 +1,4 @@
-// target: lib/lapack/dgetrs/lib/ndarray.js
+// target: lib/lapack/dgetrs/lib/strided.js
 /**
 * @license MIT
 *

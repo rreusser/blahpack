@@ -74,12 +74,12 @@ zgemv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Com
 - `RangeError` ninth argument must be non-zero
 - `RangeError` twelfth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgemv.ndarray(
+zgemv.strided(
     trans,
     M, N,
     alpha,
@@ -182,9 +182,9 @@ const beta = new Complex128( 0.0, 0.0 );
 zgemv( 'column-major', 'no-transpose', 2, 2, alpha, A, 2, x, 1, beta, y, 1 );
 console.log( y ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 y = new Complex128Array( 2 );
-zgemv.ndarray( 'no-transpose', 2, 2, alpha, A, 1, 2, 0, x, 1, 0, beta, y, 1, 0 );
+zgemv.strided( 'no-transpose', 2, 2, alpha, A, 1, 2, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( y ); // eslint-disable-line no-console
 ```
 

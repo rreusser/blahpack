@@ -1,4 +1,4 @@
-// Fixture for bin/lib/value-mutants.test.mjs: zhetrf's test.ndarray.js as it was
+// Fixture for bin/lib/value-mutants.test.mjs: zhetrf's test.strided.js as it was
 // before PR #58 (commit 39d98455d~1), i.e. without the upper_66_* reference
 // tests; only its import paths are changed, to reach the real module.
 
@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zhetrf from '../../../../../lib/lapack/zhetrf/lib/ndarray.js';
+import zhetrf from '../../../../../lib/lapack/zhetrf/lib/strided.js';
 
 // FIXTURES //
 

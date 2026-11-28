@@ -55,12 +55,12 @@ dppequ( order, uplo, N, AP, s, strideS, scond, amax ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dppequ.ndarray(
+dppequ.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -156,9 +156,9 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': dppequ.ndarray( 'upper', N, AP, 1, 0, s, 1, 0, scond, amax ),
+	'info': dppequ.strided( 'upper', N, AP, 1, 0, s, 1, 0, scond, amax ),
 	'scond': scond[ 0 ],
 	'amax': amax[ 0 ]
 };

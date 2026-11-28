@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The scaffold generator produced `scond` and `amax` as input parameters, but they are output-only scalars. Following dpbequ, they must be returned as part of the `{ info, scond, amax }` result object. The ndarray.js and zpbequ.js wrappers needed manual correction to drop these params.
+- The scaffold generator produced `scond` and `amax` as input parameters, but they are output-only scalars. Following dpbequ, they must be returned as part of the `{ info, scond, amax }` result object. The strided.js and zpbequ.js wrappers needed manual correction to drop these params.
 - Complex band storage uses the same row/column structure as real band storage, but each element occupies 2 floats. After `reinterpret()`, multiplying strides and offset by 2 gives correct Float64 indexing. Reading only the real part (even index) of each diagonal element is all that zpbequ needs.
 
 ## Dependency interface surprises

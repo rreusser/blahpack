@@ -52,12 +52,12 @@ ddisna( job, M, N, d, strideD, SEP, strideSEP ) → integer
 - `TypeError` first argument must be one of the following: "eigenvalues", "left-vectors", "right-vectors"
 - `RangeError` second argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ddisna.ndarray( job, M, N, d, strideD, offsetD, SEP, strideSEP, offsetSEP ) → integer
+ddisna.strided( job, M, N, d, strideD, offsetD, SEP, strideSEP, offsetSEP ) → integer
 ```
 
 | Parameter | Type | Description |

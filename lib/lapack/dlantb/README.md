@@ -62,12 +62,12 @@ dlantb( order, norm, uplo, diag, N, K, AB, LDAB, WORK ) → number
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, K + 1 )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlantb.ndarray(
+dlantb.strided(
     norm, uplo, diag,
     N, K,
     AB, strideAB1, strideAB2, offsetAB,
@@ -163,10 +163,10 @@ import dlantb from '@rreusser/blahpack/lapack/dlantb';
 const AB = new Float64Array( [ 0, 2, -3, 4, 1, -5, 6, 7 ] );
 const WORK = new Float64Array( 4 );
 
-console.log( 'Max norm:', dlantb.ndarray( 'max', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'One norm:', dlantb.ndarray( 'one-norm', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'Inf norm:', dlantb.ndarray( 'inf-norm', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'Frobenius norm:', dlantb.ndarray( 'frobenius', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Max norm:', dlantb.strided( 'max', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'One norm:', dlantb.strided( 'one-norm', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Inf norm:', dlantb.strided( 'inf-norm', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Frobenius norm:', dlantb.strided( 'frobenius', 'upper', 'non-unit', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
 ```
 
 </section>

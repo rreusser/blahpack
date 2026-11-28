@@ -1,13 +1,13 @@
 /**
 * Load hook for bin/workspace-optimum.mjs and bin/workspace-minimum.mjs
 * (registered in their workers with `module.register`). It rewrites ONE
-* file of a module (`data.target`: the wrapper, or ndarray.js):
+* file of a module (`data.target`: the wrapper, or strided.js):
 *
 * -   unless `data.guard` is false, every null-workspace allocation goes
 *     through `globalThis.__wsGuard` (the rewrite of
 *     bin/workspace-guard-loader.mjs), which the optimum checker defines to
 *     record the requested size;
-* -   the module's own `base.js` / `ndarray.js` default import is replaced by
+* -   the module's own `base.js` / `strided.js` default import is replaced by
 *     `globalThis.__wsOptStop`, which throws a sentinel: the call stops after
 *     validation (and allocation), before the algorithm runs.
 */
@@ -27,7 +27,7 @@ function stopOwnEntry( src ) {
 	const ast = espree.parse( src, { 'ecmaVersion': 2022, 'sourceType': 'module', 'range': true } );
 	const edits = [];
 	ast.body.forEach( ( st ) => {
-		if ( st.type !== 'ImportDeclaration' || ![ './base.js', './ndarray.js' ].includes( st.source.value ) ) {
+		if ( st.type !== 'ImportDeclaration' || ![ './base.js', './strided.js' ].includes( st.source.value ) ) {
 			return;
 		}
 		const def = st.specifiers.find( ( s ) => s.type === 'ImportDefaultSpecifier' );

@@ -41,12 +41,12 @@ dscal( N, alpha, x, strideX ) → Float64Array
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dscal.ndarray( N, alpha, x, strideX, offsetX ) → Float64Array
+dscal.strided( N, alpha, x, strideX, offsetX ) → Float64Array
 ```
 
 | Parameter | Type | Description |
@@ -101,9 +101,9 @@ let out = dscal( N, 2.0, x, 1 );
 console.log( out );
 // => <Float64Array>[ 2.0, -4.0, 6.0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Float64Array( [ 1.0, -2.0, 3.0 ] );
-out = dscal.ndarray( N, 2.0, x, 1, 0 );
+out = dscal.strided( N, 2.0, x, 1, 0 );
 console.log( out );
 // => <Float64Array>[ 2.0, -4.0, 6.0 ]
 ```

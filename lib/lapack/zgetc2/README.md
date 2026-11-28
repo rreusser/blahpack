@@ -47,12 +47,12 @@ zgetc2( order, N, A, LDA, IPIV, strideIPIV, JPIV, strideJPIV ) → info: integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgetc2.ndarray(
+zgetc2.strided(
     N,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV,

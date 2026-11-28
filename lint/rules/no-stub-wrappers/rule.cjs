@@ -17,7 +17,7 @@ var rule = {
 		var filename = ( context.filename || ( context.getFilename && context.getFilename() ) || '' );
 		var basename = path.basename( filename );
 
-		// Only check wrapper files (index.js, ndarray.js, etc.), not base.js
+		// Only check wrapper files (index.js, strided.js, etc.), not base.js
 		if ( basename === 'base.js' ) {
 			return {};
 		}

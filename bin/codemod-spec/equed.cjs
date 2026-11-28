@@ -54,7 +54,7 @@ function indentAt( src, i ) {
 
 function laq( mod ) {
 	var spec = specLib.load( mod.routine );
-	[ 'base', 'ndarray', 'strided' ].forEach( function each( form ) {
+	[ 'base', 'strided', 'wrapper' ].forEach( function each( form ) {
 		var file = mod.files[ form ];
 		var src = fs.readFileSync( file, 'utf8' );
 		var fn = lib.exported( lib.parse( src ) );

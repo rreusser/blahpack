@@ -87,13 +87,13 @@ import iparmq = require( './index' );
 	iparmq( 1, 'X', 'X', 1, 1, 1, 1 ); // $ExpectError
 }
 
-// The `ndarray` method returns a number...
+// The `strided` method returns a number...
 {
-	iparmq.ndarray( 1, 'X', 'X', 1, 1, 1 ); // $ExpectType number
+	iparmq.strided( 1, 'X', 'X', 1, 1, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the `ndarray` method is provided an unsupported number of arguments...
+// The compiler throws an error if the `strided` method is provided an unsupported number of arguments...
 {
-	iparmq.ndarray(); // $ExpectError
-	iparmq.ndarray( 1, 'X', 'X', 1, 1, 1, 1 ); // $ExpectError
+	iparmq.strided(); // $ExpectError
+	iparmq.strided( 1, 'X', 'X', 1, 1, 1, 1 ); // $ExpectError
 }

@@ -50,7 +50,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, iw, gl, gu, d, strideD, offsetD, E2, strideE2, offsetE2, pivmin, reltol, w, werr )
+{{alias}}.strided( N, iw, gl, gu, d, strideD, offsetD, E2, strideE2, offsetE2, pivmin, reltol, w, werr )
     Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy, using alternative indexing semantics.
 
     Parameters

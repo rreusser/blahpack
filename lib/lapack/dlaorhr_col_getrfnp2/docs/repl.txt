@@ -35,7 +35,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD )
+{{alias}}.strided( M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD )
     Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel)., using alternative indexing semantics.
 
     Parameters

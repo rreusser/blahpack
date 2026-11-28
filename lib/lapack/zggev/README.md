@@ -102,12 +102,12 @@ zggev(
 - `RangeError` fourteenth argument is invalid (rejected when `LDVL < 1 \|\| ( ( jobvl === "compute-vectors" ) && LDVL < N )`)
 - `RangeError` sixteenth argument is invalid (rejected when `LDVR < 1 \|\| ( ( jobvr === "compute-vectors" ) && LDVR < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggev.ndarray(
+zggev.strided(
     jobvl, jobvr,
     N,
     A, strideA1, strideA2, offsetA,
@@ -245,12 +245,12 @@ const BETA = new Complex128Array( N );
 let out = zggev( 'column-major', 'compute-vectors', 'compute-vectors', N, A, N, B, N, ALPHA, 1, BETA, 1, VL, N, VR, N, null, null );
 console.log( out, reinterpret( ALPHA, 0 ), reinterpret( BETA, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface (caller-provided workspaces):
+// Using the strided interface (caller-provided workspaces):
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 B = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 const WORK = new Complex128Array( N + ( N * 32 ) + 4160 ); // the optimum; the minimum is 2*N
 const RWORK = new Float64Array( 8 * N );
-out = zggev.ndarray( 'compute-vectors', 'compute-vectors', N, A, 1, N, 0, B, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, VL, 1, N, 0, VR, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
+out = zggev.strided( 'compute-vectors', 'compute-vectors', N, A, 1, N, 0, B, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, VL, 1, N, 0, VR, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( out, reinterpret( ALPHA, 0 ), reinterpret( BETA, 0 ) ); // eslint-disable-line no-console
 ```
 

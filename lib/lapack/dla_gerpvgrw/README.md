@@ -46,12 +46,12 @@ dla_gerpvgrw( order, N, ncols, A, LDA, AF, LDAF ) → number
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_gerpvgrw.ndarray(
+dla_gerpvgrw.strided(
     N, ncols,
     A, strideA1, strideA2, offsetA,
     AF, strideAF1, strideAF2, offsetAF
@@ -121,8 +121,8 @@ const AF = discreteUniform( N * N, -10, 10, opts );
 let out = dla_gerpvgrw( 'column-major', N, 1, A, N, AF, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dla_gerpvgrw.ndarray( N, 1, A, N, 1, 0, AF, N, 1, 0 );
+// Using the strided interface:
+out = dla_gerpvgrw.strided( N, 1, A, N, 1, 0, AF, N, 1, 0 );
 console.log( out );
 ```
 

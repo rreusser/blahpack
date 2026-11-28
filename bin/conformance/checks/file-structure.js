@@ -10,15 +10,15 @@ var REQUIRED = [
 	'package.json',
 	'lib/index.js',
 	'lib/base.js',
-	'lib/ndarray.js',
+	'lib/strided.js',
 	'test/test.js',
-	'test/test.ndarray.js',
+	'test/test.strided.js',
 	'README.md',
 	'docs/types/index.d.ts',
 	'docs/types/test.ts',
 	'docs/repl.txt',
 	'examples/index.js',
-	'benchmark/benchmark.ndarray.js'
+	'benchmark/benchmark.strided.js'
 ];
 
 // Files a module must not have. lib/main.js was folded into lib/index.js

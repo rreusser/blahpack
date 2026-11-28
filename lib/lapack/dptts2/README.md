@@ -49,12 +49,12 @@ dptts2( order, N, nrhs, d, strideD, e, strideE, B, LDB ) → Float64Array
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dptts2.ndarray(
+dptts2.strided(
     N, nrhs,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -134,8 +134,8 @@ const e = discreteUniform( N, -10, 10, opts );
 let out = dptts2( 'column-major', N, N, d, 1, e, 1, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dptts2.ndarray( N, N, d, 1, 0, e, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dptts2.strided( N, N, d, 1, 0, e, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

@@ -1,4 +1,4 @@
-// target: lib/lapack/dgeqrf/lib/ndarray.js
+// target: lib/lapack/dgeqrf/lib/strided.js
 function helper( WORK, strideWork ) {
 	return WORK[ strideWork ];
 }

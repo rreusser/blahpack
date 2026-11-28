@@ -1,9 +1,9 @@
 # `workspace-length-guard`
 
-`ndarray.js` checks the length of every workspace whose minimum the spec knows
+`strided.js` checks the length of every workspace whose minimum the spec knows
 (CONVENTIONS W3; ticket 0107).
 
-**Files:** `lib/<pkg>/<routine>/lib/ndarray.js`, when `spec/<routine>.json`
+**Files:** `lib/<pkg>/<routine>/lib/strided.js`, when `spec/<routine>.json`
 has a param of role `workspace` whose `minLength.js` is not null.
 
 ## Rule
@@ -21,9 +21,9 @@ has a param of role `workspace` whose `minLength.js` is not null.
 
 Whether a guard demands the right length, on every path, is not this rule's
 job: `ci:workspace-minimum` (`bin/workspace-minimum.mjs`) replays the
-reference's minimum through `ndarray.js`, and the wrapper replay's `min-work`
+reference's minimum through `strided.js`, and the wrapper replay's `min-work`
 and `short-work` variants (`test/harness/replay.js`) replay every recorded call
-at the minimum `ndarray.js` demands and one element below it.
+at the minimum `strided.js` demands and one element below it.
 
 ## Why
 

@@ -75,12 +75,12 @@ zgbcon(
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` tenth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgbcon.ndarray(
+zgbcon.strided(
     norm,
     N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
@@ -198,7 +198,7 @@ zgbtrf( 'column-major', N, N, kl, ku, AB, LDAB, IPIV, 1 );
 let info = zgbcon( 'column-major', 'one-norm', N, kl, ku, AB, LDAB, IPIV, 1, anorm, rcond, null, null );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 AB = new Complex128Array( [
 	0.0, 0.0, 0.0, 0.0, 4.0, 0.0, -1.0, 0.0,
 	0.0, 0.0, -1.0, 0.0, 4.0, 0.0, -1.0, 0.0,
@@ -208,8 +208,8 @@ AB = new Complex128Array( [
 IPIV = new Int32Array( N );
 const WORK = new Complex128Array( 2 * N );
 const RWORK = new Float64Array( N );
-zgbtrf.ndarray( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
-info = zgbcon.ndarray( 'one-norm', N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
+zgbtrf.strided( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
+info = zgbcon.strided( 'one-norm', N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 ```
 

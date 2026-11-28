@@ -286,24 +286,24 @@ def parse_type_declaration_stmt (node):
             
             output_name = name
 
-            ndarray = False
-            ndarray_args = []
+            strided = False
+            strided_args = []
             remove_args = []
             if shape and len(shape) > 0 and shape[-1] == '*':
                 dim = len(shape)
-                ndarray = True
+                strided = True
                 output_name = output_name.upper() if dim > 1 else output_name
 
                 remove_args = [arg for arg in shape if arg != '*']
-                ndarray_args = ['stride%s%s' % (output_name.upper(), i+1 if dim > 1 else '') for i in range(dim)]
-                ndarray_args.append('offset%s' % output_name.upper())
+                strided_args = ['stride%s%s' % (output_name.upper(), i+1 if dim > 1 else '') for i in range(dim)]
+                strided_args.append('offset%s' % output_name.upper())
             
             declarations[name] = {
                 'name': output_name,
                 'type': type,
                 'shape': shape,
-                'ndarray': ndarray,
-                'ndarray_args': ndarray_args,
+                'strided': strided,
+                'strided_args': strided_args,
                 'remove_args': remove_args,
             }
 

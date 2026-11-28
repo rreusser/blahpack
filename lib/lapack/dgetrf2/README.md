@@ -50,12 +50,12 @@ dgetrf2( order, M, N, A, LDA, IPIV, strideIPIV ) → info: integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetrf2.ndarray(
+dgetrf2.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV
@@ -139,10 +139,10 @@ let IPIV = new Int32Array( N );
 let out = dgetrf2( 'column-major', N, N, A, N, IPIV, 1 );
 console.log( out, A, IPIV ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( A0 );
 IPIV = new Int32Array( N );
-out = dgetrf2.ndarray( N, N, A, 1, N, 0, IPIV, 1, 0 );
+out = dgetrf2.strided( N, N, A, 1, N, 0, IPIV, 1, 0 );
 console.log( out, A, IPIV ); // eslint-disable-line no-console
 ```
 

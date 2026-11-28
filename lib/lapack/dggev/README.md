@@ -99,12 +99,12 @@ Prefer passing a caller-owned buffer for batched use.
 - `RangeError` LDA must be >= max(1,N)
 - `RangeError` LDB must be >= max(1,N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggev.ndarray(
+dggev.strided(
     jobvl, jobvr,
     N,
     A, strideA1, strideA2, offsetA,

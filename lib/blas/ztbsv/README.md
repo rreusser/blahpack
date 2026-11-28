@@ -104,12 +104,12 @@ ztbsv( order, uplo, trans, diag, N, K, A, LDA, x, strideX ) → Complex128Array
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` tenth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztbsv.ndarray(
+ztbsv.strided(
     uplo, trans, diag,
     N, K,
     A, strideA1, strideA2, offsetA,
@@ -234,9 +234,9 @@ const x = new Complex128Array( [ 4.0, 0.0, 9.0, 0.0 ] );
 ztbsv( 'column-major', 'upper', 'no-transpose', 'non-unit', 2, 1, A, 2, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 const y = new Complex128Array( [ 4.0, 0.0, 9.0, 0.0 ] );
-ztbsv.ndarray( 'upper', 'no-transpose', 'non-unit', 2, 1, A, 1, 2, 0, y, 1, 0 );
+ztbsv.strided( 'upper', 'no-transpose', 'non-unit', 2, 1, A, 1, 2, 0, y, 1, 0 );
 console.log( reinterpret( y, 0 ) ); // eslint-disable-line no-console
 ```
 

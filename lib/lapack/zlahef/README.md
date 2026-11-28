@@ -90,12 +90,12 @@ Computes a partial factorization of a complex Hermitian matrix `A` using the Bun
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nb )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlahef.ndarray(
+zlahef.strided(
     uplo,
     N, nb,
     kb,
@@ -235,11 +235,11 @@ let out = {
 console.log( out );
 console.log( IPIV );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = hermitian();
 IPIV = new Int32Array( N );
 W = new Complex128Array( N * nb );
-info = zlahef.ndarray( 'upper', N, nb, kb, A, 1, N, 0, IPIV, 1, 0, W, 1, N, 0 );
+info = zlahef.strided( 'upper', N, nb, kb, A, 1, N, 0, IPIV, 1, 0, W, 1, N, 0 );
 out = {
 	'info': info,
 	'kb': kb[ 0 ]

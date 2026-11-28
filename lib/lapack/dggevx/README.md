@@ -173,12 +173,12 @@ Prefer passing caller-owned buffers for batched use.
 - `RangeError` eighteenth argument is invalid (rejected when `LDVL < 1 \|\| ( ( jobvl === "compute-vectors" ) && LDVL < N )`)
 - `RangeError` twentieth argument is invalid (rejected when `LDVR < 1 \|\| ( ( jobvr === "compute-vectors" ) && LDVR < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggevx.ndarray(
+dggevx.strided(
     balanc, jobvl, jobvr, sense,
     N,
     A, strideA1, strideA2, offsetA,

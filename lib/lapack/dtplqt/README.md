@@ -66,12 +66,12 @@ Computes a blocked LQ factorization of a real triangular-pentagonal matrix `C = 
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (row-major)
 - `RangeError` leading dimensions must be valid
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtplqt.ndarray(
+dtplqt.strided(
     M, N, l, mb,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

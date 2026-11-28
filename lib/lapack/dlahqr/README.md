@@ -69,12 +69,12 @@ dlahqr(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlahqr.ndarray(
+dlahqr.strided(
     wantt, wantz,
     N,
     ilo, ihi,
@@ -203,10 +203,10 @@ let info = dlahqr( 'column-major', true, true, N, 1, N, H, N, WR, 1, WI, 1, 1, N
 console.log( 'info = %d', info );
 console.log( WR, WI );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Float64Array( [ 1.0, 4.0, 0.0, 2.0, 5.0, 7.0, 3.0, 6.0, 8.0 ] );
 Z = new Float64Array( [ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 ] );
-info = dlahqr.ndarray( true, true, N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, 1, N, Z, 1, N, 0 );
+info = dlahqr.strided( true, true, N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, 1, N, Z, 1, N, 0 );
 console.log( 'info = %d', info );
 console.log( WR, WI );
 ```

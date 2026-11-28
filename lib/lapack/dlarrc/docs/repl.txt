@@ -35,7 +35,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( jobt, N, vl, vu, D, strideD, offsetD, E, strideE, offsetE, pivmin, eigcnt, lcnt, rcnt )
+{{alias}}.strided( jobt, N, vl, vu, D, strideD, offsetD, E, strideE, offsetE, pivmin, eigcnt, lcnt, rcnt )
     Counts the number of eigenvalues of a symmetric tridiagonal matrix in an
     interval using alternative indexing semantics.
 

@@ -1,7 +1,7 @@
 /**
 * Storage schemes: the pluggable layer that realizes a logical matrix (logical.js)
 * into a physical, poisoned, API-ready buffer AND yields the stride/offset
-* argument list to splat into a routine's `ndarray` call.
+* argument list to splat into a routine's `strided` call.
 *
 * This is the abstraction that was missing: `(s1, s2, offset)` describes only ONE
 * addressing scheme (dense strided). BLAS/LAPACK have several, encoded by the
@@ -346,7 +346,7 @@ function vectorLayouts() {
 /**
 * Restrict a vector layout to a caller-owned WORKSPACE vector. Workspace is
 * unobservable scratch and only a unit stride is supported (CONVENTIONS.md
-* D5): ndarray.js rejects any other stride. What still varies, and must leave
+* D5): strided.js rejects any other stride. What still varies, and must leave
 * every output bit-identical, is where the scratch starts (`lead` = offset) and
 * what surrounds it (`tail`), since drivers hand callees slices of one buffer.
 *

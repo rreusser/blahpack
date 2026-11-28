@@ -96,7 +96,7 @@ interface Routine {
 	* @param offsetIWORK - starting index for `IWORK`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, dif: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	strided( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, dif: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

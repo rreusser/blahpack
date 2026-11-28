@@ -2,7 +2,7 @@
 
 // ESLint rule: spec-prologue
 //
-// The validation prologue of ndarray.js and <routine>.js is exactly the one
+// The validation prologue of strided.js and <routine>.js is exactly the one
 // generated from the spec's argument checks (lint/lib/prologue.cjs;
 // CONVENTIONS V1, V3–V7): after any uninitialized `let` declarations, the
 // function body starts with one `if ( <test> ) { throw new <Error>( … ); }`
@@ -42,7 +42,7 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'ndarray.js / <routine>.js validation prologue equals the one generated from the spec (CONVENTIONS V1, V3–V7)'
+			'description': 'strided.js / <routine>.js validation prologue equals the one generated from the spec (CONVENTIONS V1, V3–V7)'
 		},
 		'schema': [],
 		'messages': {

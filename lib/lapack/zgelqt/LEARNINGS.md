@@ -21,7 +21,7 @@
 
 ## Coverage gaps
 
-- 100% line and 100% branch coverage achieved on `base.js`, `ndarray.js`, `zgelqt.js`, `index.js`, and `main.js`. The `if (i + ib < M)` branch (skip trailing update for the final block) is exercised by the `m3_n5_mb3` and `m1_n4_mb1` cases. Quick-return paths covered by `m0_n4_mb1` and the dedicated `M=0`/`N=0` JS tests.
+- 100% line and 100% branch coverage achieved on `base.js`, `strided.js`, `zgelqt.js`, `index.js`, and `main.js`. The `if (i + ib < M)` branch (skip trailing update for the final block) is exercised by the `m3_n5_mb3` and `m1_n4_mb1` cases. Quick-return paths covered by `m0_n4_mb1` and the dedicated `M=0`/`N=0` JS tests.
 
 ## Process improvements
 

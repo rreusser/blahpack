@@ -55,7 +55,7 @@
 
 ## Coverage notes
 
-- 100% line / 100% branch on base.js, ndarray.js, and dtzrzf.js.
+- 100% line / 100% branch on base.js, strided.js, and dtzrzf.js.
 - Blocked path tests use M=140, N=200 (M > NX=128) with mathematical
   reconstruction `A = R * Z` rather than fixture comparison: blocked
   vs. unblocked Fortran outputs differ in floating-point roundoff

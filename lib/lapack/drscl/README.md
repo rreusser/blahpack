@@ -38,12 +38,12 @@ drscl( N, sa, x, strideX ) → Float64Array
 
 **Returns** `Float64Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-drscl.ndarray( N, sa, x, strideX, offsetX ) → Float64Array
+drscl.strided( N, sa, x, strideX, offsetX ) → Float64Array
 ```
 
 | Parameter | Type | Description |
@@ -102,8 +102,8 @@ const x = discreteUniform( N, -10, 10, opts );
 let out = drscl( N, 1, x, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = drscl.ndarray( N, 1, x, 1, 0 );
+// Using the strided interface:
+out = drscl.strided( N, 1, x, 1, 0 );
 console.log( out );
 ```
 

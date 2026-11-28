@@ -63,12 +63,12 @@ zpftrs( order, transr, uplo, N, nrhs, A, strideA, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpftrs.ndarray(
+zpftrs.strided(
     transr, uplo,
     N, nrhs,
     A, strideA, offsetA,
@@ -180,7 +180,7 @@ const B = new Complex128Array([
 ]);
 
 // Solve A * X = B:
-info = zpftrs.ndarray( 'no-transpose', 'lower', 3, 1, A, 1, 0, B, 1, 3, 0 );
+info = zpftrs.strided( 'no-transpose', 'lower', 3, 1, A, 1, 0, B, 1, 3, 0 );
 console.log( 'zpftrs info:', info ); // eslint-disable-line no-console
 console.log( 'Solution X:', reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```

@@ -80,7 +80,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( job, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, s, strideS, offsetS, SEP, strideSEP, offsetSEP, mm, M, WORK, strideWORK1, strideWORK2, offsetWORK, RWORK, strideRWORK, offsetRWORK )
+{{alias}}.strided( job, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, s, strideS, offsetS, SEP, strideSEP, offsetSEP, mm, M, WORK, strideWORK1, strideWORK2, offsetWORK, RWORK, strideRWORK, offsetRWORK )
     Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex triangular matrix, using alternative indexing semantics.
 
     Parameters

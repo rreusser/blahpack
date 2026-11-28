@@ -5,7 +5,7 @@
 // declares the parameters and their roles; this module turns that into the
 // three JavaScript signatures. It is the single place those projections live.
 //
-//   base(spec)     base.js / ndarray.js parameter list (offset form, S1/S3)
+//   base(spec)     base.js / strided.js parameter list (offset form, S1/S3)
 //   strided(spec)  <routine>.js parameter list (S4, D1–D3)
 
 var path = require( 'path' );
@@ -130,7 +130,7 @@ function takesOrder( spec ) {
 	});
 }
 
-function strided( spec ) {
+function wrapper( spec ) {
 	var out = [];
 	baseGroups( spec ).forEach( function each( g ) {
 		var p = g.param;
@@ -195,8 +195,8 @@ module.exports = {
 	'SPEC_DIR': SPEC_DIR,
 	'load': load,
 	'base': base,
-	'ndarray': base,
-	'strided': strided,
+	'strided': base,
+	'wrapper': wrapper,
 	'takesOrder': takesOrder,
 	'baseGroups': baseGroups
 };

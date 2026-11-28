@@ -67,12 +67,12 @@ zlanhf( norm, transr, uplo, N, A, strideA, WORK ) → number
 - `TypeError` third argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlanhf.ndarray(
+zlanhf.strided(
     norm, transr, uplo,
     N,
     A, strideA, offsetA,

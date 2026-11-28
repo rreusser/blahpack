@@ -80,12 +80,12 @@ zlaqz1(
 - `TypeError` first argument must be a valid order
 - `RangeError` `k` must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqz1.ndarray(
+zlaqz1.strided(
     ilq, ilz, k, istartm, istopm, ihi,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

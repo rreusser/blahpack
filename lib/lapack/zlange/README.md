@@ -48,12 +48,12 @@ zlange( order, norm, M, N, A, LDA, WORK ) → number
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlange.ndarray(
+zlange.strided(
     norm,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -130,8 +130,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = zlange( 'row-major', 'one-norm', N, N, A, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = zlange.ndarray( 'one-norm', N, N, A, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zlange.strided( 'one-norm', N, N, A, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

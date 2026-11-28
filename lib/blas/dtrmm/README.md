@@ -95,12 +95,12 @@ dtrmm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB ) → Float6
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrmm.ndarray(
+dtrmm.strided(
     side, uplo, transa, diag,
     M, N,
     alpha,

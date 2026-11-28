@@ -44,7 +44,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
     Compute inverse of complex Hermitian matrix using factorization from zhetrf_rook, using alternative indexing semantics.
 
     Parameters

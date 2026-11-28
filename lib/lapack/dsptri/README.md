@@ -66,12 +66,12 @@ dsptri( order, uplo, N, AP, IPIV, strideIPIV, WORK ) → info: integer
 - `TypeError` second argument must be a valid matrix triangle
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsptri.ndarray(
+dsptri.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -173,7 +173,7 @@ let info = dsptrf( 'column-major', 'lower', 3, AP, IPIV, 1 );
 console.log( 'dsptrf info:', info );
 
 // Compute the inverse of A...
-info = dsptri.ndarray( 'lower', 3, AP, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
+info = dsptri.strided( 'lower', 3, AP, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
 
 console.log( 'dsptri info:', info );
 console.log( 'inv(A) (lower packed):', AP );

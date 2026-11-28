@@ -31,12 +31,12 @@ import dsapps from './index';
 	dsapps(); // $ExpectError
 }
 
-// The ndarray method returns void...
+// The strided method returns void...
 {
-	dsapps.ndarray( 5, 2, 1, new Float64Array( 1 ), 1, 0, new Float64Array( 15 ), 1, 5, 0, new Float64Array( 6 ), 1, 3, 0, new Float64Array( 5 ), 1, 0, new Float64Array( 9 ), 1, 3, 0, new Float64Array( 10 ), 1, 0 ); // $ExpectType void
+	dsapps.strided( 5, 2, 1, new Float64Array( 1 ), 1, 0, new Float64Array( 15 ), 1, 5, 0, new Float64Array( 6 ), 1, 3, 0, new Float64Array( 5 ), 1, 0, new Float64Array( 9 ), 1, 3, 0, new Float64Array( 10 ), 1, 0 ); // $ExpectType void
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsapps.ndarray(); // $ExpectError
+	dsapps.strided(); // $ExpectError
 }

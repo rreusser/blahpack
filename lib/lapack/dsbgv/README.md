@@ -88,12 +88,12 @@ dsbgv(
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` fourteenth argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsbgv.ndarray(
+dsbgv.strided(
     jobz, uplo,
     N, ka, kb,
     AB, strideAB1, strideAB2, offsetAB,

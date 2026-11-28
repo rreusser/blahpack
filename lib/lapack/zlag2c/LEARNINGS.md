@@ -5,7 +5,7 @@
 - The scaffolder (`init_routine.py`) cannot distinguish two arrays with
   different Fortran names when the signature has two 2D arrays. It emitted
   duplicate `A`/`strideA1`/`offsetA` parameters for both the input (A) and
-  output (SA). base.js, ndarray.js, and zlag2c.js had to be rewritten by
+  output (SA). base.js, strided.js, and zlag2c.js had to be rewritten by
   hand to use distinct `A`/`SA` + `LDA`/`LDSA` identifiers.
 - The Fortran loop uses `GO TO 30` on overflow detection, which translates
   cleanly to an early `return 1;` in JS (no other cleanup needed — SA on
@@ -41,7 +41,7 @@
 
 ## Benchmark fix
 
-- The scaffolded `benchmark.js` / `benchmark.ndarray.js` used
+- The scaffolded `benchmark.js` / `benchmark.strided.js` used
   `N = pow(10, i)` up to `i=3` and allocated `N*N` elements. For N=1000 that
   is 1e6 complex doubles = 16 MB (fine), but the pattern is dangerous if
   max is ever raised. Rewrote to use an explicit sizes list `[4,16,64,256]`

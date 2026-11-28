@@ -60,12 +60,12 @@ dsyev( order, jobz, uplo, N, A, LDA, w, strideW, WORK ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyev.ndarray(
+dsyev.strided(
     jobz, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -163,9 +163,9 @@ const WORK = new Float64Array( 3 * N );
 let info = dsyev( 'column-major', 'compute-vectors', 'upper', N, A, N, w, 1, WORK );
 console.log( info, w, A );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( data );
-info = dsyev.ndarray( 'compute-vectors', 'upper', N, A, 1, N, 0, w, 1, 0, WORK, 1, 0 );
+info = dsyev.strided( 'compute-vectors', 'upper', N, A, 1, N, 0, w, 1, 0, WORK, 1, 0 );
 console.log( info, w, A );
 ```
 

@@ -53,10 +53,10 @@ interface Routine {
 	* @returns parameter value
 	*
 	* @example
-	* var v = ilaenv.ndarray( 1, 'DGEQRF', ' ', 100, 100, -1, -1 );
+	* var v = ilaenv.strided( 1, 'DGEQRF', ' ', 100, 100, -1, -1 );
 	* // returns 32
 	*/
-	ndarray( ispec: number, name: string, opts: string, n1: number, n2: number, n3: number, n4: number ): number;
+	strided( ispec: number, name: string, opts: string, n1: number, n2: number, n3: number, n4: number ): number;
 }
 
 /**

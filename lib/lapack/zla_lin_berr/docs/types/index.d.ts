@@ -33,7 +33,7 @@ interface Routine {
 	* @param nz - nz
 	* @param nrhs - nrhs
 	* @param res - input array
-	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
+	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (strided)
 	* @param ayb - input array
 	* @param strideAYB - stride length for `ayb`
 	* @param berr - input array
@@ -49,7 +49,7 @@ interface Routine {
 	* @param nz - nz
 	* @param nrhs - nrhs
 	* @param res - input array
-	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
+	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (strided)
 	* @param offsetRES - starting index for `RES`
 	* @param ayb - input array
 	* @param strideAYB - stride length for `ayb`
@@ -59,7 +59,7 @@ interface Routine {
 	* @param offsetBERR - starting index for `BERR`
 	* @returns result
 	*/
-	ndarray( N: number, nz: number, nrhs: number, res: Float64Array, strideRES1: number, strideRES2: number, offsetRES: number, ayb: Float64Array, strideAYB1: number, strideAYB2: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
+	strided( N: number, nz: number, nrhs: number, res: Float64Array, strideRES1: number, strideRES2: number, offsetRES: number, ayb: Float64Array, strideAYB1: number, strideAYB2: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
 }
 
 /**

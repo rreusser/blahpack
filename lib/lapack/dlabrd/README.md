@@ -89,12 +89,12 @@ dlabrd(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlabrd.ndarray(
+dlabrd.strided(
     M, N, nb,
     A, strideA1, strideA2, offsetA,
     d, strideD, offsetD,
@@ -217,8 +217,8 @@ const TAUP = discreteUniform( N, -10, 10, opts );
 let out = dlabrd( 'row-major', N, N, N, A, N, d, 1, e, 1, TAUQ, 1, TAUP, 1, X, N, Y, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlabrd.ndarray( N, N, N, A, N, 1, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, X, N, 1, 0, Y, N, 1, 0 );
+// Using the strided interface:
+out = dlabrd.strided( N, N, N, A, N, 1, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, X, N, 1, 0, Y, N, 1, 0 );
 console.log( out );
 ```
 

@@ -11,7 +11,7 @@
   d-prefix sister when one exists.
 - **Drop ILAENV/LWORK entirely.** Hardcode `NB = 32` at module scope;
   do not surface `WORK`/`LWORK` in the JS API. The scaffold leaves
-  these in the wrapper signatures (`ndarray.js`, `<routine>.js`,
+  these in the wrapper signatures (`strided.js`, `<routine>.js`,
   README, examples, benchmarks) and they all need scrubbing.
 - **Workspace allocation.** `W = new Complex128Array(ldwork * nb)` is
   allocated inside the driver (one per call to `zlasyf_rook`) since

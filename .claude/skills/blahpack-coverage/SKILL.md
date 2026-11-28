@@ -9,7 +9,7 @@ on the full test suite** — it produces thousands of lines.
 
 For a specific module:
 ```bash
-node --test --experimental-test-coverage lib/<pkg>/<routine>/test/test.js lib/<pkg>/<routine>/test/test.<routine>.js lib/<pkg>/<routine>/test/test.ndarray.js 2>&1 | tail -30
+node --test --experimental-test-coverage lib/<pkg>/<routine>/test/test.js lib/<pkg>/<routine>/test/test.<routine>.js lib/<pkg>/<routine>/test/test.strided.js 2>&1 | tail -30
 ```
 
 If the user asks about the whole codebase, iterate modules individually

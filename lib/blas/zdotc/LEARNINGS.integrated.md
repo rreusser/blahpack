@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The signature generator (`bin/signature.py`) generates a signature with both `strideX`/`offsetX` AND `incx` for complex FUNCTION routines, plus returns `number` instead of `Complex128`. This is incorrect for complex functions. The correct base.js signature uses `strideX, offsetX` only (no separate incx), and returns `Complex128`. The ndarray wrapper handles the Fortran INCX-to-stride/offset conversion.
+- The signature generator (`bin/signature.py`) generates a signature with both `strideX`/`offsetX` AND `incx` for complex FUNCTION routines, plus returns `number` instead of `Complex128`. This is incorrect for complex functions. The correct base.js signature uses `strideX, offsetX` only (no separate incx), and returns `Complex128`. The strided wrapper handles the Fortran INCX-to-stride/offset conversion.
 - Fortran's ZDOTC is a `COMPLEX*16 FUNCTION`, not a SUBROUTINE. The JS equivalent returns a `new Complex128(realPart, imagPart)` rather than writing to an output parameter.
 - The Fortran has separate code paths for unit-stride (INCX=1 AND INCY=1) vs general stride. The unit-stride path is a performance optimization that is not needed in JS since we do not unroll. A single loop with stride/offset handles all cases.
 

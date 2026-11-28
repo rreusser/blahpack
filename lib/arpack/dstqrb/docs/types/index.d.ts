@@ -60,7 +60,7 @@ interface Routine {
 	* @param offsetWork - starting index for `WORK`
 	* @returns INFO (0 if successful, >0 if INFO eigenvalues did not converge)
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Z: Float64Array, strideZ: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
+	strided( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Z: Float64Array, strideZ: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**

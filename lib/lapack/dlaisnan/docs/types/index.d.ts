@@ -38,7 +38,7 @@ interface Routine {
 	* @param din2 - `din2`
 	* @returns result
 	*/
-	ndarray( din1: number, din2: number ): number;
+	strided( din1: number, din2: number ): number;
 }
 
 /**

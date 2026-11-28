@@ -25,7 +25,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV )
     @license Apache-2.0 using alternative indexing semantics.
 
     Parameters

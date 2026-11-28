@@ -50,12 +50,12 @@ zpoequ( order, N, A, LDA, s, strideS, scond, amax ) → integer
 - `RangeError` second argument must be a nonnegative integer
 - `RangeError` fourth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpoequ.ndarray(
+zpoequ.strided(
     N,
     A, strideA1, strideA2, offsetA,
     s, strideS, offsetS,
@@ -157,9 +157,9 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': zpoequ.ndarray( N, A, 1, N, 0, s, 1, 0, scond, amax ),
+	'info': zpoequ.strided( N, A, 1, N, 0, s, 1, 0, scond, amax ),
 	's': Array.prototype.slice.call( s ),
 	'scond': scond[ 0 ],
 	'amax': amax[ 0 ]

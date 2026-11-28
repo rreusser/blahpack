@@ -91,12 +91,12 @@ zgerfs(
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgerfs.ndarray(
+zgerfs.strided(
     trans,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -252,10 +252,10 @@ const BERR = new Float64Array( NRHS );
 let info = zgerfs( 'column-major', 'no-transpose', N, NRHS, A, N, AF, N, IPIV, 1, B, N, X, N, FERR, 1, BERR, 1, null, null );
 console.log( info, reinterpret( X, 0 ), FERR, BERR ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 const WORK = new Complex128Array( 2 * N );
 const RWORK = new Float64Array( N );
-info = zgerfs.ndarray( 'no-transpose', N, NRHS, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+info = zgerfs.strided( 'no-transpose', N, NRHS, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, reinterpret( X, 0 ), FERR, BERR ); // eslint-disable-line no-console
 ```
 

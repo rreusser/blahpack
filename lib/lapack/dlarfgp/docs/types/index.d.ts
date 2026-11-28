@@ -49,7 +49,7 @@ interface Routine {
 	* @param tau - tau
 	* @returns result
 	*/
-	ndarray( N: number, alpha: number, x: Float64Array, stride: number, offset: number, tau: number ): Float64Array;
+	strided( N: number, alpha: number, x: Float64Array, stride: number, offset: number, tau: number ): Float64Array;
 }
 
 /**

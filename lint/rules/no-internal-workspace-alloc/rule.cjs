@@ -1,11 +1,11 @@
 'use strict';
 
-// Disallow internal workspace-array allocation inside base.js AND ndarray.js.
+// Disallow internal workspace-array allocation inside base.js AND strided.js.
 //
 // Workspace strategy (three layers; allocation allowed in exactly one):
 //   - base.js    : NEVER allocates. Pure strided kernel; the caller owns every
 //                  buffer.
-//   - ndarray.js : NEVER allocates; asserts the caller-provided size (throws a
+//   - strided.js : NEVER allocates; asserts the caller-provided size (throws a
 //                  RangeError instead of silently reading OOB into NaN). This is
 //                  the BATCHING layer — a stack of same-size matrices shares ONE
 //                  workspace, allocated once by the batch driver and reused across
@@ -18,7 +18,7 @@
 // Rationale (per project design): (a) these JS routines model C implementations —
 // avoiding allocation avoids C memory management; if C doesn't allocate, JS
 // shouldn't either. (b) Batching reuses one workspace, so allocation must live
-// above the per-invocation routines. This rule enforces the base+ndarray half.
+// above the per-invocation routines. This rule enforces the base+strided half.
 //
 // Exemptions (mirroring the workspace conformance check's `internalAllocs`):
 //   - scalar temporaries: a bare numeric size <= 8 (e.g. `new Float64Array( 2 )`
@@ -32,7 +32,7 @@ var path = require( 'path' );
 var fortranData = require( '../../lib/fortran-data.cjs' );
 
 // Memoize the "does the reference Fortran declare a workspace array?" lookup so
-// linting `base.js` and `ndarray.js` of the same routine reads the source once.
+// linting `base.js` and `strided.js` of the same routine reads the source once.
 var FORTRAN_WS_CACHE = {};
 var FORTRAN_WORK_ARGS = [ 'WORK', 'RWORK', 'IWORK', 'SWORK', 'BWORK' ];
 
@@ -163,7 +163,7 @@ var rule = {
 	},
 	'create': function main( context ) {
 		var bn = path.basename( ( context.filename || ( context.getFilename && context.getFilename() ) || '' ) );
-		if ( bn !== 'base.js' && bn !== 'ndarray.js' ) {
+		if ( bn !== 'base.js' && bn !== 'strided.js' ) {
 			return {};
 		}
 		var fortranHasWorkspace = fortranDeclaresWorkspace( routineFromFile( ( context.filename || ( context.getFilename && context.getFilename() ) || '' ) ) );
@@ -214,7 +214,7 @@ var rule = {
 				for ( i = 0; i < candidates.length; i++ ) {
 					context.report({
 						'node': candidates[ i ],
-						'message': bn + ' must not allocate a problem-sized workspace array (`new ' + candidates[ i ].callee.name + '(...)`) — ' + reason + ', so this workspace must be caller-owned. Expose `work, strideWork, offsetWork` (and `iwork`/`rwork` as needed) on base.js + ndarray.js and USE it (per @stdlib/lapack/base/dlarf1f); assert the size in ndarray.js; allocate only in the wrapper (<routine>.js) when `work === null`. base.js/ndarray.js must never allocate — that is what lets same-size batches reuse ONE workspace. Exemptions: fixed-size bookkeeping arrays, buffer views, and the block-reflector T factor.'
+						'message': bn + ' must not allocate a problem-sized workspace array (`new ' + candidates[ i ].callee.name + '(...)`) — ' + reason + ', so this workspace must be caller-owned. Expose `work, strideWork, offsetWork` (and `iwork`/`rwork` as needed) on base.js + strided.js and USE it (per @stdlib/lapack/base/dlarf1f); assert the size in strided.js; allocate only in the wrapper (<routine>.js) when `work === null`. base.js/strided.js must never allocate — that is what lets same-size batches reuse ONE workspace. Exemptions: fixed-size bookkeeping arrays, buffer views, and the block-reflector T factor.'
 					});
 				}
 			}

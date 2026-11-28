@@ -94,7 +94,7 @@ interface Routine {
 	* @param offsetZTEMP - starting index for `ZTEMP`
 	* @returns result
 	*/
-	ndarray( N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Int32Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number, q: Float64Array, strideQ: number, offsetQ: number, QPTR: Int32Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, offsetZ: number, ZTEMP: Float64Array, strideZTEMP: number, offsetZTEMP: number ): Float64Array;
+	strided( N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Int32Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number, q: Float64Array, strideQ: number, offsetQ: number, QPTR: Int32Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, offsetZ: number, ZTEMP: Float64Array, strideZTEMP: number, offsetZTEMP: number ): Float64Array;
 }
 
 /**

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Check for modules with stub wrapper files (throw "not yet implemented").
 #
-# Every module's JS files (index.js, <routine>.js, ndarray.js)
+# Every module's JS files (index.js, <routine>.js, strided.js)
 # must have real implementations, not scaffold stubs. base.js is the core
 # algorithm; everything else is a wrapper that must actually work.
 #

@@ -86,12 +86,12 @@ zbdsqr(
 - `RangeError` sixteenth argument is invalid (column-major: rejected when `( ncc === 0 && LDC < 1 ) \|\| ( ncc > 0 && LDC < max( 1, N ) )`)
 - `RangeError` sixteenth argument is invalid (row-major: rejected when `( ncc === 0 && LDC < 1 ) \|\| ( ncc > 0 && LDC < max( 1, ncc ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zbdsqr.ndarray(
+zbdsqr.strided(
     uplo,
     N, ncvt, nru, ncc,
     d, strideD, offsetD,
@@ -213,14 +213,14 @@ let RWORK = new Float64Array( 4 * N );
 let info = zbdsqr( 'row-major', 'upper', N, N, N, N, d, 1, e, 1, VT, N, U, N, C, N, RWORK );
 console.log( info, d, reinterpret( VT, 0 ), reinterpret( U, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 3.0, 2.0 ] );
 e = new Float64Array( [ 1.0, 0.5 ] );
 VT = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 U = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 C = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 RWORK = new Float64Array( 4 * N );
-info = zbdsqr.ndarray( 'upper', N, N, N, N, d, 1, 0, e, 1, 0, VT, N, 1, 0, U, N, 1, 0, C, N, 1, 0, RWORK, 1, 0 );
+info = zbdsqr.strided( 'upper', N, N, N, N, d, 1, 0, e, 1, 0, VT, N, 1, 0, U, N, 1, 0, C, N, 1, 0, RWORK, 1, 0 );
 console.log( info, d, reinterpret( VT, 0 ), reinterpret( U, 0 ) ); // eslint-disable-line no-console
 ```
 

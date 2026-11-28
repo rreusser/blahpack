@@ -17,8 +17,8 @@ import instrument from './instrument.js';
 // Install BEFORE loading any LAPACK modules
 instrument.install();
 
-const { default: zgesv } = await import( '../lib/lapack/zgesv/lib/ndarray.js' );
-const { default: zgesvd } = await import( '../lib/lapack/zgesvd/lib/ndarray.js' );
+const { default: zgesv } = await import( '../lib/lapack/zgesv/lib/strided.js' );
+const { default: zgesvd } = await import( '../lib/lapack/zgesvd/lib/strided.js' );
 
 // zgesvd's job flags, by the single-letter names this script reports.
 var JOB = { 'A': 'all-columns', 'N': 'none' };

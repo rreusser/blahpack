@@ -94,12 +94,12 @@ ztpmqrt(
 - `RangeError` tenth argument (LDV) must be `>= max(1,M)` (left) or `max(1,N)` (right)
 - `RangeError` fourteenth argument (LDA) must be `>= max(1,K)` (left) or `max(1,M)` (right)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztpmqrt.ndarray(
+ztpmqrt.strided(
     side, trans,
     M, N, K, l,
     nb,
@@ -322,8 +322,8 @@ const B = new Complex128Array( Bbuf.buffer );
 
 const WORK = new Complex128Array( 2 * 3 );
 
-// ztpmqrt.ndarray( side, trans, M, N, K, l, nb, V, sV1, sV2, oV, T, sT1, sT2, oT, A, sA1, sA2, oA, B, sB1, sB2, oB, WORK, sW, oW )
-ztpmqrt.ndarray( 'left', 'no-transpose', 4, 3, 3, 2, 2, V, 1, 4, 0, T, 1, 2, 0, A, 1, 3, 0, B, 1, 4, 0, WORK, 1, 0 );
+// ztpmqrt.strided( side, trans, M, N, K, l, nb, V, sV1, sV2, oV, T, sT1, sT2, oT, A, sA1, sA2, oA, B, sB1, sB2, oB, WORK, sW, oW )
+ztpmqrt.strided( 'left', 'no-transpose', 4, 3, 3, 2, 2, V, 1, 4, 0, T, 1, 2, 0, A, 1, 3, 0, B, 1, 4, 0, WORK, 1, 0 );
 
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console

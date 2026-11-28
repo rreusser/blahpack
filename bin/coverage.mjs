@@ -5,10 +5,10 @@
 *
 * For each module, runs all of its `test/test*.js` once under node's
 * coverage, together with the wrapper replay (test/harness/replay-coverage.mjs:
-* every recorded `ndarray.js` call replayed through the wrapper, in both
+* every recorded `strided.js` call replayed through the wrapper, in both
 * orders and with `WORK = null`), restricted to the module's own `lib/`
 * files, and reports line
-* and branch coverage for EVERY file there: `base.js`, `ndarray.js`, the
+* and branch coverage for EVERY file there: `base.js`, `strided.js`, the
 * `<routine>.js` wrapper, `index.js`. The wrapper is where the
 * convenience logic lives (`order`/LD mapping, `WORK = null` allocation),
 * and a module's correctness tests usually bypass it, so it must be measured
@@ -41,7 +41,7 @@ const REPLAY_COVERAGE = path.join( ROOT, 'test', 'harness', 'replay-coverage.mjs
 // Minimum line and branch coverage (percent) per file role.
 const THRESHOLDS = {
 	'wrapper': { 'lines': 100, 'branches': 100 },
-	'ndarray': { 'lines': 100, 'branches': 100 },
+	'strided': { 'lines': 100, 'branches': 100 },
 	'base': { 'lines': 90, 'branches': 85 },
 	'other': { 'lines': 90, 'branches': 85 }
 };
@@ -51,8 +51,8 @@ function role( r, file ) {
 	if ( b === r + '.js' ) {
 		return 'wrapper';
 	}
-	if ( b === 'ndarray.js' ) {
-		return 'ndarray';
+	if ( b === 'strided.js' ) {
+		return 'strided';
 	}
 	if ( b === 'base.js' ) {
 		return 'base';
@@ -72,7 +72,7 @@ function measure( r ) {
 		return { 'routine': r, 'error': 'no test files', 'files': [] };
 	}
 	// The wrapper replay (ticket 0065) runs in the same coverage run, so the
-	// wrapper lines its replayed ndarray calls reach count as covered.
+	// wrapper lines its replayed strided calls reach count as covered.
 	if ( fs.existsSync( path.join( dir, 'lib', r + '.js' ) ) && fs.existsSync( path.join( ROOT, 'spec', r + '.json' ) ) ) {
 		tests.push( REPLAY_COVERAGE );
 	}

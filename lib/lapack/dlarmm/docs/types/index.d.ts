@@ -44,7 +44,7 @@ interface Routine {
 	* @param cnorm - cnorm
 	* @returns result
 	*/
-	ndarray( anorm: number, bnorm: number, cnorm: number ): number;
+	strided( anorm: number, bnorm: number, cnorm: number ): number;
 }
 
 /**

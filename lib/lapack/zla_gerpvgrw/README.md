@@ -46,12 +46,12 @@ zla_gerpvgrw( order, N, ncols, A, LDA, AF, LDAF ) → number
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_gerpvgrw.ndarray(
+zla_gerpvgrw.strided(
     N, ncols,
     A, strideA1, strideA2, offsetA,
     AF, strideAF1, strideAF2, offsetAF
@@ -126,8 +126,8 @@ zgetrf( 'column-major', N, N, AF, N, IPIV, 1 );
 let out = zla_gerpvgrw( 'column-major', N, N, A, N, AF, N );
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-out = zla_gerpvgrw.ndarray( N, N, A, 1, N, 0, AF, 1, N, 0 );
+// Using the strided interface:
+out = zla_gerpvgrw.strided( N, N, A, 1, N, 0, AF, 1, N, 0 );
 console.log( out ); // eslint-disable-line no-console
 ```
 

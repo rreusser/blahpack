@@ -31,12 +31,12 @@ import dsaupd = require( './index' );
 	dsaupd(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dsaupd.ndarray( {}, new Int32Array( 1 ), 'standard', 6, 'LM', 2, 0.0, new Float64Array( 6 ), 1, 0, 5, new Float64Array( 30 ), 1, 6, 0, new Int32Array( 11 ), 1, 0, new Int32Array( 11 ), 1, 0, new Float64Array( 18 ), 1, 0, new Float64Array( 65 ), 1, 0, 65, 1 ); // $ExpectType number
+	dsaupd.strided( {}, new Int32Array( 1 ), 'standard', 6, 'LM', 2, 0.0, new Float64Array( 6 ), 1, 0, 5, new Float64Array( 30 ), 1, 6, 0, new Int32Array( 11 ), 1, 0, new Int32Array( 11 ), 1, 0, new Float64Array( 18 ), 1, 0, new Float64Array( 65 ), 1, 0, 65, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsaupd.ndarray(); // $ExpectError
+	dsaupd.strided(); // $ExpectError
 }

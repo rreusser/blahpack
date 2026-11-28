@@ -71,12 +71,12 @@ Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a gen
 - `RangeError` ninth argument must be non-zero
 - `RangeError` twelfth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_geamv.ndarray(
+dla_geamv.strided(
     trans,
     M, N,
     alpha,

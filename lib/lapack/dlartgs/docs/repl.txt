@@ -30,7 +30,7 @@
     <Float64Array>[ ~0.4903, ~0.8716 ]
 
 
-{{alias}}.ndarray( x, y, sigma, cs, sn )
+{{alias}}.strided( x, y, sigma, cs, sn )
     Generates a plane rotation designed to introduce a bulge in implicit QR
     iteration for the bidiagonal SVD problem, using alternative indexing
     semantics.
@@ -58,7 +58,7 @@
     Examples
     --------
     > var out = new {{alias:@stdlib/array/float64}}( 2 );
-    > {{alias}}.ndarray( 3.0, 4.0, 1.5, out )
+    > {{alias}}.strided( 3.0, 4.0, 1.5, out )
     <Float64Array>[ ~0.4903, ~0.8716 ]
 
     See Also

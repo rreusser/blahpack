@@ -40,12 +40,12 @@ dlarfg( N, alpha, x, strideX, tau ) → Float64Array
 
 **Returns** `Float64Array`: `x`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) → Float64Array
+dlarfg.strided( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) → Float64Array
 ```
 
 | Parameter | Type | Description |

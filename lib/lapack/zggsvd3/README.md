@@ -159,12 +159,12 @@ Computes the generalized singular value decomposition (GSVD) of an M-by-N comple
 - `RangeError` twenty-first argument is invalid (rejected when `LDV < 1 \|\| ( jobv === "compute-V" && LDV < p )`)
 - `RangeError` twenty-third argument is invalid (rejected when `LDQ < 1 \|\| ( jobq === "compute-Q" && LDQ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggsvd3.ndarray(
+zggsvd3.strided(
     jobu, jobv, jobq,
     M, N, p,
     K,

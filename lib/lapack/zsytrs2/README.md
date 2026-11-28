@@ -62,12 +62,12 @@ zsytrs2( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → inte
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytrs2.ndarray(
+zsytrs2.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -196,9 +196,9 @@ let info = zsytrs2( 'column-major', 'upper', N, nrhs, A, N, IPIV, 1, B, N, WORK 
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( [ 6.0, 1.0, 3.0, -1.0, 14.0, -1.0 ] );
-info = zsytrs2.ndarray( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
+info = zsytrs2.strided( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```

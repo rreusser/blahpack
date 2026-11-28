@@ -86,12 +86,12 @@ zgelss(
 - `RangeError` eighth argument must be greater than or equal to `max( 1, max( M, N ) )` (column-major)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgelss.ndarray(
+zgelss.strided(
     M, N, nrhs,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,
@@ -222,12 +222,12 @@ const rank = new Int32Array( 1 );
 let out = zgelss( 'column-major', M, N, nrhs, A, M, B, M, S, 1, -1.0, rank, null, null );
 console.log( out, rank[ 0 ], S );
 
-// Using the ndarray interface with caller-owned workspaces:
+// Using the strided interface with caller-owned workspaces:
 A = new Complex128Array( discreteUniform( 2 * M * N, -10, 10, opts ) );
 B = new Complex128Array( discreteUniform( 2 * M * nrhs, -10, 10, opts ) );
 const WORK = new Complex128Array( computeMinWorkSize( M, N, nrhs ) );
 const RWORK = new Float64Array( 5 * Math.min( M, N ) );
-out = zgelss.ndarray( M, N, nrhs, A, 1, M, 0, B, 1, M, 0, S, 1, 0, -1.0, rank, WORK, 1, 0, RWORK, 1, 0 );
+out = zgelss.strided( M, N, nrhs, A, 1, M, 0, B, 1, M, 0, S, 1, 0, -1.0, rank, WORK, 1, 0, RWORK, 1, 0 );
 console.log( out, rank[ 0 ], S );
 ```
 

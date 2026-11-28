@@ -90,12 +90,12 @@ dla_gbrcond(
 - `RangeError` ninth argument must be greater than or equal to `2 * kl + ku + 1` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_gbrcond.ndarray(
+dla_gbrcond.strided(
     trans,
     N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
@@ -219,9 +219,9 @@ const c = new Float64Array( [ 1.0, 2.0, 3.0 ] );
 const WORK = new Float64Array( 15 );
 const IWORK = new Int32Array( 3 );
 
-dgbtrf.ndarray( 3, 3, 1, 1, AFB, 1, 4, 0, IPIV, 1, 0 );
+dgbtrf.strided( 3, 3, 1, 1, AFB, 1, 4, 0, IPIV, 1, 0 );
 
-const result = dla_gbrcond.ndarray('no-transpose', 3, 1, 1, AB, 1, 3, 0, AFB, 1, 4, 0, IPIV, 1, 0, 1, c, 1, 0, WORK, 1, 0, IWORK, 1, 0);
+const result = dla_gbrcond.strided('no-transpose', 3, 1, 1, AB, 1, 3, 0, AFB, 1, 4, 0, IPIV, 1, 0, 1, c, 1, 0, WORK, 1, 0, IWORK, 1, 0);
 console.log( 'Skeel condition number:', result ); // eslint-disable-line no-console
 ```
 

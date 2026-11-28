@@ -96,7 +96,7 @@ async function analyze( r ) {
 		let args;
 		try {
 			// The wrapper's arguments, every workspace `null`.
-			args = callArgs( spec, pl, vals, 'strided', () => null );
+			args = callArgs( spec, pl, vals, 'wrapper', () => null );
 		} catch ( err ) {
 			res.unrun.push( { 'why': 'translate: ' + err.message, 'args': where } );
 			continue;

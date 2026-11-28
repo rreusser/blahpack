@@ -35,12 +35,12 @@ dasum( N, x, strideX ) → number
 
 **Returns** `number`: sum of absolute values
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dasum.ndarray( N, x, strideX, offsetX ) → number
+dasum.strided( N, x, strideX, offsetX ) → number
 ```
 
 | Parameter | Type | Description |

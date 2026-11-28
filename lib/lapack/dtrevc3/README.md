@@ -99,12 +99,12 @@ dtrevc3(
 - `RangeError` twelfth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( side === "right" \|\| side === "both" ) && LDVR < max( 1, mm ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrevc3.ndarray(
+dtrevc3.strided(
     side, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -245,10 +245,10 @@ let VR = new Float64Array( N * N );
 let info = dtrevc3( 'column-major', 'right', 'all', SELECT, 1, N, T, N, VL, N, VR, N, N, M, WORK );
 console.log( info, M[ 0 ], VR );
 
-// Using the ndarray interface:
+// Using the strided interface:
 VL = new Float64Array( N * N );
 VR = new Float64Array( N * N );
-info = dtrevc3.ndarray( 'right', 'all', SELECT, 1, 0, N, T, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, N, M, WORK, 1, 0 );
+info = dtrevc3.strided( 'right', 'all', SELECT, 1, 0, N, T, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, N, M, WORK, 1, 0 );
 console.log( info, M[ 0 ], VR );
 ```
 

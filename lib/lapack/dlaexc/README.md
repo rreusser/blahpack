@@ -53,12 +53,12 @@ dlaexc( order, wantq, N, T, LDT, Q, LDQ, j1, n1, n2, WORK ) → integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaexc.ndarray(
+dlaexc.strided(
     wantq,
     N,
     T, strideT1, strideT2, offsetT,
@@ -158,10 +158,10 @@ console.log( 'info = %d', info );
 console.log( T );
 console.log( Q );
 
-// Using the ndarray interface:
+// Using the strided interface:
 T = new Float64Array( [ 1.0, 0.0, 0.0, 2.0, 4.0, 0.0, 3.0, 5.0, 6.0 ] );
 Q = new Float64Array( [ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 ] );
-info = dlaexc.ndarray( true, 3, T, 1, 3, 0, Q, 1, 3, 0, 1, 1, 1, WORK, 1, 0 );
+info = dlaexc.strided( true, 3, T, 1, 3, 0, Q, 1, 3, 0, 1, 1, 1, WORK, 1, 0 );
 console.log( 'info = %d', info );
 console.log( T );
 console.log( Q );

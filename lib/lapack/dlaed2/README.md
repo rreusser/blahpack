@@ -96,12 +96,12 @@ dlaed2(
 - `RangeError` fourth argument is invalid (rejected when `min( 1, trunc( N / 2 ) ) > n1 \|\| trunc( N / 2 ) < n1`)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaed2.ndarray(
+dlaed2.strided(
     k,
     N, n1,
     d, strideD, offsetD,
@@ -269,11 +269,11 @@ let out = {
 };
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 s = subproblems();
 rho[ 0 ] = 1.0;
 out = {
-	'info': dlaed2.ndarray( k, N, n1, s.d, 1, 0, s.Q, 1, N, 0, s.INDXQ, 1, 0, rho, s.z, 1, 0, DLAMBDA, 1, 0, w, 1, 0, Q2, 1, 0, INDX, 1, 0, INDXC, 1, 0, INDXP, 1, 0, COLTYP, 1, 0 ),
+	'info': dlaed2.strided( k, N, n1, s.d, 1, 0, s.Q, 1, N, 0, s.INDXQ, 1, 0, rho, s.z, 1, 0, DLAMBDA, 1, 0, w, 1, 0, Q2, 1, 0, INDX, 1, 0, INDXC, 1, 0, INDXP, 1, 0, COLTYP, 1, 0 ),
 	'K': k[ 0 ],
 	'rho': rho[ 0 ],
 	'DLAMBDA': DLAMBDA.slice( 0, k[ 0 ] )

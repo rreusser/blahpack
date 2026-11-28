@@ -4,7 +4,7 @@
 * Sources, in order of authority:
 *
 *   1. JSDoc in the module source: `lib/index.js` (module summary, examples,
-*      and the layout wrapper it default-exports) and `lib/ndarray.js`.
+*      and the layout wrapper it default-exports) and `lib/strided.js`.
 *   2. `spec/<routine>.json`: parameter roles, intents, shapes and argument
 *      checks, generated from the reference Fortran.
 *   3. `lib/base.js` imports: the call graph.
@@ -206,11 +206,11 @@ function fortranSignature( spec ) {
 // MAIN //
 
 /**
-* Builds the IR for one signature (layout wrapper or ndarray).
+* Builds the IR for one signature (layout wrapper or strided).
 *
 * @private
 * @param {Object} ctx - routine context
-* @param {string} kind - `'layout'` or `'ndarray'`
+* @param {string} kind - `'layout'` or `'strided'`
 * @param {string} file - repo-relative source path
 * @param {string} fname - function name in that file
 * @returns {(Object|null)} signature IR
@@ -316,7 +316,7 @@ function signature( ctx, kind, file, fname ) {
 	const rn = splitNamed( ret ? ret.description : '' );
 	return {
 		kind,
-		'call': kind === 'ndarray' ? ctx.name + '.ndarray' : ctx.name,
+		'call': kind === 'strided' ? ctx.name + '.strided' : ctx.name,
 		file,
 		'description': doc.description || '',
 		params,
@@ -360,17 +360,17 @@ export function extractRoutine( pkg, name ) {
 	const ident = exportedIdent( indexSrc );
 	const wrapperFile = ident ? importedFile( indexSrc, ident ) : null;
 	const signatures = [];
-	if ( wrapperFile && wrapperFile !== 'ndarray' ) {
+	if ( wrapperFile && wrapperFile !== 'strided' ) {
 		const wsrc = read( join( ROOT, dir, 'lib', wrapperFile + '.js' ) ) || '';
 		const s = signature( ctx, 'layout', join( dir, 'lib', wrapperFile + '.js' ), exportedIdent( wsrc ) || name );
 		if ( s ) {
 			signatures.push( s );
 		}
 	}
-	const nsrc = read( join( ROOT, dir, 'lib', 'ndarray.js' ) ) || '';
-	const ns = signature( ctx, 'ndarray', join( dir, 'lib', 'ndarray.js' ), exportedIdent( nsrc ) || name );
+	const nsrc = read( join( ROOT, dir, 'lib', 'strided.js' ) ) || '';
+	const ns = signature( ctx, 'strided', join( dir, 'lib', 'strided.js' ), exportedIdent( nsrc ) || name );
 	if ( ns ) {
-		if ( !wrapperFile || wrapperFile === 'ndarray' ) {
+		if ( !wrapperFile || wrapperFile === 'strided' ) {
 			ns.call = name;
 		}
 		signatures.push( ns );
@@ -379,7 +379,7 @@ export function extractRoutine( pkg, name ) {
 	const pkgJson = JSON.parse( read( join( ROOT, dir, 'package.json' ) ) || '{}' );
 	let description = ( mdoc.description || '' ).trim() || signatures.map( ( s ) => s.description.trim() ).find( Boolean ) || '';
 	if ( !description ) {
-		ctx.health.push({ 'code': 'no-summary', 'where': dir, 'message': 'no description in the JSDoc of lib/index.js, the wrapper or ndarray.js (fell back to package.json)' });
+		ctx.health.push({ 'code': 'no-summary', 'where': dir, 'message': 'no description in the JSDoc of lib/index.js, the wrapper or strided.js (fell back to package.json)' });
 		description = pkgJson.description || '';
 	}
 	// Module JSDoc may carry a `## Notes` part (usage facts specific to this translation).
@@ -406,7 +406,7 @@ export function extractRoutine( pkg, name ) {
 
 	// Call graph from base.js imports:
 	const baseSrc = read( join( ROOT, dir, 'lib', 'base.js' ) ) || '';
-	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/)?(\w+)\/lib\/(?:base|ndarray|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
+	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/)?(\w+)\/lib\/(?:base|strided|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
 
 	// The reference's routine-level documentation (Purpose, Further Details, ...), from
 	// data/fortran-routine-docs.json; omitted when it only restates the summary.

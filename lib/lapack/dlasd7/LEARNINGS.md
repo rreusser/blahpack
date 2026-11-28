@@ -10,7 +10,7 @@
 ## Dependency interface surprises
 
 - dlamrg outputs 1-based index values (matching Fortran convention), which is documented in its base.js but easy to forget. The calling convention uses `(A, strideA, offsetA, dtrd1, dtrd2, INDEX, strideINDEX, offsetINDEX)`.
-- drot uses ndarray signature `(N, x, strideX, offsetX, y, strideY, offsetY, c, s)` - the c,s are scalar parameters at the end, not array parameters.
+- drot uses strided signature `(N, x, strideX, offsetX, y, strideY, offsetY, c, s)` - the c,s are scalar parameters at the end, not array parameters.
 
 ## Automation opportunities
 

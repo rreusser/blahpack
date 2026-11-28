@@ -41,12 +41,12 @@ dlartg( f, g, c, s, r ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlartg.ndarray( f, g, c, s, r ) → void
+dlartg.strided( f, g, c, s, r ) → void
 ```
 
 Generates a plane rotation with real cosine and real sine, using alternative indexing semantics.
@@ -103,8 +103,8 @@ dlartg( 1, 1, c, s, r );
 let out = new Float64Array( [ c[ 0 ], s[ 0 ], r[ 0 ] ] );
 console.log( out );
 
-// Using the ndarray interface:
-dlartg.ndarray( 1, 1, c, s, r );
+// Using the strided interface:
+dlartg.strided( 1, 1, c, s, r );
 out = new Float64Array( [ c[ 0 ], s[ 0 ], r[ 0 ] ] );
 console.log( out );
 ```

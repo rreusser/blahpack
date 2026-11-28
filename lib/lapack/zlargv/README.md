@@ -42,12 +42,12 @@ zlargv( N, x, strideX, y, strideY, c, strideC ) → Float64Array
 
 **Returns** `Float64Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlargv.ndarray(
+zlargv.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,
@@ -120,7 +120,7 @@ const x = new Complex128Array( [ 3.0, 1.0, 1.0, 2.0 ] );
 const y = new Complex128Array( [ 4.0, 0.0, 3.0, 1.0 ] );
 const c = new Float64Array( 2 );
 
-zlargv.ndarray( 2, x, 1, 0, y, 1, 0, c, 1, 0 );
+zlargv.strided( 2, x, 1, 0, y, 1, 0, c, 1, 0 );
 
 console.log( 'cosines:', c );
 console.log( 'x (r):', reinterpret( x, 0 ) );

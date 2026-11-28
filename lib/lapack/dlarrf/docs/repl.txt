@@ -92,7 +92,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, d, strideD, offsetD, l, strideL, offsetL, LD, strideLD, offsetLD, clstrt, clend, w, strideW, offsetW, WGAP, strideWGAP, offsetWGAP, WERR, strideWERR, offsetWERR, spdiam, clgapl, clgapr, pivmin, sigma, DPLUS, strideDPLUS, offsetDPLUS, LPLUS, strideLPLUS, offsetLPLUS, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( N, d, strideD, offsetD, l, strideL, offsetL, LD, strideLD, offsetLD, clstrt, clend, w, strideW, offsetW, WGAP, strideWGAP, offsetWGAP, WERR, strideWERR, offsetWERR, spdiam, clgapl, clgapr, pivmin, sigma, DPLUS, strideDPLUS, offsetDPLUS, LPLUS, strideLPLUS, offsetLPLUS, WORK, strideWORK, offsetWORK )
     Finds a new relatively robust representation for eigenvalues, using alternative indexing semantics.
 
     Parameters

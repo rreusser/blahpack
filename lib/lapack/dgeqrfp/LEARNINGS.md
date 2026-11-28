@@ -10,7 +10,7 @@
   Fortran prototype lists `LWORK`. In stdlib convention for this family
   (`dgeqrf`), the workspace query is not exposed; instead, if `WORK` is
   `null` or too small, the base routine internally allocates. We dropped
-  `lwork` from all wrappers (ndarray.js, dgeqrfp.js, base.js, types, repl.txt)
+  `lwork` from all wrappers (strided.js, dgeqrfp.js, base.js, types, repl.txt)
   to match `dgeqrf`.
 
 ## Dependency interface surprises

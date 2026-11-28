@@ -20,7 +20,7 @@ var BACKTICK_QUOTED = /`/;
 function check( mod ) {
 	var results = [];
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var baseContent = util.readFile( basePath );
 	var hits;
 	var locs;
@@ -52,7 +52,7 @@ function check( mod ) {
 		results.push( util.skip( ID + '.no-single-char-code', 'No base.js' ) );
 	}
 
-	// 2. No single-char flags in @param JSDoc (base.js + ndarray.js)
+	// 2. No single-char flags in @param JSDoc (base.js + strided.js)
 	count = 0;
 	locs = [];
 	if ( baseContent ) {
@@ -64,12 +64,12 @@ function check( mod ) {
 			}
 		}
 	}
-	if ( util.fileExists( ndarrayPath ) ) {
-		hits = util.grepFile( ndarrayPath, SINGLE_CHAR_PARAM );
+	if ( util.fileExists( stridedPath ) ) {
+		hits = util.grepFile( stridedPath, SINGLE_CHAR_PARAM );
 		for ( i = 0; i < hits.length; i++ ) {
 			if ( !BACKTICK_QUOTED.test( hits[ i ].text ) ) {
 				count++;
-				locs.push( 'ndarray.js:' + hits[ i ].line );
+				locs.push( 'strided.js:' + hits[ i ].line );
 			}
 		}
 	}

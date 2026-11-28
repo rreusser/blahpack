@@ -40,7 +40,7 @@ interface Routine {
 	* @param z - `z`
 	* @returns result
 	*/
-	ndarray( z: Complex128 ): number;
+	strided( z: Complex128 ): number;
 }
 
 /**

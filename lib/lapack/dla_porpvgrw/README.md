@@ -52,12 +52,12 @@ dla_porpvgrw( order, uplo, ncols, A, LDA, AF, LDAF, WORK ) → number
 - `TypeError` second argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_porpvgrw.ndarray(
+dla_porpvgrw.strided(
     uplo,
     ncols,
     A, strideA1, strideA2, offsetA,
@@ -138,8 +138,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dla_porpvgrw( 'column-major', 'upper', 1, A, N, AF, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dla_porpvgrw.ndarray( 'upper', 1, A, N, 1, 0, AF, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dla_porpvgrw.strided( 'upper', 1, A, N, 1, 0, AF, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

@@ -63,12 +63,12 @@ dpbstf( order, uplo, N, kd, AB, LDAB ) → info: integer
 - `RangeError` sixth argument must be greater than or equal to `kd + 1` (column-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpbstf.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB ) → info: integer
+dpbstf.strided( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB ) → info: integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -150,7 +150,7 @@ const ab = new Float64Array([
 	2.0    // col 3
 ]);
 
-const info = dpbstf.ndarray( 'upper', 4, 1, ab, 1, 2, 0 );
+const info = dpbstf.strided( 'upper', 4, 1, ab, 1, 2, 0 );
 
 console.log( 'info:', info );
 console.log( 'S (band storage):', ab );

@@ -51,12 +51,12 @@ dgelqt3( order, M, N, A, LDA, T, LDT ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, M )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgelqt3.ndarray(
+dgelqt3.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     T, strideT1, strideT2, offsetT

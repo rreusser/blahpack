@@ -97,12 +97,12 @@ Converts the factorization output format used in `dsytrf` to the format used in 
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyconvf.ndarray(
+dsyconvf.strided(
     uplo, way,
     N,
     A, strideA1, strideA2, offsetA,

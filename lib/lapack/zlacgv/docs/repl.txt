@@ -22,7 +22,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, x, stride, offset )
+{{alias}}.strided( N, x, stride, offset )
     Conjugate a complex vector in-place using alternative indexing
     semantics.
 

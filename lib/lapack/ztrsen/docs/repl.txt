@@ -68,7 +68,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( job, compq, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, W, strideW, offsetW, M, s, sep, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( job, compq, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, W, strideW, offsetW, M, s, sep, WORK, strideWORK, offsetWORK, lwork )
     Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that
     a selected cluster of eigenvalues appears in the leading positions on
     the diagonal of the upper triangular matrix T, and the leading columns

@@ -51,7 +51,7 @@
     0
 
 
-{{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ, offsetZ, WORK, strideWork, offsetWork )
+{{alias}}.strided( N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ, offsetZ, WORK, strideWork, offsetWork )
     Computes all eigenvalues and the last eigenvector row, using alternative
     indexing semantics.
 
@@ -107,7 +107,7 @@
     > var e = new {{alias:@stdlib/array/float64}}( [ -1.0, -1.0, -1.0 ] );
     > var Z = new {{alias:@stdlib/array/float64}}( 4 );
     > var WORK = new {{alias:@stdlib/array/float64}}( 6 );
-    > {{alias}}.ndarray( 4, d, 1, 0, e, 1, 0, Z, 1, 0, WORK, 1, 0 )
+    > {{alias}}.strided( 4, d, 1, 0, e, 1, 0, Z, 1, 0, WORK, 1, 0 )
     0
 
     See Also

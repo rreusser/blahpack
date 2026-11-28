@@ -10,7 +10,7 @@
 ## Dependency interface surprises
 
 - **`dlamtsqr` takes both C and WORK** — when calling with `side='left'`, dlamtsqr's WORK must be at least `N*nb` doubles. We pass our scratch slice (`oc + ldc*N` onward) directly, avoiding double allocation.
-- **`dlaset` ndarray signature** — `dlaset( uplo, M, N, alpha, beta, A, sa1, sa2, oA )` — the *off-diagonal* value comes before the diagonal value. Easy to flip; matches Fortran but visually unintuitive.
+- **`dlaset` strided signature** — `dlaset( uplo, M, N, alpha, beta, A, sa1, sa2, oA )` — the *off-diagonal* value comes before the diagonal value. Easy to flip; matches Fortran but visually unintuitive.
 
 ## Coverage / testing notes
 

@@ -43,12 +43,12 @@ zdrot( N, x, strideX, y, strideY, c, s ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zdrot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
+zdrot.strided( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
 ```
 
 Applies a plane rotation, using alternative indexing semantics.
@@ -114,8 +114,8 @@ zdrot( 2, zx, 1, zy, 1, 0.8, 0.6 );
 console.log( reinterpret( zx, 0 ) ); // eslint-disable-line no-console
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zdrot.ndarray( 2, zx, 1, 0, zy, 1, 0, 0.8, 0.6 );
+// Using the strided interface:
+zdrot.strided( 2, zx, 1, 0, zy, 1, 0, 0.8, 0.6 );
 console.log( reinterpret( zx, 0 ) ); // eslint-disable-line no-console
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 ```

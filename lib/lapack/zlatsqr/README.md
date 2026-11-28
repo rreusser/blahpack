@@ -64,12 +64,12 @@ Computes a blocked Tall-Skinny QR (TSQR) factorization of a complex `M`-by-`N` m
 - `RangeError` ninth argument must be greater than or equal to `nb` (column-major)
 - `RangeError` `LDA` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatsqr.ndarray(
+zlatsqr.strided(
     M, N,
     mb, nb,
     A, strideA1, strideA2, offsetA,

@@ -3,7 +3,7 @@
 /**
 * Records the reference's workspace minimum (CONVENTIONS W3; ticket 0016)
 * into the committed cache data/fortran-lwmin.json, which
-* bin/workspace-minimum.mjs checks every ndarray.js's workspace check
+* bin/workspace-minimum.mjs checks every strided.js's workspace check
 * against.
 *
 * Scope: the d/z modules whose spec has a workspace-length argument (LWORK,

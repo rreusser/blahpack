@@ -7,22 +7,22 @@
 // F3; there is no main.js, ticket 0124). index.js must:
 //
 //   - attach the offset form to the layout form:
-//       setReadOnly( <routine>, 'ndarray', ndarray )
+//       setReadOnly( <routine>, 'strided', strided )
 //   - default-export the routine, typed with what it attaches, so tsc checks
-//     callers' `<routine>.ndarray( … )` (ticket 0094):
-//       export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );
-//   - export the offset form by name: export { ndarray };
+//     callers' `<routine>.strided( … )` (ticket 0094):
+//       export default /** @type {typeof <routine> & { strided: typeof strided }} */ ( <routine> );
+//   - export the offset form by name: export { strided };
 //
 // A module missing any of these is a broken public API.
 
 var path = require( 'path' );
 var moduleOf = require( '../../lib/module-path.cjs' ).moduleOf;
 
-function isNdarrayAttach( node ) {
-	// setReadOnly( X, 'ndarray', Y )
+function isStridedAttach( node ) {
+	// setReadOnly( X, 'strided', Y )
 	if ( node.callee && node.callee.type === 'Identifier' && node.callee.name === 'setReadOnly' ) {
 		var a = node.arguments && node.arguments[ 1 ];
-		if ( a && ( a.type === 'Literal' || a.type === 'StringLiteral' ) && a.value === 'ndarray' ) {
+		if ( a && ( a.type === 'Literal' || a.type === 'StringLiteral' ) && a.value === 'strided' ) {
 			return true;
 		}
 	}
@@ -33,15 +33,15 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'enforce the export surface of index.js (typed default with .ndarray attached, and a named ndarray export)',
+			'description': 'enforce the export surface of index.js (typed default with .strided attached, and a named strided export)',
 			'recommended': true
 		},
 		'schema': [],
 		'messages': {
 			'noDefault': 'index.js must export a default (the layout form).',
-			'noAttach': 'index.js must attach the offset form: setReadOnly( <routine>, \'ndarray\', ndarray ).',
-			'untyped': 'index.js must type its default export with the ndarray it attaches, so tsc checks callers\' `<routine>.ndarray( … )`: export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> ); (ticket 0094)',
-			'noNamedNdarray': 'index.js must also export the offset form by name: export { ndarray };'
+			'noAttach': 'index.js must attach the offset form: setReadOnly( <routine>, \'strided\', strided ).',
+			'untyped': 'index.js must type its default export with the strided it attaches, so tsc checks callers\' `<routine>.strided( … )`: export default /** @type {typeof <routine> & { strided: typeof strided }} */ ( <routine> ); (ticket 0094)',
+			'noNamedStrided': 'index.js must also export the offset form by name: export { strided };'
 		}
 	},
 	'create': function create( context ) {
@@ -55,15 +55,15 @@ var rule = {
 			return {};
 		}
 		var hasDefaultExport = false;
-		var hasNamedNdarray = false;
-		var ndarrayAttached = false;
+		var hasNamedStrided = false;
+		var stridedAttached = false;
 		var defaultTyped = false;
 		var sourceCode = context.sourceCode || context.getSourceCode();
 
 		return {
 			'ExportDefaultDeclaration': function onDefault( node ) {
 				hasDefaultExport = true;
-				if ( /^export default \/\*\* @type \{typeof ([\w$]+) & \{ ndarray: typeof [\w$]+ \}\} \*\/ \( \1 \);$/.test( sourceCode.getText( node ) ) ) {
+				if ( /^export default \/\*\* @type \{typeof ([\w$]+) & \{ strided: typeof [\w$]+ \}\} \*\/ \( \1 \);$/.test( sourceCode.getText( node ) ) ) {
 					defaultTyped = true;
 				}
 			},
@@ -73,27 +73,27 @@ var rule = {
 					if ( exported === 'default' ) {
 						hasDefaultExport = true;
 					}
-					if ( exported === 'ndarray' ) {
-						hasNamedNdarray = true;
+					if ( exported === 'strided' ) {
+						hasNamedStrided = true;
 					}
 				});
 			},
 			'CallExpression': function onCall( node ) {
-				if ( isNdarrayAttach( node ) ) {
-					ndarrayAttached = true;
+				if ( isStridedAttach( node ) ) {
+					stridedAttached = true;
 				}
 			},
 			'Program:exit': function onExit( programNode ) {
 				if ( !hasDefaultExport ) {
 					context.report({ 'node': programNode, 'messageId': 'noDefault' });
 				}
-				if ( !ndarrayAttached ) {
+				if ( !stridedAttached ) {
 					context.report({ 'node': programNode, 'messageId': 'noAttach' });
 				} else if ( hasDefaultExport && !defaultTyped ) {
 					context.report({ 'node': programNode, 'messageId': 'untyped' });
 				}
-				if ( !hasNamedNdarray ) {
-					context.report({ 'node': programNode, 'messageId': 'noNamedNdarray' });
+				if ( !hasNamedStrided ) {
+					context.report({ 'node': programNode, 'messageId': 'noNamedStrided' });
 				}
 			}
 		};

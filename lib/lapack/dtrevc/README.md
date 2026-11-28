@@ -99,12 +99,12 @@ dtrevc(
 - `RangeError` twelfth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( side === "right" \|\| side === "both" ) && LDVR < max( 1, mm ) )`)
 - `RangeError` fourteenth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrevc.ndarray(
+dtrevc.strided(
     side, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -258,8 +258,8 @@ const VR = new Float64Array( 16 );
 const SELECT = new Uint8Array( 4 );
 const WORK = new Float64Array( 12 );
 
-// Compute right eigenvectors using the ndarray interface:
-const info = dtrevc.ndarray( 'right', 'all', SELECT, 1, 0, 4, T, 1, 4, 0, VL, 1, 4, 0, VR, 1, 4, 0, 4, m, WORK, 1, 0 ); // eslint-disable-line max-len
+// Compute right eigenvectors using the strided interface:
+const info = dtrevc.strided( 'right', 'all', SELECT, 1, 0, 4, T, 1, 4, 0, VL, 1, 4, 0, VR, 1, 4, 0, 4, m, WORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'VR:', VR ); // eslint-disable-line no-console

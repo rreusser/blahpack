@@ -156,12 +156,12 @@ dggsvd3(
 - `RangeError` twenty-third argument is invalid (rejected when `LDQ < 1 \|\| ( jobq === "compute-Q" && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggsvd3.ndarray(
+dggsvd3.strided(
     jobu, jobv, jobq,
     M, N, p,
     K,
@@ -372,10 +372,10 @@ const IWORK = new Int32Array( N );
 let out = dggsvd3( 'column-major', 'compute-U', 'compute-V', 'compute-Q', N, N, N, K, L, A, N, B, N, ALPHA, 1, BETA, 1, U, N, V, N, Q, N, WORK, IWORK );
 console.log( out, K[ 0 ], L[ 0 ], ALPHA, BETA ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = discreteUniform( N * N, -10, 10, opts );
 B = discreteUniform( N * N, -10, 10, opts );
-out = dggsvd3.ndarray( 'compute-U', 'compute-V', 'compute-Q', N, N, N, K, L, A, 1, N, 0, B, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, U, 1, N, 0, V, 1, N, 0, Q, 1, N, 0, WORK, 1, 0, IWORK, 1, 0 );
+out = dggsvd3.strided( 'compute-U', 'compute-V', 'compute-Q', N, N, N, K, L, A, 1, N, 0, B, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, U, 1, N, 0, V, 1, N, 0, Q, 1, N, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( out, K[ 0 ], L[ 0 ], ALPHA, BETA ); // eslint-disable-line no-console
 ```
 

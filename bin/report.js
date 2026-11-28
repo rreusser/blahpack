@@ -80,7 +80,7 @@ function scanModules( pkg ) {
 			} catch ( e ) {}
 		}
 
-		// Discover ALL test files: test.js, test.<routine>.js, test.ndarray.js.
+		// Discover ALL test files: test.js, test.<routine>.js, test.strided.js.
 		// The earlier regex `/^test(\.|$).*\.js$/` *failed to match `test.js`*
 		// (the bare-name file): after consuming `^test\.` it required a second
 		// `.js` ending, leaving nothing in between. That silently excluded the
@@ -107,7 +107,7 @@ function scanModules( pkg ) {
 
 		// Coverage — run ALL test files together so coverage reflects the
 		// full test suite, not just test.js (which usually only has export
-		// checks). The real fixture-based tests live in test.ndarray.js.
+		// checks). The real fixture-based tests live in test.strided.js.
 		var lineCov = null;
 		var branchCov = null;
 		if ( hasTests && hasImpl && !isStub ) {
@@ -119,7 +119,7 @@ function scanModules( pkg ) {
 				// Parse Node's coverage-table output. Coverage-table lines start
 				// with the info-symbol `ℹ` (U+2139); test-result lines start
 				// with `✔`/`✖`. Restricting to `ℹ`-lines avoids a real bug we
-				// hit: a test name like `'dlartgs.ndarray: |x| < thresh branch'`
+				// hit: a test name like `'dlartgs.strided: |x| < thresh branch'`
 				// contains both the module name AND a `|`, so the previous
 				// regex (`\b<name>\b` + `|`) latched onto the test result and
 				// then read the *previous* module's base.js coverage. Result:
@@ -131,7 +131,7 @@ function scanModules( pkg ) {
 					// Only consider coverage-table lines, which start with the
 					// info-symbol `ℹ` (U+2139). Test-result lines start with
 					// `✔`/`✖`. Without this filter, a test name like
-					// `'dlartgs.ndarray: |x| < thresh branch'` matches both
+					// `'dlartgs.strided: |x| < thresh branch'` matches both
 					// the module name AND a `|`, latches `foundDir = true` on
 					// the test line, then reads the *previous* module's
 					// base.js coverage (dlartgs read 76% when actual was 100%).

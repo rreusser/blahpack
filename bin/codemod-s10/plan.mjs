@@ -1,5 +1,5 @@
-// Per-routine migration plan: old and new parameter lists (base/ndarray and
-// strided wrapper), the caller-side array type for each output scalar, and the
+// Per-routine migration plan: old and new parameter lists (base/strided and
+// wrapper), the caller-side array type for each output scalar, and the
 // new return value. Shared by the base.js transform and the call-site rewrite.
 
 import fs from 'node:fs';
@@ -28,7 +28,7 @@ function insertOutputs( list, spec, outs, groupsOf ) {
 		const gi = groups.findIndex( ( g ) => g.param === p );
 		let at = 0;
 		for ( let j = gi - 1; j >= 0; j-- ) {
-			// Base names, plus the strided form's `LD<NAME>` for a matrix.
+			// Base names, plus the wrapper form's `LD<NAME>` for a matrix.
 			const prev = groups[ j ].names.concat( [ groups[ j ].param.name, 'LD' + groups[ j ].param.name ] ).map( lc );
 			let idx = -1;
 			out.forEach( ( x, k ) => {
@@ -40,10 +40,10 @@ function insertOutputs( list, spec, outs, groupsOf ) {
 				at = idx + 1;
 				break;
 			}
-			// A spec param the code spells differently (e.g. strided wrapper's
+			// A spec param the code spells differently (e.g. wrapper's
 			// `LDA` for base `strideA1`): keep looking further back.
 		}
-		// Leading `order` in the strided wrapper stays first.
+		// Leading `order` in the wrapper stays first.
 		if ( at === 0 && out[ 0 ] === 'order' ) {
 			at = 1;
 		}
@@ -85,13 +85,13 @@ export function plan( routine ) {
 	const newBase = insertOutputs( baseKept, spec, outs, ( p ) => ( isComplex( p ) ? [ p.name, offsetName( p ) ] : [ p.name ] ) );
 
 	const wfile = path.join( d.dir, 'lib', routine + '.js' );
-	const nfile = path.join( d.dir, 'lib', 'ndarray.js' );
+	const nfile = path.join( d.dir, 'lib', 'strided.js' );
 	const oldStrided = fs.existsSync( wfile ) ? paramsOf( fs.readFileSync( wfile, 'utf8' ) ) : null;
 	const oldNd = fs.existsSync( nfile ) ? paramsOf( fs.readFileSync( nfile, 'utf8' ) ) : null;
 	let newStrided = null;
 	if ( oldStrided ) {
 		const sRemoved = new Set( removed );
-		// Removed array params drop their stride too in the strided form.
+		// Removed array params drop their stride too in the wrapper form.
 		for ( const r of removed ) {
 			oldStrided.forEach( ( x ) => {
 				if ( lc( x ) === 'stride' + r || ( ov.removeStrided || [] ).map( lc ).includes( lc( x ) ) ) {

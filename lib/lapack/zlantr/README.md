@@ -61,12 +61,12 @@ zlantr( order, norm, uplo, diag, M, N, A, LDA, WORK ) → number
 - `TypeError` fourth argument must be a valid diagonal type
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlantr.ndarray(
+zlantr.strided(
     norm, uplo, diag,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -157,8 +157,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = zlantr( 'column-major', 'one-norm', 'upper', 'non-unit', N, N, A, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = zlantr.ndarray( 'one-norm', 'upper', 'non-unit', N, N, A, 1, N, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zlantr.strided( 'one-norm', 'upper', 'non-unit', N, N, A, 1, N, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

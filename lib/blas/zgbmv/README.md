@@ -98,12 +98,12 @@ zgbmv(
 - `RangeError` eleventh argument must be non-zero
 - `RangeError` fourteenth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgbmv.ndarray(
+zgbmv.strided(
     trans,
     M, N, kl, ku,
     alpha,
@@ -231,8 +231,8 @@ const beta = new Complex128( 0.0, 0.0 );
 zgbmv( 'column-major', 'no-transpose', 2, 2, 0, 1, alpha, A, 2, x, 1, beta, y, 1 );
 console.log( reinterpret( y, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zgbmv.ndarray( 'no-transpose', 2, 2, 0, 1, alpha, A, 1, 2, 0, x, 1, 0, beta, y, 1, 0 );
+// Using the strided interface:
+zgbmv.strided( 'no-transpose', 2, 2, 0, 1, alpha, A, 1, 2, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( reinterpret( y, 0 ) ); // eslint-disable-line no-console
 ```
 

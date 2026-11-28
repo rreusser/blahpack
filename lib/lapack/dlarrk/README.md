@@ -55,12 +55,12 @@ dlarrk( N, iw, gl, gu, d, strideD, E2, strideE2, pivmin, reltol, w, werr ) → i
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarrk.ndarray(
+dlarrk.strided(
     N,
     iw, gl, gu,
     D, strideD, offsetD,

@@ -18,7 +18,7 @@
 ## Coverage gaps
 
 - All fixture cases (n=0, n=1, 3x3, 4x4 with 1x1 and 2x2 pivots, singular, swap) are tested.
-- Row-major (negative strides) not tested but supported by the ndarray interface.
+- Row-major (negative strides) not tested but supported by the strided interface.
 
 ## Complex number handling
 

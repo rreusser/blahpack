@@ -52,12 +52,12 @@ zlanhe( order, norm, uplo, N, A, LDA, WORK ) → number
 - `TypeError` second argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
 - `TypeError` third argument must be a valid matrix triangle
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlanhe.ndarray(
+zlanhe.strided(
     norm, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -137,8 +137,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = zlanhe( 'row-major', 'one-norm', 'upper', N, A, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = zlanhe.ndarray( 'one-norm', 'upper', N, A, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zlanhe.strided( 'one-norm', 'upper', N, A, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

@@ -66,12 +66,12 @@ zlahqr(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlahqr.ndarray(
+zlahqr.strided(
     wantt, wantz,
     N,
     ilo, ihi,
@@ -209,10 +209,10 @@ let info = zlahqr( 'column-major', true, true, N, 1, N, H, N, W, 1, 1, N, Z, N )
 console.log( 'info = %d', info );
 console.log( reinterpret( W, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = hessenberg();
 Z = identity();
-info = zlahqr.ndarray( true, true, N, 1, N, H, 1, N, 0, W, 1, 0, 1, N, Z, 1, N, 0 );
+info = zlahqr.strided( true, true, N, 1, N, H, 1, N, 0, W, 1, 0, 1, N, Z, 1, N, 0 );
 console.log( 'info = %d', info );
 console.log( reinterpret( W, 0 ) );
 ```

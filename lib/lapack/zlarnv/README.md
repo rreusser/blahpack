@@ -47,12 +47,12 @@ zlarnv( idist, iseed, strideISEED, N, x, strideX ) → Complex128Array
 
 **Returns** `Complex128Array`: `x`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarnv.ndarray(
+zlarnv.strided(
     idist,
     iseed, strideISEED, offsetISEED,
     N,
@@ -118,7 +118,7 @@ let i;
 const iseed = new Int32Array( [ 1, 2, 3, 4 ] );
 const x = new Complex128Array( 5 );
 
-zlarnv.ndarray( 1, iseed, 1, 0, 5, x, 1, 0 );
+zlarnv.strided( 1, iseed, 1, 0, 5, x, 1, 0 );
 
 const xv = reinterpret( x, 0 );
 for ( i = 0; i < 5; i += 1 ) {

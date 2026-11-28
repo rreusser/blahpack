@@ -55,7 +55,7 @@
     0
 
 
-{{alias}}.ndarray( rnorm, N, H, strideH1, strideH2, offsetH, eig, strideEig, offsetEig, bounds, strideBounds, offsetBounds, workl, strideWorkl, offsetWorkl, ierr )
+{{alias}}.strided( rnorm, N, H, strideH1, strideH2, offsetH, eig, strideEig, offsetEig, bounds, strideBounds, offsetBounds, workl, strideWorkl, offsetWorkl, ierr )
     Computes the eigenvalues and Ritz estimates, using alternative indexing
     semantics.
 
@@ -117,7 +117,7 @@
     > var eig = new {{alias:@stdlib/array/float64}}( 4 );
     > var bounds = new {{alias:@stdlib/array/float64}}( 4 );
     > var workl = new {{alias:@stdlib/array/float64}}( 12 );
-    > {{alias}}.ndarray( 0.5, 4, H, 1, 4, 0, eig, 1, 0, bounds, 1, 0, workl, 1, 0 )
+    > {{alias}}.strided( 0.5, 4, H, 1, 4, 0, eig, 1, 0, bounds, 1, 0, workl, 1, 0 )
     0
 
     See Also

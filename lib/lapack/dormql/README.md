@@ -73,12 +73,12 @@ dormql( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK ) → 
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dormql.ndarray(
+dormql.strided(
     side, trans,
     M, N, K,
     A, strideA1, strideA2, offsetA,
@@ -197,9 +197,9 @@ let C = new Float64Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.
 let info = dormql( 'column-major', 'left', 'no-transpose', N, N, N, A, N, TAU, 1, C, N, WORK );
 console.log( info, C );
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Float64Array( [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] );
-info = dormql.ndarray( 'left', 'no-transpose', N, N, N, A, 1, N, 0, TAU, 1, 0, C, 1, N, 0, WORK, 1, 0 );
+info = dormql.strided( 'left', 'no-transpose', N, N, N, A, 1, N, 0, TAU, 1, 0, C, 1, N, 0, WORK, 1, 0 );
 console.log( info, C );
 ```
 

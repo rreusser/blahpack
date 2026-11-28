@@ -78,12 +78,12 @@ zlagtm(
 - `TypeError` second argument must be a valid transpose operation
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlagtm.ndarray(
+zlagtm.strided(
     trans,
     N, nrhs,
     alpha,
@@ -190,9 +190,9 @@ let B = new Complex128Array( N * nrhs );
 zlagtm( 'column-major', 'no-transpose', N, nrhs, 1.0, DL, 1, d, 1, DU, 1, X, N, 0.0, B, N );
 console.log( reinterpret( B, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( N * nrhs );
-zlagtm.ndarray( 'no-transpose', N, nrhs, 1.0, DL, 1, 0, d, 1, 0, DU, 1, 0, X, 1, N, 0, 0.0, B, 1, N, 0 );
+zlagtm.strided( 'no-transpose', N, nrhs, 1.0, DL, 1, 0, d, 1, 0, DU, 1, 0, X, 1, N, 0, 0.0, B, 1, N, 0 );
 console.log( reinterpret( B, 0 ) );
 ```
 

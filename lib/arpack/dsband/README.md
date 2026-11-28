@@ -102,12 +102,12 @@ Computes converged approximations to eigenvalues of `A*z = lambda*B*z` for bande
 - `RangeError` workd array must have sufficient length
 - `RangeError` workl array must have sufficient length
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsband.ndarray(
+dsband.strided(
     rvec,
     howmny,
     select, strideSelect, offsetSelect,

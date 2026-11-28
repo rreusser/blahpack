@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The `info` parameter is marked as "consumed" by `signature.py` because it does not appear in the output parameter list, but it is actually an input parameter that determines `NCOLS`. It must be manually added back to the base.js signature and all wrappers (ndarray.js, zla_herpvgrw.js). The same issue exists in `dla_syrpvgrw`.
+- The `info` parameter is marked as "consumed" by `signature.py` because it does not appear in the output parameter list, but it is actually an input parameter that determines `NCOLS`. It must be manually added back to the base.js signature and all wrappers (strided.js, zla_herpvgrw.js). The same issue exists in `dla_syrpvgrw`.
 - The Fortran test deps file needs `dlamch` for transitive dependency through `dlapy2` (called by `zhetf2`). The standard `deps.py` output does not include this.
 
 ## Dependency interface surprises

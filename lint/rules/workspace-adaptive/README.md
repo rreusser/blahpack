@@ -24,7 +24,7 @@ reads. The spec property is generated from the reference
 reference tests that workspace's LWORK in an IF after its argument checks,
 other than to reject it (`INFO = -k`) or to answer a workspace query (`LQUERY`).
 A routine whose reference only rejects a short LWORK (DSYTRI2) or has no LWORK
-(DPSTRF) may use a fixed block size, provided `ndarray.js` demands what it uses.
+(DPSTRF) may use a fixed block size, provided `strided.js` demands what it uses.
 
 The rule checks that the length is read, not that the path chosen from it is
 the reference's; each module's tests past the blocking threshold, at the

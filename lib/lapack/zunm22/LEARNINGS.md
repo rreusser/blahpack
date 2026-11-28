@@ -32,7 +32,7 @@
 
 ## Missing automation
 
-- The scaffolded benchmark.js/benchmark.ndarray.js default to
+- The scaffolded benchmark.js/benchmark.strided.js default to
   Float64Array and use wrong dimensions (len=10^6) — always fix for
   z-prefix routines: use Complex128Array and size-based powers of 2.
   (Known: benchmark OOM trap.)

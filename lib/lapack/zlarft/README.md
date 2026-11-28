@@ -61,12 +61,12 @@ zlarft( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Comple
 - `TypeError` second argument must be one of the following: "forward", "backward"
 - `TypeError` third argument must be one of the following: "columnwise", "rowwise"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarft.ndarray(
+zlarft.strided(
     direct, storev,
     N, K,
     V, strideV1, strideV2, offsetV,
@@ -161,9 +161,9 @@ let T = new Complex128Array( K * K );
 zlarft( 'column-major', 'forward', 'columnwise', N, K, V, N, TAU, 1, T, K );
 console.log( reinterpret( T, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 T = new Complex128Array( K * K );
-zlarft.ndarray( 'forward', 'columnwise', N, K, V, 1, N, 0, TAU, 1, 0, T, 1, K, 0 );
+zlarft.strided( 'forward', 'columnwise', N, K, V, 1, N, 0, TAU, 1, 0, T, 1, K, 0 );
 console.log( reinterpret( T, 0 ) ); // eslint-disable-line no-console
 ```
 

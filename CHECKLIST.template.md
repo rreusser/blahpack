@@ -27,7 +27,7 @@ review; [GENERATE] means the file should be generated from a template.
 ## index.js
 
 - [ ] [MANUAL] `@module` should reference `@stdlib/<pkg>/<routine>`
-- [ ] [MANUAL] `@example` blocks should show both layout API and `.ndarray()` with
+- [ ] [MANUAL] `@example` blocks should show both layout API and `.strided()` with
       correct arguments and expected output comments
 
 ## base.js
@@ -40,7 +40,7 @@ review; [GENERATE] means the file should be generated from a template.
 - [ ] [MANUAL] Review algorithm — stdlib may use optimized variants (e.g., blocked
       multiplication, ddot kernels) vs our direct Fortran translation
 
-## ndarray.js (public ndarray API)
+## strided.js (public strided API)
 
 - [ ] [MANUAL] JSDoc `@param` descriptions should match stdlib conventions
 - Validation, `@example`, `@private`: CONVENTIONS V1–V10, J1–J3
@@ -57,7 +57,7 @@ review; [GENERATE] means the file should be generated from a template.
 
 ## README.md
 
-- [ ] [GENERATE] Should document BOTH the layout API and the `.ndarray()` API
+- [ ] [GENERATE] Should document BOTH the layout API and the `.strided()` API
 - [ ] [GENERATE] Should include mathematical notation in description
 - [ ] [GENERATE] Should include parameter tables with types, descriptions
 - [ ] [GENERATE] Should include notes about edge cases (quick returns, etc.)

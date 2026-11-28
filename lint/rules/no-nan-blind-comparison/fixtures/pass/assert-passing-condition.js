@@ -1,4 +1,4 @@
-// target: lib/lapack/dgeqrf/test/test.ndarray.js
+// target: lib/lapack/dgeqrf/test/test.strided.js
 // Asserting the passing condition directly is NaN-safe.
 import assert from 'node:assert/strict';
 

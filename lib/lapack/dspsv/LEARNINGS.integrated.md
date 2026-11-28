@@ -22,7 +22,7 @@
 
 ## Coverage gaps
 
-- ndarray.js line 77 (early return for N=0 || nrhs=0) is exercised
+- strided.js line 77 (early return for N=0 || nrhs=0) is exercised
   via base.js directly. 100% coverage on base.js.
 
 ## Complex number handling

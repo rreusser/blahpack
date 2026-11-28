@@ -51,12 +51,12 @@ dtpttr( order, uplo, N, AP, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtpttr.ndarray(
+dtpttr.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -141,8 +141,8 @@ const AP = discreteUniform( N, -10, 10, opts );
 let out = dtpttr( 'row-major', 'upper', N, AP, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dtpttr.ndarray( 'upper', N, AP, 1, 0, A, N, 1, 0 );
+// Using the strided interface:
+out = dtpttr.strided( 'upper', N, AP, 1, 0, A, N, 1, 0 );
 console.log( out );
 ```
 

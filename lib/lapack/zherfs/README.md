@@ -102,12 +102,12 @@ zherfs(
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zherfs.ndarray(
+zherfs.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -253,8 +253,8 @@ const RWORK = new Float64Array( N );
 let info = zherfs( 'column-major', 'upper', N, nrhs, A, N, AF, N, IPIV, 1, B, N, X, N, FERR, 1, BERR, 1, WORK, RWORK );
 console.log( 'info:', info, 'X:', reinterpret( X, 0 ), 'FERR:', FERR, 'BERR:', BERR );
 
-// Using the ndarray interface:
-info = zherfs.ndarray( 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+// Using the strided interface:
+info = zherfs.strided( 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( 'info:', info, 'X:', reinterpret( X, 0 ), 'FERR:', FERR, 'BERR:', BERR );
 ```
 

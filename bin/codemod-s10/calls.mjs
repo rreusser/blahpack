@@ -1,7 +1,7 @@
 // Rewrite every call site of the migrating routines to the S10 form.
 //
-// Call sites are found by resolving imports (base.js, ndarray.js, <r>.js,
-// index.js; `.ndarray` member calls on the latter). For each
+// Call sites are found by resolving imports (base.js, strided.js, <r>.js,
+// index.js; `.strided` member calls on the latter). For each
 // call, the argument list is remapped by name from the old to the new
 // parameter list; each output scalar gets a caller-side length-1 array, and
 // the places that read the output are rewritten:
@@ -62,9 +62,9 @@ function entryIndex( plans ) {
 	for ( const P of plans ) {
 		const lib = path.join( P.dir, 'lib' );
 		idx.set( path.join( lib, 'base.js' ), { P, kind: 'base' } );
-		idx.set( path.join( lib, 'ndarray.js' ), { P, kind: 'ndarray' } );
-		idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'strided' } );
-		idx.set( path.join( lib, 'index.js' ), { P, kind: 'strided', hasNdarray: true } );
+		idx.set( path.join( lib, 'strided.js' ), { P, kind: 'strided' } );
+		idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'wrapper' } );
+		idx.set( path.join( lib, 'index.js' ), { P, kind: 'wrapper', hasStrided: true } );
 	}
 	return idx;
 }
@@ -73,7 +73,7 @@ function lists( P, kind ) {
 	if ( kind === 'base' ) {
 		return [ P.oldBase, P.newBase ];
 	}
-	if ( kind === 'ndarray' ) {
+	if ( kind === 'strided' ) {
 		return [ P.oldNd || P.oldBase, P.newNd || P.newBase ];
 	}
 	return [ P.oldStrided, P.newStrided ];
@@ -204,7 +204,7 @@ export class FileRewriter {
 			return false;
 		}
 		const byName = new Map( bindings.map( ( b ) => [ b.local, b ] ) );
-		// Module-level aliases: `const dgeevx = ndarrayFn;`.
+		// Module-level aliases: `const dgeevx = stridedFn;`.
 		for ( const node of this.ast.body ) {
 			if ( node.type === 'VariableDeclaration' ) {
 				for ( const d of node.declarations ) {
@@ -216,7 +216,7 @@ export class FileRewriter {
 		}
 		// Routines passed as an argument: `function callX( mod, … ) { mod( … ) }`
 		// where every call of callX passes the same migrating routine's
-		// base/ndarray entry (same signature) in that position.
+		// base/strided entry (same signature) in that position.
 		const paramBindings = new Map(); // fn node → Map(param name → binding)
 		const fnDecls = new Map();
 		walkParents( this.ast, ( n ) => {
@@ -276,8 +276,8 @@ export class FileRewriter {
 			if ( n.type === 'CallExpression' ) {
 				if ( n.callee.type === 'Identifier' && byName.has( n.callee.name ) && !paramBinding( n, n.callee.name ) ) {
 					calls.push( { node: n, b: byName.get( n.callee.name ), kind: byName.get( n.callee.name ).kind } );
-				} else if ( n.callee.type === 'MemberExpression' && !n.callee.computed && n.callee.object.type === 'Identifier' && byName.has( n.callee.object.name ) && n.callee.property.name === 'ndarray' && byName.get( n.callee.object.name ).hasNdarray ) {
-					calls.push( { node: n, b: byName.get( n.callee.object.name ), kind: 'ndarray' } );
+				} else if ( n.callee.type === 'MemberExpression' && !n.callee.computed && n.callee.object.type === 'Identifier' && byName.has( n.callee.object.name ) && n.callee.property.name === 'strided' && byName.get( n.callee.object.name ).hasStrided ) {
+					calls.push( { node: n, b: byName.get( n.callee.object.name ), kind: 'strided' } );
 				}
 			}
 			if ( n.type === 'MemberExpression' && !n.computed && n.object.type === 'Identifier' && byName.has( n.object.name ) && n.property.name === 'length' ) {
@@ -304,11 +304,11 @@ export class FileRewriter {
 		}
 	}
 
-	// Is this call inside the routine's own wrapper (ndarray.js / <r>.js)
+	// Is this call inside the routine's own wrapper (strided.js / <r>.js)
 	// calling base, so outputs pass straight through by name?
 	isOwnWrapper( b ) {
 		const lib = path.join( b.P.dir, 'lib' );
-		return path.dirname( this.file ) === lib && ( path.basename( this.file ) === 'ndarray.js' || path.basename( this.file ) === b.P.routine + '.js' );
+		return path.dirname( this.file ) === lib && ( path.basename( this.file ) === 'strided.js' || path.basename( this.file ) === b.P.routine + '.js' );
 	}
 
 	// The migrating routine whose main function encloses `node` in this file
@@ -579,9 +579,9 @@ export class FileRewriter {
 				return arr[ p.name ];
 			}
 			if ( ins.offsetOf ) {
-				// The ndarray wrapper passes its own offset through; the strided
+				// The strided wrapper passes its own offset through; the strided
 				// wrapper (no offset param) and other callers pass 0.
-				return own && path.basename( this.file ) === 'ndarray.js' ? offsetName( ins.offsetOf ) : '0';
+				return own && path.basename( this.file ) === 'strided.js' ? offsetName( ins.offsetOf ) : '0';
 			}
 			return ins;
 		});

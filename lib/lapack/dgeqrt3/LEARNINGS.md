@@ -33,7 +33,7 @@
   computable).
 - **No XERBLA / no parameter validation in base.js.** The Fortran
   routine front-loads input validation and calls XERBLA on failure;
-  base.js drops both. Validation lives in ndarray.js / dgeqrt3.js. The
+  base.js drops both. Validation lives in strided.js / dgeqrt3.js. The
   base routine returns 0 unconditionally on success; there's no
   algorithmic failure mode (dgeqrt3 cannot return INFO > 0).
 

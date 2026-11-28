@@ -4,7 +4,7 @@
 
 - The Fortran `LWORK` parameter is dropped in JS (workspace is
   caller-supplied with stride/offset). Drop it from the wrapper and
-  ndarray API to stay consistent with other modules.
+  strided API to stay consistent with other modules.
 - `DLAMCH('Precision')` (used here) is *not* `DLAMCH('Epsilon')`.
   `Precision = Epsilon * Base = 2^-52 = Number.EPSILON` (vs.
   `Epsilon = 2^-53 = Number.EPSILON / 2`). The convergence test reads

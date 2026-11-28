@@ -53,7 +53,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ident, M, N, K, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK1, strideWORK2, offsetWORK )
+{{alias}}.strided( ident, M, N, K, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK1, strideWORK2, offsetWORK )
     Applies a complex Householder block reflector to a triangular-pentagonal matrix, using alternative indexing semantics.
 
     Parameters

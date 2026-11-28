@@ -53,12 +53,12 @@ Computes a QR factorization of a real M-by-N matrix using the compact WY represe
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeqrt2.ndarray(
+dgeqrt2.strided(
     M,
     N,
     A, strideA1, strideA2, offsetA,
@@ -148,8 +148,8 @@ const T = new Float64Array( N * N );
 let out = dgeqrt2( 'column-major', M, N, A, M, T, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dgeqrt2.ndarray( M, N, A, 1, M, 0, T, 1, N, 0 );
+// Using the strided interface:
+out = dgeqrt2.strided( M, N, A, 1, M, 0, T, 1, N, 0 );
 console.log( out );
 ```
 

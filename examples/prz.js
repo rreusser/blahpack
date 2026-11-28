@@ -4,7 +4,7 @@
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zggev from '../lib/lapack/zggev/lib/ndarray.js';
+import zggev from '../lib/lapack/zggev/lib/strided.js';
 import zladiv from '../lib/lapack/zladiv/lib/base.js';
 
 // Smallest safe denominator; eigenvalues with |beta| below it are infinite.

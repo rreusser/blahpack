@@ -3,7 +3,7 @@
 
 // Codemod: rename parameters to the spec's names (CONVENTIONS S2, S7).
 //
-// For each of base.js / ndarray.js / <routine>.js whose parameter list has the
+// For each of base.js / strided.js / <routine>.js whose parameter list has the
 // spec projection's length, every position whose name differs (other than in
 // case: names compare case-insensitively) is renamed — the parameter, every
 // reference to it (scope-aware), and its JSDoc `@param`. Parameters are
@@ -23,7 +23,7 @@ var only = argv.filter( function f( a ) {
 });
 
 function want( spec, form ) {
-	return ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec );
+	return ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec );
 }
 
 function renameFile( file, target, report ) {
@@ -161,8 +161,8 @@ function main() {
 			return;
 		}
 		renameFile( mod.files.base, want( spec, 'base' ), report );
-		renameFile( mod.files.ndarray, want( spec, 'ndarray' ), report );
 		renameFile( mod.files.strided, want( spec, 'strided' ), report );
+		renameFile( mod.files.wrapper, want( spec, 'wrapper' ), report );
 	});
 	console.log( report.join( '\n' ) );
 }

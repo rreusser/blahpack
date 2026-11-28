@@ -13,7 +13,7 @@ import * as espree from 'espree';
 globalThis.__replayLens = [];
 globalThis.__replayAllocs = [];
 // Records the size of each workspace the wrapper allocates for a null
-// argument, so null-work can be compared with ndarray.js given that size.
+// argument, so null-work can be compared with strided.js given that size.
 globalThis.__replayAlloc = function replayAlloc( name, arr ) {
 	globalThis.__replayAllocs.push( { 'name': name, 'length': arr.length, 'ctor': arr.constructor } );
 	return arr;

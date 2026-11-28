@@ -62,7 +62,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, mm, M, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( side, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, mm, M, WORK, strideWORK, offsetWORK, lwork )
     Computes some or all of the right and/or left eigenvectors of a real
     upper quasi-triangular matrix T, using alternative indexing semantics.
 

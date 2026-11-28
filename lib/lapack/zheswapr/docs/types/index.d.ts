@@ -53,7 +53,7 @@ interface Routine {
 	* @param i2 - i2
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, a: Float64Array, strideA: number, offsetA: number, lda: number, i1: number, i2: number ): Float64Array;
+	strided( uplo: string, N: number, a: Float64Array, strideA: number, offsetA: number, lda: number, i1: number, i2: number ): Float64Array;
 }
 
 /**

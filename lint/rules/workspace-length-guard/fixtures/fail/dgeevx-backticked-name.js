@@ -1,4 +1,4 @@
-// target: lib/lapack/dgeevx/lib/ndarray.js
+// target: lib/lapack/dgeevx/lib/strided.js
 // expect: The WORK length guard must throw
 // A backtick between the name and `array` defeats the replay's `(\w+) array must have` (ticket 0108).
 /* eslint-disable max-len, max-params */

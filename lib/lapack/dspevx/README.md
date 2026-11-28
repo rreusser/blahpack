@@ -120,12 +120,12 @@ dspevx(
 - `RangeError` sixteenth argument is invalid (column-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 - `RangeError` sixteenth argument is invalid (row-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < max( 1, range === "index" ? iu - il + 1 : N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspevx.ndarray(
+dspevx.strided(
     jobz, range, uplo,
     N,
     AP, strideAP, offsetAP,
@@ -271,7 +271,7 @@ const WORK = new Float64Array( 24 );
 const IWORK = new Int32Array( 15 );
 const IFAIL = new Int32Array( 3 );
 
-dspevx.ndarray( 'compute-vectors', 'all', 'upper', 3, AP, 1, 0, 0, 0, 0, 0, 0, m, w, 1, 0, Z, 1, 3, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 ); // eslint-disable-line max-len
+dspevx.strided( 'compute-vectors', 'all', 'upper', 3, AP, 1, 0, 0, 0, 0, 0, 0, m, w, 1, 0, Z, 1, 3, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'Number of eigenvalues found: %d', m[ 0 ] );
 console.log( 'Eigenvalues:', w );

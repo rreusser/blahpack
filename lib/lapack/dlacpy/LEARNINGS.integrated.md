@@ -8,7 +8,7 @@
 
 3. **Row-major detection**: `copyUpper`/`copyLower` use `isRowMajor([strideA1, strideA2])` and iterate differently for row vs column major. We handle both via stride arithmetic (correct, but less cache-efficient).
 
-4. **UPLO string values**: base.js uses full strings (`'upper'`, `'lower'`, `'all'`), NOT Fortran chars (`'U'`, `'L'`). The ndarray.js wrapper normalizes.
+4. **UPLO string values**: base.js uses full strings (`'upper'`, `'lower'`, `'all'`), NOT Fortran chars (`'U'`, `'L'`). The strided.js wrapper normalizes.
 
 ## Scaffold differences
 
@@ -18,12 +18,12 @@
 
 7. **@param types**: stdlib uses specific types: `{string}`, `{NonNegativeInteger}`, `{Float64Array}`, `{integer}`. Our scaffold uses `{TODO}`.
 
-8. **ndarray.js is a thin passthrough**: In stdlib, ndarray.js for dlacpy has no validation — just calls base directly. The validation lives in `dlacpy.js` (the BLAS/LAPACK-style wrapper).
+8. **strided.js is a thin passthrough**: In stdlib, strided.js for dlacpy has no validation — just calls base directly. The validation lives in `dlacpy.js` (the BLAS/LAPACK-style wrapper).
 
 ## Actionable items for tooling
 
 - [x] Scaffold should add eslint-disable pragmas for long signatures — DONE in scaffold.py
 - [x] Scaffold should generate proper @param types — DONE via signature.py js_arg_meta
 - [ ] Document the helper decomposition pattern in CLAUDE.md for uplo routines
-- [x] uplo string convention decided: single chars in base.js, ndarray.js normalizes — documented in CLAUDE.md
+- [x] uplo string convention decided: single chars in base.js, strided.js normalizes — documented in CLAUDE.md
 - [x] Loop interchange optimization deferred — correctness first, noted in CLAUDE.md

@@ -77,7 +77,7 @@ interface Routine {
 	* @param tau - `tau`
 	* @returns result
 	*/
-	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, dmin: number, sigma: number, desig: number, qmax: number, nfail: number, iter: number, ndiv: number, ieee: number, ttype: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, g: number, tau: number ): Float64Array;
+	strided( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, dmin: number, sigma: number, desig: number, qmax: number, nfail: number, iter: number, ndiv: number, ieee: number, ttype: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, g: number, tau: number ): Float64Array;
 }
 
 /**

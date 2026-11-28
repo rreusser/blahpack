@@ -1,4 +1,4 @@
-// target: lib/lapack/dlansf/lib/ndarray.js
+// target: lib/lapack/dlansf/lib/strided.js
 // expect: check
 /**
 * @license MIT

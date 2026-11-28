@@ -35,12 +35,12 @@ idamax( N, x, strideX ) → integer
 
 **Returns** `integer`: 0-based index of the max element, or -1 if N < 1
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-idamax.ndarray( N, x, strideX, offsetX ) → integer
+idamax.strided( N, x, strideX, offsetX ) → integer
 ```
 
 Finds the index of the first element having the maximum absolute value.

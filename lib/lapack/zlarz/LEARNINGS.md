@@ -7,7 +7,7 @@
   `zlarf`, there is no explicit unit entry in `v`. The `l` parameter gives
   the meaningful length, separate from the leading-dimension of `C`.
 - For `SIDE = 'L'`, the Fortran source passes `C(M-L+1, 1)` as the sub-panel
-  base for the inner `ZGEMV`/`ZGERU` calls. Translated to 0-based ndarray
+  base for the inner `ZGEMV`/`ZGERU` calls. Translated to 0-based strided
   semantics this becomes `offsetC + (M - l) * strideC1`.
 - Both left and right branches are gated on `tau != 0` in Fortran. The JS
   base.js checks tau once at the top and early-returns; behavior is

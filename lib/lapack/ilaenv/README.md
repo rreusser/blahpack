@@ -59,12 +59,12 @@ ilaenv( ispec, name, opts, n1, n2, n3, n4 ) → integer
 - `TypeError` second argument must be a string
 - `TypeError` third argument must be a string
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ilaenv.ndarray( ispec, name, opts, n1, n2, n3, n4 ) → integer
+ilaenv.strided( ispec, name, opts, n1, n2, n3, n4 ) → integer
 ```
 
 Returns problem-dependent parameters for the local environment, using alternative indexing semantics (the routine takes no arrays).
@@ -132,7 +132,7 @@ import ilaenv from '@rreusser/blahpack/lapack/ilaenv';
 console.log( ilaenv( 1, 'DGEQRF', ' ', 100, 100, -1, -1 ) );
 // => 32
 
-console.log( ilaenv.ndarray( 1, 'DGEQRF', ' ', 100, 100, -1, -1 ) );
+console.log( ilaenv.strided( 1, 'DGEQRF', ' ', 100, 100, -1, -1 ) );
 // => 32
 ```
 

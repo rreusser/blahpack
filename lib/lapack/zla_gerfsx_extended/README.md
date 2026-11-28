@@ -45,7 +45,7 @@ Improves the computed solution to a complex general system of linear equations u
 
 ## Notes
 
--   This routine is a private helper called from `zgerfsx` and is not intended for direct application use. It accepts a storage layout (`'row-major'` or `'column-major'`), derives the per-matrix strides, and delegates to the ndarray implementation.
+-   This routine is a private helper called from `zgerfsx` and is not intended for direct application use. It accepts a storage layout (`'row-major'` or `'column-major'`), derives the per-matrix strides, and delegates to the strided implementation.
 
 | Parameter | Type | Description |
 |---|---|---|
@@ -212,12 +212,12 @@ Improves the computed solution to a complex general system of linear equations u
 - `RangeError` eighteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eighteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_gerfsx_extended.ndarray(
+zla_gerfsx_extended.strided(
     prec_type,
     trans_type,
     N, nrhs,
@@ -460,7 +460,7 @@ import Int32Array from '@stdlib/array/int32/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import zgetrf from './../../zgetrf/lib/base.js';
 import zgetrs from './../../zgetrs/lib/base.js';
-import zla_gerfsx_extended from './../lib/ndarray.js';
+import zla_gerfsx_extended from './../lib/strided.js';
 
 // 3x3 diagonally dominant complex matrix (column-major):
 const N = 3;

@@ -48,12 +48,12 @@ zlapmt( order, forwrd, M, N, X, LDX, k, strideK ) → Int32Array
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlapmt.ndarray(
+zlapmt.strided(
     forwrd,
     M, N,
     X, strideX1, strideX2, offsetX,
@@ -125,8 +125,8 @@ const k = new Int32Array( [ 2, 0, 1 ] );
 zlapmt( 'column-major', true, N, N, X, N, k, 1 );
 console.log( reinterpret( X, 0 ) );
 
-// Using the ndarray interface (undo the permutation):
-zlapmt.ndarray( false, N, N, X, 1, N, 0, k, 1, 0 );
+// Using the strided interface (undo the permutation):
+zlapmt.strided( false, N, N, X, 1, N, 0, k, 1, 0 );
 console.log( reinterpret( X, 0 ) );
 ```
 

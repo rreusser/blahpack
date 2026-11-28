@@ -58,7 +58,7 @@ interface Routine {
 	* @param equed - `equed`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, scond: number, amax: number, equed: string ): Float64Array;
+	strided( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, scond: number, amax: number, equed: string ): Float64Array;
 }
 
 /**

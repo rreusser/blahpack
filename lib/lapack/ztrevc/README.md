@@ -101,12 +101,12 @@ ztrevc(
 - `RangeError` twelfth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( side === "right" \|\| side === "both" ) && LDVR < max( 1, mm ) )`)
 - `RangeError` fourteenth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrevc.ndarray(
+ztrevc.strided(
     side, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,

@@ -4,7 +4,7 @@
 
 - Fortran uses NMAX=4 for array declarations even for 3x3 tests. When printing complex arrays via EQUIVALENCE, the interleaved data includes padding rows. Must pack before printing (copy NxM used portion to a tight array) or the fixtures will have padding that doesn't match tight JS layouts.
 - The Fortran `WORK(N) = CMONE` for left eigenvectors sets position N (1-based), which is N-1 in 0-based JS. This value gets overwritten by the subsequent loop for KI < N-1, so it only matters for the ki = N-1 case.
-- `isOperationSide` from stdlib only recognizes `'left'` and `'right'`, not `'both'`. The ndarray.js and ztrevc.js validators needed explicit `side !== 'both'` checks.
+- `isOperationSide` from stdlib only recognizes `'left'` and `'right'`, not `'both'`. The strided.js and ztrevc.js validators needed explicit `side !== 'both'` checks.
 
 ## Dependency interface surprises
 

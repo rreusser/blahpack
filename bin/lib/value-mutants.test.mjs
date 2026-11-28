@@ -6,7 +6,7 @@
 * reference covers K-IMAX rows (ticket 0108). It was fully covered, and the
 * tests before PR #58 passed with it. The self-test below runs the tool's
 * mutant at that site against zhetrf's tests as they were before PR #58
-* (test/harness/fixtures/value-mutants/zhetrf-pre58/test.ndarray.js, the only
+* (test/harness/fixtures/value-mutants/zhetrf-pre58/test.strided.js, the only
 * zhetrf test file the PR changed) and as they are now:
 *
 * - fixed code, old tests: `k - imax` -> `( k - imax ) - 1` (the old bug)
@@ -28,8 +28,8 @@ import { enumerate, runMutants, changedLines } from '../value-mutants.mjs';
 const FIX = path.join( ROOT, 'test', 'harness', 'fixtures', 'value-mutants', 'zhetrf-pre58' );
 const ZLAHEF = path.join( ROOT, 'lib', 'lapack', 'zlahef', 'lib', 'base.js' );
 const TESTS = path.join( ROOT, 'lib', 'lapack', 'zhetrf', 'test' );
-const CURRENT = [ 'test.js', 'test.ndarray.js', 'test.validate.js', 'test.zhetrf.js' ].map( ( f ) => path.join( TESTS, f ) );
-const OLD = [ path.join( TESTS, 'test.js' ), path.join( FIX, 'test.ndarray.js' ), path.join( TESTS, 'test.validate.js' ), path.join( TESTS, 'test.zhetrf.js' ) ];
+const CURRENT = [ 'test.js', 'test.strided.js', 'test.validate.js', 'test.zhetrf.js' ].map( ( f ) => path.join( TESTS, f ) );
+const OLD = [ path.join( TESTS, 'test.js' ), path.join( FIX, 'test.strided.js' ), path.join( TESTS, 'test.validate.js' ), path.join( TESTS, 'test.zhetrf.js' ) ];
 const SITE = /jmax = imax \+ 1 \+ izamax\( k - imax/;
 
 // A file path inside a (nonexistent) module, so imports resolve to real callees.
@@ -109,7 +109,7 @@ test( 'self-test (ticket 0108): the old zlahef row-max bug survives the pre-PR #
 	const cur = await runMutants( { 'file': ZLAHEF, 'tests': CURRENT, 'mutants': [ m ], 'concurrency': 1 } );
 	assert.equal( cur.results[ 0 ].killed, true, 'the upper_66_* reference tests kill it' );
 	assert.equal( cur.results[ 0 ].outcome, 'fail' );
-	assert.equal( cur.results[ 0 ].by, 'test.ndarray.js' );
+	assert.equal( cur.results[ 0 ].by, 'test.strided.js' );
 });
 
 test( 'self-test (ticket 0108): on the old zlahef the tool flags the buggy line; the current tests reject that code', async () => {
@@ -131,7 +131,7 @@ test( 'runMutants: a mutant that hangs is killed by the timeout and reported as 
 	const src = fs.readFileSync( file, 'utf8' );
 	const hang = { 'key': 'k', 'line': 1, 'op': 'test', 'before': '', 'after': '', 'context': '', 'src': src.replace( 'dtemp = 0.0;', 'dtemp = 0.0; for ( ;; ) {}' ) };
 	assert.notEqual( hang.src, src );
-	const tests = [ path.join( ROOT, 'lib', 'blas', 'ddot', 'test', 'test.ndarray.js' ) ];
+	const tests = [ path.join( ROOT, 'lib', 'blas', 'ddot', 'test', 'test.strided.js' ) ];
 	const t0 = Date.now();
 	const r = await runMutants( { 'file': file, 'tests': tests, 'mutants': [ hang ], 'concurrency': 1, 'timeoutMs': 2000 } );
 	assert.equal( r.results[ 0 ].outcome, 'timeout' );

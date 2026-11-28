@@ -57,12 +57,12 @@ zlarfx( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Complex128Array
 - `TypeError` second argument must be a valid operation side
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarfx.ndarray(
+zlarfx.strided(
     side,
     M, N,
     v, strideV, offsetV,
@@ -173,7 +173,7 @@ const C = new Complex128Array([
 ]);
 const WORK = new Complex128Array( 10 );
 
-zlarfx.ndarray( 'left', 2, 3, v, 1, 0, tau, C, 1, 2, 0, WORK, 1, 0 );
+zlarfx.strided( 'left', 2, 3, v, 1, 0, tau, C, 1, 2, 0, WORK, 1, 0 );
 
 const view = reinterpret( C, 0 );
 console.log( 'C after left reflector application:' ); // eslint-disable-line no-console

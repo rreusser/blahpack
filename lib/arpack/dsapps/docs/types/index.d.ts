@@ -75,7 +75,7 @@ interface Routine {
 	* @param strideWorkd - stride length for `workd`
 	* @param offsetWorkd - starting index for `workd`
 	*/
-	ndarray( n: number, kev: number, np: number, shift: Float64Array, strideShift: number, offsetShift: number, v: Float64Array, strideV1: number, strideV2: number, offsetV: number, h: Float64Array, strideH1: number, strideH2: number, offsetH: number, resid: Float64Array, strideResid: number, offsetResid: number, q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): void;
+	strided( n: number, kev: number, np: number, shift: Float64Array, strideShift: number, offsetShift: number, v: Float64Array, strideV1: number, strideV2: number, offsetV: number, h: Float64Array, strideH1: number, strideH2: number, offsetH: number, resid: Float64Array, strideResid: number, offsetResid: number, q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): void;
 }
 
 /**

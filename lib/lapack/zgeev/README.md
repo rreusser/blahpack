@@ -80,12 +80,12 @@ zgeev(
 - `RangeError` twelfth argument is invalid (rejected when `LDVR < 1 \|\| ( jobvr === "compute-vectors" && LDVR < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeev.ndarray(
+zgeev.strided(
     jobvl, jobvr,
     N,
     A, strideA1, strideA2, offsetA,
@@ -215,9 +215,9 @@ const RWORK = new Float64Array( 2 * N );
 let out = zgeev( 'column-major', 'compute-vectors', 'compute-vectors', N, A, N, w, 1, VL, N, VR, N, WORK, RWORK );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
-out = zgeev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, w, 1, 0, VL, N, 1, 0, VR, N, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+out = zgeev.strided( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, w, 1, 0, VL, N, 1, 0, VR, N, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( out );
 ```
 

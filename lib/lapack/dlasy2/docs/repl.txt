@@ -58,7 +58,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ltranl, ltranr, isgn, n1, n2, TL, strideTL1, strideTL2, offsetTL, TR, strideTR1, strideTR2, offsetTR, B, strideB1, strideB2, offsetB, scale, X, strideX1, strideX2, offsetX, xnorm )
+{{alias}}.strided( ltranl, ltranr, isgn, n1, n2, TL, strideTL1, strideTL2, offsetTL, TR, strideTR1, strideTR2, offsetTR, B, strideB1, strideB2, offsetB, scale, X, strideX1, strideX2, offsetX, xnorm )
     Solves the Sylvester matrix equation, using alternative indexing
     semantics.
 

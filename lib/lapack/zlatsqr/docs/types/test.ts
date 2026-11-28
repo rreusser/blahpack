@@ -32,12 +32,12 @@ import zlatsqr = require( './index' );
 	zlatsqr(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	zlatsqr.ndarray( 4, 2, 8, 2, new Complex128Array( 8 ), 1, 4, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 4 ), 1, 0 ); // $ExpectType number
+	zlatsqr.strided( 4, 2, 8, 2, new Complex128Array( 8 ), 1, 4, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 4 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zlatsqr.ndarray(); // $ExpectError
+	zlatsqr.strided(); // $ExpectError
 }

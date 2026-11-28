@@ -41,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, PIV, stridePIV, offsetPIV, RANK, tol, WORK )
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA, PIV, stridePIV, offsetPIV, RANK, tol, WORK )
     Computes the Cholesky factorization with complete pivoting of a complex
     Hermitian positive semi-definite matrix (blocked algorithm) using
     alternative indexing semantics.

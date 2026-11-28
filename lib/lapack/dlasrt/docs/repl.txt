@@ -25,7 +25,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( id, N, d, stride, offset )
+{{alias}}.strided( id, N, d, stride, offset )
     Sorts numbers in increasing or decreasing order, using alternative
     indexing semantics.
 

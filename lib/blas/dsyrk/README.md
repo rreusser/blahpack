@@ -81,12 +81,12 @@ dsyrk( order, uplo, trans, N, K, alpha, A, LDA, beta, C, LDC ) → Float64Array
 - `RangeError` eighth argument must be greater than or equal to `max( 1, trans === 'no-transpose' ? K : N )` (row-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyrk.ndarray(
+dsyrk.strided(
     uplo, trans,
     N, K,
     alpha,

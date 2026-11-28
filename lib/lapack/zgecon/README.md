@@ -55,12 +55,12 @@ zgecon( order, norm, N, A, LDA, anorm, rcond, WORK, RWORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` sixth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgecon.ndarray(
+zgecon.strided(
     norm,
     N,
     A, strideA1, strideA2, offsetA,
@@ -166,13 +166,13 @@ zgetrf( 'column-major', N, N, A, N, IPIV, 1 );
 let info = zgecon( 'column-major', 'one-norm', N, A, N, anorm, rcond, null, null );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( [ 4.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 3.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 2.0, 0.0 ] );
 IPIV = new Int32Array( N );
 const WORK = new Complex128Array( 2 * N );
 const RWORK = new Float64Array( 2 * N );
-zgetrf.ndarray( N, N, A, 1, N, 0, IPIV, 1, 0 );
-info = zgecon.ndarray( 'one-norm', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
+zgetrf.strided( N, N, A, 1, N, 0, IPIV, 1, 0 );
+info = zgecon.strided( 'one-norm', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] ); // eslint-disable-line no-console
 ```
 

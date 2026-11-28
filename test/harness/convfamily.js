@@ -119,7 +119,7 @@ function comps( sc, vals ) {
 * Build the check-runner bundle for one scalar type.
 *
 * @param {Object} sc - scalar trait (S.real | S.complex)
-* @param {Object} R - { trttf,tfttr,trttp,tpttr,tfttp,tpttf } ndarray fns
+* @param {Object} R - { trttf,tfttr,trttp,tpttr,tfttp,tpttf } strided fns
 * @param {Array<string>} transrs - RFP variants ('no-transpose' + T/C)
 * @returns {Object} check runners
 */

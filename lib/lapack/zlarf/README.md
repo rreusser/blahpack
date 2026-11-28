@@ -56,12 +56,12 @@ zlarf( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Complex128Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be a valid operation side
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarf.ndarray(
+zlarf.strided(
     side,
     M, N,
     v, strideV, offsetV,
@@ -152,9 +152,9 @@ const WORK = new Complex128Array( N );
 zlarf( 'column-major', 'left', N, N, v, 1, tau, C, N, WORK );
 console.log( reinterpret( C, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Complex128Array( [ 1.0, 2.0, 3.0, -1.0, 0.5, 0.0, -2.0, 1.0, 4.0, 0.5, 1.0, -1.5, 0.0, 3.0, 2.0, 2.0, -1.0, -1.0 ] );
-zlarf.ndarray( 'left', N, N, v, 1, 0, tau, 0, C, 1, N, 0, WORK, 1, 0 );
+zlarf.strided( 'left', N, N, v, 1, 0, tau, 0, C, 1, N, 0, WORK, 1, 0 );
 console.log( reinterpret( C, 0 ) );
 ```
 

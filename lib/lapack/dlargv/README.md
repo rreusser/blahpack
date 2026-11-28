@@ -42,12 +42,12 @@ dlargv( N, x, strideX, y, strideY, c, strideC ) → Float64Array
 
 **Returns** `Float64Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlargv.ndarray(
+dlargv.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,
@@ -127,8 +127,8 @@ const c = discreteUniform( N, -10, 10, opts );
 let out = dlargv( N, x, 1, y, 1, c, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlargv.ndarray( N, x, 1, 0, y, 1, 0, c, 1, 0 );
+// Using the strided interface:
+out = dlargv.strided( N, x, 1, 0, y, 1, 0, c, 1, 0 );
 console.log( out );
 ```
 

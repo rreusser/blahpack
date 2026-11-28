@@ -104,12 +104,12 @@ zhgeqz(
 - `RangeError` seventeenth argument is invalid (rejected when `LDQ < 1 \|\| ( ( compq === "initialize" \|\| compq === "update" ) && LDQ < N )`)
 - `RangeError` nineteenth argument is invalid (rejected when `LDZ < 1 \|\| ( ( compz === "initialize" \|\| compz === "update" ) && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhgeqz.ndarray(
+zhgeqz.strided(
     job, compq, compz,
     N,
     ilo, ihi,
@@ -261,7 +261,7 @@ let info = zhgeqz( 'column-major', 'schur', 'initialize', 'initialize', N, 1, N,
 console.log( info );
 console.log( reinterpret( ALPHA, 0 ), reinterpret( BETA, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Complex128Array( Hvals );
 T = new Complex128Array( Tvals );
 Q = new Complex128Array( N * N );
@@ -270,7 +270,7 @@ ALPHA = new Complex128Array( N );
 BETA = new Complex128Array( N );
 const WORK = new Complex128Array( N );
 const RWORK = new Float64Array( N );
-info = zhgeqz.ndarray( 'schur', 'initialize', 'initialize', N, 1, N, H, 1, N, 0, T, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, Q, 1, N, 0, Z, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
+info = zhgeqz.strided( 'schur', 'initialize', 'initialize', N, 1, N, H, 1, N, 0, T, 1, N, 0, ALPHA, 1, 0, BETA, 1, 0, Q, 1, N, 0, Z, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info );
 console.log( reinterpret( ALPHA, 0 ), reinterpret( BETA, 0 ) );
 ```

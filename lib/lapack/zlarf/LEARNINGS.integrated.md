@@ -2,7 +2,7 @@
 
 ## Translation Pitfalls
 - Complex arrays use `reinterpret()` at function entry for Float64Array views; strides and offsets are multiplied by 2 for Float64 indexing.
-- String parameters (`side`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`side`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 
 ## Dependency Interface Surprises
 - Dependencies: `reinterpret-complex128`, `zgemv`, `zgerc`. No unexpected interface issues encountered.

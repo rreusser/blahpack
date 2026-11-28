@@ -75,7 +75,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, DF, strideDF, offsetDF, EF, strideEF, offsetEF, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, DF, strideDF, offsetDF, EF, strideEF, offsetEF, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK )
     Improves the computed solution to a system of linear equations when the
     coefficient matrix is symmetric positive definite and tridiagonal, and
     provides error bounds and backward error estimates for the solution,

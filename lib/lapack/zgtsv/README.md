@@ -56,12 +56,12 @@ zgtsv( order, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB ) → inte
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgtsv.ndarray(
+zgtsv.strided(
     N, nrhs,
     DL, strideDL, offsetDL,
     d, strideD, offsetD,
@@ -166,12 +166,12 @@ let info = zgtsv( 'column-major', N, nrhs, DL, 1, d, 1, DU, 1, B, N );
 console.log( 'info:', info );
 console.log( 'X:', reinterpret( B, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 DL = new Complex128Array( [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ] );
 d = new Complex128Array( [ 4.0, 0.0, 4.0, 0.0, 4.0, 0.0, 4.0, 0.0 ] );
 DU = new Complex128Array( [ 1.0, -1.0, 1.0, -1.0, 1.0, -1.0 ] );
 B = new Complex128Array( [ 6.0, -2.0, 12.0, -2.0, 18.0, -2.0, 19.0, 3.0 ] );
-info = zgtsv.ndarray( N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, B, 1, N, 0 );
+info = zgtsv.strided( N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, B, 1, N, 0 );
 console.log( 'info:', info );
 console.log( 'X:', reinterpret( B, 0 ) );
 ```

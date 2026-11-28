@@ -42,7 +42,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, WORK, strideWORK, offsetWORK )
     Computes the reciprocal of the condition number (in the 1-norm) of a
     real symmetric positive definite tridiagonal matrix using the
     factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF, using

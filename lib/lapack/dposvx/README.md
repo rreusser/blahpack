@@ -114,12 +114,12 @@ dposvx(
 - `RangeError` sixteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dposvx.ndarray(
+dposvx.strided(
     fact, uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,

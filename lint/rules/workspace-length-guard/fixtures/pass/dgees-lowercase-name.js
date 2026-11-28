@@ -1,4 +1,4 @@
-// target: lib/lapack/dgees/lib/ndarray.js
+// target: lib/lapack/dgees/lib/strided.js
 // Names compare case-insensitively (S7): `bwork` is BWORK.
 /* eslint-disable max-len, max-params */
 

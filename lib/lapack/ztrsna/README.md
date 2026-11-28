@@ -99,12 +99,12 @@ ztrsna(
 - `RangeError` twelfth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( job === "eigenvalues" \|\| job === "both" ) && LDVR < max( 1, mm ) )`)
 - `RangeError` must supply valid dimensions
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrsna.ndarray(
+ztrsna.strided(
     job, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,

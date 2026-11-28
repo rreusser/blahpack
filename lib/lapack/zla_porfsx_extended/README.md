@@ -202,12 +202,12 @@ zla_porfsx_extended(
 - `RangeError` sixteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` sixteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_porfsx_extended.ndarray(
+zla_porfsx_extended.strided(
     prec_type,
     uplo,
     N, nrhs,
@@ -482,7 +482,7 @@ zpotrf( 'upper', 3, AF, 1, 3, 0 );
 Y.set( B );
 zpotrs( 'upper', 3, 1, AF, 1, 3, 0, Y, 1, 3, 0 );
 
-const info = zla_porfsx_extended.ndarray(1, 'upper', 3, 1, A, 1, 3, 0, AF, 1, 3, 0, false, c, 1, 0, B, 1, 3, 0, Y, 1, 3, 0, berr_out, 1, 0, 2, err_bnds_norm, 1, 1, 0, err_bnds_comp, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, YT, 1, 0, 1.0, 10, 0.5, 0.25, false);
+const info = zla_porfsx_extended.strided(1, 'upper', 3, 1, A, 1, 3, 0, AF, 1, 3, 0, false, c, 1, 0, B, 1, 3, 0, Y, 1, 3, 0, berr_out, 1, 0, 2, err_bnds_norm, 1, 1, 0, err_bnds_comp, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, YT, 1, 0, 1.0, 10, 0.5, 0.25, false);
 console.log( 'info = %d', info ); // eslint-disable-line no-console
 console.log( 'berr_out = %s', berr_out ); // eslint-disable-line no-console
 ```

@@ -9,7 +9,7 @@
 *                  runtime imports nothing, and no file calls `require(`;
 *   3. browser     headless Chromium loads every routine from a local server
 *                  with no request to any other host; each default export and
-*                  its `.ndarray` are functions; the CASES below give the same
+*                  its `.strided` are functions; the CASES below give the same
 *                  results, bit for bit, in the browser (dist/) and in Node (lib/);
 *   4. size        gzipped sizes stay under BUDGET. Raising a budget is a
 *                  deliberate edit to this file.
@@ -45,7 +45,7 @@ const CASES = [
 		routines: [ 'blas/ddot' ],
 		body: `( ddot ) => {
 			const x = new Float64Array( [ 1, 2, 3, 4 ] );
-			return [ ddot( 4, x, 1, x, 1 ), ddot.ndarray( 2, x, 2, 1, x, 2, 1 ) ];
+			return [ ddot( 4, x, 1, x, 1 ), ddot.strided( 2, x, 2, 1, x, 2, 1 ) ];
 		}`
 	},
 	{
@@ -138,7 +138,7 @@ const mods = {};
 await Promise.all( routines.map( async ( r ) => {
 	try {
 		const m = ( await import( './dist/' + r + '.js' ) ).default;
-		if ( typeof m !== 'function' || typeof m.ndarray !== 'function' ) bad.push( r + ': default export or .ndarray is not a function' );
+		if ( typeof m !== 'function' || typeof m.strided !== 'function' ) bad.push( r + ': default export or .strided is not a function' );
 		mods[ r ] = m;
 	} catch ( e ) { bad.push( r + ': ' + e.message ); }
 } ) );

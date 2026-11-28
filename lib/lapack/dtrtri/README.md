@@ -55,12 +55,12 @@ dtrtri( order, uplo, diag, N, A, LDA ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrtri.ndarray( uplo, diag, N, A, strideA1, strideA2, offsetA ) → info: integer
+dtrtri.strided( uplo, diag, N, A, strideA1, strideA2, offsetA ) → info: integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -142,8 +142,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = dtrtri( 'row-major', 'upper', 'non-unit', N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dtrtri.ndarray( 'upper', 'non-unit', N, A, N, 1, 0 );
+// Using the strided interface:
+out = dtrtri.strided( 'upper', 'non-unit', N, A, N, 1, 0 );
 console.log( out );
 ```
 

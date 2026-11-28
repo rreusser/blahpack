@@ -31,12 +31,12 @@ import dsgets from './index';
 	dsgets(); // $ExpectError
 }
 
-// The ndarray method returns void...
+// The strided method returns void...
 {
-	dsgets.ndarray( 1, 'LM', 3, 2, new Float64Array( 5 ), 1, 0, new Float64Array( 5 ), 1, 0, new Float64Array( 2 ), 1, 0 ); // $ExpectType void
+	dsgets.strided( 1, 'LM', 3, 2, new Float64Array( 5 ), 1, 0, new Float64Array( 5 ), 1, 0, new Float64Array( 2 ), 1, 0 ); // $ExpectType void
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsgets.ndarray(); // $ExpectError
+	dsgets.strided(); // $ExpectError
 }

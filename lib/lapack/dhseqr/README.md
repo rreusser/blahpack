@@ -85,12 +85,12 @@ dhseqr(
 - `RangeError` fourteenth argument is invalid (rejected when `LDZ < 1 \|\| ( ( compz === "initialize" \|\| compz === "update" ) && LDZ < max( 1, N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dhseqr.ndarray(
+dhseqr.strided(
     job, compz,
     N,
     ilo, ihi,
@@ -263,13 +263,13 @@ let info = dhseqr( 'column-major', 'schur', 'initialize', N, 1, N, H, N, WR, 1, 
 console.log( info );
 console.log( WR, WI );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Float64Array( Hvals );
 WR = new Float64Array( N );
 WI = new Float64Array( N );
 Z = new Float64Array( N * N );
 const WORK = new Float64Array( N );
-info = dhseqr.ndarray( 'schur', 'initialize', N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
+info = dhseqr.strided( 'schur', 'initialize', N, 1, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
 console.log( info );
 console.log( WR, WI );
 ```

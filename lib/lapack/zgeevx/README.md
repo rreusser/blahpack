@@ -128,12 +128,12 @@ zgeevx(
 - `RangeError` fourteenth argument is invalid (rejected when `LDVR < 1 \|\| ( jobvr === "compute-vectors" && LDVR < N )`)
 - `RangeError` N must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeevx.ndarray(
+zgeevx.strided(
     balanc, jobvl, jobvr, sense,
     N,
     A, strideA1, strideA2, offsetA,
@@ -332,7 +332,7 @@ ilo[ 0 ] = 0;
 ihi[ 0 ] = 0;
 abnrm[ 0 ] = 0;
 const out = {
-	'info': zgeevx.ndarray( 'both', 'compute-vectors', 'compute-vectors', 'none', N, A, 1, N, 0, w, 1, 0, VL, 1, N, 0, VR, 1, N, 0, ilo, ihi, SCALE, 1, 0, abnrm, RCONDE, 1, 0, RCONDV, 1, 0, WORK, 1, 0, RWORK, 1, 0 ),
+	'info': zgeevx.strided( 'both', 'compute-vectors', 'compute-vectors', 'none', N, A, 1, N, 0, w, 1, 0, VL, 1, N, 0, VR, 1, N, 0, ilo, ihi, SCALE, 1, 0, abnrm, RCONDE, 1, 0, RCONDV, 1, 0, WORK, 1, 0, RWORK, 1, 0 ),
 	'ilo': ilo[ 0 ],
 	'ihi': ihi[ 0 ],
 	'abnrm': abnrm[ 0 ]

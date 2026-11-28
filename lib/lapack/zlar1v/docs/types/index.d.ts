@@ -102,7 +102,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns result
 	*/
-	ndarray( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, offsetD: number, l: Float64Array, strideL: number, offsetL: number, LD: Float64Array, strideLD: number, offsetLD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, offsetZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	strided( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, offsetD: number, l: Float64Array, strideL: number, offsetL: number, LD: Float64Array, strideLD: number, offsetLD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, offsetZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

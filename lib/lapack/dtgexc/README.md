@@ -77,12 +77,12 @@ dtgexc(
 - `RangeError` thirteenth argument is invalid (rejected when `( ifst[ 0 ] + 1 ) < 1 \|\| ( ifst[ 0 ] + 1 ) > N`)
 - `RangeError` fourteenth argument is invalid (rejected when `( ilst[ 0 ] + 1 ) < 1 \|\| ( ilst[ 0 ] + 1 ) > N`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgexc.ndarray(
+dtgexc.strided(
     wantq, wantz,
     N,
     A, strideA1, strideA2, offsetA,

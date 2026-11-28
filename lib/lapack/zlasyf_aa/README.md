@@ -65,12 +65,12 @@ zlasyf_aa( order, uplo, j1, M, nb, A, LDA, IPIV, strideIPIV, H, LDH, WORK ) → 
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nb )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlasyf_aa.ndarray(
+zlasyf_aa.strided(
     uplo,
     j1,
     M, nb,

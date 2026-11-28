@@ -99,12 +99,12 @@ ztgevc(
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgevc.ndarray(
+ztgevc.strided(
     side, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -254,10 +254,10 @@ let info = ztgevc( 'column-major', 'both', 'all', SELECT, 1, N, S, N, P, N, VL, 
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( VR, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 VL = new Complex128Array( N * N );
 VR = new Complex128Array( N * N );
-info = ztgevc.ndarray( 'both', 'all', SELECT, 1, 0, N, S, 1, N, 0, P, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, N, M, WORK, 1, 0, RWORK, 1, 0 );
+info = ztgevc.strided( 'both', 'all', SELECT, 1, 0, N, S, 1, N, 0, P, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, N, M, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( VR, 0 ) ); // eslint-disable-line no-console
 ```

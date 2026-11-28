@@ -19,7 +19,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( x, y )
+{{alias}}.strided( x, y )
     Returns sqrt(x2+y2), using alternative indexing semantics.
 
     Parameters

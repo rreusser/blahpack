@@ -32,12 +32,12 @@ import zunbdb5 = require( './index' );
 	zunbdb5(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	zunbdb5.ndarray( 2, 2, 1, new Complex128Array( 2 ), 1, 0, new Complex128Array( 2 ), 1, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 1 ), 1, 0 ); // $ExpectType number
+	zunbdb5.strided( 2, 2, 1, new Complex128Array( 2 ), 1, 0, new Complex128Array( 2 ), 1, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 1 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zunbdb5.ndarray(); // $ExpectError
+	zunbdb5.strided(); // $ExpectError
 }

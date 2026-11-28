@@ -12,7 +12,7 @@
 
 ## Automation opportunities
 
-- The scaffold generator did not add `isTransposeOperation` validation to ndarray.js for the `transr` parameter. This was a manual fix. The scaffold should detect `transr` parameters and add the import and validation automatically.
+- The scaffold generator did not add `isTransposeOperation` validation to strided.js for the `transr` parameter. This was a manual fix. The scaffold should detect `transr` parameters and add the import and validation automatically.
 
 ## Coverage gaps
 

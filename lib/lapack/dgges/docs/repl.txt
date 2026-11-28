@@ -92,7 +92,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( jobvsl, jobvsr, sort, selctg, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, sdim, ALPHAR, strideALPHAR, offsetALPHAR, ALPHAI, strideALPHAI, offsetALPHAI, BETA, strideBETA, offsetBETA, VSL, strideVSL1, strideVSL2, offsetVSL, VSR, strideVSR1, strideVSR2, offsetVSR, WORK, strideWORK, offsetWORK, lwork, BWORK, strideBWORK, offsetBWORK )
+{{alias}}.strided( jobvsl, jobvsr, sort, selctg, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, sdim, ALPHAR, strideALPHAR, offsetALPHAR, ALPHAI, strideALPHAI, offsetALPHAI, BETA, strideBETA, offsetBETA, VSL, strideVSL1, strideVSL2, offsetVSL, VSR, strideVSR1, strideVSR2, offsetVSR, WORK, strideWORK, offsetWORK, lwork, BWORK, strideBWORK, offsetBWORK )
     Computes generalized eigenvalues and real Schur form for a pair of real nonsymmetric matrices, using alternative indexing semantics.
 
     Parameters

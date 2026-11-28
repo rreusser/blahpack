@@ -102,12 +102,12 @@ ztgsy2(
 - `RangeError` seventeenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgsy2.ndarray(
+ztgsy2.strided(
     trans,
     ijob,
     M, N,
@@ -241,7 +241,7 @@ const scale = new Float64Array( 1 );
 const rdsum = new Float64Array( [ 0.0 ] );
 const rdscal = new Float64Array( [ 1.0 ] );
 
-const info = ztgsy2.ndarray( 'no-transpose', 0, 2, 2, A, 1, 2, 0, B, 1, 2, 0, C, 1, 2, 0, D, 1, 2, 0, E, 1, 2, 0, F, 1, 2, 0, scale, rdsum, rdscal ); // eslint-disable-line max-len
+const info = ztgsy2.strided( 'no-transpose', 0, 2, 2, A, 1, 2, 0, B, 1, 2, 0, C, 1, 2, 0, D, 1, 2, 0, E, 1, 2, 0, F, 1, 2, 0, scale, rdsum, rdscal ); // eslint-disable-line max-len
 
 const Cv = reinterpret( C, 0 );
 const Fv = reinterpret( F, 0 );

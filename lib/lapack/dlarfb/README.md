@@ -85,12 +85,12 @@ dlarfb(
 - `TypeError` fourth argument must be one of the following: "forward", "backward"
 - `TypeError` fifth argument must be one of the following: "columnwise", "rowwise"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarfb.ndarray(
+dlarfb.strided(
     side, trans, direct, storev,
     M, N, K,
     V, strideV1, strideV2, offsetV,
@@ -204,8 +204,8 @@ const WORK = discreteUniform( N * N, -10, 10, opts );
 let out = dlarfb( 'row-major', 'left', 'no-transpose', 'forward', 'columnwise', N, N, N, V, N, T, N, C, N, WORK, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlarfb.ndarray( 'left', 'no-transpose', 'forward', 'columnwise', N, N, N, V, N, 1, 0, T, N, 1, 0, C, N, 1, 0, WORK, N, 1, 0 );
+// Using the strided interface:
+out = dlarfb.strided( 'left', 'no-transpose', 'forward', 'columnwise', N, N, N, V, N, 1, 0, T, N, 1, 0, C, N, 1, 0, WORK, N, 1, 0 );
 console.log( out );
 ```
 

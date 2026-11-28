@@ -54,7 +54,7 @@ interface Routine {
 	* @param snq - `snq`
 	* @returns result
 	*/
-	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number, csu: number, snu: number, csv: number, snv: number, csq: number, snq: number ): void;
+	strided( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number, csu: number, snu: number, csv: number, snv: number, csq: number, snq: number ): void;
 }
 
 /**

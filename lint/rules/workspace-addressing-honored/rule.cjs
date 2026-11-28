@@ -14,7 +14,7 @@
 //
 //   * STRIDE — kept in the signature for parity with stdlib's ndarray shape,
 //     but only a unit stride is supported: nothing needs strided scratch.
-//     ndarray.js must reject any other value, so the API never silently
+//     strided.js must reject any other value, so the API never silently
 //     accepts what the kernels do not honor. (Supporting non-unit workspace
 //     strides is a future feature, if anyone asks for it.)
 //
@@ -26,7 +26,7 @@
 // Rebasing once at entry (`WORK = WORK.subarray( offsetWork );`) honors the
 // offset. `reinterpret( W, 0 )` builds a view and is not a forwarding call.
 //
-// ndarray.js reports a workspace whose declared `strideX` is neither rejected
+// strided.js reports a workspace whose declared `strideX` is neither rejected
 // (compared against the literal `1`) nor honored by base.js (read; never
 // replaced by a literal when forwarding; scaling every varying element index).
 // Supported ⇒ honored; unsupported ⇒ rejected. A WORK-named array whose
@@ -296,7 +296,7 @@ function checkBase( context, node ) {
 	});
 }
 
-function checkNdarray( context, node, honored ) {
+function checkStrided( context, node, honored ) {
 	var sig = signature( node );
 	if ( !node.body ) {
 		return;
@@ -321,7 +321,7 @@ function checkNdarray( context, node, honored ) {
 		if ( !asserted && !honored( w ) ) {
 			context.report({
 				'node': node.params[ s.index ],
-				'message': 'Workspace `' + w + '` declares `' + s.name + '`, but ndarray.js never asserts it is 1 and base.js does not honor it. A stride must be either supported or rejected (CONVENTIONS.md D5): add `if ( ' + s.name + ' !== 1 ) { throw new RangeError( ... ); }`, or make base.js address `' + w + '` through `' + s.name + '` everywhere.'
+				'message': 'Workspace `' + w + '` declares `' + s.name + '`, but strided.js never asserts it is 1 and base.js does not honor it. A stride must be either supported or rejected (CONVENTIONS.md D5): add `if ( ' + s.name + ' !== 1 ) { throw new RangeError( ... ); }`, or make base.js address `' + w + '` through `' + s.name + '` everywhere.'
 			});
 		}
 	});
@@ -333,7 +333,7 @@ function checkNdarray( context, node, honored ) {
 var rule = {
 	'meta': {
 		'docs': {
-			'description': 'caller-owned workspace: base.js honors the declared offset; ndarray.js asserts a unit stride'
+			'description': 'caller-owned workspace: base.js honors the declared offset; strided.js asserts a unit stride'
 		},
 		'schema': [],
 		'type': 'problem'
@@ -348,7 +348,7 @@ var rule = {
 				}
 			};
 		}
-		if ( name === 'ndarray.js' ) {
+		if ( name === 'strided.js' ) {
 			return {
 				'Program': function check( program ) {
 					var fn = exportedFunction( program );
@@ -364,7 +364,7 @@ var rule = {
 							baseFn = null;
 						}
 					}
-					checkNdarray( context, fn, function honored( w ) {
+					checkStrided( context, fn, function honored( w ) {
 						return baseFn !== null && honorsStride( baseFn, w );
 					});
 				}

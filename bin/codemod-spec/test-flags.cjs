@@ -23,7 +23,7 @@ var only = argv.filter( function f( a ) {
 
 // Position → first accepted value, for the enum checks of a form.
 function flagValues( spec, form ) {
-	var names = ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec );
+	var names = ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec );
 	var out = {};
 	P.prologue( spec, form, names ).forEach( function each( c ) {
 		var i = names.indexOf( c.args[ 0 ] );
@@ -68,14 +68,14 @@ function fixFile( file, routine, spec ) {
 	}
 	ast.body.forEach( function each( n ) {
 		if ( n.type === 'ImportDeclaration' && n.specifiers[ 0 ] ) {
-			if ( /\/ndarray\.js$/.test( n.source.value ) ) {
-				imports[ n.specifiers[ 0 ].local.name ] = 'ndarray';
-			} else if ( new RegExp( '/(' + routine + '|index|main)\\.js$' ).test( n.source.value ) ) {
+			if ( /\/strided\.js$/.test( n.source.value ) ) {
 				imports[ n.specifiers[ 0 ].local.name ] = 'strided';
+			} else if ( new RegExp( '/(' + routine + '|index|main)\\.js$' ).test( n.source.value ) ) {
+				imports[ n.specifiers[ 0 ].local.name ] = 'wrapper';
 			}
 		}
 	});
-	var vals = { 'ndarray': flagValues( spec, 'ndarray' ), 'strided': flagValues( spec, 'strided' ) };
+	var vals = { 'strided': flagValues( spec, 'strided' ), 'wrapper': flagValues( spec, 'wrapper' ) };
 	walk( ast, function each( n ) {
 		var fnBody;
 		if ( n.type !== 'CallExpression' || n.callee.type !== 'MemberExpression' || n.callee.property.name !== 'throws' || n.arguments.length < 2 ) {
@@ -92,8 +92,8 @@ function fixFile( file, routine, spec ) {
 			}
 			if ( c.callee.type === 'Identifier' && imports[ c.callee.name ] ) {
 				form = imports[ c.callee.name ];
-			} else if ( c.callee.type === 'MemberExpression' && c.callee.property.name === 'ndarray' && c.callee.object.type === 'Identifier' && imports[ c.callee.object.name ] === 'strided' ) {
-				form = 'ndarray';
+			} else if ( c.callee.type === 'MemberExpression' && c.callee.property.name === 'strided' && c.callee.object.type === 'Identifier' && imports[ c.callee.object.name ] === 'wrapper' ) {
+				form = 'strided';
 			}
 			if ( !form ) {
 				return;

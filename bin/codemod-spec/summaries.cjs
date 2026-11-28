@@ -2,7 +2,7 @@
 'use strict';
 
 // Repairs broken JSDoc summaries (lint rule jsdoc-summary) on the exported
-// function of base.js, ndarray.js and <routine>.js, and on lib/index.js's
+// function of base.js, strided.js and <routine>.js, and on lib/index.js's
 // module JSDoc.
 //
 // - `@license` tag where the summary belongs: the tag line goes, the summary
@@ -13,7 +13,7 @@
 //
 // The summary is the routine's curated one-liner in
 // data/descriptions.generated.json (bin/gen-descriptions.js), which exists
-// because these sentences were truncated upstream. ndarray.js gets
+// because these sentences were truncated upstream. strided.js gets
 // ", using alternative indexing semantics" as elsewhere in the corpus.
 //
 // Usage: node bin/codemod-spec/summaries.cjs [routine ...]
@@ -31,7 +31,7 @@ function summaryFor( routine, file ) {
 		return null;
 	}
 	d = d.replace( /[.\s]+$/, '' );
-	if ( path.basename( file ) === 'ndarray.js' ) {
+	if ( path.basename( file ) === 'strided.js' ) {
 		d += ', using alternative indexing semantics';
 	}
 	return d + '.';
@@ -93,7 +93,7 @@ function main() {
 			if ( only.length && only.indexOf( routine ) < 0 ) {
 				return;
 			}
-			[ 'index.js', 'base.js', 'ndarray.js', routine + '.js' ].forEach( function g( x ) {
+			[ 'index.js', 'base.js', 'strided.js', routine + '.js' ].forEach( function g( x ) {
 				var file = path.join( base, routine, 'lib', x );
 				var src;
 				var comment;

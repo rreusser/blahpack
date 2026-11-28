@@ -17,7 +17,7 @@
 
 - The `drot` call using stride `LDAB-1` corresponds to walking along a
   diagonal of the band (both increments compensate for the column/row stride
-  shift). In the ndarray form this becomes `strideAB2 - strideAB1`.
+  shift). In the strided form this becomes `strideAB2 - strideAB1`.
 
 - The final phase (`ku > 0` && `M < N`) reduces the last extra superdiagonal
   entry using a downward sweep; `rb` carries state between iterations and
@@ -36,7 +36,7 @@
 
 ## Validation notes
 
-- `vect` is validated at the public-API level (both `dgbbrd` and the ndarray
+- `vect` is validated at the public-API level (both `dgbbrd` and the strided
   entry point) as one of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'`.
   The Fortran single-character flags ('N', 'Q', 'P', 'B') are never used in
   the JS surface.

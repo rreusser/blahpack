@@ -7,7 +7,7 @@
 * `IWORK`/`SWORK`/`BWORK` arguments). The stdlib-js convention — see the
 * authoritative reference implementation `@stdlib/lapack/base/dlarf1f` — is
 * to expose that workspace as caller-provided `work, strideWork, offsetWork`
-* triples on BOTH `base.js` and `ndarray.js`, sized per a documented formula.
+* triples on BOTH `base.js` and `strided.js`, sized per a documented formula.
 * The integer length arguments (`LWORK`/`LRWORK`/`LIWORK`) are dropped and
 * there is NO `lwork === -1` query mode: the required size is documented in
 * the JSDoc instead.

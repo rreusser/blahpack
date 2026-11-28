@@ -87,12 +87,12 @@ dsfrk( order, transr, uplo, trans, N, K, alpha, A, LDA, beta, C, strideC ) → F
 - `RangeError` ninth argument must be greater than or equal to `max( 1, trans === 'no-transpose' ? K : N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsfrk.ndarray(
+dsfrk.strided(
     transr, uplo, trans,
     N, K,
     alpha,
@@ -200,7 +200,7 @@ const A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
 const C = new Float64Array( [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ] );
 
 // Compute C := 1.0 * A * A^T + 0.0 * C
-dsfrk.ndarray( 'no-transpose', 'lower', 'no-transpose', 3, 2, 1.0, A, 1, 3, 0, 0.0, C, 1, 0 );
+dsfrk.strided( 'no-transpose', 'lower', 'no-transpose', 3, 2, 1.0, A, 1, 3, 0, 0.0, C, 1, 0 );
 
 console.log( C );
 // => Float64Array [ 17, 22, 27, 45, 29, 36 ]

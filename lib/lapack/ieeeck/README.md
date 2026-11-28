@@ -45,12 +45,12 @@ ieeeck( ispec, zero, one ) → integer
 
 **Returns** `integer`: `1` if the arithmetic is safe, `0` otherwise
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ieeeck.ndarray( ispec, zero, one ) → integer
+ieeeck.strided( ispec, zero, one ) → integer
 ```
 
 Checks whether infinity and NaN arithmetic is safe, using alternative indexing semantics (the routine takes no arrays).
@@ -104,7 +104,7 @@ import ieeeck from '@rreusser/blahpack/lapack/ieeeck';
 console.log( ieeeck( 1, 0.0, 1.0 ) );
 // => 1
 
-console.log( ieeeck.ndarray( 1, 0.0, 1.0 ) );
+console.log( ieeeck.strided( 1, 0.0, 1.0 ) );
 // => 1
 ```
 

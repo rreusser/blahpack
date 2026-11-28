@@ -84,12 +84,12 @@ Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-
 - `RangeError` `nb` must be a positive integer
 - `RangeError` `LDA` must satisfy `LDA >= max(1, M)` (column-major) or `LDA >= max(1, N)` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zungtsqr.ndarray(
+zungtsqr.strided(
     M, N,
     mb, nb,
     A, strideA1, strideA2, offsetA,
@@ -226,8 +226,8 @@ WORK = new Complex128Array( ( M + nb ) * N );
 zungtsqr( 'column-major', M, N, mb, nb, A, M, T, nb, WORK );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Equivalent call via the ndarray interface:
-zungtsqr.ndarray( M, N, mb, nb, A, 1, M, 0, T, 1, nb, 0, WORK, 1, 0 );
+// Equivalent call via the strided interface:
+zungtsqr.strided( M, N, mb, nb, A, 1, M, 0, T, 1, nb, 0, WORK, 1, 0 );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

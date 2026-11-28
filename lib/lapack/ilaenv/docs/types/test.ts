@@ -96,13 +96,13 @@ import ilaenv = require( './index' );
 	ilaenv( 1, 'X', 'X', 1, 1, 1, 1, 1 ); // $ExpectError
 }
 
-// The `ndarray` method returns a number...
+// The `strided` method returns a number...
 {
-	ilaenv.ndarray( 1, 'X', 'X', 1, 1, 1, 1 ); // $ExpectType number
+	ilaenv.strided( 1, 'X', 'X', 1, 1, 1, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the `ndarray` method is provided an unsupported number of arguments...
+// The compiler throws an error if the `strided` method is provided an unsupported number of arguments...
 {
-	ilaenv.ndarray(); // $ExpectError
-	ilaenv.ndarray( 1, 'X', 'X', 1, 1, 1, 1, 1 ); // $ExpectError
+	ilaenv.strided(); // $ExpectError
+	ilaenv.strided( 1, 'X', 'X', 1, 1, 1, 1, 1 ); // $ExpectError
 }

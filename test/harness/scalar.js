@@ -6,7 +6,7 @@
 * A trait encapsulates everything type-dependent:
 *   - physical storage: how many Float64 slots an element occupies, how to
 *     allocate a poisoned (NaN-filled) API-ready array, and how to read/write an
-*     element at an ELEMENT index (matching the ndarray convention, where
+*     element at an ELEMENT index (matching the strided convention, where
 *     strides/offsets count elements, not floats);
 *   - arithmetic on element VALUES (harness-internal representation): real values
 *     are plain JS numbers; complex values are `{ re, im }` objects;

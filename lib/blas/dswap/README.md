@@ -37,12 +37,12 @@ dswap( N, x, strideX, y, strideY ) → Float64Array
 
 **Returns** `Float64Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dswap.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
+dswap.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
 ```
 
 Interchange two double-precision floating-point vectors.

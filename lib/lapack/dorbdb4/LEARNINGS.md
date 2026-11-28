@@ -67,7 +67,7 @@
 
 ## Coverage notes
 
-- 100% line + 100% branch on `base.js`, `ndarray.js`, `dorbdb4.js`,
+- 100% line + 100% branch on `base.js`, `strided.js`, `dorbdb4.js`,
   `index.js`, and `main.js`. The five fixture cases collectively
   exercise the i==0 phantom branch, the i>0 branch, the inner
   `i < M-Q-1` PHI/dnrm2 path, the second cleanup loop (X11), the
@@ -87,7 +87,7 @@
 - The scaffolded `<routine>.js` had the same N-undefined / wrong
   LD-bound bugs as dorbdb1 (rows-vs-cols guess for non-square
   matrices). Fixed by hand using the dorbdb1 wrapper as the template.
-- The scaffolded benchmark `benchmark.js` and `benchmark.ndarray.js`
+- The scaffolded benchmark `benchmark.js` and `benchmark.strided.js`
   use `uniform( N*N, ... )` for everything, including arrays that
   should be `Q` or `M-Q` long. They also call `dorbdb4(N, N, N, ...)`
   which violates the dimension constraints (M-Q=0, but P=Q=M means

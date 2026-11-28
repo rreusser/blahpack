@@ -2,7 +2,7 @@
 
 /**
 * Wrapper replay check (tickets 0065, 0068): replays every module's recorded
-* `ndarray.js` calls through its `<routine>.js` wrapper and requires
+* `strided.js` calls through its `<routine>.js` wrapper and requires
 * results (exact with recorded workspaces; with `WORK = null`), and audits
 * each vector length the wrapper assumes. See test/harness/replay.js.
 *
@@ -15,7 +15,7 @@
 * (bin/lib/corpus.mjs; `--no-cache`, `--jobs <n>`).
 *
 * `--check` exits 1 on any mismatch, rejected call or length finding, a
-* timeout, or when a module's tests make no replayable `ndarray` call.
+* timeout, or when a module's tests make no replayable `strided` call.
 */
 
 import path from 'node:path';
@@ -47,7 +47,7 @@ async function main() {
 			} else if ( r.unmapped ) {
 				console.log( 'UNMAPPED   ' + r.routine + ': ' + r.unmapped );
 			} else if ( r.variants === 0 ) {
-				console.log( 'UNTESTED   ' + r.routine + ': no replayable ndarray call (' + r.recorded + ' recorded; ' + JSON.stringify( r.skipped ) + ')' );
+				console.log( 'UNTESTED   ' + r.routine + ': no replayable strided call (' + r.recorded + ' recorded; ' + JSON.stringify( r.skipped ) + ')' );
 			}
 			r.mismatches.slice( 0, 3 ).forEach( ( m ) => console.log( 'MISMATCH   ' + r.routine + '  ' + m.variant + ': ' + m.detail ) );
 			r.rejected.slice( 0, 3 ).forEach( ( m ) => console.log( 'REJECTED   ' + r.routine + '  ' + m.variant + ': ' + m.detail ) );

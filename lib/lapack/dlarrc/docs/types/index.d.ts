@@ -52,7 +52,7 @@ interface Routine {
 	* @param pivmin - `pivmin`
 	* @returns result
 	*/
-	ndarray( jobt: string, N: number, vl: number, vu: number, D: Float64Array, strideD: number, offsetD: number, E: Float64Array, strideE: number, offsetE: number, pivmin: number ): Float64Array;
+	strided( jobt: string, N: number, vl: number, vu: number, D: Float64Array, strideD: number, offsetD: number, E: Float64Array, strideE: number, offsetE: number, pivmin: number ): Float64Array;
 }
 
 /**

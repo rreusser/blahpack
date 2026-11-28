@@ -47,12 +47,12 @@ zrotg( a, b, c, s ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zrotg.ndarray( a, offsetA, b, offsetB, c, offsetC, s, offsetS ) → void
+zrotg.strided( a, offsetA, b, offsetB, c, offsetC, s, offsetS ) → void
 ```
 
 | Parameter | Type | Description |
@@ -113,12 +113,12 @@ zrotg( a, b, c, s );
 console.log( reinterpret( a, 0 ), c, reinterpret( s, 0 ) ); // eslint-disable-line no-console
 // => r = 5, c = 0.6, s = 0.8
 
-// Using the ndarray interface:
+// Using the strided interface:
 a = new Complex128Array( [ 3.0, 0.0 ] );
 b = new Complex128Array( [ 4.0, 0.0 ] );
 c = new Float64Array( 1 );
 s = new Complex128Array( 1 );
-zrotg.ndarray( a, 0, b, 0, c, 0, s, 0 );
+zrotg.strided( a, 0, b, 0, c, 0, s, 0 );
 console.log( reinterpret( a, 0 ), c, reinterpret( s, 0 ) ); // eslint-disable-line no-console
 ```
 

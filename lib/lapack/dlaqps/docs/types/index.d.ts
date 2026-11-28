@@ -80,7 +80,7 @@ interface Routine {
 	* @param offsetF - starting index for `F`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, offset: number, nb: number, kb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, AUXV: Float64Array, strideAUXV: number, offsetAUXV: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number ): Float64Array;
+	strided( M: number, N: number, offset: number, nb: number, kb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, AUXV: Float64Array, strideAUXV: number, offsetAUXV: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number ): Float64Array;
 }
 
 /**

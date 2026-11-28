@@ -64,12 +64,12 @@ ztrcon( order, norm, uplo, diag, N, A, LDA, RCOND, WORK, RWORK ) → integer
 - `RangeError` fifth argument must be a nonnegative integer
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrcon.ndarray(
+ztrcon.strided(
     norm, uplo, diag,
     N,
     A, strideA1, strideA2, offsetA,
@@ -190,8 +190,8 @@ const RWORK = new Float64Array( N );
 let info = ztrcon( 'column-major', 'one-norm', 'upper', 'non-unit', N, A, N, RCOND, WORK, RWORK );
 console.log( info, RCOND[ 0 ] );
 
-// Using the ndarray interface:
-info = ztrcon.ndarray( 'inf-norm', 'upper', 'non-unit', N, A, 1, N, 0, RCOND, WORK, 1, 0, RWORK, 1, 0 );
+// Using the strided interface:
+info = ztrcon.strided( 'inf-norm', 'upper', 'non-unit', N, A, 1, N, 0, RCOND, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info, RCOND[ 0 ] );
 ```
 

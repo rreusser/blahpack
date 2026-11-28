@@ -61,7 +61,7 @@
 ## Process improvements
 
 - The `init_routine.py` scaffold for z-prefix LAPACK routines still
-  emits Float64Array-typed `ndarray.js`/`zgeqrt2.js`/`test.zgeqrt2.js`
+  emits Float64Array-typed `strided.js`/`zgeqrt2.js`/`test.zgeqrt2.js`
   templates. Every translation has to manually flip these to
   `Complex128Array`. Worth a follow-up to teach the scaffold to detect
   z-prefix and emit the right typed-array imports + JSDoc.

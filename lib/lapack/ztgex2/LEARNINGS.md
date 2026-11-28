@@ -8,7 +8,7 @@
 
 ## Dependency interface surprises
 
-- `zlacpy` ndarray wrapper validates `uplo` strictly -- passing `'full'` fails; use `'all'` (or require base.js directly). From another base routine, it's cleaner to require base.js directly to skip validation overhead.
+- `zlacpy` strided wrapper validates `uplo` strictly -- passing `'full'` fails; use `'all'` (or require base.js directly). From another base routine, it's cleaner to require base.js directly to skip validation overhead.
 - `zrot` expects `s` as `Float64Array(2)` with `[re, im]`, NOT a Complex128Array. The Fortran `DCONJG(SZ)` becomes a manual sign flip on the imag part of the Float64Array.
 - `zlartg` takes Complex128Array inputs for f, g, s, r with complex-element offsets, and Float64Array for c.
 - `zlassq` returns an object `{ scl, sumsq }` rather than modifying arguments in place.

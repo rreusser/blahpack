@@ -5,7 +5,7 @@
 //
 //   prologue( spec, form, actual )  → [ check, ... ]
 //
-// `form` is 'ndarray' (ndarray.js) or 'strided' (<routine>.js). `actual` is the
+// `form` is 'strided' (strided.js) or 'wrapper' (<routine>.js). `actual` is the
 // code's parameter list for that form; it is used only to spell each name the
 // way the code spells it (names compare case-insensitively, S7). Each check is
 //
@@ -17,12 +17,12 @@
 //       throw new <ctor>( format( '<format>', <args> ) );
 //   }
 //
-// The order is: the layout flag `order` (strided form, D1/V6), then the spec's
+// The order is: the layout flag `order` (wrapper form, D1/V6), then the spec's
 // checks in reference order (|INFO|), with an enum check for each input option
 // the spec has none for (ticket 0092) at that option's position. A leading-dimension check whose bound
 // differs between layouts becomes two statements (column-major: the reference
 // bound on the rows; row-major: the column count, V5). A check that names an
-// argument the form does not have (an LD in ndarray.js, or a workspace length)
+// argument the form does not have (an LD in strided.js, or a workspace length)
 // is not part of that form. A check the generator could not translate
 // (`js: null` in the spec) is not generated.
 
@@ -100,7 +100,7 @@ function findArray( spec, name ) {
 // spells it), for every spec param that has a name in this form.
 function nameMap( spec, form, actual ) {
 	var groups = specLib.baseGroups( spec );
-	var names = ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec );
+	var names = ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec );
 	var spell = {};
 	var map = {};
 	var byParam = {};
@@ -132,7 +132,7 @@ function nameMap( spec, form, actual ) {
 			map[ lc( p.name ) ] = spell[ lc( n ) ];
 		}
 	});
-	if ( has( 'order' ) && form === 'strided' && specLib.takesOrder( spec ) ) {
+	if ( has( 'order' ) && form === 'wrapper' && specLib.takesOrder( spec ) ) {
 		map.order = spell.order;
 	}
 	// How a check reads each argument's value: an output scalar is a
@@ -152,7 +152,7 @@ function nameMap( spec, form, actual ) {
 		}
 		var e = n;
 		if ( p.intent !== 'in' || p.element === true ) {
-			e = ( g.names.length === 2 && form !== 'strided' ) ? n + '[ ' + spell[ lc( g.names[ 1 ] ) ] + ' ]' : n + '[ 0 ]';
+			e = ( g.names.length === 2 && form !== 'wrapper' ) ? n + '[ ' + spell[ lc( g.names[ 1 ] ) ] + ' ]' : n + '[ 0 ]';
 		}
 		value[ lc( p.name ) ] = e;
 		if ( p.base === 0 ) {
@@ -381,7 +381,7 @@ function prologue( spec, form, actual ) {
 	var nm = nameMap( spec, form, actual );
 	var out = [];
 	var checks;
-	if ( form === 'strided' && nm.map.order && specLib.takesOrder( spec ) ) {
+	if ( form === 'wrapper' && nm.map.order && specLib.takesOrder( spec ) ) {
 		out.push({
 			'param': 'order',
 			'kind': 'order',
@@ -406,7 +406,7 @@ function prologue( spec, form, actual ) {
 			return;
 		}
 		if ( p.role === 'ld' ) {
-			if ( form === 'strided' ) {
+			if ( form === 'wrapper' ) {
 				ldParamCheck( spec, c, p, nm, out );
 			}
 			return;

@@ -106,12 +106,12 @@ dgsvj1(
 - `RangeError` eighteenth argument must be a nonnegative integer
 - `RangeError` dimensions and leading dimensions must be consistent
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgsvj1.ndarray(
+dgsvj1.strided(
     jobv,
     M, N, n1,
     A, strideA1, strideA2, offsetA,

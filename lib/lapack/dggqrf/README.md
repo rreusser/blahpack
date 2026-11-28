@@ -71,12 +71,12 @@ dggqrf(
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, p )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggqrf.ndarray(
+dggqrf.strided(
     N, M, p,
     A, strideA1, strideA2, offsetA,
     TAUA, strideTAUA, offsetTAUA,
@@ -187,8 +187,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dggqrf( 'column-major', N, N, 1, A, N, TAUA, 1, B, N, TAUB, 1, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dggqrf.ndarray( N, N, 1, A, 1, N, 0, TAUA, 1, 0, B, 1, N, 0, TAUB, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dggqrf.strided( N, N, 1, A, 1, N, 0, TAUA, 1, 0, B, 1, N, 0, TAUB, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

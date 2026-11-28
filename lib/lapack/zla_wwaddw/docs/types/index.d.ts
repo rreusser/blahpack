@@ -55,7 +55,7 @@ interface Routine {
 	* @param offsetW - starting index for `w`
 	* @returns `x`
 	*/
-	ndarray( N: number, x: Complex128Array, strideX: number, offsetX: number, y: Complex128Array, strideY: number, offsetY: number, w: Complex128Array, strideW: number, offsetW: number ): Complex128Array;
+	strided( N: number, x: Complex128Array, strideX: number, offsetX: number, y: Complex128Array, strideY: number, offsetY: number, w: Complex128Array, strideW: number, offsetW: number ): Complex128Array;
 }
 
 /**

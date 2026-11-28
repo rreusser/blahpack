@@ -46,8 +46,8 @@
     > {{alias}}( 'column-major', 'lower', 4, A, 4, e, 1, IPIV, 1 );
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, e, strideE, offsetE, IPIV, strideIPIV, offsetIPIV )
-    Same operation as the BLAS-style API, with full ndarray (stride/offset)
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA, e, strideE, offsetE, IPIV, strideIPIV, offsetIPIV )
+    Same operation as the BLAS-style API, with full strided (stride/offset)
     semantics for every array argument.
 
     Parameters
@@ -98,7 +98,7 @@
     > var A = new {{alias:@stdlib/array/float64}}( [ 4, 2, 1, 0, 0, 5, 2, 1, 0, 0, 6, 3, 0, 0, 0, 8 ] );
     > var e = new {{alias:@stdlib/array/float64}}( 4 );
     > var IPIV = new {{alias:@stdlib/array/int32}}( 4 );
-    > {{alias}}.ndarray( 'lower', 4, A, 1, 4, 0, e, 1, 0, IPIV, 1, 0 );
+    > {{alias}}.strided( 'lower', 4, A, 1, 4, 0, e, 1, 0, IPIV, 1, 0 );
 
     See Also
     --------

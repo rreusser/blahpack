@@ -100,12 +100,12 @@ Applies a complex triangular-pentagonal block reflector to a matrix.
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (row-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztprfb.ndarray(
+ztprfb.strided(
     side, trans, direct, storev,
     M, N, K, l,
     V, strideV1, strideV2, offsetV,

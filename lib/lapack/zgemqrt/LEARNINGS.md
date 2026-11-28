@@ -12,7 +12,7 @@ parameter wiring and Fortran fixture authoring.
   `'transpose'` (the legitimate token for symmetric/real routines)
   none of the four `if` branches fire and the routine silently no-ops
   (returns 0 with C unchanged). Both `lib/zgemqrt.js` and
-  `lib/ndarray.js` therefore add an explicit positive-trans check that
+  `lib/strided.js` therefore add an explicit positive-trans check that
   rejects `'transpose'` even though `isTransposeOperation('transpose')`
   is true. Mirror this for every z-applier.
 - The Fortran reference uses `LSAME(TRANS,'C')` for the conjugate-

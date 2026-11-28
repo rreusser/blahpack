@@ -61,12 +61,12 @@ zgetrs( order, trans, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgetrs.ndarray(
+zgetrs.strided(
     trans,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -170,9 +170,9 @@ let B = new Complex128Array( B0 );
 let out = zgetrs( 'column-major', 'no-transpose', N, 1, A, N, IPIV, 1, B, N );
 console.log( out, reinterpret( B, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( B0 );
-out = zgetrs.ndarray( 'no-transpose', N, 1, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
+out = zgetrs.strided( 'no-transpose', N, 1, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( out, reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```
 

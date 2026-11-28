@@ -39,7 +39,7 @@
     24
 
 
-{{alias}}.ndarray( ispec, name, opts, N, ilo, ihi )
+{{alias}}.strided( ispec, name, opts, N, ilo, ihi )
     Returns the tuning parameters of the multishift QR algorithm, using alternative indexing
     semantics (the routine takes no arrays).
 
@@ -77,7 +77,7 @@
 
     Examples
     --------
-    > var v = {{alias}}.ndarray( 15, 'DLAQR0', 'SV', 200, 1, 200 )
+    > var v = {{alias}}.strided( 15, 'DLAQR0', 'SV', 200, 1, 200 )
     24
 
     See Also

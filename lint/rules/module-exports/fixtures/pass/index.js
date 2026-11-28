@@ -1,10 +1,10 @@
 // PASS — canonical index.js: the offset form attached, the typed default, and
-// the named ndarray export (ticket 0124: there is no main.js).
+// the named strided export (ticket 0124: there is no main.js).
 import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
 import ddot from './ddot.js';
-import ndarray from './ndarray.js';
+import strided from './strided.js';
 
-setReadOnly( ddot, 'ndarray', ndarray );
+setReadOnly( ddot, 'strided', strided );
 
-export default /** @type {typeof ddot & { ndarray: typeof ndarray }} */ ( ddot );
-export { ndarray };
+export default /** @type {typeof ddot & { strided: typeof strided }} */ ( ddot );
+export { strided };

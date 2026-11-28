@@ -68,12 +68,12 @@ zsytf2( order, uplo, N, A, LDA, IPIV, strideIPIV ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytf2.ndarray(
+zsytf2.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -177,10 +177,10 @@ console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 console.log( IPIV ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( [ 1.0, 1.0, 2.0, 0.0, 3.0, 0.0, 2.0, 0.0, -4.0, 0.0, 5.0, -1.0, 3.0, 0.0, 5.0, -1.0, 6.0, 0.0 ] );
 IPIV = new Int32Array( N );
-info = zsytf2.ndarray( 'upper', N, A, N, 1, 0, IPIV, 1, 0 );
+info = zsytf2.strided( 'upper', N, A, N, 1, 0, IPIV, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 console.log( IPIV ); // eslint-disable-line no-console

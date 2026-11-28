@@ -22,7 +22,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( a, b, c, rt1, rt2 )
+{{alias}}.strided( a, b, c, rt1, rt2 )
     @license Apache-2.0 using alternative indexing semantics.
 
     Parameters

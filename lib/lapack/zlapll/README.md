@@ -50,12 +50,12 @@ zlapll( N, x, strideX, y, strideY, ssmin ) → Complex128Array
 
 **Returns** `Complex128Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlapll.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, ssmin ) → Complex128Array
+zlapll.strided( N, x, strideX, offsetX, y, strideY, offsetY, ssmin ) → Complex128Array
 ```
 
 Measures the linear dependence of two vectors X and Y by computing the.

@@ -19,7 +19,7 @@
   clearer than calling `dcopy` with `strideX = N`, since the outer index
   walks columns.
 - The `MB1` Fortran constraint is `MB1 > N` (strict). Both the wrapper
-  and ndarray validators must reject `mb1 == N`. `dlatsqr` itself has
+  and strided validators must reject `mb1 == N`. `dlatsqr` itself has
   a `mb <= N` fall-through to `dgeqrt`, but `dgetsqrhrt`'s contract is
   stricter because `dorgtsqr_row` requires `mb > N`.
 - Rounding-up convention for `T`'s column count: the public `T` is

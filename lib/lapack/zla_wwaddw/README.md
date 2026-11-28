@@ -46,12 +46,12 @@ zla_wwaddw( N, x, strideX, y, strideY, w, strideW ) → Complex128Array
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_wwaddw.ndarray(
+zla_wwaddw.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,
@@ -129,8 +129,8 @@ const w = new Complex128Array( uniform( 2 * N, -10.0, 10.0, opts ) );
 zlaWwaddw( N, x, 1, y, 1, w, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zlaWwaddw.ndarray( N, x, 1, 0, y, 1, 0, w, 1, 0 );
+// Using the strided interface:
+zlaWwaddw.strided( N, x, 1, 0, y, 1, 0, w, 1, 0 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 ```
 

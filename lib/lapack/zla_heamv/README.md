@@ -70,12 +70,12 @@ Computes a matrix-vector product `y := alpha*|A|*|x| + beta*|y|` using a Hermiti
 - `RangeError` eighth argument must be non-zero
 - `RangeError` eleventh argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_heamv.ndarray(
+zla_heamv.strided(
     uplo,
     N,
     alpha,

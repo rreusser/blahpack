@@ -38,12 +38,12 @@ zrscl( N, a, x, strideX ) → Complex128Array
 
 **Returns** `Complex128Array`: input array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zrscl.ndarray( N, a, x, strideX, offsetX ) → Complex128Array
+zrscl.strided( N, a, x, strideX, offsetX ) → Complex128Array
 ```
 
 | Parameter | Type | Description |

@@ -44,12 +44,12 @@ zlaev2( a, b, c, rt1, rt2, cs1, sn1 ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaev2.ndarray( a, b, c, rt1, rt2, cs1, sn1, offsetSn1 ) → void
+zlaev2.strided( a, b, c, rt1, rt2, cs1, sn1, offsetSn1 ) → void
 ```
 
 | Parameter | Type | Description |

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-Fix TODO @param in ndarray.js and <routine>.js wrapper files.
+Fix TODO @param in strided.js and <routine>.js wrapper files.
 
-For ndarray.js:
+For strided.js:
   - Copy @param JSDoc from base.js (remove @private, add @throws for string params)
   - Add validation for string params (uplo, trans, diag, side, norm, etc.)
 
@@ -123,9 +123,9 @@ def get_function_params(filepath):
     return [p.strip() for p in params_str.split(',') if p.strip()]
 
 
-def fix_ndarray(ndarray_path, base_path, dry_run=False):
-    """Fix ndarray.js: copy JSDoc from base.js, add validation."""
-    with open(ndarray_path) as f:
+def fix_strided(strided_path, base_path, dry_run=False):
+    """Fix strided.js: copy JSDoc from base.js, add validation."""
+    with open(strided_path) as f:
         content = f.read()
 
     # Skip if already has proper validation (not a scaffold)
@@ -137,7 +137,7 @@ def fix_ndarray(ndarray_path, base_path, dry_run=False):
     if not param_lines:
         return False
 
-    func_params = get_function_params(ndarray_path)
+    func_params = get_function_params(strided_path)
     if not func_params:
         return False
 
@@ -232,7 +232,7 @@ def fix_ndarray(ndarray_path, base_path, dry_run=False):
 
     if new_content != content:
         if not dry_run:
-            with open(ndarray_path, 'w') as f:
+            with open(strided_path, 'w') as f:
                 f.write(new_content)
         return True
     return False
@@ -300,7 +300,7 @@ def fix_routine_js(routine_path, base_path, dry_run=False):
 def main():
     dry_run = '--dry-run' in sys.argv
 
-    ndarray_count = 0
+    strided_count = 0
     routine_count = 0
 
     for pkg in ['blas', 'lapack']:
@@ -317,13 +317,13 @@ def main():
             if not os.path.exists(base_path):
                 continue
 
-            # Fix ndarray.js
-            ndarray_path = os.path.join(lib_dir, 'ndarray.js')
-            if os.path.exists(ndarray_path):
-                if fix_ndarray(ndarray_path, base_path, dry_run):
-                    ndarray_count += 1
+            # Fix strided.js
+            strided_path = os.path.join(lib_dir, 'strided.js')
+            if os.path.exists(strided_path):
+                if fix_strided(strided_path, base_path, dry_run):
+                    strided_count += 1
                     if dry_run:
-                        print(f'  Would fix: {ndarray_path}')
+                        print(f'  Would fix: {strided_path}')
 
             # Fix <routine>.js
             routine_js = os.path.join(lib_dir, f'{routine}.js')
@@ -334,7 +334,7 @@ def main():
                         print(f'  Would fix: {routine_js}')
 
     action = 'Would fix' if dry_run else 'Fixed'
-    print(f'\n{action} {ndarray_count} ndarray.js files')
+    print(f'\n{action} {strided_count} strided.js files')
     print(f'{action} {routine_count} <routine>.js files')
 
 

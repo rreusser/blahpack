@@ -55,12 +55,12 @@ dpptrs( order, uplo, N, nrhs, AP, B, LDB ) → info: integer
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpptrs.ndarray(
+dpptrs.strided(
     uplo,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -140,7 +140,7 @@ import dpptrs from '@rreusser/blahpack/lapack/dpptrs';
 const AP = new Float64Array( [ 2.0, 1.0, 2.0, 0.5, 1.25, 2.68095132369090194 ] );
 const B = new Float64Array( [ 1.0, 2.0, 3.0 ] );
 
-const info = dpptrs.ndarray( 'upper', 3, 1, AP, 1, 0, B, 1, 3, 0 );
+const info = dpptrs.strided( 'upper', 3, 1, AP, 1, 0, B, 1, 3, 0 );
 console.log( 'info:', info );
 console.log( 'x:', B );
 ```

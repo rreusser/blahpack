@@ -58,12 +58,12 @@ zlaic1( job, j, x, strideX, sest, w, strideW, gamma, sestpr, s, c ) → void
 
 - `TypeError` first argument must be one of the following: "largest-singular-value", "smallest-singular-value"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaic1.ndarray(
+zlaic1.strided(
     job,
     j,
     x, strideX, offsetX,
@@ -151,7 +151,7 @@ const sestpr = new Float64Array( 1 );
 const s = new Complex128Array( 1 );
 const c = new Complex128Array( 1 );
 
-zlaic1.ndarray( 'largest-singular-value', 3, x, 1, 0, 2.5, w, 1, 0, gamma, sestpr, s, 0, c, 0 );
+zlaic1.strided( 'largest-singular-value', 3, x, 1, 0, 2.5, w, 1, 0, gamma, sestpr, s, 0, c, 0 );
 
 console.log( 'sestpr:', sestpr[ 0 ] ); // eslint-disable-line no-console
 console.log( 's:', s.get( 0 ) ); // eslint-disable-line no-console

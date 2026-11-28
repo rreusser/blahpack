@@ -59,12 +59,12 @@ zhpr( order, uplo, N, alpha, x, strideX, AP ) → Complex128Array
 - `RangeError` sixth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhpr.ndarray( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP ) → Complex128Array
+zhpr.strided( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP ) → Complex128Array
 ```
 
 Performs the Hermitian packed rank-1 update `A := alpha*x*x**H + A`.
@@ -142,9 +142,9 @@ let AP = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
 zhpr( 'column-major', 'upper', 2, 1.0, x, 1, AP );
 console.log( reinterpret( AP, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 AP = new Complex128Array( [ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0 ] );
-zhpr.ndarray( 'upper', 2, 1.0, x, 1, 0, AP, 1, 0 );
+zhpr.strided( 'upper', 2, 1.0, x, 1, 0, AP, 1, 0 );
 console.log( reinterpret( AP, 0 ) ); // eslint-disable-line no-console
 ```
 

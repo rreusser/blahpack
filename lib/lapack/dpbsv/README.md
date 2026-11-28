@@ -63,12 +63,12 @@ dpbsv( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpbsv.ndarray(
+dpbsv.strided(
     uplo,
     N, kd, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
@@ -163,8 +163,8 @@ const B = discreteUniform( N * N, -10, 10, opts );
 let out = dpbsv( 'row-major', 'upper', N, 1, N, AB, N, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dpbsv.ndarray( 'upper', N, 1, N, AB, N, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dpbsv.strided( 'upper', N, 1, N, AB, N, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

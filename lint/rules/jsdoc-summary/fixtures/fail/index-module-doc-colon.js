@@ -12,9 +12,9 @@
 
 import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
 import dgemm from './dgemm.js';
-import ndarray from './ndarray.js';
+import strided from './strided.js';
 
-setReadOnly( dgemm, 'ndarray', ndarray );
+setReadOnly( dgemm, 'strided', strided );
 
-export default /** @type {typeof dgemm & { ndarray: typeof ndarray }} */ ( dgemm );
-export { ndarray };
+export default /** @type {typeof dgemm & { strided: typeof strided }} */ ( dgemm );
+export { strided };

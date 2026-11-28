@@ -9,7 +9,7 @@
 - Unlike `zla_hercond_c`, this routine uses `zpotrs` + `zpotrf` (Cholesky)
   rather than `zhetrs` + `zhetrf` (Bunch-Kaufman), so there is **no IPIV
   parameter**. The signature generator still produces the standard
-  ndarray pattern with stride1/stride2/offset for `A` and `AF`.
+  strided pattern with stride1/stride2/offset for `A` and `AF`.
 
 ## Dependency interface surprises
 

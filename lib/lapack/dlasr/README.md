@@ -72,12 +72,12 @@ dlasr( order, side, pivot, direct, M, N, c, strideC, s, strideS, A, LDA ) → Fl
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasr.ndarray(
+dlasr.strided(
     side, pivot, direct,
     M, N,
     c, strideC, offsetC,
@@ -178,8 +178,8 @@ const s = new Float64Array( [ 0.8, 0.6 ] );
 dlasr( 'row-major', 'left', 'variable', 'forward', N, N, c, 1, s, 1, A, N );
 console.log( A ); // eslint-disable-line no-console
 
-// Using the ndarray interface (apply the same rotations in backward order, P = P(1)*P(2)):
-dlasr.ndarray( 'left', 'variable', 'backward', N, N, c, 1, 0, s, 1, 0, A, N, 1, 0 );
+// Using the strided interface (apply the same rotations in backward order, P = P(1)*P(2)):
+dlasr.strided( 'left', 'variable', 'backward', N, N, c, 1, 0, s, 1, 0, A, N, 1, 0 );
 console.log( A ); // eslint-disable-line no-console
 ```
 

@@ -46,12 +46,12 @@ zlacrt( N, x, strideX, y, strideY, c, s ) → Complex128Array
 
 **Returns** `Complex128Array`: `cx`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacrt.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
+zlacrt.strided( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -114,7 +114,7 @@ const cy = new Complex128Array( [ 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 ] );
 const c = new Complex128( 0.6, 0.1 );
 const s = new Complex128( 0.8, 0.2 );
 
-zlacrt.ndarray( 3, cx, 1, 0, cy, 1, 0, c, s );
+zlacrt.strided( 3, cx, 1, 0, cy, 1, 0, c, s );
 
 console.log( 'cx:', cx );
 console.log( 'cy:', cy );

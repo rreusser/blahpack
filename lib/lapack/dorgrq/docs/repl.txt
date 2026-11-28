@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
     generates an M-by-N real matrix Q with orthonormal rows from elementary reflectors returned by DGERQF (blocked algorithm), using alternative indexing semantics.
 
     Parameters

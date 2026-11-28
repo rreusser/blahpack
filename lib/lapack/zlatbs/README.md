@@ -96,12 +96,12 @@ zlatbs(
 - `RangeError` ninth argument must be greater than or equal to `kd + 1` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatbs.ndarray(
+zlatbs.strided(
     uplo, trans, diag, normin,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,
@@ -237,11 +237,11 @@ let CNORM = new Float64Array( N );
 let info = zlatbs( 'column-major', 'upper', 'no-transpose', 'non-unit', 'no', N, kd, AB, kd + 1, x, 1, scale, CNORM, 1 );
 console.log( info, x, scale );
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Complex128Array( b );
 scale = new Float64Array( 1 );
 CNORM = new Float64Array( N );
-info = zlatbs.ndarray( 'upper', 'no-transpose', 'non-unit', 'no', N, kd, AB, 1, kd + 1, 0, x, 1, 0, scale, CNORM, 1, 0 );
+info = zlatbs.strided( 'upper', 'no-transpose', 'non-unit', 'no', N, kd, AB, 1, kd + 1, 0, x, 1, 0, scale, CNORM, 1, 0 );
 console.log( info, x, scale );
 ```
 

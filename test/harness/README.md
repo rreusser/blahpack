@@ -69,7 +69,7 @@ node bin/validation-level.js --md       # markdown table (for the progress repor
 // from lib/<pkg>/<routine>/test/ the repo root is five levels up:
 import { RNG, scalar as S, logical, schemes, ref, check, SIZES_SMALL } from '../../../../../test/harness/index.js';
 import { checked } from '../../../../../test/harness/ledger.js';
-import dpotrf from './../lib/ndarray.js';
+import dpotrf from './../lib/strided.js';
 
 for ( const sc of [ S.real /*, S.complex for z-routines */ ] ) {
   for ( const uplo of [ 'upper', 'lower' ] ) {

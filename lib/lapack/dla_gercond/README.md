@@ -82,12 +82,12 @@ dla_gercond(
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_gercond.ndarray(
+dla_gercond.strided(
     trans,
     N,
     A, strideA1, strideA2, offsetA,
@@ -200,7 +200,7 @@ const c = new Float64Array( [ 1.0, 1.0, 1.0 ] );
 const WORK = new Float64Array( 9 );
 const IWORK = new Int32Array( 3 );
 
-const result = dlaGercond.ndarray( 'no-transpose', 3, A, 1, 3, 0, AF, 1, 3, 0, IPIV, 1, 0, 1, c, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+const result = dlaGercond.strided( 'no-transpose', 3, A, 1, 3, 0, AF, 1, 3, 0, IPIV, 1, 0, 1, c, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( 'Reciprocal Skeel condition number:', result ); // eslint-disable-line no-console
 ```
 

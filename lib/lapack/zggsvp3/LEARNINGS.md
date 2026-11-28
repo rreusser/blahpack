@@ -56,6 +56,6 @@ same convention.
 - `WORK` (complex workspace) for blocked operations; `lwork` selects block size.
 
 The scaffold `bin/signature.py` generates parameter lists that include
-all of these explicitly in the ndarray signature (43 params total), so
+all of these explicitly in the strided signature (43 params total), so
 the `stdlib/signature-conformance` rule prints an informational warning
 comparing against the shorter Fortran signature — this is expected.

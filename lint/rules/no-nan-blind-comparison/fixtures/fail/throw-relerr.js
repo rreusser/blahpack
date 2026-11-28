@@ -1,4 +1,4 @@
-// target: lib/blas/dger/test/test.ndarray.js
+// target: lib/blas/dger/test/test.strided.js
 // expect: blindIf
 // A helper that throws when the relative error is too big: NaN passes.
 function assertArrayClose( actual, expected, tol, msg ) {

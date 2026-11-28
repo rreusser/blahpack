@@ -25,7 +25,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( a, b, c, s )
+{{alias}}.strided( a, b, c, s )
     Constructs a Givens plane rotation using alternative indexing semantics.
 
     Parameters

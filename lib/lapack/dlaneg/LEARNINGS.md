@@ -42,7 +42,7 @@
 
 ## Scaffold / tooling notes
 
-- `bin/init_routine.py` scaffolds `benchmark.js` / `benchmark.ndarray.js`
+- `bin/init_routine.py` scaffolds `benchmark.js` / `benchmark.strided.js`
   that call the public wrapper with `dlaneg( N, d, N, LLD, N, N, N, N )` —
   passing `N` as the stride argument breaks with out-of-bounds for any
   `N > 1`. Fixed to `stride = 1` and to pass the remaining scalars
@@ -51,7 +51,7 @@
   for invalid order" case that does not apply to dlaneg (no layout/order
   parameter). Replaced with a `RangeError` check on negative `N`.
 - Scaffolded `test.js` was written as the full fixture-driven test file;
-  replaced with a minimal `main export is a function` / `has ndarray method`
+  replaced with a minimal `main export is a function` / `has strided method`
   template matching the stdlib convention.
 - `bin/lint-fix.sh`'s codemod re-inserts a second blank line between
   `'use strict';` and `// MODULES //`, and the eslint rule

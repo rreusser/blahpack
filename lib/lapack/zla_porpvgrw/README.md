@@ -52,12 +52,12 @@ zla_porpvgrw( order, uplo, ncols, A, LDA, AF, LDAF, WORK ) → number
 - `TypeError` second argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_porpvgrw.ndarray(
+zla_porpvgrw.strided(
     uplo,
     ncols,
     A, strideA1, strideA2, offsetA,
@@ -144,8 +144,8 @@ zpotrf( 'column-major', 'upper', N, AF, N );
 let out = zla_porpvgrw( 'column-major', 'upper', N, A, N, AF, N, WORK );
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-out = zla_porpvgrw.ndarray( 'upper', N, A, 1, N, 0, AF, 1, N, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zla_porpvgrw.strided( 'upper', N, A, 1, N, 0, AF, 1, N, 0, WORK, 1, 0 );
 console.log( out ); // eslint-disable-line no-console
 ```
 

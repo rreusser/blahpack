@@ -92,12 +92,12 @@ zhbmv( order, uplo, N, K, alpha, A, LDA, x, strideX, beta, y, strideY ) → Comp
 - `RangeError` ninth argument must be non-zero
 - `RangeError` twelfth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhbmv.ndarray(
+zhbmv.strided(
     uplo,
     N, K,
     alpha,
@@ -225,7 +225,7 @@ const y = new Complex128Array( [ 0.0, 0.0, 0.0, 0.0 ] );
 const alpha = new Complex128( 1.0, 0.0 );
 const beta = new Complex128( 0.0, 0.0 );
 
-zhbmv.ndarray( 'upper', 2, 1, alpha, A, 2, 1, 0, x, 1, 0, beta, y, 1, 0 );
+zhbmv.strided( 'upper', 2, 1, alpha, A, 2, 1, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( reinterpret( y, 0 ) ); // eslint-disable-line no-console
 ```
 

@@ -45,7 +45,7 @@ interface Routine {
 	* @param pp - `pp`
 	* @returns result
 	*/
-	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number ): Float64Array;
+	strided( i0: number, n0: number, z: number, stride: number, offset: number, pp: number ): Float64Array;
 }
 
 /**

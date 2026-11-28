@@ -64,12 +64,12 @@ zlarzt( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Comple
 - `RangeError` `K` must be a nonnegative integer
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, K )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarzt.ndarray(
+zlarzt.strided(
     direct, storev,
     N, K,
     V, strideV1, strideV2, offsetV,
@@ -177,7 +177,7 @@ const V = new Complex128Array([
 const TAU = new Complex128Array( [ 0.8, -0.3, 0.5, 0.2 ] );
 const T = new Complex128Array( K * K );
 
-zlarzt.ndarray( 'backward', 'rowwise', N, K, V, 1, K, 0, TAU, 1, 0, T, 1, K, 0 );
+zlarzt.strided( 'backward', 'rowwise', N, K, V, 1, K, 0, TAU, 1, 0, T, 1, K, 0 );
 
 console.log( reinterpret( T, 0 ) ); // eslint-disable-line no-console
 ```

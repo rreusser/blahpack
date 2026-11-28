@@ -62,7 +62,7 @@ interface Routine {
 	* @param c - c
 	* @returns result
 	*/
-	ndarray( job: number, j: number, x: Float64Array, strideX: number, offsetX: number, sest: number, w: Float64Array, strideW: number, offsetW: number, gamma: number, sestpr: number, s: number, c: number ): Float64Array;
+	strided( job: number, j: number, x: Float64Array, strideX: number, offsetX: number, sest: number, w: Float64Array, strideW: number, offsetW: number, gamma: number, sestpr: number, s: number, c: number ): Float64Array;
 }
 
 /**

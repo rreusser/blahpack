@@ -128,7 +128,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( prec_type, trans_type, N, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, colequ, c, strideC, offsetC, B, strideB1, strideB2, offsetB, Y, strideY1, strideY2, offsetY, BERR_OUT, strideBERR_OUT, offsetBERR_OUT, n_norms, ERRS_N, strideERRS_N1, strideERRS_N2, offsetERRS_N, ERRS_C, strideERRS_C1, strideERRS_C2, offsetERRS_C, RES, strideRES, offsetRES, AYB, strideAYB, offsetAYB, y, strideY, offsetY, Y_TAIL, strideY_TAIL, offsetY_TAIL, rcond, ithresh, rthresh, dz_ub, ignore_cwise )
+{{alias}}.strided( prec_type, trans_type, N, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, colequ, c, strideC, offsetC, B, strideB1, strideB2, offsetB, Y, strideY1, strideY2, offsetY, BERR_OUT, strideBERR_OUT, offsetBERR_OUT, n_norms, ERRS_N, strideERRS_N1, strideERRS_N2, offsetERRS_N, ERRS_C, strideERRS_C1, strideERRS_C2, offsetERRS_C, RES, strideRES, offsetRES, AYB, strideAYB, offsetAYB, y, strideY, offsetY, Y_TAIL, strideY_TAIL, offsetY_TAIL, rcond, ithresh, rthresh, dz_ub, ignore_cwise )
     Improves the computed solution using extra-precise iterative refinement for complex general matrices, using alternative indexing semantics.
 
     Parameters

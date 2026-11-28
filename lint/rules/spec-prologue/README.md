@@ -1,6 +1,6 @@
 # `spec-prologue`
 
-**The validation prologue of `ndarray.js` and `<routine>.js` is exactly the one
+**The validation prologue of `strided.js` and `<routine>.js` is exactly the one
 generated from the spec's argument checks.**
 
 [`lint/lib/prologue.cjs`](../../lib/prologue.cjs) turns every translated
@@ -35,7 +35,7 @@ An output scalar is read as `x[ 0 ]` (S10), an `element` scalar as
 generator could not translate) gets an enum check over the values of its type
 (`spec/options.json`, CONVENTIONS V1), so a plain-JS caller's typo throws
 rather than silently taking the reference's "any other letter" case
-(`fixtures/fail/missing-option-check.js`). A check naming something the form lacks (an LD in `ndarray.js`) or that
+(`fixtures/fail/missing-option-check.js`). A check naming something the form lacks (an LD in `strided.js`) or that
 the generator could not translate (`js: null`) is not generated.
 
 Statements after the prologue — quick returns, workspace checks (W3, D5b),
@@ -46,5 +46,5 @@ and its imports.
 
 Supersedes the conformance checks `ld-rules`, `option-rules`, `option-parity`,
 `conventions.routine-{string,dimension,ld}-validation`,
-`conventions.ndarray-{string,dimension}-validation` and
-`implementation.ndarray-{string,dimension}-validation`.
+`conventions.strided-{string,dimension}-validation` and
+`implementation.strided-{string,dimension}-validation`.

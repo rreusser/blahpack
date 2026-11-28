@@ -59,7 +59,7 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, S: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): Float64Array;
+	strided( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, S: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): Float64Array;
 }
 
 /**

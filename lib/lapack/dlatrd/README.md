@@ -74,12 +74,12 @@ dlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW ) → Flo
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, nb )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlatrd.ndarray(
+dlatrd.strided(
     uplo,
     N, nb,
     A, strideA1, strideA2, offsetA,
@@ -185,8 +185,8 @@ const TAU = discreteUniform( N, -10, 10, opts );
 let out = dlatrd( 'row-major', 'upper', N, N, A, N, e, 1, TAU, 1, W, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlatrd.ndarray( 'upper', N, N, A, N, 1, 0, e, 1, 0, TAU, 1, 0, W, N, 1, 0 );
+// Using the strided interface:
+out = dlatrd.strided( 'upper', N, N, A, N, 1, 0, e, 1, 0, TAU, 1, 0, W, N, 1, 0 );
 console.log( out );
 ```
 

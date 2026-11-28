@@ -105,12 +105,12 @@ zhsein(
 - `RangeError` fifteenth argument is invalid (column-major: rejected when `LDVR < 1 \|\| ( ( side === "right" \|\| side === "both" ) && LDVR < N )`)
 - `RangeError` fifteenth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( side === "right" \|\| side === "both" ) && LDVR < max( 1, mm ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhsein.ndarray(
+zhsein.strided(
     side, eigsrc, initv,
     SELECT, strideSELECT, offsetSELECT,
     N,

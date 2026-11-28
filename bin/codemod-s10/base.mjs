@@ -499,7 +499,7 @@ export function rewriteMainJsdoc( src, P, fn, newList, isBase ) {
 	return src.slice( 0, ds ) + nd + src.slice( de );
 }
 
-// Wrapper quick returns: `return { 'info': 0, 'sdim': 0 };` in ndarray.js /
+// Wrapper quick returns: `return { 'info': 0, 'sdim': 0 };` in strided.js /
 // <r>.js → output writes + the new return value.
 export function rewriteWrapperReturns( src, P, fn ) {
 	const ast = annotate( parse( src ) );

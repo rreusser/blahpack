@@ -6,7 +6,7 @@
 - RCOND is an output scalar in Fortran but dgecon expects it as a Float64Array (writes to `rcond[0]`). In dgesvx, we allocate a temporary `new Float64Array(1)` for dgecon, then extract the value.
 - String convention mismatch: dgesvx uses single-char strings for FACT/TRANS/EQUED at its API boundary, but dependencies (dgetrs, dgerfs) expect long-form strings ('no-transpose', 'transpose'). The conversion is done internally via a `transLong` variable.
 - WORK and IWORK parameters were removed from the signature since all callees (dgerfs, dgecon) allocate their own workspace internally. The driver allocates workspace for dlange/dlantr as needed.
-- The Fortran drops input validation (XERBLA) for negative INFO -- base.js skips all parameter validation per stdlib convention (ndarray.js handles that).
+- The Fortran drops input validation (XERBLA) for negative INFO -- base.js skips all parameter validation per stdlib convention (strided.js handles that).
 - The singular matrix early return (info > 0 from dgetrf) returns immediately with rcond=0 and the partial rpvgrw computation. The info=N+1 case (near-singular) only triggers after the full solve completes.
 
 ## Dependency interface surprises

@@ -32,6 +32,7 @@ bin/                           # Pipeline scripts
   lint-fix.sh                  #   Full fix pipeline (codemods + eslint + test verify)
   build-dist.mjs               #   Browser/CDN build into dist/ (vendors stdlib); run by prepack
   codemod-flatten.mjs          #   Layout codemod: lib/<pkg>/<routine>; --check is a CI gate (rerun it on old branches)
+  codemod-strided.mjs          #   Offset form ndarray -> strided (tooling: <routine>.js form -> wrapper); --check is a CI gate
   codemod-tests.js             #   Test file mechanical fixes
   codemod-index.js             #   Index.js mechanical fixes
 lint/                          # THE rule library: one dir per rule (rule, README, fixtures, test)

@@ -54,12 +54,12 @@ dorgr2( order, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorgr2.ndarray(
+dorgr2.strided(
     M, N, K,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,
@@ -134,7 +134,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import { ndarray as dgerq2 } from './../../dgerq2/lib/index.js';
+import { strided as dgerq2 } from './../../dgerq2/lib/index.js';
 import dorgr2 from '@rreusser/blahpack/lapack/dorgr2';
 
 // 3x5 matrix in column-major order:

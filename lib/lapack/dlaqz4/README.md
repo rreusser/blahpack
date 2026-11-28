@@ -95,12 +95,12 @@ Executes a single multishift QZ sweep on the matrix pencil `(A, B)`.
 - `RangeError` `LDA` must be a positive integer
 - `RangeError` `LDB` must be a positive integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqz4.ndarray(
+dlaqz4.strided(
     ilschur, ilq, ilz,
     N,
     ilo, ihi, nshifts,

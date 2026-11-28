@@ -65,12 +65,12 @@ dtrcon( order, norm, uplo, diag, N, A, LDA, RCOND, WORK, IWORK ) → integer
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrcon.ndarray(
+dtrcon.strided(
     norm, uplo, diag,
     N,
     A, strideA1, strideA2, offsetA,
@@ -189,8 +189,8 @@ const IWORK = new Int32Array( N );
 let info = dtrcon( 'column-major', 'one-norm', 'upper', 'non-unit', N, A, N, RCOND, WORK, IWORK );
 console.log( info, RCOND[ 0 ] );
 
-// Using the ndarray interface:
-info = dtrcon.ndarray( 'inf-norm', 'upper', 'non-unit', N, A, 1, N, 0, RCOND, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dtrcon.strided( 'inf-norm', 'upper', 'non-unit', N, A, 1, N, 0, RCOND, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, RCOND[ 0 ] );
 ```
 

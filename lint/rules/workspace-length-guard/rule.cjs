@@ -2,7 +2,7 @@
 
 // ESLint rule: workspace-length-guard
 //
-// `ndarray.js` checks the length of every workspace whose minimum the spec
+// `strided.js` checks the length of every workspace whose minimum the spec
 // knows (CONVENTIONS W3; ticket 0107). For each spec param of role
 // `workspace` with a non-null `minLength.js`, the exported function has a
 // top-level guard
@@ -160,11 +160,11 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'ndarray.js checks the length of every workspace whose minimum the spec knows, after the zero-dimension quick returns (CONVENTIONS W3)'
+			'description': 'strided.js checks the length of every workspace whose minimum the spec knows, after the zero-dimension quick returns (CONVENTIONS W3)'
 		},
 		'schema': [],
 		'messages': {
-			'missing': '{{name}} has no length guard: the spec gives its minimum (`{{js}}`), so `ndarray.js` must throw RangeError when `{{name}}.length - offset < {{js}}` (CONVENTIONS W3; ticket 0107). Fix: `node bin/codemod-workspace-guard.mjs {{routine}}`.',
+			'missing': '{{name}} has no length guard: the spec gives its minimum (`{{js}}`), so `strided.js` must throw RangeError when `{{name}}.length - offset < {{js}}` (CONVENTIONS W3; ticket 0107). Fix: `node bin/codemod-workspace-guard.mjs {{routine}}`.',
 			'message': 'The {{name}} length guard must throw `new RangeError( format( \'invalid argument. {{name}} array must have at least %d elements from offset %d. Provided length: %d.\', min, offset, length ) )`, the form the wrapper replay reads the minimum from (ticket 0108).',
 			'order': 'This return follows the {{name}} length guard. A zero-dimension quick return comes before the workspace checks: an empty problem needs no workspace (CONVENTIONS W3).'
 		}
@@ -178,7 +178,7 @@ var rule = {
 				var names;
 				var seen = {};
 				var first = null;
-				if ( !r || r.form !== 'ndarray' || !r.spec ) {
+				if ( !r || r.form !== 'strided' || !r.spec ) {
 					return;
 				}
 				checkMessages( context, r.fn.body, workspaces( r.spec ) );

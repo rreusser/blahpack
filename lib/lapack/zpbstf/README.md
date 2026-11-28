@@ -63,12 +63,12 @@ zpbstf( order, uplo, N, kd, AB, LDAB ) → info: integer
 - `RangeError` sixth argument must be greater than or equal to `kd + 1` (column-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpbstf.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB ) → info: integer
+zpbstf.strided( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB ) → info: integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -159,7 +159,7 @@ const ab = new Complex128Array([
 	0.0
 ]);
 
-const info = zpbstf.ndarray( 'upper', 4, 1, ab, 1, 2, 0 );
+const info = zpbstf.strided( 'upper', 4, 1, ab, 1, 2, 0 );
 
 console.log( 'info:', info );
 console.log( 'S (band storage):', reinterpret( ab, 0 ) );

@@ -87,7 +87,7 @@ interface Routine {
 	* @param infoIn - nonzero on the first call to signal a user-supplied initial residual
 	* @returns INFO
 	*/
-	ndarray( state: State, ido: Int32Array, bmat: string, N: number, which: string, nev: number, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, ncv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, iparam: Int32Array, strideIparam: number, offsetIparam: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, lworkl: number, infoIn: number ): number;
+	strided( state: State, ido: Int32Array, bmat: string, N: number, which: string, nev: number, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, ncv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, iparam: Int32Array, strideIparam: number, offsetIparam: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, lworkl: number, infoIn: number ): number;
 }
 
 /**

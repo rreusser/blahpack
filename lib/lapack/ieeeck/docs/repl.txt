@@ -25,7 +25,7 @@
     1
 
 
-{{alias}}.ndarray( ispec, zero, one )
+{{alias}}.strided( ispec, zero, one )
     Checks whether infinity and NaN arithmetic is safe, using alternative indexing
     semantics (the routine takes no arrays).
 
@@ -49,7 +49,7 @@
 
     Examples
     --------
-    > var v = {{alias}}.ndarray( 1, 0.0, 1.0 )
+    > var v = {{alias}}.strided( 1, 0.0, 1.0 )
     1
 
     See Also

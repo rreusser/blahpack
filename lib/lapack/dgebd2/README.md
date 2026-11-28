@@ -87,12 +87,12 @@ dgebd2(
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgebd2.ndarray(
+dgebd2.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     d, strideD, offsetD,
@@ -211,14 +211,14 @@ let TAUP = new Float64Array( N );
 let info = dgebd2( 'column-major', M, N, A, M, d, 1, e, 1, TAUQ, 1, TAUP, 1, null );
 console.log( info, d, e ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 2.0, 1.0, 0.0, 5.0, 3.0, -1.0, 2.0, 1.0 ] );
 d = new Float64Array( N );
 e = new Float64Array( N - 1 );
 TAUQ = new Float64Array( N );
 TAUP = new Float64Array( N );
 const WORK = new Float64Array( Math.max( M, N ) );
-info = dgebd2.ndarray( M, N, A, 1, M, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, WORK, 1, 0 );
+info = dgebd2.strided( M, N, A, 1, M, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, WORK, 1, 0 );
 console.log( info, d, e, TAUQ, TAUP ); // eslint-disable-line no-console
 ```
 

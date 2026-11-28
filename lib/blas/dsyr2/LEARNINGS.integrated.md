@@ -17,7 +17,7 @@
 ## Coverage gaps
 
 - Branch coverage at 93.75%. The uncovered branches are likely the `uplo === 'u'` lowercase variant checks. These are trivially correct (case-insensitive comparison) and not worth adding dedicated tests for.
-- Negative strides for x and y are not separately tested via Fortran fixtures, but the unified stride/offset code path handles them correctly since offsets are computed by the caller (ndarray.js).
+- Negative strides for x and y are not separately tested via Fortran fixtures, but the unified stride/offset code path handles them correctly since offsets are computed by the caller (strided.js).
 
 ## Complex number handling
 

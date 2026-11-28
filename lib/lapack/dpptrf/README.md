@@ -50,12 +50,12 @@ dpptrf( order, uplo, N, AP ) → info: integer
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpptrf.ndarray( uplo, N, AP, strideAP, offsetAP ) → integer
+dpptrf.strided( uplo, N, AP, strideAP, offsetAP ) → integer
 ```
 
 Compute the Cholesky factorization of a real symmetric positive definite matrix stored in packed format.

@@ -59,7 +59,7 @@
   emit a matching 2D stride pair, or document the convention that
   such arguments are strided 1D views over `N*NRHS` in column-major
   order.
-- Scaffolded `benchmark/benchmark.{js,ndarray.js}` allocates with
+- Scaffolded `benchmark/benchmark.{js,strided.js}` allocates with
   only `N` elements and passes `Float64Array` for a complex argument.
   Rewrote both to build a `Complex128Array` of `N*NRHS` entries and
   capped `max` at `10^4` to avoid the N*N OOM trap documented in

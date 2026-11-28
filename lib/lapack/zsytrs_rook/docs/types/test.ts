@@ -31,12 +31,12 @@ import zsytrs_rook = require( './index' );
 	zsytrs_rook(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zsytrs_rook.ndarray( 'upper', 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
+	zsytrs_rook.strided( 'upper', 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zsytrs_rook.ndarray(); // $ExpectError
+	zsytrs_rook.strided(); // $ExpectError
 }

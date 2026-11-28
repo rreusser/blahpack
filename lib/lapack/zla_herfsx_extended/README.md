@@ -209,12 +209,12 @@ Improves the computed solution using extra-precise iterative refinement for Herm
 - `RangeError` eighteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eighteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_herfsx_extended.ndarray(
+zla_herfsx_extended.strided(
     prec_type,
     uplo,
     N, nrhs,
@@ -483,7 +483,7 @@ AFv.set( Av );
 Bv[ 0 ] = 1.0;
 Bv[ 2 ] = 2.0;
 
-zlaHerfsxExtended.ndarray( 1, 'upper', 2, 1, A, 1, 2, 0, AF, 1, 2, 0, IPIV, 1, 0, false, c, 1, 0, B, 1, 2, 0, Y, 1, 2, 0, berrOut, 1, 0, 2, errBndsNorm, 1, 1, 0, errBndsComp, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, yTail, 1, 0, 1e-10, 10, 0.5, 0.25, false );
+zlaHerfsxExtended.strided( 1, 'upper', 2, 1, A, 1, 2, 0, AF, 1, 2, 0, IPIV, 1, 0, false, c, 1, 0, B, 1, 2, 0, Y, 1, 2, 0, berrOut, 1, 0, 2, errBndsNorm, 1, 1, 0, errBndsComp, 1, 1, 0, RES, 1, 0, AYB, 1, 0, DY, 1, 0, yTail, 1, 0, 1e-10, 10, 0.5, 0.25, false );
 console.log( berrOut ); // eslint-disable-line no-console
 ```
 

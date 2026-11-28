@@ -80,12 +80,12 @@ dopmtr( order, side, uplo, trans, M, N, AP, TAU, strideTAU, C, LDC, WORK ) → i
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dopmtr.ndarray(
+dopmtr.strided(
     side, uplo, trans,
     M, N,
     AP, strideAP, offsetAP,
@@ -193,7 +193,7 @@ const TAU = new Float64Array( [ 0.0, 1.50, 1.67 ] );
 const C = new Float64Array( [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ] ); // eslint-disable-line max-len
 const WORK = new Float64Array( 4 );
 
-dopmtr.ndarray( 'left', 'upper', 'no-transpose', 4, 4, AP, 1, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+dopmtr.strided( 'left', 'upper', 'no-transpose', 4, 4, AP, 1, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'Q (columns of C):' );
 console.log( C );

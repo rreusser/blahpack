@@ -32,7 +32,7 @@
   pivoting-tie behavior noted in the project skill — different
   idamax/internal swap-record decisions can yield equivalent
   factorizations. We accept the IPIV divergence on the large fixture and
-  rely on the smaller deterministic fixtures + the ndarray non-trivial
+  rely on the smaller deterministic fixtures + the strided non-trivial
   offset test for IPIV correctness.
 
 ## Dependency interface surprises
@@ -66,5 +66,5 @@
 - 100% line / 100% branch on `lib/base.js` achieved with the fixture
   set covering: 4x4 PD lower/upper, 4x4 indefinite lower/upper, N=0,
   N=1, 5x5 lower/upper (single-panel branch), 40x40 lower/upper
-  (multi-panel + trailing dgemm/dgemv updates), and an ndarray
+  (multi-panel + trailing dgemm/dgemv updates), and an strided
   non-trivial offset test.

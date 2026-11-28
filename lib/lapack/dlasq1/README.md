@@ -44,12 +44,12 @@ dlasq1( N, d, strideD, e, strideE, WORK ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasq1.ndarray(
+dlasq1.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -127,10 +127,10 @@ const WORK = new Float64Array( 4 * N );
 let info = dlasq1( N, d, 1, e, 1, WORK );
 console.log( info, d ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 3.0, 2.0, 1.0 ] );
 e = new Float64Array( [ 1.0, 0.5, 0.25 ] );
-info = dlasq1.ndarray( N, d, 1, 0, e, 1, 0, WORK, 1, 0 );
+info = dlasq1.strided( N, d, 1, 0, e, 1, 0, WORK, 1, 0 );
 console.log( info, d ); // eslint-disable-line no-console
 ```
 

@@ -52,12 +52,12 @@ dlatrz( order, M, N, l, A, LDA, TAU, strideTAU, WORK ) → Float64Array
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max(1,M)` (column-major) or `max(1,N)` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlatrz.ndarray(
+dlatrz.strided(
     M, N, l,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,
@@ -168,8 +168,8 @@ const A = new Float64Array([
 dlatrz( 'column-major', 3, 5, 2, A, 3, TAU, 1, WORK );
 console.log( TAU ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-dlatrz.ndarray( 3, 5, 2, A2, 1, 3, 0, TAU2, 1, 0, WORK2, 1, 0 );
+// Using the strided interface:
+dlatrz.strided( 3, 5, 2, A2, 1, 3, 0, TAU2, 1, 0, WORK2, 1, 0 );
 console.log( TAU2 ); // eslint-disable-line no-console
 ```
 

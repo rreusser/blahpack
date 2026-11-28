@@ -56,12 +56,12 @@ dpocon( order, uplo, N, A, LDA, anorm, rcond, WORK, IWORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` sixth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpocon.ndarray(
+dpocon.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -164,10 +164,10 @@ dpotrf( 'column-major', 'upper', N, A, N );
 let info = dpocon( 'column-major', 'upper', N, A, N, anorm, rcond, WORK, IWORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( data );
-dpotrf.ndarray( 'upper', N, A, 1, N, 0 );
-info = dpocon.ndarray( 'upper', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
+dpotrf.strided( 'upper', N, A, 1, N, 0 );
+info = dpocon.strided( 'upper', N, A, 1, N, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

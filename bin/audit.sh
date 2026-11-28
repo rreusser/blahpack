@@ -45,7 +45,7 @@ if [ "${1:-}" != "" ]; then
   echo ""
 
   base="$dir/lib/base.js"
-  ndarray="$dir/lib/ndarray.js"
+  strided="$dir/lib/strided.js"
   test="$dir/test/test.js"
 
   if [ ! -f "$base" ]; then
@@ -69,8 +69,8 @@ if [ "${1:-}" != "" ]; then
   # Single-char strings in JSDoc
   c=$(grep "@param.*'[A-Z]'" "$base" 2>/dev/null | grep -cv '`' || true)
   c2=0
-  if [ -f "$ndarray" ]; then
-    c2=$(grep "@param.*'[A-Z]'" "$ndarray" 2>/dev/null | grep -cv '`' || true)
+  if [ -f "$strided" ]; then
+    c2=$(grep "@param.*'[A-Z]'" "$strided" 2>/dev/null | grep -cv '`' || true)
   fi
   check "single-char flags in @param" "$((c + c2))"
 
@@ -84,12 +84,12 @@ if [ "${1:-}" != "" ]; then
     fi
   fi
 
-  # Validation in ndarray.js
-  if [ -f "$ndarray" ] && grep -q "uplo\|trans\|diag\|side" "$base" 2>/dev/null; then
-    if ! grep -q "throw new TypeError" "$ndarray" 2>/dev/null; then
-      warn "ndarray.js missing string validation" 1
+  # Validation in strided.js
+  if [ -f "$strided" ] && grep -q "uplo\|trans\|diag\|side" "$base" 2>/dev/null; then
+    if ! grep -q "throw new TypeError" "$strided" 2>/dev/null; then
+      warn "strided.js missing string validation" 1
     else
-      check "ndarray.js validates strings" 0
+      check "strided.js validates strings" 0
     fi
   fi
 
@@ -146,7 +146,7 @@ check "z-prefix indexing Complex128Array without reinterpret" "$zcount"
 echo ""
 echo "Validation:"
 vcount=0
-for f in lib/*/*/lib/ndarray.js; do
+for f in lib/*/*/lib/strided.js; do
   [ -f "$f" ] || continue
   grep -q "throw new TypeError" "$f" 2>/dev/null && continue
   base="$(dirname "$f")/base.js"
@@ -156,7 +156,7 @@ for f in lib/*/*/lib/ndarray.js; do
     vcount=$((vcount + 1))
   fi
 done
-warn "ndarray.js with string params but no validation" "$vcount"
+warn "strided.js with string params but no validation" "$vcount"
 
 echo ""
 echo "Tests:"

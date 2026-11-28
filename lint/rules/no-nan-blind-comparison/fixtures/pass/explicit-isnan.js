@@ -1,4 +1,4 @@
-// target: lib/lapack/zsyr/test/test.ndarray.js
+// target: lib/lapack/zsyr/test/test.strided.js
 // A comparison whose operand is also checked for NaN is accepted.
 import assert from 'node:assert/strict';
 

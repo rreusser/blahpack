@@ -73,12 +73,12 @@ zla_syrcond_x(
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_syrcond_x.ndarray(
+zla_syrcond_x.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,

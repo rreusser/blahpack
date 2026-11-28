@@ -31,12 +31,12 @@ import dsaup2 = require( './index' );
 	dsaup2(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dsaup2.ndarray( {}, new Int32Array( 1 ), 'standard', 4, 'LM', new Int32Array( 1 ), new Int32Array( 1 ), 0.0, new Float64Array( 4 ), 1, 0, 1, 1, 1, new Int32Array( 1 ), new Float64Array( 16 ), 1, 4, 0, new Float64Array( 8 ), 1, 4, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 16 ), 1, 4, 0, new Float64Array( 12 ), 1, 0, new Int32Array( 3 ), 1, 0, new Float64Array( 12 ), 1, 0, 1 ); // $ExpectType number
+	dsaup2.strided( {}, new Int32Array( 1 ), 'standard', 4, 'LM', new Int32Array( 1 ), new Int32Array( 1 ), 0.0, new Float64Array( 4 ), 1, 0, 1, 1, 1, new Int32Array( 1 ), new Float64Array( 16 ), 1, 4, 0, new Float64Array( 8 ), 1, 4, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 16 ), 1, 4, 0, new Float64Array( 12 ), 1, 0, new Int32Array( 3 ), 1, 0, new Float64Array( 12 ), 1, 0, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dsaup2.ndarray(); // $ExpectError
+	dsaup2.strided(); // $ExpectError
 }

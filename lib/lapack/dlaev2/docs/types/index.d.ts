@@ -40,7 +40,7 @@ interface Routine {
 	* @param c - `c`
 	* @returns result
 	*/
-	ndarray( a: number, b: number, c: number ): Dlaev2Result;
+	strided( a: number, b: number, c: number ): Dlaev2Result;
 }
 
 /**

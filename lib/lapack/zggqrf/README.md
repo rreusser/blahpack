@@ -71,12 +71,12 @@ zggqrf(
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, p )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggqrf.ndarray(
+zggqrf.strided(
     N, M, p,
     A, strideA1, strideA2, offsetA,
     TAUA, strideTAUA, offsetTAUA,
@@ -172,7 +172,7 @@ const B = new Complex128Array( [ 3, -1 ] );
 const TAUB = new Complex128Array( 1 );
 const WORK = new Complex128Array( 64 );
 
-const info = zggqrf.ndarray( 1, 1, 1, A, 1, 1, 0, TAUA, 1, 0, B, 1, 1, 0, TAUB, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+const info = zggqrf.strided( 1, 1, 1, A, 1, 1, 0, TAUA, 1, 0, B, 1, 1, 0, TAUB, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'A:', reinterpret( A, 0 ) ); // eslint-disable-line no-console
 console.log( 'B:', reinterpret( B, 0 ) ); // eslint-disable-line no-console

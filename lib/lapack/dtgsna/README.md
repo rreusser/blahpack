@@ -103,12 +103,12 @@ dtgsna(
 - `RangeError` fourteenth argument is invalid (row-major: rejected when `( job === "eigenvalues" \|\| job === "both" ) && LDVR < max( 1, mm )`)
 - `RangeError` leading dimensions must satisfy LDA, LDB, LDVL, LDVR >= max(1, N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgsna.ndarray(
+dtgsna.strided(
     job, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -274,7 +274,7 @@ VR[ 0 ] = 1.0;
 VR[ 4 ] = 1.0;
 VR[ 8 ] = 1.0;
 
-dtgsna.ndarray( 'both', 'all', SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, s, 1, 0, DIF, 1, 0, N, M, WORK, 1, 0, IWORK, 1, 0 );
+dtgsna.strided( 'both', 'all', SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, VL, 1, N, 0, VR, 1, N, 0, s, 1, 0, DIF, 1, 0, N, M, WORK, 1, 0, IWORK, 1, 0 );
 
 console.log( 's =', s ); // eslint-disable-line no-console
 console.log( 'DIF =', DIF ); // eslint-disable-line no-console

@@ -67,12 +67,12 @@ dlaqp2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqp2.ndarray(
+dlaqp2.strided(
     M, N, offset,
     A, strideA1, strideA2, offsetA,
     JPVT, strideJPVT, offsetJPVT,
@@ -196,7 +196,7 @@ dlaqp2( 'column-major', M, N, 0, A, M, JPVT, 1, TAU, 1, VN1, 1, VN2, 1, WORK );
 console.log( A );
 console.log( JPVT );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 1.0, 2.0, 3.0, -1.0, 4.0, 0.5, 2.0, 1.0, -2.0 ] );
 JPVT = new Int32Array( [ 0, 1, 2 ] );
 TAU = new Float64Array( N );
@@ -204,7 +204,7 @@ VN1 = new Float64Array( N );
 VN2 = new Float64Array( N );
 WORK = new Float64Array( N );
 colnorms( A, N, VN1, VN2 );
-dlaqp2.ndarray( M, N, 0, A, 1, M, 0, JPVT, 1, 0, TAU, 1, 0, VN1, 1, 0, VN2, 1, 0, WORK, 1, 0 );
+dlaqp2.strided( M, N, 0, A, 1, M, 0, JPVT, 1, 0, TAU, 1, 0, VN1, 1, 0, VN2, 1, 0, WORK, 1, 0 );
 console.log( A );
 console.log( JPVT );
 ```

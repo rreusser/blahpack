@@ -88,12 +88,12 @@ dlasy2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasy2.ndarray(
+dlasy2.strided(
     ltranl, ltranr, isgn,
     n1, n2,
     TL, strideTL1, strideTL2, offsetTL,
@@ -224,11 +224,11 @@ let xnorm = new Float64Array( 1 );
 let info = dlasy2( 'column-major', false, false, 1, N, N, TL, N, TR, N, B, N, scale, X, N, xnorm );
 console.log( info, X, scale, xnorm );
 
-// Using the ndarray interface:
+// Using the strided interface:
 X = new Float64Array( N * N );
 scale = new Float64Array( 1 );
 xnorm = new Float64Array( 1 );
-info = dlasy2.ndarray( false, false, 1, N, N, TL, 1, N, 0, TR, 1, N, 0, B, 1, N, 0, scale, X, 1, N, 0, xnorm );
+info = dlasy2.strided( false, false, 1, N, N, TL, 1, N, 0, TR, 1, N, 0, B, 1, N, 0, scale, X, 1, N, 0, xnorm );
 console.log( info, X, scale, xnorm );
 ```
 

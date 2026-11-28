@@ -79,12 +79,12 @@ dlaqz2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqz2.ndarray(
+dlaqz2.strided(
     ilq, ilz, k, istartm, istopm, ihi,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

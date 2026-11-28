@@ -3,7 +3,7 @@
 ## Translation pitfalls
 
 - dpttrs is a thin wrapper around dptts2. The Fortran version uses ILAENV to determine a block size NB and splits columns into chunks, but in JS we skip ILAENV entirely and call dptts2 once with all columns. This is functionally equivalent since dptts2 already loops over columns internally.
-- The Fortran dpttrs validates N, NRHS, and LDB and sets INFO. In the JS stride/offset API, LDB is consumed into strideB1/strideB2, so that validation is deferred to the ndarray wrapper. The base.js only handles quick returns for N=0 or NRHS=0.
+- The Fortran dpttrs validates N, NRHS, and LDB and sets INFO. In the JS stride/offset API, LDB is consumed into strideB1/strideB2, so that validation is deferred to the strided wrapper. The base.js only handles quick returns for N=0 or NRHS=0.
 
 ## Dependency interface surprises
 

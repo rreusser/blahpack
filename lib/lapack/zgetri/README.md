@@ -48,12 +48,12 @@ zgetri( order, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` second argument must be a nonnegative integer
 - `RangeError` fourth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgetri.ndarray(
+zgetri.strided(
     N,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV,
@@ -140,11 +140,11 @@ zgetrf( 'column-major', N, N, A, N, IPIV, 1 );
 let out = zgetri( 'column-major', N, A, N, IPIV, 1, null );
 console.log( out, reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( A0 );
-zgetrf.ndarray( N, N, A, 1, N, 0, IPIV, 1, 0 );
+zgetrf.strided( N, N, A, 1, N, 0, IPIV, 1, 0 );
 const WORK = new Complex128Array( N );
-out = zgetri.ndarray( N, A, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
+out = zgetri.strided( N, A, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
 console.log( out, reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

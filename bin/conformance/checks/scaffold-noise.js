@@ -21,8 +21,8 @@ var STAR_RETURN = /@returns\s*\{\*\}/;
 // `//` line comments here.
 var STRAY_COPYRIGHT = /^\s*\/\/.*Ricky Reusser/;
 
-// test.ndarray.js requiring lib/base.js bypasses the validator. The public
-// ndarray surface is the layer being tested; bypassing it has hidden silent
+// test.strided.js requiring lib/base.js bypasses the validator. The public
+// strided surface is the layer being tested; bypassing it has hidden silent
 // correctness bugs (validator strings disagreeing with base dispatch keys).
 var NDARRAY_TEST_REQ_BASE = /require\(\s*['"]\.\.?\/(?:\.\.\/)?lib\/base\.js['"]\s*\)/;
 
@@ -46,7 +46,7 @@ var WRAPPER_MAP_VAR = /^\s*var\s+[A-Z]+_MAP\s*=/;
 // bin/scaffold.py before base.js exists, or the retired placeholder body
 // (`createBenchmark( len )` that allocates no arrays, so the call passes
 // scalars where arrays belong and measures nothing). Regenerate with
-// `node bin/gen-benchmark.mjs <module> --kind=strided|ndarray --write`.
+// `node bin/gen-benchmark.mjs <module> --kind=wrapper|strided --write`.
 var BENCHMARK_STUB = /benchmark not generated/;
 var BENCHMARK_EMPTY_BODY = /function createBenchmark\( len \) \{\s*(?:const N = len;\s*)?return benchmark;/;
 
@@ -67,7 +67,7 @@ function check( mod ) {
 	var docsDir = path.join( mod.dir, 'docs' );
 	var libFiles = [
 		[ path.join( libDir, 'base.js' ), 'base.js' ],
-		[ path.join( libDir, 'ndarray.js' ), 'ndarray.js' ],
+		[ path.join( libDir, 'strided.js' ), 'strided.js' ],
 		[ path.join( libDir, routine + '.js' ), routine + '.js' ],
 		[ path.join( libDir, 'index.js' ), 'index.js' ]
 	];
@@ -79,9 +79,9 @@ function check( mod ) {
 	var exampleFiles = [
 		[ path.join( mod.dir, 'examples', 'index.js' ), 'examples/index.js' ],
 		[ path.join( mod.dir, 'benchmark', 'benchmark.js' ), 'benchmark/benchmark.js' ],
-		[ path.join( mod.dir, 'benchmark', 'benchmark.ndarray.js' ), 'benchmark/benchmark.ndarray.js' ]
+		[ path.join( mod.dir, 'benchmark', 'benchmark.strided.js' ), 'benchmark/benchmark.strided.js' ]
 	];
-	var ndarrayTestPath = path.join( mod.dir, 'test', 'test.ndarray.js' );
+	var stridedTestPath = path.join( mod.dir, 'test', 'test.strided.js' );
 	var allDocAndLib = libFiles.concat( docFiles );
 	var locs;
 	var i;
@@ -141,29 +141,29 @@ function check( mod ) {
 		));
 	}
 
-	// 4. test.ndarray.js must require lib/ndarray.js, not lib/base.js. We
-	// only enforce this when the module actually has an ndarray.js — some
-	// BLAS Level-1 modules don't ship a separate ndarray wrapper, so their
+	// 4. test.strided.js must require lib/strided.js, not lib/base.js. We
+	// only enforce this when the module actually has an strided.js — some
+	// BLAS Level-1 modules don't ship a separate strided wrapper, so their
 	// tests legitimately have no choice but to require base.js.
-	var ndarrayLibPath = path.join( mod.dir, 'lib', 'ndarray.js' );
-	if ( !util.fileExists( ndarrayTestPath ) ) {
-		results.push( util.skip( ID + '.ndarray-test-routes-through-validator', 'No test/test.ndarray.js' ) );
-	} else if ( !util.fileExists( ndarrayLibPath ) ) {
-		results.push( util.skip( ID + '.ndarray-test-routes-through-validator', 'No lib/ndarray.js (single-file module)' ) );
+	var stridedLibPath = path.join( mod.dir, 'lib', 'strided.js' );
+	if ( !util.fileExists( stridedTestPath ) ) {
+		results.push( util.skip( ID + '.strided-test-routes-through-validator', 'No test/test.strided.js' ) );
+	} else if ( !util.fileExists( stridedLibPath ) ) {
+		results.push( util.skip( ID + '.strided-test-routes-through-validator', 'No lib/strided.js (single-file module)' ) );
 	} else {
-		hits = util.grepFile( ndarrayTestPath, NDARRAY_TEST_REQ_BASE );
+		hits = util.grepFile( stridedTestPath, NDARRAY_TEST_REQ_BASE );
 		if ( hits.length === 0 ) {
-			results.push( util.pass( ID + '.ndarray-test-routes-through-validator', 'test.ndarray.js routes through ndarray.js' ) );
+			results.push( util.pass( ID + '.strided-test-routes-through-validator', 'test.strided.js routes through strided.js' ) );
 		} else {
 			locs = [];
 			for ( j = 0; j < hits.length; j++ ) {
-				locs.push( 'test/test.ndarray.js:' + hits[ j ].line );
+				locs.push( 'test/test.strided.js:' + hits[ j ].line );
 			}
 			results.push( util.fail(
-				ID + '.ndarray-test-routes-through-validator',
-				'test.ndarray.js routes through ndarray.js',
+				ID + '.strided-test-routes-through-validator',
+				'test.strided.js routes through strided.js',
 				locs.length, locs,
-				'test.ndarray.js bypasses the validator by requiring lib/base.js — change to lib/ndarray.js (move base-only tests to test.base.js if needed)'
+				'test.strided.js bypasses the validator by requiring lib/base.js — change to lib/strided.js (move base-only tests to test.base.js if needed)'
 			));
 		}
 	}
@@ -220,7 +220,7 @@ function check( mod ) {
 			ID + '.benchmark-generated',
 			'Benchmarks are generated (no scaffold stub/placeholder)',
 			locs.length, locs,
-			'Run `node bin/gen-benchmark.mjs lib/<pkg>/<routine> --kind=strided|ndarray --write` after implementing base.js'
+			'Run `node bin/gen-benchmark.mjs lib/<pkg>/<routine> --kind=wrapper|strided --write` after implementing base.js'
 		));
 	}
 

@@ -57,12 +57,12 @@ dger( order, M, N, alpha, x, strideX, y, strideY, A, LDA ) → Float64Array
 - `RangeError` tenth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dger.ndarray(
+dger.strided(
     M, N,
     alpha,
     x, strideX, offsetX,

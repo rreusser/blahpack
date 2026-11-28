@@ -46,12 +46,12 @@ zlarscl2( order, M, N, d, strideD, X, LDX ) → Complex128Array
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarscl2.ndarray(
+zlarscl2.strided(
     M, N,
     d, strideD, offsetD,
     X, strideX1, strideX2, offsetX
@@ -120,8 +120,8 @@ const d = discreteUniform( N, 1, 10, opts );
 zlarscl2( 'row-major', N, N, d, 1, X, N );
 console.log( reinterpret( X, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zlarscl2.ndarray( N, N, d, 1, 0, X, N, 1, 0 );
+// Using the strided interface:
+zlarscl2.strided( N, N, d, 1, 0, X, N, 1, 0 );
 console.log( reinterpret( X, 0 ) ); // eslint-disable-line no-console
 ```
 

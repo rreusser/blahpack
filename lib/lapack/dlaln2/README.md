@@ -79,12 +79,12 @@ dlaln2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaln2.ndarray(
+dlaln2.strided(
     ltrans,
     na, nw,
     smin, ca,
@@ -212,9 +212,9 @@ let out = {
 console.log( out );
 console.log( X );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': dlaln2.ndarray( false, 2, 1, smin, ca, A, 1, 2, 0, d1, d2, B, 1, 2, 0, wr, wi, X, 1, 2, 0, scale, xnorm ),
+	'info': dlaln2.strided( false, 2, 1, smin, ca, A, 1, 2, 0, d1, d2, B, 1, 2, 0, wr, wi, X, 1, 2, 0, scale, xnorm ),
 	'scale': scale[ 0 ],
 	'xnorm': xnorm[ 0 ]
 };

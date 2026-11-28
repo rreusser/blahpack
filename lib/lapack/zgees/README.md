@@ -86,12 +86,12 @@ zgees(
 - `RangeError` twelfth argument is invalid (rejected when `LDVS < 1 \|\| ( jobvs === "compute-vectors" && LDVS < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgees.ndarray(
+zgees.strided(
     jobvs, sort,
     select,
     N,
@@ -247,9 +247,9 @@ const BWORK = new Uint8Array( N );
 let out = zgees( 'column-major', 'compute-vectors', 'none', select, N, A, N, sdim, W, 1, VS, N, WORK, RWORK, BWORK );
 console.log( out );
 
-// Using the ndarray interface (ordering selected eigenvalues first):
+// Using the strided interface (ordering selected eigenvalues first):
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
-out = zgees.ndarray( 'compute-vectors', 'sort', select, N, A, 1, N, 0, sdim, W, 1, 0, VS, 1, N, 0, WORK, 1, 0, RWORK, 1, 0, BWORK, 1, 0 );
+out = zgees.strided( 'compute-vectors', 'sort', select, N, A, 1, N, 0, sdim, W, 1, 0, VS, 1, N, 0, WORK, 1, 0, RWORK, 1, 0, BWORK, 1, 0 );
 console.log( out, sdim[ 0 ] );
 ```
 

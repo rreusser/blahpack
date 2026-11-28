@@ -44,7 +44,7 @@
     <Float64Array>[ 1.0, 2.0, 3.0 ]
 
 
-{{alias}}.ndarray( which, apply, N, x, strideX, offsetX, na, A, strideA1, strideA2, offsetA )
+{{alias}}.strided( which, apply, N, x, strideX, offsetX, na, A, strideA1, strideA2, offsetA )
     Sorts the values in `x`, using alternative indexing semantics.
 
     Parameters
@@ -86,7 +86,7 @@
     --------
     > var x = new {{alias:@stdlib/array/float64}}( [ 3.0, 1.0, 2.0 ] );
     > var A = new {{alias:@stdlib/array/float64}}( [ 11.0, 12.0, 21.0, 22.0, 31.0, 32.0 ] );
-    > {{alias}}.ndarray( 'LA', true, 3, x, 1, 0, 2, A, 1, 2, 0 );
+    > {{alias}}.strided( 'LA', true, 3, x, 1, 0, 2, A, 1, 2, 0 );
     > x
     <Float64Array>[ 1.0, 2.0, 3.0 ]
 

@@ -1,6 +1,6 @@
 # `jsdoc-summary`
 
-**The JSDoc of a module's exported function (`base.js`, `ndarray.js`,
+**The JSDoc of a module's exported function (`base.js`, `strided.js`,
 `<routine>.js`) opens with a complete summary sentence. So does the module
 JSDoc in `lib/index.js`, when there is one.** The API reference (`bin/docs`)
 uses the first sentence as the routine's summary in listings, search,

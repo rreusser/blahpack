@@ -53,6 +53,6 @@
 - The `init_routine.py` scaffold faithfully reproduces the Fortran
   signature, INCLUDING the `WORK`/`LWORK`/`offsetWORK` parameters that
   the project convention deletes. Always cross-check the scaffolded
-  ndarray.js / `<routine>.js` signature against the closest already-
+  strided.js / `<routine>.js` signature against the closest already-
   translated counterpart (`zhetrf_rk` here) before writing tests, or
   the test arity assertions and example call signatures will lag behind.

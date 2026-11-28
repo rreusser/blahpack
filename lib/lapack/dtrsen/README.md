@@ -94,12 +94,12 @@ dtrsen(
 - `RangeError` tenth argument is invalid (rejected when `LDQ < 1 \|\| ( compq === "update" && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrsen.ndarray(
+dtrsen.strided(
     job, compq,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -250,10 +250,10 @@ let Q = new Float64Array( Q0 );
 let info = dtrsen( 'column-major', 'both', 'update', SELECT, 1, N, T, N, Q, N, WR, 1, WI, 1, M, s, sep, WORK, IWORK );
 console.log( info, M[ 0 ], s[ 0 ], sep[ 0 ], WR );
 
-// Using the ndarray interface:
+// Using the strided interface:
 T = new Float64Array( T0 );
 Q = new Float64Array( Q0 );
-info = dtrsen.ndarray( 'both', 'update', SELECT, 1, 0, N, T, 1, N, 0, Q, 1, N, 0, WR, 1, 0, WI, 1, 0, M, s, sep, WORK, 1, 0, IWORK, 1, 0 );
+info = dtrsen.strided( 'both', 'update', SELECT, 1, 0, N, T, 1, N, 0, Q, 1, N, 0, WR, 1, 0, WI, 1, 0, M, s, sep, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, M[ 0 ], s[ 0 ], sep[ 0 ], WR );
 ```
 

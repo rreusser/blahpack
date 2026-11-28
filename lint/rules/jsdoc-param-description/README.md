@@ -1,6 +1,6 @@
 # `jsdoc-param-description`
 
-**Every `@param` on a module's exported function (`base.js`, `ndarray.js`,
+**Every `@param` on a module's exported function (`base.js`, `strided.js`,
 `<routine>.js`) describes the parameter. A description that only repeats the
 parameter's name fails** (`@param {NonNegativeInteger} N - N`). Ticket 0002
 counted 2,225 of these. The API reference (`bin/docs`) prints the description

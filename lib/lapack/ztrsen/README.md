@@ -88,12 +88,12 @@ ztrsen(
 - `RangeError` tenth argument is invalid (rejected when `LDQ < 1 \|\| ( compq === "update" && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrsen.ndarray(
+ztrsen.strided(
     job, compq,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -234,10 +234,10 @@ let Q = new Complex128Array( Q0 );
 let info = ztrsen( 'column-major', 'both', 'update', SELECT, 1, N, T, N, Q, N, W, 1, M, s, sep, WORK );
 console.log( info, M[ 0 ], s[ 0 ], sep[ 0 ], reinterpret( W, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 T = new Complex128Array( T0 );
 Q = new Complex128Array( Q0 );
-info = ztrsen.ndarray( 'both', 'update', SELECT, 1, 0, N, T, 1, N, 0, Q, 1, N, 0, W, 1, 0, M, s, sep, WORK, 1, 0 );
+info = ztrsen.strided( 'both', 'update', SELECT, 1, 0, N, T, 1, N, 0, Q, 1, N, 0, W, 1, 0, M, s, sep, WORK, 1, 0 );
 console.log( info, M[ 0 ], s[ 0 ], sep[ 0 ], reinterpret( W, 0 ) );
 ```
 

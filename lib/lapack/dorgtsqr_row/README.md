@@ -80,12 +80,12 @@ Generates an M-by-N real matrix Q with orthonormal columns from the output of DL
 - `RangeError` ninth argument must be greater than or equal to `max( 1, min( nb, N ) )` (column-major)
 - `RangeError` `LDA` must be greater than or equal to `max(1,M)` for column-major (or `max(1,N)` for row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorgtsqr_row.ndarray(
+dorgtsqr_row.strided(
     M, N,
     mb, nb,
     A, strideA1, strideA2, offsetA,
@@ -191,8 +191,8 @@ The reference documents `INFO` as:
 /* eslint-disable camelcase */
 
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlatsqr from './../../dlatsqr/lib/ndarray.js';
-import dorgtsqr_row from './../lib/ndarray.js';
+import dlatsqr from './../../dlatsqr/lib/strided.js';
+import dorgtsqr_row from './../lib/strided.js';
 
 // Reconstruct Q from a TSQR factorization of an 8-by-3 matrix.
 const M = 8;

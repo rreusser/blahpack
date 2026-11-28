@@ -26,14 +26,14 @@
   lowercases `DY` to `y`, which collides with `strideY`/`offsetY` and
   produces a function with two parameters named `offsetY`. In strict
   mode JS this is a `SyntaxError` at load time. Fix: rename the `DY`
-  parameter to `DY`/`strideDY`/`offsetDY` in base.js, ndarray.js, and
+  parameter to `DY`/`strideDY`/`offsetDY` in base.js, strided.js, and
   the layout wrapper (and in the tests that call them). Any future
   routine whose Fortran signature has a 2D array plus a 1D array
   sharing the same first letter needs the same manual rename.
 - `bin/signature.py` drops `NRHS` from the JS signature (it's marked
   "consumed" because it's treated as a loop bound). For this routine,
   `NRHS` is a first-class argument — we need it to drive the outer
-  RHS loop. Add `nrhs` manually after `ku` in base.js, ndarray.js, and
+  RHS loop. Add `nrhs` manually after `ku` in base.js, strided.js, and
   the layout wrapper; bump the layout wrapper arity test accordingly.
 - The routine's initial `Y_PREC_STATE = EXTRA_RESIDUAL` (= 1) is NOT
   equivalent to `BASE_RESIDUAL` (= 0) in the state-machine transitions
@@ -60,7 +60,7 @@
 - `Infinity` literals appear in fixture JSONL when a branch stores
   `HUGEVAL * HUGEVAL` (e.g., `final_dz_z` on divergent componentwise
   tracking). Bare `Infinity` is not valid JSON; the fixture reader in
-  `test.ndarray.js` replaces `Infinity` with `1e309` before calling
+  `test.strided.js` replaces `Infinity` with `1e309` before calling
   `JSON.parse`, and `assertClose` short-circuits when `expected` is
   non-finite.
 

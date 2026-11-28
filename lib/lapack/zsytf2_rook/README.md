@@ -68,12 +68,12 @@ zsytf2_rook( order, uplo, N, A, LDA, IPIV, strideIPIV ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytf2_rook.ndarray(
+zsytf2_rook.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -190,7 +190,7 @@ const IPIV = new Int32Array( N );
 let info = zsytf2Rook( 'column-major', 'lower', N, A, N, IPIV, 1 );
 console.log( info );
 
-info = zsytf2Rook.ndarray( 'lower', N, A, 1, N, 0, IPIV, 1, 0 );
+info = zsytf2Rook.strided( 'lower', N, A, 1, N, 0, IPIV, 1, 0 );
 console.log( info );
 ```
 

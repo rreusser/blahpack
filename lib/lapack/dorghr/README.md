@@ -53,12 +53,12 @@ dorghr( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` fourth argument is invalid (rejected when `ihi < min( ilo, N ) \|\| ihi > N`)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorghr.ndarray(
+dorghr.strided(
     N,
     ilo, ihi,
     A, strideA1, strideA2, offsetA,
@@ -166,9 +166,9 @@ let Q = new Float64Array( A );
 let info = dorghr( 'column-major', N, 1, N, Q, N, TAU, 1, WORK );
 console.log( info, Q );
 
-// Using the ndarray interface:
+// Using the strided interface:
 Q = new Float64Array( A );
-info = dorghr.ndarray( N, 1, N, Q, 1, N, 0, TAU, 1, 0, WORK, 1, 0 );
+info = dorghr.strided( N, 1, N, Q, 1, N, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( info, Q );
 ```
 

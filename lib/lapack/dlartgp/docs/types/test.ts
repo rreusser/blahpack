@@ -31,12 +31,12 @@ import dlartgp = require( './index' );
 	dlartgp(); // $ExpectError
 }
 
-// The ndarray method returns a void...
+// The strided method returns a void...
 {
-	dlartgp.ndarray( 2, 2, 2, 2, 2 ); // $ExpectType void
+	dlartgp.strided( 2, 2, 2, 2, 2 ); // $ExpectType void
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dlartgp.ndarray(); // $ExpectError
+	dlartgp.strided(); // $ExpectError
 }

@@ -6,7 +6,7 @@
   `WORK, strideWORK, offsetWORK, lwork` because `signature.py` faithfully
   echoes the Fortran declaration. Per project convention, JS routines
   allocate workspace internally; we removed all four parameters from
-  base.js, ndarray.js, the BLAS-style wrapper, the README, and the
+  base.js, strided.js, the BLAS-style wrapper, the README, and the
   TypeScript type tests. The arity check in `test.dsytrf_rk.js` had
   to drop from `13` to `9` accordingly.
 - **Lower-case IPIV adjustment must respect the bitwise-NOT 2x2 encoding.**
@@ -50,9 +50,9 @@
 ## Coverage gaps
 
 - The `N === 0` quick return in `base.js` (lines 81-83) is unreachable
-  via tests that go through `ndarray.js`, since the wrapper short-circuits
+  via tests that go through `strided.js`, since the wrapper short-circuits
   N===0 first. Direct base-level invocation isn't part of the test
-  surface (per the project rule that tests target `lib/ndarray.js`,
+  surface (per the project rule that tests target `lib/strided.js`,
   not `lib/base.js`). The branch is structurally trivial; final base.js
   coverage is 98.97% line / 90.91% branch — both above gate threshold.
 

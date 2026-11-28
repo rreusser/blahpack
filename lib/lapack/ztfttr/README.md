@@ -58,12 +58,12 @@ ztfttr( order, transr, uplo, N, ARF, strideARF, A, LDA ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztfttr.ndarray(
+ztfttr.strided(
     transr, uplo,
     N,
     ARF, strideARF, offsetARF,
@@ -155,9 +155,9 @@ let A = new Complex128Array( N * N );
 ztfttr( 'row-major', 'no-transpose', 'upper', N, ARF, 1, A, N );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( N * N );
-ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
+ztfttr.strided( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
 console.log( reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

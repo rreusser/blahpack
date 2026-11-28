@@ -43,12 +43,12 @@ dpttrf( N, d, strideD, e, strideE ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpttrf.ndarray( N, d, strideD, offsetD, e, strideE, offsetE ) → integer
+dpttrf.strided( N, d, strideD, offsetD, e, strideE, offsetE ) → integer
 ```
 
 Computes the L_D_L^T factorization of a real symmetric positive definite tridiagonal matrix A.
@@ -128,8 +128,8 @@ const e = discreteUniform( N, -10, 10, opts );
 let out = dpttrf( N, d, 1, e, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dpttrf.ndarray( N, d, 1, 0, e, 1, 0 );
+// Using the strided interface:
+out = dpttrf.strided( N, d, 1, 0, e, 1, 0 );
 console.log( out );
 ```
 

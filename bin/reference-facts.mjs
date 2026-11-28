@@ -12,7 +12,7 @@
 *
 * The reference text is the spec's `params[].reference` (bin/gen_spec, from
 * data/fortran-param-docs.json); the JSDoc is the `@param` line of the module's
-* `lib/ndarray.js`. Both are committed, so this runs without the Fortran sources.
+* `lib/strided.js`. Both are committed, so this runs without the Fortran sources.
 *
 * Usage:
 *   node bin/reference-facts.mjs            # summary; exit 1 when anything is missing
@@ -59,7 +59,7 @@ function modules() {
 			continue;
 		}
 		for ( const r of readdirSync( base ) ) {
-			const nd = join( base, r, 'lib', 'ndarray.js' );
+			const nd = join( base, r, 'lib', 'strided.js' );
 			if ( existsSync( nd ) ) {
 				out.set( r, nd );
 			}
@@ -68,13 +68,13 @@ function modules() {
 	return out;
 }
 
-function findings( routine, ndarray ) {
+function findings( routine, strided ) {
 	const file = join( ROOT, 'spec', routine + '.json' );
 	if ( !existsSync( file ) ) {
 		return [];
 	}
 	const spec = JSON.parse( readFileSync( file, 'utf8' ) );
-	const docs = jsdocParams( readFileSync( ndarray, 'utf8' ) );
+	const docs = jsdocParams( readFileSync( strided, 'utf8' ) );
 	const out = [];
 	for ( const p of spec.params ) {
 		const desc = docs.get( p.name.toLowerCase() );

@@ -61,12 +61,12 @@ ztftri( transr, uplo, diag, N, A, strideA ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztftri.ndarray( transr, uplo, diag, N, A, strideA, offsetA ) → integer
+ztftri.strided( transr, uplo, diag, N, A, strideA, offsetA ) → integer
 ```
 
 Computes the inverse of A complex triangular matrix in Rectangular Full Packed format.
@@ -160,7 +160,7 @@ const a = new Complex128Array([
 	0.2
 ]);
 
-const info = ztftri.ndarray( 'no-transpose', 'lower', 'non-unit', 3, a, 1, 0 );
+const info = ztftri.strided( 'no-transpose', 'lower', 'non-unit', 3, a, 1, 0 );
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 ```

@@ -59,7 +59,7 @@ interface Routine {
 	* @param strideShifts - stride length for `shifts`
 	* @param offsetShifts - starting index for `shifts`
 	*/
-	ndarray( ishift: number, which: string, kev: number, np: number, ritz: Float64Array, strideRitz: number, offsetRitz: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, shifts: Float64Array, strideShifts: number, offsetShifts: number ): void;
+	strided( ishift: number, which: string, kev: number, np: number, ritz: Float64Array, strideRitz: number, offsetRitz: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, shifts: Float64Array, strideShifts: number, offsetShifts: number ): void;
 }
 
 /**

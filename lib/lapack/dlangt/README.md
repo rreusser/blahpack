@@ -49,12 +49,12 @@ dlangt( norm, N, DL, strideDL, d, strideD, DU, strideDU ) → number
 - `TypeError` first argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlangt.ndarray(
+dlangt.strided(
     norm,
     N,
     DL, strideDL, offsetDL,
@@ -134,8 +134,8 @@ const DU = discreteUniform( N, -10, 10, opts );
 let out = dlangt( 'one-norm', N, DL, 1, d, 1, DU, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlangt.ndarray( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0 );
+// Using the strided interface:
+out = dlangt.strided( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0 );
 console.log( out );
 ```
 

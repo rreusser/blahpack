@@ -44,12 +44,12 @@ dlanv2( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlanv2.ndarray( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn ) → void
+dlanv2.strided( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn ) → void
 ```
 
 Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standard form.

@@ -84,7 +84,7 @@ more closely, which makes the layout remapping awkward.
 **stdlib base.js** uses `'upper'`/`'lower'` (full words).
 **Ours** uses `'U'`/`'u'`/`'L'`/`'l'` (Fortran convention).
 
-The ndarray.js wrapper normalizes. This is a project-wide convention question.
+The strided.js wrapper normalizes. This is a project-wide convention question.
 Our blahpack project consistently uses single chars across all routines
 (dpotf2, ztrmm, ztrmv, zlaset, dlacpy).
 
@@ -104,7 +104,7 @@ for routines with 3+ uplo variants or more complex dispatch.
 ## Testing patterns (from stdlib)
 
 - **23 fixture files** covering: row/column major × upper/lower × positive/negative strides × offsets × complex access patterns
-- Separate test files: `test.dsyr.js` (BLAS-style, 18 tests) and `test.ndarray.js` (stride/offset, 32 tests)
+- Separate test files: `test.dsyr.js` (BLAS-style, 18 tests) and `test.strided.js` (stride/offset, 32 tests)
 - Fixture format: JSON with `A`, `x`, `A_out`, plus all stride/offset params
 - **Key coverage gaps if we only test column-major**: row-major + upper and row-major + lower are distinct code paths in stdlib
 
@@ -114,7 +114,7 @@ for routines with 3+ uplo variants or more complex dispatch.
 - [x] Use incremental `ia` pointer for matrix access — documented in CLAUDE.md "Performance Patterns"
 - [ ] Consider adopting `i0`/`i1`/`sa0`/`sa1` naming for layout-aware routines — deferred, current naming works
 - [x] Ensure tests cover both row-major and column-major — noted in coverage guidance
-- [x] uplo convention decided: `'U'`/`'L'` in base.js, ndarray.js normalizes — documented in CLAUDE.md
+- [x] uplo convention decided: `'U'`/`'L'` in base.js, strided.js normalizes — documented in CLAUDE.md
 
 ## Patterns to carry forward
 

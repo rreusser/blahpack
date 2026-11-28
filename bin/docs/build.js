@@ -102,7 +102,7 @@ function main() {
 	}) ) ) );
 	write( 'search-index.json', JSON.stringify( routines.map( ( r ) => [ r.name, r.package, r.group.label, r.summary.replace( /`/g, '' ) ] ) ) );
 
-	const llms = [ '# ' + site.shortName, '', '> ' + site.description + '. ' + routines.length + ' routines, each with a layout API `f( order, ..., A, LDA, ... )` and a strided API `f.ndarray( ..., A, strideA1, strideA2, offsetA, ... )`.', '', 'Each link below is a compact Markdown page with the routine\'s signatures, a parameter table (type, intent, shape, constraints), returns, throws and examples. `api.json` holds the same data as JSON.', '' ];
+	const llms = [ '# ' + site.shortName, '', '> ' + site.description + '. ' + routines.length + ' routines, each with a layout API `f( order, ..., A, LDA, ... )` and a strided API `f.strided( ..., A, strideA1, strideA2, offsetA, ... )`.', '', 'Each link below is a compact Markdown page with the routine\'s signatures, a parameter table (type, intent, shape, constraints), returns, throws and examples. `api.json` holds the same data as JSON.', '' ];
 	for ( const [ pkg, groups ] of grouped ) {
 		llms.push( '## ' + PACKAGES[ pkg ].title );
 		llms.push( '' );

@@ -116,12 +116,12 @@ zheevx(
 - `RangeError` seventeenth argument is invalid (row-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < max( 1, range === "index" ? iu - il + 1 : N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zheevx.ndarray(
+zheevx.strided(
     jobz, range, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -299,9 +299,9 @@ const IFAIL = new Int32Array( N );
 let info = zheevx( 'column-major', 'compute-vectors', 'all', 'upper', N, A, N, 0.0, 0.0, 1, N, 0.0, m, w, 1, Z, N, WORK, RWORK, IWORK, IFAIL, 1 );
 console.log( 'info:', info, 'm:', m[ 0 ], 'eigenvalues:', w );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( [ 4.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, -1.0, 5.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0, 2.0, 6.0, 0.0 ] ); // eslint-disable-line max-len
-info = zheevx.ndarray( 'compute-vectors', 'all', 'upper', N, A, 1, N, 0, 0.0, 0.0, 1, N, 0.0, m, w, 1, 0, Z, 1, N, 0, WORK, 1, 0, RWORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 );
+info = zheevx.strided( 'compute-vectors', 'all', 'upper', N, A, 1, N, 0, 0.0, 0.0, 1, N, 0.0, m, w, 1, 0, Z, 1, N, 0, WORK, 1, 0, RWORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 );
 console.log( 'info:', info, 'm:', m[ 0 ], 'eigenvalues:', w );
 ```
 

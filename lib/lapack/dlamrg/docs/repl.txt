@@ -37,7 +37,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( n1, n2, a, strideA, offsetA, dtrd1, dtrd2, INDEX, strideINDEX, offsetINDEX )
+{{alias}}.strided( n1, n2, a, strideA, offsetA, dtrd1, dtrd2, INDEX, strideINDEX, offsetINDEX )
     Merges two sorted integer sublists into a single sorted list using
     alternative indexing semantics.
 

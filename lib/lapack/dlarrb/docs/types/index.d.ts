@@ -92,7 +92,7 @@ interface Routine {
 	* @param twist - twist
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, ifirst: number, ilast: number, rtol1: number, rtol2: number, offset: number, w: Float64Array, strideW: number, offsetW: number, WGAP: Float64Array, strideWGAP: number, offsetWGAP: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, pivmin: number, spdiam: number, twist: number ): Float64Array;
+	strided( N: number, d: Float64Array, strideD: number, offsetD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, ifirst: number, ilast: number, rtol1: number, rtol2: number, offset: number, w: Float64Array, strideW: number, offsetW: number, WGAP: Float64Array, strideWGAP: number, offsetWGAP: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, pivmin: number, spdiam: number, twist: number ): Float64Array;
 }
 
 /**

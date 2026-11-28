@@ -1,16 +1,16 @@
 'use strict';
 
-// ESLint rule: wrapper-calls-ndarray
+// ESLint rule: wrapper-calls-strided
 //
 // A layout wrapper (lib/<pkg>/<routine>/lib/<routine>.js) whose routine
 // takes a workspace (a spec param of role `workspace`) calls the default
-// export of `./ndarray.js`, not of `./base.js` (CONVENTIONS D5c; ticket 0077).
+// export of `./strided.js`, not of `./base.js` (CONVENTIONS D5c; ticket 0077).
 //
-// Why: ndarray.js is where a workspace is checked against the reference's
+// Why: strided.js is where a workspace is checked against the reference's
 // minimum (W3) and against the stride rules (D5b). A wrapper that calls
 // base.js hands a caller's undersized WORK straight to the algorithm, where
 // typed-array writes past the end are dropped and reads give `undefined`: the
-// result is silently NaN or wrong. Calling ndarray.js keeps the validation in
+// result is silently NaN or wrong. Calling strided.js keeps the validation in
 // one layer instead of hand-copying it into two.
 //
 // Named helpers base.js exports (`computeOptimalWorkSize`, used to size the
@@ -30,19 +30,19 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'A layout wrapper whose routine takes a workspace calls ndarray.js, not base.js (CONVENTIONS D5c)'
+			'description': 'A layout wrapper whose routine takes a workspace calls strided.js, not base.js (CONVENTIONS D5c)'
 		},
 		'schema': [],
 		'messages': {
-			'base': 'The wrapper imports the default export of `./base.js`; a routine with a workspace ({{ws}}) must call `./ndarray.js`, so a caller\'s workspace is checked against the minimum (CONVENTIONS D5c, W3). Fix: `node bin/codemod-wrapper-ndarray.mjs {{routine}}`.',
-			'nocall': 'The wrapper never calls the default export of `./ndarray.js`; a routine with a workspace ({{ws}}) must, so a caller\'s workspace is checked against the minimum (CONVENTIONS D5c, W3).'
+			'base': 'The wrapper imports the default export of `./base.js`; a routine with a workspace ({{ws}}) must call `./strided.js`, so a caller\'s workspace is checked against the minimum (CONVENTIONS D5c, W3). Fix: `node bin/codemod-wrapper-strided.mjs {{routine}}`.',
+			'nocall': 'The wrapper never calls the default export of `./strided.js`; a routine with a workspace ({{ws}}) must, so a caller\'s workspace is checked against the minimum (CONVENTIONS D5c, W3).'
 		}
 	},
 	'create': function create( context ) {
 		var t = specTarget.target( context.filename || context.getFilename() );
 		var spec;
 		var ws;
-		if ( !t || t.form !== 'strided' ) {
+		if ( !t || t.form !== 'wrapper' ) {
 			return {};
 		}
 		spec = specLib.load( t.routine );
@@ -66,7 +66,7 @@ var rule = {
 						if ( s.type === 'ImportNamespaceSpecifier' || s.type === 'ImportDefaultSpecifier' || ( s.type === 'ImportSpecifier' && s.imported.name === 'default' ) ) {
 							if ( n.source.value === './base.js' ) {
 								context.report( { 'node': s, 'messageId': 'base', 'data': { 'ws': ws, 'routine': t.routine } } );
-							} else if ( n.source.value === './ndarray.js' && s.type !== 'ImportNamespaceSpecifier' ) {
+							} else if ( n.source.value === './strided.js' && s.type !== 'ImportNamespaceSpecifier' ) {
 								ndLocal = s.local.name;
 							}
 						}

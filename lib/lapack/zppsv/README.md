@@ -66,12 +66,12 @@ zppsv( order, uplo, N, nrhs, AP, B, LDB ) → info: integer
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zppsv.ndarray(
+zppsv.strided(
     uplo,
     N, nrhs,
     AP, strideAP, offsetAP,
@@ -160,7 +160,7 @@ import zppsv from '@rreusser/blahpack/lapack/zppsv';
 const AP = new Complex128Array( [ 10.0, 0.0, 3.0, -1.0, 8.0, 0.0, 1.0, 2.0, 2.0, -1.0, 6.0, 0.0 ] ); // eslint-disable-line max-len
 const B = new Complex128Array( [ 1.0, 1.0, 2.0, -1.0, 3.0, 0.5 ] );
 
-const info = zppsv.ndarray( 'upper', 3, 1, AP, 1, 0, B, 1, 3, 0 );
+const info = zppsv.strided( 'upper', 3, 1, AP, 1, 0, B, 1, 3, 0 );
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'Solution X:', B ); // eslint-disable-line no-console
 ```

@@ -82,12 +82,12 @@ dorhr_col( order, M, N, nb, A, LDA, T, LDT, d, strideD ) → integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, min( nb, N ) )` (column-major)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorhr_col.ndarray(
+dorhr_col.strided(
     M, N,
     nb,
     A, strideA1, strideA2, offsetA,

@@ -56,12 +56,12 @@ zlansb( order, norm, uplo, N, K, AB, LDAB, WORK ) → number
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, K + 1 )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlansb.ndarray(
+zlansb.strided(
     norm, uplo,
     N, K,
     AB, strideAB1, strideAB2, offsetAB,
@@ -152,10 +152,10 @@ import zlansb from '@rreusser/blahpack/lapack/zlansb';
 const AB = new Complex128Array( [ 0, 0, 2, 1, -3, 1, 4, -2, 1, 2, -5, 1, 6, -3, 7, 2 ] );
 const WORK = new Float64Array( 4 );
 
-console.log( 'Max norm:', zlansb.ndarray( 'max', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'One norm:', zlansb.ndarray( 'one-norm', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'Inf norm:', zlansb.ndarray( 'inf-norm', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
-console.log( 'Frobenius norm:', zlansb.ndarray( 'frobenius', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Max norm:', zlansb.strided( 'max', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'One norm:', zlansb.strided( 'one-norm', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Inf norm:', zlansb.strided( 'inf-norm', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
+console.log( 'Frobenius norm:', zlansb.strided( 'frobenius', 'upper', 4, 1, AB, 1, 2, 0, WORK, 1, 0 ) );
 ```
 
 </section>

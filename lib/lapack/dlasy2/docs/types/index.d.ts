@@ -72,7 +72,7 @@ interface Routine {
 	* @param xnorm - `xnorm`
 	* @returns result
 	*/
-	ndarray( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, strideTL1: number, strideTL2: number, offsetTL: number, TR: Float64Array, strideTR1: number, strideTR2: number, offsetTR: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, scale: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, xnorm: number ): Float64Array;
+	strided( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, strideTL1: number, strideTL2: number, offsetTL: number, TR: Float64Array, strideTR1: number, strideTR2: number, offsetTR: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, scale: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, xnorm: number ): Float64Array;
 }
 
 /**

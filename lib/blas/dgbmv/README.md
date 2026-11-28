@@ -98,12 +98,12 @@ dgbmv(
 - `RangeError` eleventh argument must be non-zero
 - `RangeError` fourteenth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgbmv.ndarray(
+dgbmv.strided(
     trans,
     M, N, kl, ku,
     alpha,

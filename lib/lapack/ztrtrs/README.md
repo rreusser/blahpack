@@ -70,12 +70,12 @@ ztrtrs( order, uplo, trans, diag, N, nrhs, A, LDA, B, LDB ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrtrs.ndarray(
+ztrtrs.strided(
     uplo, trans, diag,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -187,9 +187,9 @@ let info = ztrtrs( 'column-major', 'upper', 'no-transpose', 'non-unit', N, 1, A,
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface, solve A^H * X = B:
+// Using the strided interface, solve A^H * X = B:
 B = new Complex128Array( bdata );
-info = ztrtrs.ndarray( 'upper', 'conjugate-transpose', 'non-unit', N, 1, A, 1, N, 0, B, 1, N, 0 );
+info = ztrtrs.strided( 'upper', 'conjugate-transpose', 'non-unit', N, 1, A, 1, N, 0, B, 1, N, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( B, 0 ) ); // eslint-disable-line no-console
 ```

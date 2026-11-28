@@ -46,7 +46,7 @@
     <Float64Array>[ -1.0, -1.5, 2.0, 3.0, 4.0 ]
 
 
-{{alias}}.ndarray( ishift, which, kev, np, ritz, strideRitz, offsetRitz, bounds, strideBounds, offsetBounds, shifts, strideShifts, offsetShifts )
+{{alias}}.strided( ishift, which, kev, np, ritz, strideRitz, offsetRitz, bounds, strideBounds, offsetBounds, shifts, strideShifts, offsetShifts )
     Selects shifts and sorts the Ritz values, using alternative indexing
     semantics.
 
@@ -96,7 +96,7 @@
     > var ritz = new {{alias:@stdlib/array/float64}}( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );
     > var bounds = new {{alias:@stdlib/array/float64}}( [ 0.1, 0.5, 0.02, 0.3, 0.05 ] );
     > var shifts = new {{alias:@stdlib/array/float64}}( 2 );
-    > {{alias}}.ndarray( 1, 'LM', 3, 2, ritz, 1, 0, bounds, 1, 0, shifts, 1, 0 );
+    > {{alias}}.strided( 1, 'LM', 3, 2, ritz, 1, 0, bounds, 1, 0, shifts, 1, 0 );
     > ritz
     <Float64Array>[ -1.0, -1.5, 2.0, 3.0, 4.0 ]
 

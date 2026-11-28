@@ -76,7 +76,7 @@ interface Routine {
 	* @param offsetWorkd - starting index for `workd`
 	* @returns IERR (0 on success, -1 if refinement failed)
 	*/
-	ndarray( state: State, ido: Int32Array, bmat: string, itry: number, initv: boolean, N: number, j: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, resid: Float64Array, strideResid: number, offsetResid: number, rnorm: Float64Array, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): number;
+	strided( state: State, ido: Int32Array, bmat: string, itry: number, initv: boolean, N: number, j: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, resid: Float64Array, strideResid: number, offsetResid: number, rnorm: Float64Array, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): number;
 }
 
 /**

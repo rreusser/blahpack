@@ -22,7 +22,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( f, g, h, ssmin, ssmax, snr, csr, snl, csl )
+{{alias}}.strided( f, g, h, ssmin, ssmax, snr, csr, snl, csl )
     Returns |a| with the sign of b (Fortran SIGN intrinsic) using
     alternative indexing semantics.
 

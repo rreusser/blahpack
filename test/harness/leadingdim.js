@@ -2,7 +2,7 @@
 * Leading-dimension conformance: the seam the property/layout harness could not
 * see.
 *
-* The property and layout-invariance layers drive a routine's `ndarray` form
+* The property and layout-invariance layers drive a routine's `strided` form
 * (explicit `stride…, offset`) with operand buffers sized to the operand's full
 * logical shape. That deliberately bypasses the leading-dimension WRAPPER
 * (`<routine>.js`: `order` + `LDA`/`LDB` validation and the order→stride mapping),

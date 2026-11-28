@@ -1,4 +1,4 @@
-// target: lib/lapack/dsytrd/lib/ndarray.js
+// target: lib/lapack/dsytrd/lib/strided.js
 // A minimum of 1 passed as a `%d` argument is the canonical form (ticket 0108).
 /* eslint-disable max-len, max-params */
 

@@ -77,12 +77,12 @@ dgtcon(
 - `RangeError` thirteenth argument is invalid (rejected when `anorm < 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgtcon.ndarray(
+dgtcon.strided(
     norm,
     N,
     DL, strideDL, offsetDL,
@@ -213,8 +213,8 @@ const IWORK = new Int32Array( N );
 let info = dgtcon( 'one-norm', N, DL, 1, d, 1, DU, 1, DU2, 1, IPIV, 1, anorm, rcond, WORK, IWORK );
 console.log( 'info:', info, 'rcond:', rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = dgtcon.ndarray( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dgtcon.strided( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
 console.log( 'info:', info, 'rcond:', rcond[ 0 ] );
 ```
 

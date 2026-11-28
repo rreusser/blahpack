@@ -74,12 +74,12 @@ dgtts2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgtts2.ndarray(
+dgtts2.strided(
     itrans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -188,9 +188,9 @@ let B = new Float64Array( [ 6.0, 12.0, 18.0, 19.0 ] );
 dgtts2( 'column-major', 0, N, nrhs, DL, 1, d, 1, DU, 1, DU2, 1, IPIV, 1, B, N );
 console.log( 'X:', B );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Float64Array( [ 6.0, 12.0, 18.0, 19.0 ] );
-dgtts2.ndarray( 0, N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
+dgtts2.strided( 0, N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( 'X:', B );
 ```
 

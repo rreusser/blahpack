@@ -61,12 +61,12 @@ zheev( order, jobz, uplo, N, A, LDA, w, strideW, WORK, RWORK ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zheev.ndarray(
+zheev.strided(
     jobz, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -168,9 +168,9 @@ const RWORK = new Float64Array( ( 3 * N ) - 2 );
 let info = zheev( 'column-major', 'compute-vectors', 'upper', N, A, N, w, 1, WORK, RWORK );
 console.log( 'info:', info, 'eigenvalues:', w );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( [ 4.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, -1.0, 5.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0, 2.0, 6.0, 0.0 ] ); // eslint-disable-line max-len
-info = zheev.ndarray( 'compute-vectors', 'upper', N, A, 1, N, 0, w, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+info = zheev.strided( 'compute-vectors', 'upper', N, A, 1, N, 0, w, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( 'info:', info, 'eigenvalues:', w );
 ```
 

@@ -60,12 +60,12 @@ zpttrs( order, uplo, N, nrhs, d, strideD, e, strideE, B, LDB ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpttrs.ndarray(
+zpttrs.strided(
     uplo,
     N, nrhs,
     d, strideD, offsetD,
@@ -176,9 +176,9 @@ console.log( info );
 console.log( reinterpret( B, 0 ) );
 // => <Float64Array>[ ~1, ~0, ~1, ~0, ~1, ~0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( rhs );
-info = zpttrs.ndarray( 'lower', N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
+info = zpttrs.strided( 'lower', N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
 console.log( info );
 // => 0
 console.log( reinterpret( B, 0 ) );

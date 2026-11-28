@@ -54,12 +54,12 @@ zlartg( f, g, c, s, r ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlartg.ndarray( f, offsetF, g, offsetG, c, offsetC, s, offsetS, r, offsetR ) → void
+zlartg.strided( f, offsetF, g, offsetG, c, offsetC, s, offsetS, r, offsetR ) → void
 ```
 
 Generates a plane rotation with real cosine and complex sine, using alternative indexing semantics.
@@ -134,8 +134,8 @@ const r = new Complex128Array( 1 );
 zlartg( f, g, c, s, r );
 console.log( c[ 0 ], reinterpret( s, 0 ), reinterpret( r, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zlartg.ndarray( f, 0, g, 0, c, 0, s, 0, r, 0 );
+// Using the strided interface:
+zlartg.strided( f, 0, g, 0, c, 0, s, 0, r, 0 );
 console.log( c[ 0 ], reinterpret( s, 0 ), reinterpret( r, 0 ) ); // eslint-disable-line no-console
 ```
 

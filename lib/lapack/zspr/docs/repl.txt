@@ -35,7 +35,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP )
+{{alias}}.strided( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP )
     Perform the symmetric rank-1 update of a complex symmetric packed matrix
     using alternative indexing semantics.
 

@@ -133,12 +133,12 @@ dsbgvx(
 - `RangeError` twenty-third argument is invalid (row-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < max( 1, range === "index" ? iu - il + 1 : N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsbgvx.ndarray(
+dsbgvx.strided(
     jobz, range, uplo,
     N, ka, kb,
     AB, strideAB1, strideAB2, offsetAB,
@@ -338,7 +338,7 @@ const IWORK = new Int32Array( 30 );
 const IFAIL = new Int32Array( 5 );
 
 // Compute all eigenvalues and eigenvectors:
-const info = dsbgvx.ndarray( 'compute-vectors', 'all', 'upper', 5, 2, 1, AB, 1, 3, 0, BB, 1, 2, 0, Q, 1, 5, 0, 0, 0, 0, 0, 0, m, W, 1, 0, Z, 1, 5, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 ); // eslint-disable-line max-len
+const info = dsbgvx.strided( 'compute-vectors', 'all', 'upper', 5, 2, 1, AB, 1, 3, 0, BB, 1, 2, 0, Q, 1, 5, 0, 0, 0, 0, 0, 0, m, W, 1, 0, Z, 1, 5, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info );       // eslint-disable-line no-console
 console.log( 'M:', m[ 0 ] );         // eslint-disable-line no-console

@@ -46,7 +46,7 @@ interface Routine {
 	* @param offsetOut - starting index for `Out`
 	* @returns result
 	*/
-	ndarray( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): number;
+	strided( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): number;
 }
 
 /**

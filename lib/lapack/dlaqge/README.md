@@ -70,12 +70,12 @@ dlaqge(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqge.ndarray(
+dlaqge.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     r, strideR, offsetR,
@@ -170,8 +170,8 @@ const equed = [ '' ];
 let out = dlaqge( 'column-major', N, N, A, N, r, 1, c, 1, 1, 1, 1, equed );
 console.log( out, equed[ 0 ] );
 
-// Using the ndarray interface:
-out = dlaqge.ndarray( N, N, A, N, 1, 0, r, 1, 0, c, 1, 0, 1, 1, 1, equed );
+// Using the strided interface:
+out = dlaqge.strided( N, N, A, N, 1, 0, r, 1, 0, c, 1, 0, 1, 1, 1, equed );
 console.log( out, equed[ 0 ] );
 ```
 

@@ -72,7 +72,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns status code (0 = success)
 	*/
-	ndarray( m1: number, m2: number, N: number, X1: Float64Array, strideX1: number, offsetX1: number, X2: Float64Array, strideX2: number, offsetX2: number, Q1: Float64Array, strideQ11: number, strideQ12: number, offsetQ1: number, Q2: Float64Array, strideQ21: number, strideQ22: number, offsetQ2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): number;
+	strided( m1: number, m2: number, N: number, X1: Float64Array, strideX1: number, offsetX1: number, X2: Float64Array, strideX2: number, offsetX2: number, Q1: Float64Array, strideQ11: number, strideQ12: number, offsetQ1: number, Q2: Float64Array, strideQ21: number, strideQ22: number, offsetQ2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): number;
 }
 
 /**

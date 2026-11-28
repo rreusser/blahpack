@@ -72,12 +72,12 @@ zgghrd( order, compq, compz, N, ilo, ihi, A, LDA, B, LDB, Q, LDQ, Z, LDZ ) → i
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgghrd.ndarray(
+zgghrd.strided(
     compq, compz,
     N,
     ilo, ihi,
@@ -196,12 +196,12 @@ let Z = new Complex128Array( N * N );
 let out = zgghrd( 'column-major', 'initialize', 'initialize', N, 1, N, A, N, B, N, Q, N, Z, N );
 console.log( out, reinterpret( A, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 B = new Complex128Array( B0 );
 Q = new Complex128Array( N * N );
 Z = new Complex128Array( N * N );
-out = zgghrd.ndarray( 'initialize', 'initialize', N, 1, N, A, 1, N, 0, B, 1, N, 0, Q, 1, N, 0, Z, 1, N, 0 );
+out = zgghrd.strided( 'initialize', 'initialize', N, 1, N, A, 1, N, 0, B, 1, N, 0, Q, 1, N, 0, Z, 1, N, 0 );
 console.log( out, reinterpret( A, 0 ) ); // eslint-disable-line no-console
 ```
 

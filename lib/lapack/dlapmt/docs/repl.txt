@@ -34,7 +34,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( forwrd, M, N, X, strideX1, strideX2, offsetX, k, strideK, offsetK )
+{{alias}}.strided( forwrd, M, N, X, strideX1, strideX2, offsetX, k, strideK, offsetK )
     Performs a forward or backward permutation of the columns of a matrix,
     using alternative indexing semantics.
 

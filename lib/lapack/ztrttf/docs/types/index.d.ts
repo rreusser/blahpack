@@ -55,7 +55,7 @@ interface Routine {
 	* @param offsetARF - starting index for `ARF`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ARF: Float64Array, strideARF: number, offsetARF: number ): Float64Array;
+	strided( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ARF: Float64Array, strideARF: number, offsetARF: number ): Float64Array;
 }
 
 /**

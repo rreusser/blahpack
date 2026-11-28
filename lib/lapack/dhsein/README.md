@@ -109,12 +109,12 @@ dhsein(
 - `RangeError` M must be a nonnegative integer
 - `RangeError` leading dimensions must satisfy constraints
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dhsein.ndarray(
+dhsein.strided(
     side, eigsrc, initv,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -274,7 +274,7 @@ const IFAILR = new Int32Array( N );
 
 m[ 0 ] = 0;
 const res = {
-	'info': dhsein.ndarray( 'right', 'no-source', 'no-init', SELECT, 1, 0, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, VL, 1, N, 0, VR, 1, N, 0, N, m, WORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 ),
+	'info': dhsein.strided( 'right', 'no-source', 'no-init', SELECT, 1, 0, N, H, 1, N, 0, WR, 1, 0, WI, 1, 0, VL, 1, N, 0, VR, 1, N, 0, N, m, WORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 ),
 	'm': m[ 0 ]
 };
 console.log( res ); // eslint-disable-line no-console

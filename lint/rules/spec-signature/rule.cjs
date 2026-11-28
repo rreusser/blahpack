@@ -2,7 +2,7 @@
 
 // ESLint rule: spec-signature
 //
-// The parameter lists of base.js, ndarray.js and <routine>.js equal the
+// The parameter lists of base.js, strided.js and <routine>.js equal the
 // projections of spec/<routine>.json (CONVENTIONS S1–S5, S7, S10, D1–D3, D5c,
 // W2), computed by lint/lib/spec.cjs — the same lists `bin/spec show` prints.
 // Names compare case-insensitively (S7). A module with no spec is an error:
@@ -18,7 +18,7 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'base.js / ndarray.js / <routine>.js parameters equal the spec projections (CONVENTIONS S1–S4, D1–D3)'
+			'description': 'base.js / strided.js / <routine>.js parameters equal the spec projections (CONVENTIONS S1–S4, D1–D3)'
 		},
 		'schema': [],
 		'messages': {

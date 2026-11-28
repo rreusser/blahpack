@@ -103,12 +103,12 @@ zgesvd(
 - `RangeError` eleventh argument is invalid (row-major: rejected when `LDU < 1 \|\| ( ( jobu === "all-columns" \|\| jobu === "economy" ) && LDU < max( 1, jobu === "all-columns" ? M : min( M, N ) ) )`)
 - `RangeError` thirteenth argument is invalid (rejected when `( LDVT < 1 \|\| ( jobvt === "all-rows" && LDVT < N ) ) \|\| ( jobvt === "economy" && LDVT < min( M, N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgesvd.ndarray(
+zgesvd.strided(
     jobu, jobvt,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -248,11 +248,11 @@ const s = new Float64Array( N );
 let out = zgesvd( 'column-major', 'all-columns', 'all-rows', N, N, A, N, s, 1, U, N, VT, N, null, null );
 console.log( out, s ); // eslint-disable-line no-console
 
-// Using the ndarray interface (caller-provided workspaces; a 3-by-3 matrix needs at least 21 complex elements of WORK and 5*N elements of RWORK):
+// Using the strided interface (caller-provided workspaces; a 3-by-3 matrix needs at least 21 complex elements of WORK and 5*N elements of RWORK):
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 const WORK = new Complex128Array( 64 );
 const RWORK = new Float64Array( 5 * N );
-out = zgesvd.ndarray( 'all-columns', 'all-rows', N, N, A, 1, N, 0, s, 1, 0, U, 1, N, 0, VT, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
+out = zgesvd.strided( 'all-columns', 'all-rows', N, N, A, 1, N, 0, s, 1, 0, U, 1, N, 0, VT, 1, N, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( out, s ); // eslint-disable-line no-console
 ```
 

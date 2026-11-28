@@ -68,7 +68,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( jobvs, sort, select, N, A, strideA1, strideA2, offsetA, sdim, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VS, strideVS1, strideVS2, offsetVS, WORK, strideWORK, offsetWORK, lwork, BWORK, strideBWORK, offsetBWORK )
+{{alias}}.strided( jobvs, sort, select, N, A, strideA1, strideA2, offsetA, sdim, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VS, strideVS1, strideVS2, offsetVS, WORK, strideWORK, offsetWORK, lwork, BWORK, strideBWORK, offsetBWORK )
     Computes the eigenvalues, the Schur form, and, optionally, the matrix of
     Schur vectors for general matrices, using alternative indexing
     semantics.

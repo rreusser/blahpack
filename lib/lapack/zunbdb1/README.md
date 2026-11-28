@@ -89,12 +89,12 @@ Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix `[X
 - `RangeError` `LDX11` must satisfy the leading-dimension constraint
 - `RangeError` `LDX21` must satisfy the leading-dimension constraint
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zunbdb1.ndarray(
+zunbdb1.strided(
     M, P, Q,
     X11, strideX111, strideX112, offsetX11,
     X21, strideX211, strideX212, offsetX21,

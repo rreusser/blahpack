@@ -108,12 +108,12 @@ dtfsm(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtfsm.ndarray(
+dtfsm.strided(
     transr, side, uplo, trans, diag,
     M, N,
     alpha,
@@ -235,7 +235,7 @@ console.log( 'B before:' );
 console.log( B );
 
 // Solve A*X = B (SIDE='left', TRANS='no-transpose', alpha=1):
-dtfsm.ndarray( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 2, 1.0, A, 1, 0, B, 1, 3, 0 ); // eslint-disable-line max-len
+dtfsm.strided( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 2, 1.0, A, 1, 0, B, 1, 3, 0 ); // eslint-disable-line max-len
 
 console.log( 'B after (X):' );
 console.log( B );

@@ -55,7 +55,7 @@
     in `conformance.config.json` if needed.
 
 -   **trans='transpose' is rejected.** Both `zlamtsqr.js` (wrapper) and
-    `ndarray.js` explicitly throw on `'transpose'` because Q is unitary
+    `strided.js` explicitly throw on `'transpose'` because Q is unitary
     (`Q^H`, not `Q^T`). The whitelist accepts only `'no-transpose'` and
     `'conjugate-transpose'`.
 

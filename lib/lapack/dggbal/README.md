@@ -93,12 +93,12 @@ dggbal(
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggbal.ndarray(
+dggbal.strided(
     job,
     N,
     A, strideA1, strideA2, offsetA,
@@ -219,7 +219,7 @@ const LSCALE = new Float64Array( 2 );
 const RSCALE = new Float64Array( 2 );
 const WORK = new Float64Array( 12 );
 
-const result = dggbal.ndarray( 'both', 2, A, 1, 2, 0, B, 1, 2, 0, ilo, ihi, LSCALE, 1, 0, RSCALE, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+const result = dggbal.strided( 'both', 2, A, 1, 2, 0, B, 1, 2, 0, ilo, ihi, LSCALE, 1, 0, RSCALE, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', result ); // eslint-disable-line no-console
 console.log( 'ilo:', ilo[ 0 ] );   // eslint-disable-line no-console

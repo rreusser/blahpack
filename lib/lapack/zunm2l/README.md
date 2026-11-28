@@ -73,12 +73,12 @@ zunm2l( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK ) → 
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zunm2l.ndarray(
+zunm2l.strided(
     side, trans,
     M, N, K,
     A, strideA1, strideA2, offsetA,
@@ -215,9 +215,9 @@ let info = zunm2l( 'column-major', 'left', 'conjugate-transpose', 4, 2, K, A, M,
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( C, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface, overwrite C with Q * C:
+// Using the strided interface, overwrite C with Q * C:
 C = new Complex128Array( cdata );
-info = zunm2l.ndarray( 'left', 'no-transpose', 4, 2, K, A, 1, M, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 );
+info = zunm2l.strided( 'left', 'no-transpose', 4, 2, K, A, 1, M, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( reinterpret( C, 0 ) ); // eslint-disable-line no-console
 ```

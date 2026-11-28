@@ -29,7 +29,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA )
     Computes the Cholesky factorization of a symmetric/Hermitian positive
     definite matrix (unblocked algorithm), using alternative indexing
     semantics.

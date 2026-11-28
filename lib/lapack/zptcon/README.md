@@ -49,12 +49,12 @@ zptcon( N, d, strideD, e, strideE, anorm, rcond, RWORK ) → integer
 - `RangeError` first argument must be a nonnegative integer
 - `RangeError` sixth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zptcon.ndarray(
+zptcon.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -157,8 +157,8 @@ const RWORK = new Float64Array( N );
 let info = zptcon( N, d, 1, e, 1, anorm, rcond, RWORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = zptcon.ndarray( N, d, 1, 0, e, 1, 0, anorm, rcond, RWORK, 1, 0 );
+// Using the strided interface:
+info = zptcon.strided( N, d, 1, 0, e, 1, 0, anorm, rcond, RWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

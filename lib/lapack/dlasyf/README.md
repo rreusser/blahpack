@@ -74,12 +74,12 @@ dlasyf( order, uplo, N, nb, kb, A, LDA, IPIV, strideIPIV, W, LDW ) → integer
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nb )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasyf.ndarray(
+dlasyf.strided(
     uplo,
     N, nb,
     kb,
@@ -193,11 +193,11 @@ const kb = new Int32Array( 1 );
 let info = dlasyf( 'column-major', 'upper', N, N, kb, A, N, IPIV, 1, W, N );
 console.log( info, kb[ 0 ], A, IPIV );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( A0 );
 W = new Float64Array( N * N );
 IPIV = new Int32Array( N );
-info = dlasyf.ndarray( 'upper', N, N, kb, A, 1, N, 0, IPIV, 1, 0, W, 1, N, 0 );
+info = dlasyf.strided( 'upper', N, N, kb, A, 1, N, 0, IPIV, 1, 0, W, 1, N, 0 );
 console.log( info, kb[ 0 ], A, IPIV );
 ```
 

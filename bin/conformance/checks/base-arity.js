@@ -3,9 +3,9 @@
 /*
 * base() call-arity check.
 *
-* Every layer that calls the strided kernel — `ndarray.js` and the layout
+* Every layer that calls the strided kernel — `strided.js` and the layout
 * wrapper `<routine>.js` — must pass EXACTLY as many arguments as `base.js`
-* declares parameters. The ndarray form is already strided (1:1 with base),
+* declares parameters. The strided form is already strided (1:1 with base),
 * and the wrapper merely derives strides/offsets from `order`/`LD*` before
 * calling base, so its `base(...)` call is 1:1 too.
 *
@@ -161,7 +161,7 @@ function check( mod ) {
 	}
 
 	sources = [
-		{ 'file': 'ndarray.js', 'path': path.join( mod.dir, 'lib', 'ndarray.js' ) },
+		{ 'file': 'strided.js', 'path': path.join( mod.dir, 'lib', 'strided.js' ) },
 		{ 'file': mod.routine + '.js', 'path': path.join( mod.dir, 'lib', mod.routine + '.js' ) }
 	];
 	for ( s = 0; s < sources.length; s++ ) {
@@ -186,7 +186,7 @@ function check( mod ) {
 			'base() call arity matches base.js',
 			violations.length,
 			violations,
-			'Every base(...) call in ndarray.js/<routine>.js must pass exactly base.length args. A surplus arg is a forwarded output param (return it in the result object instead) and shifts every following argument.'
+			'Every base(...) call in strided.js/<routine>.js must pass exactly base.length args. A surplus arg is a forwarded output param (return it in the result object instead) and shifts every following argument.'
 		));
 	} else {
 		results.push( util.pass( ID, 'base() call arity matches base.js' ) );

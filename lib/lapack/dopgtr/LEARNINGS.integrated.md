@@ -7,7 +7,7 @@
 
 ## Dependency interface surprises
 
-- dorg2l and dorg2r both take a full set of stride/offset params, matching the ndarray convention. The submatrix offset for the lower case is computed as offsetQ + strideQ1 + strideQ2 to point at Q(1,1).
+- dorg2l and dorg2r both take a full set of stride/offset params, matching the strided convention. The submatrix offset for the lower case is computed as offsetQ + strideQ1 + strideQ2 to point at Q(1,1).
 
 ## Automation opportunities
 

@@ -28,7 +28,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, x, strideX, offsetX, y, strideY, offsetY )
+{{alias}}.strided( N, x, strideX, offsetX, y, strideY, offsetY )
     Interchange two double-precision floating-point vectors using
     alternative indexing semantics.
 

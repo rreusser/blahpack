@@ -47,12 +47,12 @@ dlaed6( kniter, orgati, rho, d, strideD, z, strideZ, finit, tau ) → info: inte
 
 **Returns** `info: integer`: 0 on success, 1 if convergence fails
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaed6.ndarray(
+dlaed6.strided(
     kniter, orgati, rho,
     d, strideD, offsetD,
     z, strideZ, offsetZ,

@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
     Reduces a Hermitian matrix to real symmetric tridiagonal form by an
     unitary similarity transformation (unblocked algorithm), using
     alternative indexing semantics.

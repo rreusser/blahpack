@@ -80,12 +80,12 @@ Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is a c
 - `RangeError` fourth, fifth, and sixth arguments must be nonnegative integers
 - `RangeError` sixth argument (K) must satisfy K <= M when side='left' or K <= N when side='right'
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgemlqt.ndarray(
+zgemlqt.strided(
     side, trans,
     M, N, K,
     mb,
@@ -245,8 +245,8 @@ C.set( [ 1.0, 0.0 ], 5 );
 C.set( [ 1.0, 0.0 ], 10 );
 C.set( [ 1.0, 0.0 ], 15 );
 
-// zgemlqt.ndarray( side, trans, M, N, K, mb, V, sV1, sV2, oV, T, sT1, sT2, oT, C, sC1, sC2, oC, WORK, sW, oW )
-zgemlqt.ndarray( 'left', 'no-transpose', 4, 4, 3, 2, V, 1, 3, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 );
+// zgemlqt.strided( side, trans, M, N, K, mb, V, sV1, sV2, oV, T, sT1, sT2, oT, C, sC1, sC2, oC, WORK, sW, oW )
+zgemlqt.strided( 'left', 'no-transpose', 4, 4, 3, 2, V, 1, 3, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 );
 
 console.log( C ); // eslint-disable-line no-console
 ```

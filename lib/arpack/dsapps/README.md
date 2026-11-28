@@ -57,12 +57,12 @@ dsapps(
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` workd array must have sufficient length
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsapps.ndarray(
+dsapps.strided(
     n, kev, np,
     shift, strideShift, offsetShift,
     v, strideV1, strideV2, offsetV,

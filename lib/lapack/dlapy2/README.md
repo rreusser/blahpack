@@ -34,12 +34,12 @@ dlapy2( x, y ) → number
 
 **Returns** `number`: result
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlapy2.ndarray( x, y ) → number
+dlapy2.strided( x, y ) → number
 ```
 
 | Parameter | Type | Description |
@@ -81,8 +81,8 @@ import dlapy2 from '@rreusser/blahpack/lapack/dlapy2';
 let out = dlapy2( 1, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlapy2.ndarray( 1, 1 );
+// Using the strided interface:
+out = dlapy2.strided( 1, 1 );
 console.log( out );
 ```
 

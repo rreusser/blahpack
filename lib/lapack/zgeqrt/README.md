@@ -58,12 +58,12 @@ zgeqrt( order, M, N, nb, A, LDA, T, LDT, WORK ) → integer
 - `RangeError` `LDA` must be valid for the chosen order
 - `RangeError` `LDT` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeqrt.ndarray(
+zgeqrt.strided(
     M, N, nb,
     A, strideA1, strideA2, offsetA,
     T, strideT1, strideT2, offsetT,
@@ -156,8 +156,8 @@ for ( i = 0; i < src.length; i++ ) {
 info = zgeqrt( 'column-major', 4, 3, 2, A, 4, T, 2, WORK );
 console.log( info );
 
-// Using the ndarray interface:
-info = zgeqrt.ndarray( 4, 3, 2, A, 1, 4, 0, T, 1, 2, 0, WORK, 1, 0 );
+// Using the strided interface:
+info = zgeqrt.strided( 4, 3, 2, A, 1, 4, 0, T, 1, 2, 0, WORK, 1, 0 );
 console.log( info );
 ```
 

@@ -1,4 +1,4 @@
-// target: lib/lapack/zgehrd/test/test.ndarray.js
+// target: lib/lapack/zgehrd/test/test.strided.js
 // expect: blindIf
 // "fail when both the absolute and the relative error are big": NaN fails neither.
 import assert from 'node:assert/strict';

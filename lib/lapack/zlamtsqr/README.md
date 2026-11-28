@@ -91,12 +91,12 @@ Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` dimensions and leading dimensions must satisfy the documented bounds
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlamtsqr.ndarray(
+zlamtsqr.strided(
     side, trans,
     M, N, K,
     mb, nb,

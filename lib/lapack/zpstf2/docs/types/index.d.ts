@@ -59,7 +59,7 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, PIV: Float64Array, stridePIV: number, offsetPIV: number, RANK: number, tol: number, WORK: number ): Float64Array;
+	strided( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, PIV: Float64Array, stridePIV: number, offsetPIV: number, RANK: number, tol: number, WORK: number ): Float64Array;
 }
 
 /**

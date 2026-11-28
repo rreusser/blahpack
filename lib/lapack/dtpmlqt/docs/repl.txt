@@ -68,7 +68,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, l, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( side, trans, M, N, K, l, mb, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK )
     applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B, using alternative indexing semantics.
 
     Parameters

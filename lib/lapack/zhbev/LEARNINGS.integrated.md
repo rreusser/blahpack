@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- The N=1 case extracts the real part of a complex diagonal element using `reinterpret()` on the Complex128Array. For upper storage, the diagonal sits at `AB(KD+1, 1)` which in the ndarray convention is `offsetAB + kd * strideAB1`.
+- The N=1 case extracts the real part of a complex diagonal element using `reinterpret()` on the Complex128Array. For upper storage, the diagonal sits at `AB(KD+1, 1)` which in the strided convention is `offsetAB + kd * strideAB1`.
 - The Fortran `Z(1,1) = ONE` (where ONE is double precision 1.0) becomes setting the real part to 1.0 and imaginary to 0.0 via the Float64Array view of Z.
 
 ## Dependency interface surprises

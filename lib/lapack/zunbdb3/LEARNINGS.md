@@ -73,7 +73,7 @@
 
 ## Coverage gaps
 
-- 100% line and branch coverage on `base.js`, `ndarray.js`, `main.js`,
+- 100% line and branch coverage on `base.js`, `strided.js`, `main.js`,
   `index.js`, and `zunbdb3.js`. Five fixture cases plus the row-major
   wrapper success path cover every branch:
   - `basic_8x5x4` exercises both loops + the `i<M-P` PHI/TAUP2 branch

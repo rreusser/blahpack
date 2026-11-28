@@ -22,7 +22,7 @@
 - Singular matrix detection tested.
 - N=0, N=1 edge cases tested.
 - Larger N=5 (odd) tested for two paths.
-- ndarray offset/stride tested.
+- strided offset/stride tested.
 
 ## Complex number handling
 

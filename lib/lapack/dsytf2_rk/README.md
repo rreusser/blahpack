@@ -101,12 +101,12 @@ dsytf2_rk( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsytf2_rk.ndarray(
+dsytf2_rk.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -236,7 +236,7 @@ NOTE: `INFO` only stores the first occurrence of a singularity, any subsequent o
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import { ndarray as dsytf2rk } from '@rreusser/blahpack/lapack/dsytf2_rk';
+import { strided as dsytf2rk } from '@rreusser/blahpack/lapack/dsytf2_rk';
 
 const A = new Float64Array([
 	4,

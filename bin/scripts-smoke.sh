@@ -6,7 +6,7 @@
 # These files import the library by path and call it with literal flag strings
 # and argument lists, and nothing else loads them, so a moved file or a changed
 # signature used to break them unnoticed (ticket 0109). The scripts call the
-# validating ndarray.js entry points where they can, so a stale flag throws
+# validating strided.js entry points where they can, so a stale flag throws
 # here instead of timing the wrong thing.
 #
 # A new file under those globs is picked up automatically. Give it a line in

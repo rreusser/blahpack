@@ -64,12 +64,12 @@ zupgtr( order, uplo, N, AP, TAU, strideTAU, Q, LDQ, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zupgtr.ndarray(
+zupgtr.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,

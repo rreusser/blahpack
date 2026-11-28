@@ -61,12 +61,12 @@ zhetrs2( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → inte
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetrs2.ndarray(
+zhetrs2.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -177,9 +177,9 @@ let info = zhetrs2( 'column-major', 'upper', N, nrhs, A, N, IPIV, 1, B, N, WORK 
 console.log( info );
 console.log( reinterpret( B, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( Bvals );
-info = zhetrs2.ndarray( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
+info = zhetrs2.strided( 'upper', N, nrhs, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
 console.log( info );
 console.log( reinterpret( B, 0 ) );
 ```

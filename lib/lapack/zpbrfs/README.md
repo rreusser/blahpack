@@ -92,12 +92,12 @@ zpbrfs(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpbrfs.ndarray(
+zpbrfs.strided(
     uplo,
     N, kd, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
@@ -221,7 +221,7 @@ const BERR = new Float64Array( 1 );
 const WORK = new Complex128Array( 6 );
 const RWORK = new Float64Array( 3 );
 
-const info = zpbrfs.ndarray( 'upper', 3, 1, 1, AB, 1, 2, 0, AFB, 1, 2, 0, B, 1, 3, 0, X, 1, 3, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = zpbrfs.strided( 'upper', 3, 1, 1, AB, 1, 2, 0, AFB, 1, 2, 0, B, 1, 3, 0, X, 1, 3, 0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'info:', info );
 console.log( 'FERR:', FERR[ 0 ] );
 console.log( 'BERR:', BERR[ 0 ] );

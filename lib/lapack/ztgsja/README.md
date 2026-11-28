@@ -39,7 +39,7 @@ Computes the generalized singular value decomposition of two complex upper trian
 
 ## Notes
 
--   This is a placeholder for a future BLAS/LAPACK-style API (order/layout, LDA). Use `ztgsja.ndarray` for the strided interface.
+-   This is a placeholder for a future BLAS/LAPACK-style API (order/layout, LDA). Use `ztgsja.strided` for the strided interface.
 
 | Parameter | Type | Description |
 |---|---|---|
@@ -170,12 +170,12 @@ Computes the generalized singular value decomposition of two complex upper trian
 - `RangeError` twenty-fifth argument is invalid (rejected when `LDQ < 1 \|\| ( ( jobq === "initialize" \|\| jobq === "update" ) && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgsja.ndarray(
+ztgsja.strided(
     jobu, jobv, jobq,
     M, p, N,
     K, l,
@@ -355,7 +355,7 @@ The reference documents `INFO` as:
 ## Notes
 
 -   `ztgsja()` corresponds to the reference LAPACK routine [`ZTGSJA`](https://github.com/Reference-LAPACK/lapack/blob/v3.12.0/SRC/ztgsja.f).
--   This is a placeholder for a future BLAS/LAPACK-style API (order/layout, LDA). Use `ztgsja.ndarray` for the strided interface.
+-   This is a placeholder for a future BLAS/LAPACK-style API (order/layout, LDA). Use `ztgsja.strided` for the strided interface.
 
 </section>
 
@@ -408,7 +408,7 @@ Bv[ 5 ] = 0.25;
 Bv[ 6 ] = 2.0;
 Bv[ 7 ] = 0.0;
 
-const info = ztgsja.ndarray( 'initialize', 'initialize', 'initialize', M, P, N, K, L, A, 1, M, 0, B, 1, P, 0, 1e-14, 1e-14, ALPHA, 1, 0, BETA, 1, 0, U, 1, M, 0, V, 1, P, 0, Q, 1, N, 0, WORK, 1, 0, ncycle ); // eslint-disable-line max-len
+const info = ztgsja.strided( 'initialize', 'initialize', 'initialize', M, P, N, K, L, A, 1, M, 0, B, 1, P, 0, 1e-14, 1e-14, ALPHA, 1, 0, BETA, 1, 0, U, 1, M, 0, V, 1, P, 0, Q, 1, N, 0, WORK, 1, 0, ncycle ); // eslint-disable-line max-len
 
 console.log( 'info:', info );
 console.log( 'ALPHA:', ALPHA );

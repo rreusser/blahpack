@@ -58,7 +58,7 @@ interface Routine {
 	* @param offsetBETA - starting index for `BETA`
 	* @returns result
 	*/
-	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, alphar: Float64Array, strideALPHAR: number, offsetALPHAR: number, alphai: Float64Array, strideALPHAI: number, offsetALPHAI: number, beta: Float64Array, strideBETA: number, offsetBETA: number ): Float64Array;
+	strided( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, alphar: Float64Array, strideALPHAR: number, offsetALPHAR: number, alphai: Float64Array, strideALPHAI: number, offsetALPHAI: number, beta: Float64Array, strideBETA: number, offsetBETA: number ): Float64Array;
 }
 
 /**

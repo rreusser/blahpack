@@ -45,7 +45,7 @@ interface Routine {
 	* @param sumsq - `sumsq`
 	* @returns result
 	*/
-	ndarray( N: number, x: number, stride: number, offset: number, scale: number, sumsq: number ): Float64Array;
+	strided( N: number, x: number, stride: number, offset: number, scale: number, sumsq: number ): Float64Array;
 }
 
 /**

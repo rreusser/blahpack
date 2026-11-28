@@ -13,7 +13,7 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
-import zggev from '../lib/lapack/zggev/lib/ndarray.js';
+import zggev from '../lib/lapack/zggev/lib/strided.js';
 
 var ZHGEQZ_SOURCE = fileURLToPath( new URL( '../lib/lapack/zhgeqz/lib/base.js', import.meta.url ) );
 

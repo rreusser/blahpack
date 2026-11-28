@@ -101,12 +101,12 @@ ztrsm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB ) → Comple
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` twelfth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrsm.ndarray(
+ztrsm.strided(
     side, uplo, transa, diag,
     M, N,
     alpha,
@@ -245,9 +245,9 @@ let B = new Complex128Array( Binit );
 let out = ztrsm( 'row-major', 'left', 'upper', 'no-transpose', 'non-unit', N, N, alpha, A, N, B, N );
 console.log( reinterpret( out, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Complex128Array( Binit );
-out = ztrsm.ndarray( 'left', 'upper', 'no-transpose', 'non-unit', N, N, alpha, A, N, 1, 0, B, N, 1, 0 );
+out = ztrsm.strided( 'left', 'upper', 'no-transpose', 'non-unit', N, N, alpha, A, N, 1, 0, B, N, 1, 0 );
 console.log( reinterpret( out, 0 ) );
 ```
 

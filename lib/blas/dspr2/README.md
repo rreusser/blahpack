@@ -63,12 +63,12 @@ dspr2( order, uplo, N, alpha, x, strideX, y, strideY, AP ) → Float64Array
 - `RangeError` eighth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspr2.ndarray(
+dspr2.strided(
     uplo,
     N,
     alpha,

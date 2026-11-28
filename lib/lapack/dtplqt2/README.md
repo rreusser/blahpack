@@ -59,12 +59,12 @@ dtplqt2( order, M, N, l, A, LDA, B, LDB, T, LDT ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, M )`
 - `RangeError` leading dimensions must be valid
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtplqt2.ndarray(
+dtplqt2.strided(
     M, N, l,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

@@ -51,7 +51,7 @@ function accepts( run, workLen ) {
 * exponential + binary search over `run`'s throw boundary.
 *
 * @param {Function} run - `run( workLen )` builds a WORK buffer of length
-*   `workLen`, drives the routine (ndarray form, `strideWork=1`, `offsetWork=0`),
+*   `workLen`, drives the routine (strided form, `strideWork=1`, `offsetWork=0`),
 *   and returns a flat array of the output's real components. MUST throw the
 *   wrapper's RangeError when WORK is too small.
 * @param {number} maxCap - upper bound for the search.

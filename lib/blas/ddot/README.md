@@ -41,12 +41,12 @@ ddot( N, x, strideX, y, strideY ) → number
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ddot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → number
+ddot.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → number
 ```
 
 | Parameter | Type | Description |
@@ -106,8 +106,8 @@ const y = discreteUniform( N, -10, 10, opts );
 let out = ddot( N, x, 1, y, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = ddot.ndarray( N, x, 1, 0, y, 1, 0 );
+// Using the strided interface:
+out = ddot.strided( N, x, 1, 0, y, 1, 0 );
 console.log( out );
 ```
 

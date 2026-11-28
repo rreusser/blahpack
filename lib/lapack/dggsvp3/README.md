@@ -122,12 +122,12 @@ dggsvp3(
 - `RangeError` twenty-first argument is invalid (rejected when `LDQ < 1 \|\| ( jobq === "compute-Q" && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dggsvp3.ndarray(
+dggsvp3.strided(
     jobu, jobv, jobq,
     M, p, N,
     A, strideA1, strideA2, offsetA,
@@ -311,10 +311,10 @@ const WORK = new Float64Array( 4 * N );
 let info = dggsvp3( 'column-major', 'compute-U', 'compute-V', 'compute-Q', M, p, N, A, M, B, p, tola, tolb, K, l, U, M, V, p, Q, N, IWORK, TAU, 1, WORK );
 console.log( 'info: %d, K: %d, L: %d', info, K[ 0 ], l[ 0 ] );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 2.0, 1.0, 0.0, 1.0, 3.0, 1.0, 0.0, 1.0, 4.0 ] );
 B = new Float64Array( [ 1.0, 0.0, 2.0, 0.0, 1.0, 1.0, 1.0, 1.0, 3.0 ] );
-info = dggsvp3.ndarray( 'compute-U', 'compute-V', 'compute-Q', M, p, N, A, 1, M, 0, B, 1, p, 0, tola, tolb, K, l, U, 1, M, 0, V, 1, p, 0, Q, 1, N, 0, IWORK, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+info = dggsvp3.strided( 'compute-U', 'compute-V', 'compute-Q', M, p, N, A, 1, M, 0, B, 1, p, 0, tola, tolb, K, l, U, 1, M, 0, V, 1, p, 0, Q, 1, N, 0, IWORK, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( 'info: %d, K: %d, L: %d', info, K[ 0 ], l[ 0 ] );
 ```
 

@@ -48,7 +48,7 @@ interface Routine {
 	* @param b3 - `b3`
 	* @returns result
 	*/
-	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): void;
+	strided( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): void;
 }
 
 /**

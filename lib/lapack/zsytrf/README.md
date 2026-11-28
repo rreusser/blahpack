@@ -56,12 +56,12 @@ zsytrf( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytrf.ndarray(
+zsytrf.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -160,8 +160,8 @@ console.log( out );
 
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 
-// Using the ndarray interface:
-out = zsytrf.ndarray( 'upper', N, A, 1, N, 0, IPIV, 1, 0, new Complex128Array( Math.max( 1, N * 64 ) ), 1, 0 );
+// Using the strided interface:
+out = zsytrf.strided( 'upper', N, A, 1, N, 0, IPIV, 1, 0, new Complex128Array( Math.max( 1, N * 64 ) ), 1, 0 );
 console.log( out );
 ```
 

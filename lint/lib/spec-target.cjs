@@ -4,8 +4,8 @@
 // Shared by the spec-* rules (lint/rules/spec-*).
 //
 //   lib/<pkg>/<routine>/lib/base.js       → form 'base'
-//   lib/<pkg>/<routine>/lib/ndarray.js    → form 'ndarray'
-//   lib/<pkg>/<routine>/lib/<routine>.js  → form 'strided'
+//   lib/<pkg>/<routine>/lib/strided.js    → form 'strided'
+//   lib/<pkg>/<routine>/lib/<routine>.js  → form 'wrapper'
 
 var path = require( 'path' );
 var specLib = require( './spec.cjs' );
@@ -24,11 +24,11 @@ function target( filename ) {
 	if ( file === 'base.js' ) {
 		return { 'routine': routine, 'form': 'base' };
 	}
-	if ( file === 'ndarray.js' ) {
-		return { 'routine': routine, 'form': 'ndarray' };
+	if ( file === 'strided.js' ) {
+		return { 'routine': routine, 'form': 'strided' };
 	}
 	if ( file === routine + '.js' ) {
-		return { 'routine': routine, 'form': 'strided' };
+		return { 'routine': routine, 'form': 'wrapper' };
 	}
 	return null;
 }
@@ -64,7 +64,7 @@ function paramNames( fn ) {
 
 // The projection for a form.
 function projection( spec, form ) {
-	return ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec );
+	return ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec );
 }
 
 function sameNames( a, b ) {

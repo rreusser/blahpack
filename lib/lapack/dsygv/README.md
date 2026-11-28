@@ -76,12 +76,12 @@ dsygv( order, itype, jobz, uplo, N, A, LDA, B, LDB, w, strideW, WORK ) → integ
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsygv.ndarray(
+dsygv.strided(
     itype,
     jobz, uplo,
     N,
@@ -207,10 +207,10 @@ const WORK = new Float64Array( 3 * N );
 let info = dsygv( 'column-major', 1, 'compute-vectors', 'upper', N, A, N, B, N, w, 1, WORK );
 console.log( info, w, A );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( dataA );
 B = new Float64Array( dataB );
-info = dsygv.ndarray( 1, 'compute-vectors', 'upper', N, A, 1, N, 0, B, 1, N, 0, w, 1, 0, WORK, 1, 0 );
+info = dsygv.strided( 1, 'compute-vectors', 'upper', N, A, 1, N, 0, B, 1, N, 0, w, 1, 0, WORK, 1, 0 );
 console.log( info, w, A );
 ```
 

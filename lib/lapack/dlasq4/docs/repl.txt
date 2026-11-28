@@ -59,7 +59,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( i0, n0, z, stride, offset, pp, n0in, dmin, dmin1, dmin2, dn, dn1, dn2, tau, ttype, g )
+{{alias}}.strided( i0, n0, z, stride, offset, pp, n0in, dmin, dmin1, dmin2, dn, dn1, dn2, tau, ttype, g )
     Computes an approximation to the smallest eigenvalue using values of d
     from the previous transform, using alternative indexing semantics.
 

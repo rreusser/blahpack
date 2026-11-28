@@ -48,12 +48,12 @@ dlapmr( order, forwrd, M, N, X, LDX, k, strideK ) → Int32Array
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlapmr.ndarray(
+dlapmr.strided(
     forwrd,
     M, N,
     X, strideX1, strideX2, offsetX,
@@ -69,7 +69,7 @@ If FORWRD is false, backward permutation: new row `K(I)` = old row I.
 
 ## Notes
 
--   K is 0-based in base.js. The ndarray.js wrapper converts from 1-based.
+-   K is 0-based in base.js. The strided.js wrapper converts from 1-based.
 
 -   The permutation array K is modified during execution (negated entries as
     markers) but restored to its original state on exit.
@@ -135,8 +135,8 @@ const k = new Int32Array( [ 2, 0, 1 ] );
 dlapmr( 'column-major', true, N, N, X, N, k, 1 );
 console.log( X );
 
-// Using the ndarray interface (undo the permutation):
-dlapmr.ndarray( false, N, N, X, 1, N, 0, k, 1, 0 );
+// Using the strided interface (undo the permutation):
+dlapmr.strided( false, N, N, X, 1, N, 0, k, 1, 0 );
 console.log( X );
 ```
 

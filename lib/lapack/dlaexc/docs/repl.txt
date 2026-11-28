@@ -47,7 +47,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( wantq, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, j1, n1, n2, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( wantq, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, j1, n1, n2, WORK, strideWORK, offsetWORK )
     Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix
     in Schur canonical form, by an orthogonal similarity transformation,
     using alternative indexing semantics.

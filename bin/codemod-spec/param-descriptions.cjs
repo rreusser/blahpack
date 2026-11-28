@@ -2,7 +2,7 @@
 'use strict';
 
 // Fills placeholder @param descriptions (lint rule jsdoc-param-description) on
-// the exported function of base.js, ndarray.js and <routine>.js.
+// the exported function of base.js, strided.js and <routine>.js.
 //
 // Sources, in order:
 //
@@ -350,7 +350,7 @@ function main() {
 			}
 			src = fortranSource( routine );
 			docs = src ? fortranParamDocs( src ) : {};
-			[ 'base.js', 'ndarray.js', routine + '.js' ].forEach( function g( x ) {
+			[ 'base.js', 'strided.js', routine + '.js' ].forEach( function g( x ) {
 				var file = path.join( dir, x );
 				if ( fs.existsSync( file ) && processFile( file, routine, spec, docs, report ) ) {
 					n += 1;

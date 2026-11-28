@@ -37,12 +37,12 @@ zswap( N, x, strideX, y, strideY ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zswap.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
+zswap.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -99,10 +99,10 @@ zswap( 2, x, 1, y, 1 );
 console.log( x ); // eslint-disable-line no-console
 console.log( y ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Complex128Array( [ 1.0, 2.0, 3.0, 4.0 ] );
 y = new Complex128Array( [ 5.0, 6.0, 7.0, 8.0 ] );
-zswap.ndarray( 2, x, 1, 0, y, 1, 0 );
+zswap.strided( 2, x, 1, 0, y, 1, 0 );
 console.log( x ); // eslint-disable-line no-console
 console.log( y ); // eslint-disable-line no-console
 ```

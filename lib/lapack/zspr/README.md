@@ -61,12 +61,12 @@ zspr( order, uplo, N, alpha, x, strideX, AP ) → Complex128Array
 - `RangeError` sixth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zspr.ndarray( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP ) → Complex128Array
+zspr.strided( uplo, N, alpha, x, strideX, offsetX, AP, strideAP, offsetAP ) → Complex128Array
 ```
 
 Perform the symmetric rank-1 update of a complex symmetric packed matrix.
@@ -146,9 +146,9 @@ let AP = new Complex128Array( N * ( N + 1 ) / 2 );
 let out = zspr( 'column-major', 'upper', N, alpha, x, 1, AP );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 AP = new Complex128Array( N * ( N + 1 ) / 2 );
-out = zspr.ndarray( 'upper', N, alpha, x, 1, 0, AP, 1, 0 );
+out = zspr.strided( 'upper', N, alpha, x, 1, 0, AP, 1, 0 );
 console.log( out );
 ```
 

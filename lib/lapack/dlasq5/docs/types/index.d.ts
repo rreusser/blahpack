@@ -53,7 +53,7 @@ interface Routine {
 	* @param eps - `eps`
 	* @returns result
 	*/
-	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, tau: number, sigma: number, ieee: number, eps: number ): Float64Array;
+	strided( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, tau: number, sigma: number, ieee: number, eps: number ): Float64Array;
 }
 
 /**

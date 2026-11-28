@@ -43,12 +43,12 @@ Generates a plane rotation designed to introduce a bulge in implicit QR iteratio
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlartgs.ndarray( x, y, sigma, cs, sn ) → void
+dlartgs.strided( x, y, sigma, cs, sn ) → void
 ```
 
 Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.

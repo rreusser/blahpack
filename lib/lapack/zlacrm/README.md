@@ -54,12 +54,12 @@ Multiplies a complex M-by-N matrix `A` by a real N-by-N matrix `B` and stores th
 - `RangeError` second argument must be a nonnegative integer
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacrm.ndarray(
+zlacrm.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

@@ -40,12 +40,12 @@ dlasq2( N, z, strideZ ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasq2.ndarray( N, z, strideZ, offsetZ ) → info: integer
+dlasq2.strided( N, z, strideZ, offsetZ ) → info: integer
 ```
 
 | Parameter | Type | Description |
@@ -120,9 +120,9 @@ let z = qd();
 let info = dlasq2( N, z, 1 );
 console.log( info, z.subarray( 0, N ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 z = qd();
-info = dlasq2.ndarray( N, z, 1, 0 );
+info = dlasq2.strided( N, z, 1, 0 );
 console.log( info, z.subarray( 0, N ) ); // eslint-disable-line no-console
 ```
 

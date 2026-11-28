@@ -50,12 +50,12 @@ dlapll( N, x, strideX, y, strideY, ssmin ) → Float64Array
 
 **Returns** `Float64Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlapll.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, ssmin ) → Float64Array
+dlapll.strided( N, x, strideX, offsetX, y, strideY, offsetY, ssmin ) → Float64Array
 ```
 
 Measures the linear dependence of two vectors X and Y by computing the.

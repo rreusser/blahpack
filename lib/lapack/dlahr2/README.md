@@ -59,12 +59,12 @@ dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY ) → Float64Arr
 - `RangeError` tenth argument must be a valid leading dimension
 - `RangeError` twelfth argument must be a valid leading dimension
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlahr2.ndarray(
+dlahr2.strided(
     N, K, nb,
     A, strideA1, strideA2, offsetA,
     tau, strideTAU, offsetTAU,
@@ -155,8 +155,8 @@ const Y = discreteUniform( N * N, -10, 10, opts );
 dlahr2( 'row-major', N, 1, N - 1, A, N, tau, 1, T, N, Y, N );
 console.log( tau );
 
-// Using the ndarray interface:
-dlahr2.ndarray( N, 1, N - 1, A, 1, N, 0, tau, 1, 0, T, 1, N, 0, Y, 1, N, 0 );
+// Using the strided interface:
+dlahr2.strided( N, 1, N - 1, A, 1, N, 0, tau, 1, 0, T, 1, N, 0, Y, 1, N, 0 );
 console.log( tau );
 ```
 

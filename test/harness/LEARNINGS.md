@@ -53,7 +53,7 @@ intelligence that lets us harden the tooling and the modules.
   addressing bugs (the `zpptri` class). Cross-order correctness (non-unit packed +
   row-major/negative dense still SOLVE to tolerance) is certified by a separate
   cross-layout RESIDUAL sweep (POSITIVE packed strides 1,2,3 × EVERY dense layout),
-  matching the `zsysvx` pattern. Final level: **L3-layout-fuzzed**. Base-vs-ndarray
+  matching the `zsysvx` pattern. Final level: **L3-layout-fuzzed**. Base-vs-strided
   `rcond` agree bit-for-bit (`Object.is`) on the tight layout across the sweep.
 - **Generalization**: every `*spsvx`/`*spcon`/`*sptrf`/`*hpsvx`/`*sysvx`-class
   diagonal-pivoting driver (packed OR dense) must (a) restrict factor/driver
@@ -66,7 +66,7 @@ intelligence that lets us harden the tooling and the modules.
 
 ## 2026-07-18 — dgelqt WORK guard advertised `mb*N`, but the blocked LQ trailing update scales with trailing ROWS — for tall (M>N) inputs the true peak is `(M-min(mb,N))*min(mb,N)` → poisoned WORK of the advertised length leaked NaN into the factor
 
-- **What**: The `dgelqt` ndarray wrapper AND the auto-alloc `dgelqt.js` wrapper both
+- **What**: The `dgelqt` strided wrapper AND the auto-alloc `dgelqt.js` wrapper both
   sized WORK as `mb*N` (copied verbatim from reference `DGELQT.f`'s documented
   `WORK dimension (MB*N)`). But `base.js` applies the trailing block update with
   `dlarfb('right', ..., 'rowwise', M-i-ib, N-i, ib, ..., WORK, 1, M-i-ib, ...)`,
@@ -94,7 +94,7 @@ intelligence that lets us harden the tooling and the modules.
   reference `MB*N` doc figure, which is a lower bound valid only for the M≤N regime
   the reference targets; our JS supports general M,N (base computes K=min(M,N) and
   factors tall inputs too) but never widened the WORK bound for M>N.
-- **Fix (APPLIED)**: both `ndarray.js` and `dgelqt.js` now advertise
+- **Fix (APPLIED)**: both `strided.js` and `dgelqt.js` now advertise
   `minWork = max( mb*N, (M-min(mb,K))*min(mb,K) )` when K>0 (else 0). The `max`
   preserves the reference-documented `mb*N` for the wide M≤N regime (faithful — it
   never LOWERS the documented minimum) and raises it to the exact peak only where
@@ -147,7 +147,7 @@ intelligence that lets us harden the tooling and the modules.
   fuzz it with `pureAddrRfpLayouts()` and lean on the numeric property for the
   cross-stride guarantee. Complex analogs generally stay fully bit-exact.
 
-## 2026-07-18 — dggqrf/zggqrf/dggrqf/zggrqf (generalized QR & RQ) ndarray WORK guards + convenience auto-allocs UNDER-advertise the reference min `max(1,N,M,P)` but forward ONE shared WORK to three blocked sub-kernels (geqrf/ormqr/gerqf) that each store a trailing block-reflector T → silent NaN in the factored A/B
+## 2026-07-18 — dggqrf/zggqrf/dggrqf/zggrqf (generalized QR & RQ) strided WORK guards + convenience auto-allocs UNDER-advertise the reference min `max(1,N,M,P)` but forward ONE shared WORK to three blocked sub-kernels (geqrf/ormqr/gerqf) that each store a trailing block-reflector T → silent NaN in the factored A/B
 
 - **What**: All four generalized-QR/RQ wrappers guard the caller-owned WORK with the
   reference LAPACK lower bound `minWork = max(1, N, M, P)` (the UNBLOCKED minimum),
@@ -181,7 +181,7 @@ intelligence that lets us harden the tooling and the modules.
 - **Root cause**: `convention` — copied the reference unblocked `LWORK` lower bound as
   a hard guard for a driver that delegates to three non-adaptive blocked sub-kernels
   each consuming a trailing `T` block.
-- **Fix (APPLIED)**: rewrote the WORK guard in all four `ndarray.js` (and the matching
+- **Fix (APPLIED)**: rewrote the WORK guard in all four `strided.js` (and the matching
   auto-alloc in all four convenience wrappers) to `NB=32; kA=min(...); kB=min(...);
   minWork = max(1, N, M, P, geqrfNeed, ormNeed, gerqfNeed)` mirroring the (already
   fixed) sub-kernel guards. Step 4c now passes at the corrected advertised minimum
@@ -227,31 +227,31 @@ intelligence that lets us harden the tooling and the modules.
   `dggqrf`/`zggqrf` (verified correct: `N===0` only), `dggsvp3`, `dtgsja`. Poisoned
   output arrays (TAU) at zero-dimension corners are what surfaced it.
 
-## 2026-07-18 — dposvx (real SPD expert solve driver) base.js DROPPED the `rcond` output argument that its own ndarray wrapper, docs/types/repl, and the complex twin zposvx all declare → the documented ndarray API crashes (args shift by one; WORK binds to a scalar in dlansy)
+## 2026-07-18 — dposvx (real SPD expert solve driver) base.js DROPPED the `rcond` output argument that its own strided wrapper, docs/types/repl, and the complex twin zposvx all declare → the documented strided API crashes (args shift by one; WORK binds to a scalar in dlansy)
 
 - **What**: Reference LAPACK `DPOSVX` has `RCOND` as output argument #15 (a scalar
   passed by reference). The complex twin `zposvx` translates this faithfully:
   `rcond` is an explicit length-1 `Float64Array` out-param in `base.js`,
-  `zposvx.js` (LDA-main), and `ndarray.js`, written on every return path AND echoed
+  `zposvx.js` (LDA-main), and `strided.js`, written on every return path AND echoed
   in the return object. `dposvx` was botched: `base.js` and `dposvx.js` (LDA-main)
   OMITTED the `rcond` param entirely (rcond only in the return object), while
-  `ndarray.js` — plus the published `docs/types/index.d.ts` (ndarray line) and
-  `docs/repl.txt` — DECLARE `rcond` after `offsetX`. So the ndarray function signed
+  `strided.js` — plus the published `docs/types/index.d.ts` (strided line) and
+  `docs/repl.txt` — DECLARE `rcond` after `offsetX`. So the strided function signed
   and documented a `rcond` argument that `base.js` did not accept. A caller
-  following the documented ndarray signature (as the validation harness and the
+  following the documented strided signature (as the validation harness and the
   zposvx sibling test do — pass an explicit `rcond` array) shifts every subsequent
   argument by one inside `base.js`: `rcond`→base's `FERR`, `FERR`→`strideFERR`, …,
   `WORK`→a scalar. dposvx then calls `dlansy(..., WORK=<number>, ...)` and CRASHES
   (`TypeError: Cannot create property 'NaN' on number '0'`) — a silent API-contract
   break masked only because every EXISTING caller/test happened to use the LEGACY
   no-rcond positional layout, where the missing-param double-shift (test omits
-  rcond → ndarray declares it → base omits it) accidentally re-aligned.
+  rcond → strided declares it → base omits it) accidentally re-aligned.
 - **Repro**: `lib/lapack/dposvx/test/test.validate.js` (residual/rcond/FERR-BERR
-  checks) — calling `ndarray(...,X,1,N,0, rcond, FERR,1,0, BERR,1,0, WORK,1,0,
+  checks) — calling `strided(...,X,1,N,0, rcond, FERR,1,0, BERR,1,0, WORK,1,0,
   IWORK,1,0)` with an SPD 3×3 well-conditioned system throws inside `dlansy` before
   producing any output. Minimal: `not-factored`/`upper`, N=3, nrhs=1, any SPD A.
 - **Root cause**: incomplete translation — the `rcond` output argument was dropped
-  from `base.js` and `dposvx.js` during the d-translation but left in the ndarray
+  from `base.js` and `dposvx.js` during the d-translation but left in the strided
   wrapper and all three doc artifacts, so the wrapper's advertised contract was
   never actually implemented. Faithfulness/parity gap vs the correctly-translated
   `zposvx`, `dsysvx`, `zsysvx` (all carry `offsetX, rcond`).
@@ -262,13 +262,13 @@ intelligence that lets us harden the tooling and the modules.
   return object (removed the vestigial local `RCOND` buffer). The LDA-main
   `dposvx.js` keeps its published arity (no rcond arg) by allocating a local
   `rcond` buffer and forwarding it to `base` (rcond still surfaced via the return
-  object there). Updated `test.ndarray.js` and `benchmark.ndarray.js` to pass an
-  explicit `rcond` array. No changes needed to `ndarray.js` or the `.d.ts`/repl —
+  object there). Updated `test.strided.js` and `benchmark.strided.js` to pass an
+  explicit `rcond` array. No changes needed to `strided.js` or the `.d.ts`/repl —
   they already declared `rcond`; base.js now honors it.
 - **Bug class**: `convention` / faithfulness (dropped a reference OUTPUT argument;
   wrapper + docs declared it but base never implemented it; masked by legacy
   positional callers whose omission double-shift accidentally realigned).
-- **Generalization**: when an ndarray wrapper's parameter list is LONGER than what
+- **Generalization**: when an strided wrapper's parameter list is LONGER than what
   its `base` accepts, extra trailing/interior args are silently swallowed by JS and
   the whole tail shifts — invisible until a caller actually USES the extra
   argument. High-signal probe: DIFF the d/z twins' `base.js` signatures at the
@@ -276,9 +276,9 @@ intelligence that lets us harden the tooling and the modules.
   (it is a reference output argument), not merely a return-object field. The
   fixture tests missed it because they all used the legacy no-rcond call layout.
 
-## 2026-07-18 — dormbr AND zunmbr (apply Q/P of a bidiagonal reduction) ndarray WORK guards lack a BLOCKED branch (dormbr's is also side-INDEPENDENT) → poisoned WORK of the advertised length leaks NaN into the applied C
+## 2026-07-18 — dormbr AND zunmbr (apply Q/P of a bidiagonal reduction) strided WORK guards lack a BLOCKED branch (dormbr's is also side-INDEPENDENT) → poisoned WORK of the advertised length leaks NaN into the applied C
 
-- **What**: The `dormbr` and `zunmbr` ndarray wrappers guard the caller-owned WORK
+- **What**: The `dormbr` and `zunmbr` strided wrappers guard the caller-owned WORK
   with only the UNBLOCKED minimum and no blocked branch. `dormbr` was worse: its
   guard was a bare `minWork = Math.max( 1, N )` — SIDE-INDEPENDENT, so for
   `side='right'` (true unblocked minimum M) it under-advertises whenever `M > N`
@@ -326,9 +326,9 @@ intelligence that lets us harden the tooling and the modules.
   apply/form routines already carry the correct guard, DIFF the wrappers first. The
   `dormbr` side-independence bug also shows: always test BOTH sides at Step 4c.
 
-## 2026-07-18 — dorgbr AND zungbr (BOTH real and complex form-Q/Pᵀ from a bidiagonal reduction) ndarray WORK guards advertised `max(1,min(M,N))` but delegate to BLOCKED dorgqr/dorglq needing `dim*NB` → poisoned WORK of the advertised length leaked NaN into the formed Q/Pᵀ
+## 2026-07-18 — dorgbr AND zungbr (BOTH real and complex form-Q/Pᵀ from a bidiagonal reduction) strided WORK guards advertised `max(1,min(M,N))` but delegate to BLOCKED dorgqr/dorglq needing `dim*NB` → poisoned WORK of the advertised length leaked NaN into the formed Q/Pᵀ
 
-- **What**: The `dorgbr` and `zungbr` ndarray wrappers each had the workspace guard
+- **What**: The `dorgbr` and `zungbr` strided wrappers each had the workspace guard
   `var minWork = Math.max( 1, Math.min( M, N ) );` — the reference LAPACK unblocked
   lower bound (`LWORK >= max(1,min(M,N))`). But `dorgbr`/`zungbr` do NO real work of
   their own: they DELEGATE to the BLOCKED `dorgqr`/`dorglq` (`zungqr`/`zunglq`),
@@ -352,7 +352,7 @@ intelligence that lets us harden the tooling and the modules.
   the blocked former at exactly 64 with a poisoned buffer yields a non-finite value
   at flattened component **2560** (col 40, the first block seam past the advertised
   workspace; it actually needs `N*NB = 64*32 = 2048`).
-- **Root cause**: `lib/lapack/{dorgbr,zungbr}/lib/ndarray.js` copied the
+- **Root cause**: `lib/lapack/{dorgbr,zungbr}/lib/strided.js` copied the
   reference LAPACK unblocked LWORK lower bound (`max(1,min(M,N))`) as a hard guard,
   but our JS hardcodes NB and does NOT adapt the block size down when WORK is small
   (the reference shrinks NB to fit LWORK; we do not). So the reference's minimum is
@@ -360,10 +360,10 @@ intelligence that lets us harden the tooling and the modules.
   **Second copy of the same bug**: the ERGONOMIC top-level wrappers
   `{dorgbr,zungbr}/lib/dorgbr.js`/`zungbr.js` auto-allocate WORK when the caller
   passes `null` — and they used the SAME buggy `Math.max(1,Math.min(M,N))` formula,
-  then call `base` DIRECTLY (bypassing the ndarray guard). So the null-WORK
+  then call `base` DIRECTLY (bypassing the strided guard). So the null-WORK
   convenience path silently under-allocated on the blocked path too. Both the
-  ndarray guard AND the auto-alloc size were fixed with identical branch logic.
-- **Fix (APPLIED)**: rewrote the WORK check in both ndarray wrappers AND the
+  strided guard AND the auto-alloc size were fixed with identical branch logic.
+- **Fix (APPLIED)**: rewrote the WORK check in both strided wrappers AND the
   auto-allocation in both top-level wrappers to mirror the delegate chosen by the
   same `vect`/(M,K)/(K,N) branch logic as `base.js`:
   `wantq ? (M>=K ? (K>NB? N*NB : N) : (M>1 ? (M-1>NB? (M-1)*NB : M-1) : 1))
@@ -387,9 +387,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-18 — dormhr AND zunmhr (BOTH real and complex apply-Q from a Hessenberg reduction) ndarray WORK guards UNDER-advertise on the blocked path: accept `max(1,N)`/`max(1,M)` but the blocked dormqr/zunmqr they delegate to consumes `nw*NB+(NB+1)*NB` → silent NaN in C
+## 2026-07-18 — dormhr AND zunmhr (BOTH real and complex apply-Q from a Hessenberg reduction) strided WORK guards UNDER-advertise on the blocked path: accept `max(1,N)`/`max(1,M)` but the blocked dormqr/zunmqr they delegate to consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
-- **What**: The `dormhr` and `zunmhr` ndarray wrappers each had a bare WORK guard
+- **What**: The `dormhr` and `zunmhr` strided wrappers each had a bare WORK guard
   `minWork = (side==='left') ? max(1,N) : max(1,M)` — the UNBLOCKED minimum, with
   NO `nh>NB` blocked branch. But both delegate (`dormhr/base.js` → `dormqr/base.js`,
   `zunmhr/base.js` → `zunmqr/base.js`) with `K = nh = ihi-ilo` reflectors and the
@@ -412,7 +412,7 @@ intelligence that lets us harden the tooling and the modules.
   component 1 (dormhr) / 2 (zunmhr) — it actually needs `40*32 + 33*32 = 2336`.
   side='right' M=40 N=48 (nq=N=48) is the symmetric M-side case. The unblocked
   fallback (`dorm2r`/`zunm2r`, nh ≤ NB) genuinely needs only nw and is unaffected.
-- **Root cause**: `lib/lapack/{dormhr,zunmhr}/lib/ndarray.js` copied the
+- **Root cause**: `lib/lapack/{dormhr,zunmhr}/lib/strided.js` copied the
   reference LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as their
   guard, but our JS hardcodes NB and does NOT adapt the block size down when WORK
   is small (the reference shrinks NB to fit LWORK; we do not). So the reference's
@@ -436,9 +436,9 @@ intelligence that lets us harden the tooling and the modules.
   entry point with WORK=null on a blocked problem got a silently under-sized buffer
   and **all-NaN C** — verified directly: main `dormhr('right',…,M=40,N=48,ilo=1,
   ihi=48,…,WORK=null)` (nq=48, nh=47>NB) returned **1880 NaN** (the entire 40×48 C).
-  Fixed both auto-allocators to mirror the ndarray guard: `nb=32; nh=ihi-ilo;
+  Fixed both auto-allocators to mirror the strided guard: `nb=32; nh=ihi-ilo;
   nw=left?max(1,N):max(1,M); size = (nb>=nh)?nw:(nw*nb+(nb+1)*nb)`. After the fix
-  the WORK=null main-wrapper output is bit-exact to the generous-WORK ndarray call
+  the WORK=null main-wrapper output is bit-exact to the generous-WORK strided call
   (0 NaN, maxdiff 0). The FORMER convenience wrappers `dorghr.js`/`zunghr.js`
   already auto-allocated `max(1,ihi-ilo)*NB = nh*NB` — correct.
 - **Bug class**: `convention` (copied reference LWORK lower bound as a hard guard
@@ -497,7 +497,7 @@ intelligence that lets us harden the tooling and the modules.
 - **Root cause**: `convention` — the guard copied the reference unblocked LWORK
   lower bound (`max(1,N-1)` / `max(1,N|M)`) and was never given a `>NB` blocked
   branch, though each wrapper's own sub-kernel documents the larger blocked need.
-- **Fix (APPLIED)**: add the blocked branch to each of the four `ndarray.js`
+- **Fix (APPLIED)**: add the blocked branch to each of the four `strided.js`
   guards (`NB=32`):
   - `dorgtr`/`zungtr`: `minWork = (N-1 > NB) ? (N-1)*NB : max(1, N-1)`.
   - `dormtr`/`zunmtr`: `nw = left?max(1,N):max(1,M); nq = left?M:N;
@@ -521,9 +521,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-18 — dgehrd (REAL blocked Hessenberg reduction) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `N*NB + LDT*NB` → silent NaN in the factored A
+## 2026-07-18 — dgehrd (REAL blocked Hessenberg reduction) strided WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `N*NB + LDT*NB` → silent NaN in the factored A
 
-- **What**: The `dgehrd` ndarray wrapper's WORK-length guard was a bare
+- **What**: The `dgehrd` strided wrapper's WORK-length guard was a bare
   `minWork = Math.max( 1, N )` — the UNBLOCKED (`dgehd2`) minimum, with NO blocked
   branch. But `dgehrd/lib/base.js` (matching reference `DGEHRD`) partitions WORK on
   the BLOCKED path (NH = ihi-ilo+1 > NB=32, and the loop bound `ihi-1-NX >= ilo`
@@ -548,12 +548,12 @@ intelligence that lets us harden the tooling and the modules.
   needs `64*32 + 65*32 = 4128`. The unblocked `dgehd2` remainder (N ≤ NB, or the
   sub-threshold N=33 where the block loop body never executes) genuinely needs only
   N and is unaffected.
-- **Root cause**: `lib/lapack/dgehrd/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dgehrd/lib/strided.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`) as its guard, but our JS hardcodes
   NB and does NOT adapt the block size down when WORK is small (the reference
   shrinks NB to fit LWORK; we do not). So the reference's minimum is not a safe
   minimum for our non-adaptive blocked path.
-- **Fix (APPLIED)**: rewrote the WORK check in `dgehrd/lib/ndarray.js` to mirror
+- **Fix (APPLIED)**: rewrote the WORK check in `dgehrd/lib/strided.js` to mirror
   `zgehrd`: compute `NH = ihi - ilo + 1; if (NH > 1) { NB = 32; need = (NB < NH) ?
   (N*NB + 65*NB) : N; ... }`. Step 4c now passes at the (correctly larger)
   advertised minimum (4128 at N=64, 5280 at N=100), and reconstruction A = Q·H·Qᴴ
@@ -573,9 +573,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-18 — dormql (REAL blocked apply-Q, QL) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)`/`max(1,M)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
+## 2026-07-18 — dormql (REAL blocked apply-Q, QL) strided WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)`/`max(1,M)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
-- **What**: The `dormql` ndarray wrapper's WORK-length guard was a bare
+- **What**: The `dormql` strided wrapper's WORK-length guard was a bare
   `minWork = (side==='left') ? max(1,N) : max(1,M)` — the UNBLOCKED minimum, with
   NO `K>NB` blocked branch. But `dormql/lib/base.js` (and its own JSDoc) partitions
   WORK into two contiguous segments on the BLOCKED path (K>NB=32): the first
@@ -592,14 +592,14 @@ intelligence that lets us harden the tooling and the modules.
   length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
   poisoned buffer yields `C[0,0] = NaN` (it actually needs `50*32 + 33*32 = 2656`).
   The unblocked `dorm2l` is unaffected (it genuinely needs only nw).
-- **Root cause**: `lib/lapack/dormql/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormql/lib/strided.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). The COMPLEX sibling `zunmql`
   ALREADY had the CORRECT guard (`if (K>32) need = nw*32 + 33*32`), so only the
   real `dormql` wrapper was wrong — the exact same real-lags-complex asymmetry seen
   in the `dormqr`/`zunmqr` and `dgerqf`/`zgerqf` entries below.
-- **Fix (APPLIED)**: rewrote the WORK check in `dormql/lib/ndarray.js` to compute
+- **Fix (APPLIED)**: rewrote the WORK check in `dormql/lib/strided.js` to compute
   `minWork = left ? max(1,N) : max(1,M); if (K>32) minWork = minWork*32 + 33*32;`
   under the `M/N/K>0` guard, matching `zunmql`. Step 4c now passes at the
   (correctly larger) advertised minimum for both sides, and the apply still matches
@@ -619,9 +619,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-18 — dormrq (REAL blocked apply-Q, RQ) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)`/`max(1,M)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
+## 2026-07-18 — dormrq (REAL blocked apply-Q, RQ) strided WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)`/`max(1,M)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
-- **What**: The `dormrq` ndarray wrapper's WORK-length guard was a bare
+- **What**: The `dormrq` strided wrapper's WORK-length guard was a bare
   `minWork = (side==='left') ? max(1,N) : max(1,M)` — the UNBLOCKED minimum, with
   NO `K>NB` blocked branch. But `dormrq/lib/base.js` (and its JSDoc) stores the
   block reflector `T` in a SEPARATE trailing WORK segment
@@ -641,12 +641,12 @@ intelligence that lets us harden the tooling and the modules.
   length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
   poisoned buffer yields `C[0,0] = NaN` (it actually needs `50*32 + 33*32 = 2656`).
   The unblocked fallback `dormr2` (K<=NB) is unaffected (genuinely needs only nw).
-- **Root cause**: `lib/lapack/dormrq/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormrq/lib/strided.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). So the reference's minimum is not
   a safe minimum for our non-adaptive blocked path.
-- **Fix (APPLIED)**: rewrote the WORK check in `dormrq/lib/ndarray.js` to compute
+- **Fix (APPLIED)**: rewrote the WORK check in `dormrq/lib/strided.js` to compute
   `nb=32; ldwork = left?max(1,N):max(1,M); need = (nb>=K)?ldwork:(ldwork*nb+(nb+1)*nb)`
   under `if (K>0)`, matching the `dormqr` fix. Step 4c now passes at the (correctly
   larger) advertised minimum for both sides, and the apply still matches the
@@ -667,7 +667,7 @@ intelligence that lets us harden the tooling and the modules.
 
 ## 2026-07-18 — dorgrq AND zungrq (BOTH real and complex blocked RQ Q-formation) WORK guards advertised `max(1,M)` but the blocked path needs `M*NB` → poisoned WORK of the advertised length leaked NaN into Q
 
-- **What**: The `dorgrq` and `zungrq` ndarray wrappers each had the workspace guard
+- **What**: The `dorgrq` and `zungrq` strided wrappers each had the workspace guard
   `var minWork = Math.max( 1, M );` — but their OWN JSDoc says "WORK must have
   length >= M*NB (NB=32)", and the blocked path (`dlarft`/`dlarfb`) stores the
   `ib×ib` block-reflector T factor with leading dimension `LDWORK = M` and reuses
@@ -710,9 +710,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-18 — dgerqf (REAL blocked RQ) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,M)` but the blocked path consumes `M*NB+NB*NB` → silent NaN in the factored A
+## 2026-07-18 — dgerqf (REAL blocked RQ) strided WORK guard UNDER-advertises on the blocked path: accepts `max(1,M)` but the blocked path consumes `M*NB+NB*NB` → silent NaN in the factored A
 
-- **What**: The `dgerqf` ndarray wrapper's WORK guard was a bare
+- **What**: The `dgerqf` strided wrapper's WORK guard was a bare
   `minWork = max(1,M)` (the UNBLOCKED minimum), with NO `K>NB` blocked branch. But
   `dgerqf/lib/base.js` (and its JSDoc) stores the block-reflector `T` factor
   INSIDE WORK, right after the `ldwork*nb = M*NB` main scratch
@@ -727,7 +727,7 @@ intelligence that lets us harden the tooling and the modules.
   advertised minimum probes to WORK length **80** (= max(1,M)); running the
   blocked factorization at exactly 80 with a poisoned buffer yields `A[0,0] = NaN`
   (it actually needs `80*32 + 32*32 = 3584`).
-- **Root cause**: `lib/lapack/dgerqf/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dgerqf/lib/strided.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,M)`) as its guard, but our JS
   hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). The COMPLEX sibling `zgerqf`
@@ -737,7 +737,7 @@ intelligence that lets us harden the tooling and the modules.
   below. (Note the sibling `dgelqf` needs only `M*NB` because it stores `T` in a
   SEPARATE allocation; `dgerqf` differs by keeping `T` inside WORK, so its need is
   `M*NB + NB*NB`, not `M*NB`.)
-- **Fix (APPLIED)**: rewrote the WORK check in `dgerqf/lib/ndarray.js` to compute
+- **Fix (APPLIED)**: rewrote the WORK check in `dgerqf/lib/strided.js` to compute
   `K = min(M,N); NB = 32; need = (K>NB) ? (M*NB + NB*NB) : max(1,M)` under
   `if (K>0)`, matching `zgerqf`. Step 4c now passes at the (correctly larger)
   advertised minimum, and reconstruction A=R*Q still holds there.
@@ -752,9 +752,9 @@ intelligence that lets us harden the tooling and the modules.
 
 ---
 
-## 2026-07-17 — dormqr (REAL blocked apply-Q) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
+## 2026-07-17 — dormqr (REAL blocked apply-Q) strided WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
-- **What**: The `dormqr` ndarray wrapper's WORK-length guard is `minWork =
+- **What**: The `dormqr` strided wrapper's WORK-length guard is `minWork =
   (side==='left') ? max(1,N) : max(1,M)` — the UNBLOCKED minimum. But `dormqr`'s
   own base.js (and its JSDoc) stores the block reflector `T` in a SEPARATE
   trailing WORK segment `offsetT = offsetWork + nw*NB`, so on the BLOCKED path
@@ -771,13 +771,13 @@ intelligence that lets us harden the tooling and the modules.
   unblocked `dorm2r` is unaffected (it genuinely needs only nw). The COMPLEX
   sibling `zunmqr` already had the CORRECT guard (`nb>=K ? nw : nw*nb+(nb+1)*nb`),
   so only the real `dormqr` wrapper was wrong.
-- **Root cause**: `lib/lapack/dormqr/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormqr/lib/strided.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). So the reference's minimum is not
   a safe minimum for our non-adaptive blocked path. Fix: mirror `zunmqr`'s guard —
   `need = (NB >= K) ? nw : (nw*NB + (NB+1)*NB)`, guarded by `K>0`.
-- **Fix (APPLIED)**: rewrote the WORK check in `dormqr/lib/ndarray.js` to compute
+- **Fix (APPLIED)**: rewrote the WORK check in `dormqr/lib/strided.js` to compute
   `nb=32; nw = left?max(1,N):max(1,M); need = (nb>=K)?nw:(nw*nb+(nb+1)*nb)` under
   `if (K>0)`, matching `zunmqr`. Step 4c now passes at the (correctly larger)
   advertised minimum for both sides, and the apply still matches the explicit-Q
@@ -826,7 +826,7 @@ Keep entries short. Newest first.
 
 ## 2026-07-17 — dorglq AND zunglq (BOTH real and complex blocked LQ Q-formation) WORK guards advertised `max(1,M)` but the blocked path needs `M*NB` → poisoned WORK of the advertised length leaked NaN into Q
 
-- **What**: The `dorglq` and `zunglq` ndarray wrappers each had the workspace guard
+- **What**: The `dorglq` and `zunglq` strided wrappers each had the workspace guard
   `var minWork = Math.max( 1, M );` — but their OWN JSDoc says "WORK must have
   length >= M*NB (NB=32)", and the blocked path (`dlarft`/`dlarfb`) stores the
   `ib×ib` block-reflector T factor with leading dimension `LDWORK = M` and reuses
@@ -863,7 +863,7 @@ Keep entries short. Newest first.
 
 ## 2026-07-17 — zungqr (COMPLEX blocked QR Q-formation) WORK guard advertised `max(1,N)` but the blocked path needs `N*NB` → poisoned WORK of the advertised length leaked NaN into Q
 
-- **What**: The `zungqr` ndarray wrapper's workspace guard was
+- **What**: The `zungqr` strided wrapper's workspace guard was
   `var minWork = Math.max( 1, N );` — but its OWN JSDoc says "WORK must have
   length >= N*NB (NB=32)" and the blocked path (`zlarft`/`zlarfb`) stores the
   `NB×NB` block-reflector T factor (leading dim `N`) plus `zlarfb` scratch in
@@ -1665,16 +1665,16 @@ Keep entries short. Newest first.
 - **⚠ CORRECTION (workspace strategy)**: an earlier draft of this entry (and my
   first zgels/zgelss patch) treated **base.js allocating WORK internally** as
   acceptable — "pass `WORK=null` through to base." That is WRONG.
-  **base.js and ndarray.js must NEVER allocate a problem-sized workspace**; only
+  **base.js and strided.js must NEVER allocate a problem-sized workspace**; only
   the `<routine>.js` wrapper allocates, on a null `work` arg. Reasons: (a) these
-  routines model C — if C doesn't allocate, JS shouldn't; (b) the ndarray layer
+  routines model C — if C doesn't allocate, JS shouldn't; (b) the strided layer
   reuses ONE workspace across same-size batches, so per-call allocation defeats
   batching. Enforced now by the `no-internal-workspace-alloc` ESLint rule
   (flags 37 base.js routines incl. zgels/zgelss). So the real fix for zgels/zgelss
-  is the dgels template: base+ndarray take caller-owned WORK (no alloc), ndarray
+  is the dgels template: base+strided take caller-owned WORK (no alloc), strided
   asserts the size (loud RangeError, not silent NaN), wrapper auto-allocs on null,
   drop `lwork`. The blocked-path *sizing insight* below is still correct; where it
-  says "fix base's formula" read "size the wrapper's allocation / ndarray's assert."
+  says "fix base's formula" read "size the wrapper's allocation / strided's assert."
 - **Triage — LDB output-growth class is confined to the LS/min-norm family**
   (`gels`/`gelss`): only there does the solution overwrite `B` with MORE rows
   (`max(M,N)`) than the RHS (`M`). All other ~150 `LDB < max(1,N)` solves keep `B`
@@ -1718,7 +1718,7 @@ Keep entries short. Newest first.
   write**. (Independently fixed upstream in stschiff/blahpack@09c542d; found here by
   fixing the harness, not by reading that commit.)
 - **The deeper failure was OURS — the fuzzing procedure could not see it**: the
-  property and layout-invariance layers drive only `ndarray.js` (explicit
+  property and layout-invariance layers drive only `strided.js` (explicit
   strides/offset) with buffers sized to each operand's FULL logical shape. That
   bypasses the leading-dimension wrapper entirely (G1) and never stresses a routine
   whose OUTPUT region exceeds its INPUT region in a shared buffer (G2: dgels `M<N`
@@ -1792,7 +1792,7 @@ Keep entries short. Newest first.
   `dormqr`/`dormlq` need `nrhs*NB + (NB+1)*NB`. So the blocked path over-reads the
   provided scratch by up to `(NB+1)*NB = 1056` elements — off the end of the
   caller's array → NaN. Fix: enlarge the workspace formula (guard in
-  `lib/ndarray.js` and the doc in `lib/base.js`) to
+  `lib/strided.js` and the doc in `lib/base.js`) to
   `MN + (max(MN,nrhs) + NB + 1)*NB`. Verified sufficient (exact-size WORK, no NaN,
   property residual < 1e-10) across 90 cases: both `trans`, tall/wide/square,
   `nrhs∈{1,3,40}`, sizes straddling NB=32.
@@ -1882,7 +1882,7 @@ Keep entries short. Newest first.
   VR, 3, s, 1, SEP, 1, 3, /*M*/3, WORK, 3, IWORK, 1, 0 )` on any `N>=1`. Crashes
   on the `SEP` (`dtrexc`/`dtrsyl`) workspace use.
 - **Root cause**: `base.js` returns the output count `m` in its result object
-  and has **no `M` parameter** (32 params). But `ndarray.js` and the layout
+  and has **no `M` parameter** (32 params). But `strided.js` and the layout
   wrapper `dtrsna.js` both carried a vestigial `M` *input* param and passed it
   to `base()` — 33 args to a 32-param function — so `base`'s `WORK` received the
   `M` value, `strideWork1` received the `WORK` array, and every workspace arg
@@ -1891,10 +1891,10 @@ Keep entries short. Newest first.
   `max(1, M)` (an uninitialized output) instead of `max(1, N)`.
 - **Why it hid**: **two compensating bugs.** Every existing test helper AND the
   only real caller (`dgeevx`, which imports `base.js` directly) *omitted* `M`
-  from the call — that −1 shift exactly canceled the +1 shift `ndarray.js` added,
+  from the call — that −1 shift exactly canceled the +1 shift `strided.js` added,
   so `base` received correct args and the fixture tests passed. Nothing exercised
   the actual documented signature.
-- **Fix**: removed the `M` param from `ndarray.js` and `dtrsna.js` (signature +
+- **Fix**: removed the `M` param from `strided.js` and `dtrsna.js` (signature +
   the `base()` call + the obsolete `M < 0` check); corrected the column-major
   `LD*` validations to use `N`. Now all three layers agree on 32 base params.
   Verified: `job='both'` on `diag(1,2,3)` yields `s=[1,1,1]` and `SEP=[1,1,1]`
@@ -1904,7 +1904,7 @@ Keep entries short. Newest first.
   *returned*, never carried as a positional param that the wrapper forwards —
   a forwarded output param silently shifts everything after it. Audit any
   routine whose base returns a value the wrapper also lists as a param
-  (grep `mm, M,` / `, INFO,` in `<routine>.js`/`ndarray.js`). Compensating
+  (grep `mm, M,` / `, INFO,` in `<routine>.js`/`strided.js`). Compensating
   caller bugs mean fixture tests are NOT enough — test the documented signature.
 
 ## 2026-07-19 — Systematic sweep of the forwarded-output-param class (15 siblings)
@@ -1912,7 +1912,7 @@ Keep entries short. Newest first.
 - **Trigger**: the dtrsna entry above prescribed auditing "any routine whose
   `base` returns a value that the wrapper also lists as a param." Ran that audit
   across all LAPACK modules (compare `base.js` param count vs. the args passed in
-  `ndarray.js`'s `base()` call; any extra ndarray param is a forwarded output).
+  `strided.js`'s `base()` call; any extra strided param is a forwarded output).
 - **Found 15 siblings, two severities:**
   - **Interior shift → CRASH (6, same failure mode as dtrsna):** `dlaqps` (`kb`),
     `zgesvx` (`rcond`), `dgebal` + `zgebal` (`ilo, ihi`), `zlahef` (`kb`), plus
@@ -1927,7 +1927,7 @@ Keep entries short. Newest first.
     while `base` actually returns them in its result object, so a caller
     following the docs would read never-written arrays. Dual-API inconsistency,
     not a crash.
-- **Fix**: removed every vestigial output param from the affected `ndarray.js`
+- **Fix**: removed every vestigial output param from the affected `strided.js`
   (and `dtrsna.js`/`dgebal.js`-style wrappers), so all layers pass exactly
   `base.length` args. Outputs are surfaced only via the result object. All 16
   modules: tests + lint + conformance green; callers (`dgeevx`, `dgeqp3`,
@@ -1935,24 +1935,24 @@ Keep entries short. Newest first.
 - **Bug class**: `signature-drift` / `off-by-one-argument`. Interior = crash;
   trailing = silent doc/impl divergence.
 - **Prevention**: the reliable detector is a direct **`base.js` param-count vs.
-  `ndarray.js` `base()` arg-count** comparison — any surplus arg is a forwarded
+  `strided.js` `base()` arg-count** comparison — any surplus arg is a forwarded
   output. The `signature-conformance` ESLint rule did NOT catch these: its
   flexible achievable-counts model (outputs may be present or absent) happened to
   admit the inflated counts. A dedicated conformance check that asserts
-  `ndarray`/wrapper pass exactly `base.length` args to `base()` would close this
+  `strided`/wrapper pass exactly `base.length` args to `base()` would close this
   gap deterministically; the linter's fuzzy count model cannot.
 
 ## 2026-07-19 — base-arity check exposed 24 unimplemented layout wrappers
 
 - **Trigger**: added a deterministic `base-arity` conformance check
   (`bin/conformance/checks/base-arity.js`) — asserts every `base(...)` call in
-  `ndarray.js` and the layout wrapper `<routine>.js` passes exactly
+  `strided.js` and the layout wrapper `<routine>.js` passes exactly
   `base.length` args (the invariant the forwarded-output-param class violated).
 - **Unexpected find**: beyond the 16 forwarded-output modules, the check flagged
   **24 modules whose layout wrapper is an un-implemented scaffold stub** —
   `function dlantr( a, b ) { return base( a, b ); }` with `@param a - a`
   placeholders — passing 2 args to a 12–41-param kernel. The `base.js` and
-  `ndarray.js` layers are fully implemented; only the public layout wrapper
+  `strided.js` layers are fully implemented; only the public layout wrapper
   (the default export used by `require('@stdlib/lapack/base/<r>')`) is a stub.
   Affected: `dlantr`, `dlaqr0`, `dlaqr5`, `zgbcon`, `zgecon`, `zgeequ`,
   `zgerfs`, `zgttrf`, `zhetrs`, `zhetrs2`, `zlahef`, `zlahqr`, `zlaqr0`,
@@ -1969,7 +1969,7 @@ Keep entries short. Newest first.
 - **Prevention**: `base-arity` demotes any such module to `in-progress` until
   the wrapper is genuinely implemented (order/`LD*` → stride derivation +
   validation + WORK auto-alloc). The vacuous wrapper tests are replaced with
-  real round-trip assertions against the ndarray form.
+  real round-trip assertions against the strided form.
 - **Resolution (2026-07-19)**: all 24 wrappers were implemented one at a time,
   each mirroring a completed real/complex sibling (`dgecon`→`zgecon`,
   `zgetrs`→`zhetrs`, `dlaqr4`→`zlaqr0`/`zlaqr4`/`dlaqr0`, etc.) and verified
@@ -1987,11 +1987,11 @@ Keep entries short. Newest first.
   (sensitivity loop: left eigenvector at WORK(1:N), right at WORK(N+1:2N),
   ztgevc/ztgsna scratch at WORK(2N+1)). The `rconde` fixtures for
   `sense='eigenvalues'`/`'both'` immediately diverged
-  (2.5015 expected vs 2.8753 got, N=4 fixture case `test.ndarray.js:187`).
+  (2.5015 expected vs 2.8753 got, N=4 fixture case `test.strided.js:187`).
 - **Reproduce**: `ztgevc( 'both', 'selected', ..., WORK, 1, offsetWork>0, ... )`
   with any nonzero `offsetWork` — scalar complex, dense, any N >= 1. The
   regression test is `zggevx: results are bit-identical for any
-  WORK/RWORK/IWORK/BWORK offset` (zggevx `test.ndarray.js`, N=4, PAD=5, all four
+  WORK/RWORK/IWORK/BWORK offset` (zggevx `test.strided.js`, N=4, PAD=5, all four
   `sense` values); it fails against the old ztgevc.
 - **Root cause**: `ztgevc/lib/base.js` reinterpreted WORK and indexed it from 0
   (`WORKv[ jr * 2 ]`, `zgemv(..., WORK, 1, je, ..., WORK, 1, N)`), silently
@@ -2014,8 +2014,8 @@ Keep entries short. Newest first.
 
 ## 2026-11-18 — ztgsen/ztgsyl tests ran with scrambled workspace arguments
 
-- **Trigger**: adding the unit-workspace-stride assertion to every `ndarray.js`
-  (CONVENTIONS.md D5). `ztgsen` and `ztgsyl` `test.ndarray.js` immediately threw
+- **Trigger**: adding the unit-workspace-stride assertion to every `strided.js`
+  (CONVENTIONS.md D5). `ztgsen` and `ztgsyl` `test.strided.js` immediately threw
   "`strideIWork` must be 1 … Value: `0`".
 - **Root cause**: the tests still passed the removed `lwork`/`liwork` arguments
   (`WK, 1, 0, -1, IWK, 1, 0, -1` and `null, 1, 0, -1, IWORK, 1, 0`). Every argument
@@ -2025,13 +2025,13 @@ Keep entries short. Newest first.
 - **Bug class**: `stale-arity-in-tests` — a signature change (dropping `lwork`) that
   left surplus arguments in test calls. Nothing compares test call arity against
   the function's arity; test files are also excluded from ESLint.
-- **Where else it hides**: any test calling an ndarray function with more
+- **Where else it hides**: any test calling an strided function with more
   arguments than it declares. An argument-count check on test calls (like the
   `base-arity` conformance check, but for tests) would catch the class.
 
-## 2026-11-18 — dgehrd/zgehrd strided wrappers under-allocated WORK on `null`
+## 2026-11-18 — dgehrd/zgehrd wrappers under-allocated WORK on `null`
 
-- **Trigger**: rewriting the zgehrd strided wrapper for the signature projection
+- **Trigger**: rewriting the zgehrd wrapper for the signature projection
   (PR #19 residue). A blocked-path test (`N = 40`, `WORK = null`) made zgehrd base
   throw "WORK array must have at least 3360 elements … Provided length: 40".
 - **Repro (dgehrd, before fix)**: `dgehrd( 'column-major', 40, 1, 40, A, 40, TAU, 1, null )`
@@ -2045,11 +2045,11 @@ Keep entries short. Newest first.
   factorization produced NaN.
 - **Bug class**: `wrapper-null-work-undersized` — the same silent
   workspace-underallocation family as the dgeev/dhseqr pipeline bugs. Fixtures
-  and the harness exercise base/ndarray with caller-owned WORK, so the wrappers'
+  and the harness exercise base/strided with caller-owned WORK, so the wrappers'
   `null` auto-allocation path at blocked sizes is untested.
 - **Fix**: both wrappers allocate `max(1, N*32 + 65*32)`; dgehrd gets a regression
   test comparing `null` against a caller buffer at N = 40.
-- **Where else it hides**: every blocked routine whose strided wrapper
+- **Where else it hides**: every blocked routine whose wrapper
   auto-allocates WORK (`?ge*rf`, `?or*`/`?un*` blocked, `?sytrd`, …). A check that
   calls each wrapper with `WORK = null` at a size above NB and compares against
   a generously sized caller buffer would catch the class; base.js routines that
@@ -2061,7 +2061,7 @@ Keep entries short. Newest first.
   threw "Cannot create property 'NaN' on number '-1'" inside ztgsyl at N = 100.
 - **Repro (before fix)**: `ztgsna( 'both', 'all', SELECT, 1, 0, 40, A, 1, 40, 0, B, 1, 40, 0, VL, 1, 40, 0, VR, 1, 40, 0, s, 1, 0, DIF, 1, 0, 40, 0, WORK, 1, 0, IWORK, 1, 0 )`
   with an upper-triangular complex pair (see the N = 40 test in
-  `lib/lapack/ztgsna/test/test.ndarray.js`). Complex scalar, dense column-major.
+  `lib/lapack/ztgsna/test/test.strided.js`). Complex scalar, dense column-major.
 - **Root cause**: ztgsna/base.js called ztgsyl with `…, WORK, 1, offset, -1, IWORK, …` —
   a leftover `lwork` argument from before the caller-owns-WORK migration. Every
   argument after it shifted: ztgsyl's `IWORK` received `-1`. Only ztgsyl's
@@ -2089,15 +2089,15 @@ Keep entries short. Newest first.
     audit then missed the complex twin). Also `zlarf` was called with a stale
     signature (a `Complex128` scalar instead of `(tauArray, offsetTau)`), shifting every
     later argument. Effect: `zgeev`/`zgees`/`zgeevx` returned info=0 with
-    eigen-residuals ~1e-1 for N > 75. Repro + regression: `zgeev/test/test.ndarray.js`
+    eigen-residuals ~1e-1 for N > 75. Repro + regression: `zgeev/test/test.strided.js`
     (random complex N=80, 120; `max |A v − w v|`).
   - `zggsvd3` forwarded `jobu='compute-U'` to `ztgsja`, which only recognized
     `'compute-vectors'` → Jacobi rotations never applied to U/V/Q (GSVD shared-R
     residual ~1). Fixed by making `dtgsja`/`ztgsja` use LAPACK's meaning
     (`'update'`/`'initialize'`/`'none'`) and having both GSVD drivers map their
     `'compute-*'` to `'update'` (reference xGGSVD3 forwards 'U'/'V'/'Q', which xTGSJA
-    reads as "update"). Regression: `zggsvd3/test/test.ndarray.js` (shapes 5×4/4,
-    6×5/3, 4×6/5; seed 7). The `dtgsja.ndarray` validation also accepted `'compute'`,
+    reads as "update"). Regression: `zggsvd3/test/test.strided.js` (shapes 5×4/4,
+    6×5/3, 4×6/5; seed 7). The `dtgsja.strided` validation also accepted `'compute'`,
     which base silently treated as `'none'` (the benchmark timed the wrong path).
   - `dtrsna`/`ztrsna` default WORK was `max(1, LDWORK, N+6)` for a reference
     `WORK(LDWORK, N+6)` / `(LDWORK, N+1)` matrix → all SEP = NaN when WORK omitted.
@@ -2111,11 +2111,11 @@ Keep entries short. Newest first.
   `ztpqrt`, `zungtsqr`, `zungtsqr_row`, `zggbal`); `zhseqr` lacked the
   `Complex128Array` import → ReferenceError whenever WORK was omitted.
 - **Option-validation class (new `option-parity` conformance check):** ~70 layout
-  wrappers accepted a different option set than `ndarray.js` — generated from only the
+  wrappers accepted a different option set than `strided.js` — generated from only the
   values seen in fixtures (e.g. `zgeev` rejected `'no-vectors'`, `dlarfb` rejected
   `'backward'`/`'rowwise'`, the xTREVC/xTGEVC/xHSEIN family rejected `side='both'`,
   xLACPY/xLASET rejected `uplo='all'`, RFP routines rejected `transr='transpose'`).
-  Where `ndarray.js` was the over-permissive side it was tightened to the Fortran set:
+  Where `strided.js` was the over-permissive side it was tightened to the Fortran set:
   xGECON/xGBCON/xGTCON `norm` ('max'/'frobenius' silently computed the inf-norm
   estimate), xTREXC/xTRSEN `compq` ('initialize' silently skipped Q), RFP `transr`
   (real: N/T, complex: N/C). The conventions check's name-based demand for
@@ -2130,7 +2130,7 @@ Keep entries short. Newest first.
   affected routines. **Where else it might hide:** any other wrapper whose LD check
   is not conditional on the corresponding job flag — the remaining wrappers were not
   audited against Fortran in this pass.
-- **Also fixed**: 21 `ndarray.js` doc blocks were copied from a `base.js` helper
+- **Also fixed**: 21 `strided.js` doc blocks were copied from a `base.js` helper
   (e.g. `zgecon` documented as "CABS1"); `ztrevc3`/`dtrevc3`/`ztrevc` never write the
   `M` output (documented, not changed).
 
@@ -2140,7 +2140,7 @@ Keep entries short. Newest first.
   records every routine's Fortran argument-check conditions on `LD*` plus the locals
   they use. `bin/conformance/ld-rules.js` translates them (flags inlined from
   base.js or translated from `LSAME`, option letters matched against the values
-  ndarray.js accepts, cascades → ternaries); column-major = the Fortran rule,
+  strided.js accepts, cascades → ternaries); column-major = the Fortran rule,
   row-major = same rule with the bound replaced by the declared column count.
   `bin/codemod-ld-checks.js` rewrote 526 wrappers; the `ld-rules` conformance
   check now enforces the exact checks.
@@ -2186,9 +2186,9 @@ Keep entries short. Newest first.
   - Conversely `dtrsyl` rejected `'conjugate-transpose'`, which DTRSYL accepts.
 - **Repro**: `dgemqrt( 'left', 'conjugate-transpose', 4, 4, 3, 2, V, 1, 4, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 )`
   before the fix: no error, C unchanged. Regression tests in
-  `dgemqrt`/`zunmqr`/`dtrsyl` `test/test.ndarray.js`.
+  `dgemqrt`/`zunmqr`/`dtrsyl` `test/test.strided.js`.
 - **Root cause**: nothing compared accepted option values with the reference.
-  `option-parity` only compares the wrapper against `ndarray.js`, and the
+  `option-parity` only compares the wrapper against `strided.js`, and the
   `no-dprefix-conjugate-transpose` lint rule bans the *literal* in real routines
   but not its acceptance through the helper. The `dtrmm` instance of this class
   (2026-07-17) was fixed in that routine only.
@@ -2197,7 +2197,7 @@ Keep entries short. Newest first.
   - `bin/gen_fortran_option_rules.js` evaluates each reference argument check
     letter by letter (A–Z, LSAME semantics, locals and IF/ELSE cascades,
     three-valued logic) → `data/fortran-option-rules.json`.
-  - The new `option-rules` conformance check holds `ndarray.js` to it: exact for
+  - The new `option-rules` conformance check holds `strided.js` to it: exact for
     TRANS*/SIDE/UPLO/DIAG, by count otherwise.
   - `option-parity` now also fails on options the wrapper takes but never
     validates; 41 found, e.g. `dpftrs` forwarded `transr` unchecked.
@@ -2208,7 +2208,7 @@ Keep entries short. Newest first.
     wrapper didn't validate.
   - `tsc` then narrowed `trans` and flagged 4 now-unreachable `=== 'transpose'`
     checks in `zgemqrt`/`zlamtsqr`, which were removed.
-- **Not covered**: options `ndarray.js` never validates (88 arguments) are
+- **Not covered**: options `strided.js` never validates (88 arguments) are
   skipped by the check; see tickets/0022.
 
 ## 2026-11-18 — Generated LD checks compared against output arguments (tickets/0001)
@@ -2259,7 +2259,7 @@ Keep entries short. Newest first.
 - **Repro**: `sc=complex`, `logical.triangular(sc, new RNG(0x200+N), N, {uplo})`
   with every off-diagonal scaled by `1e40`, RHS `sc.random`, N=16, any uplo,
   `zlatps(uplo,'no-transpose','non-unit','no',…)`: `scale[0] === 1` and `x`
-  contains NaN. The regression cases in each module's `test.ndarray.js` use a
+  contains NaN. The regression cases in each module's `test.strided.js` use a
   deterministic N=12 matrix and fail on the old code.
 - **Root cause**: the growth-bound loop for the no-transpose non-unit case
   exits with `IF( GROW.LE.SMLNUM ) GO TO 60` (`GO TO 50` in the real routines).
@@ -2308,7 +2308,7 @@ Keep entries short. Newest first.
 - **Effect**: a looser test than the reference, so `info = 0` could come back a
   sweep early with less-orthogonalized columns. Easy to trigger: many 4×4
   inputs with `n1 = 1` give `info = 0` where the reference gives `nsweep - 1`.
-- **Repro**: regression test in `lib/lapack/zgsvj1/test/test.ndarray.js`
+- **Repro**: regression test in `lib/lapack/zgsvj1/test/test.strided.js`
   (M=N=4, n1=1, tol=1e-2): after one sweep, the first pair of sweep 2 has
   |cos| = 2.75·tol, which lies in [√N·tol, N·tol), so the reference keeps going
   and `nsweep = 2` must return `info = 1`. Fails on the old code with `info = 0`.
@@ -2342,7 +2342,7 @@ Keep entries short. Newest first.
   1e300 norm triggers scaling, the scaled `e[0]²` underflows, and the QR search
   breaks at `lend + 1`. Old output `[-1e300, 0, 1e300]`, fixed (reference
   semantics) `[-1e300, 1e-20, 1e300]`. Regression test in
-  `lib/lapack/dsterf/test/test.ndarray.js`.
+  `lib/lapack/dsterf/test/test.strided.js`.
 - **Fix (APPLIED)**: removed the fix-up. Also removed two empty
   `if ( m === … ) { /* comments */ }` blocks after the other search loops, whose
   comments repeated the same confusion.
@@ -2461,7 +2461,7 @@ Keep entries short. Newest first.
   Seeds and sizes are in the tests.
 - **Root cause**: line-by-line translation of Fortran increments. A literal
   `1` (or `LDx`) in a Fortran call is a statement about column-major storage.
-  In the strided form it has to become the corresponding stride
+  In the wrapper form it has to become the corresponding stride
   (`1` → `strideX1`, `LDX` → `strideX2`) of *that* array.
 - **Bug class**: `literal-stride` / `foreign-stride`: a callee argument slot
   for array A's stride, filled with a constant or another array's stride.
@@ -2515,7 +2515,7 @@ Keep entries short. Newest first.
   returned NaN (found the same way, by the generator's NaN-result probe).
   There, 11 internal callers (ztgsja, zhgeqz, ztrexc, ...) pass `s` to the
   base as zlartg's in-place `[re, im]` output in hot loops. So the base keeps
-  that pair, and the public wrappers (strided, ndarray) convert the documented
+  that pair, and the public wrappers (strided, strided) convert the documented
   `Complex128` to it. The tests and example now use `Complex128`.
 
 ---
@@ -2645,10 +2645,10 @@ Keep entries short. Newest first.
   reference formula. The corpus run (420 wrappers) reports 0 overruns in the
   150 that are exercised. The other 270 are unchecked until ticket 0063.
 
-## 2026-11-23 — Wrapper replay: public wrappers disagreed with ndarray.js in about 235 of 912 modules (tickets 0065, 0068, 0072–0074)
+## 2026-11-23 — Wrapper replay: public wrappers disagreed with strided.js in about 235 of 912 modules (tickets 0065, 0068, 0072–0074)
 
 - **What**: `bin/wrapper-replay.mjs` (test/harness/replay.js) records every
-  valid `ndarray.js` call a module's own tests make. It replays each call
+  valid `strided.js` call a module's own tests make. It replays each call
   through `<routine>.js` in several variants:
   - exact, with the recorded workspaces;
   - `WORK = null`;
@@ -2678,11 +2678,11 @@ Keep entries short. Newest first.
     - `dorglq`, `dorgrq`, `dorgtr`, `zunglq`, `zungqr`, `zungtr`;
     - `dormql`, `dormrq`, `dormtr`, `zunmtr`;
     - `zungtr` at N = 0 (`new Complex128Array(-1)`).
-  - `layers-disagree` (ticket 0074): `ndarray.js` and the wrapper behaved
+  - `layers-disagree` (ticket 0074): `strided.js` and the wrapper behaved
     differently on the same call:
-    - `dlacn2`'s `ndarray.js` had an N = 0 quick return the reference
+    - `dlacn2`'s `strided.js` had an N = 0 quick return the reference
       lacks;
-    - `zgehrd`'s `ndarray.js` returned undefined for N = 0;
+    - `zgehrd`'s `strided.js` returned undefined for N = 0;
     - `zlar1v` skipped its WORK check at N = 0 although base reads
       WORK[0].
   - `wrapper-rejects-valid-call` (ticket 0073):
@@ -2745,8 +2745,8 @@ Keep entries short. Newest first.
   The child-process timeout then threw away every result of the module: valid findings sat behind the hang, for example dsytri2x's `null-work` giving NaN (an undersized wrapper allocation).
 - **Fix**:
   - Every call the replay makes goes through `bounded()` (`vm.Script.runInContext` with `timeout`, which interrupts synchronous module code). The budget is at least 2 s, or 50 × the recorded call's own time.
-  - If `ndarray.js` does not return on a zero-size probe, the input is outside the domain: the probe is skipped and counted under `skipped`.
-  - If `ndarray.js` returns but the wrapper does not, that is reported.
+  - If `strided.js` does not return on a zero-size probe, the input is outside the domain: the probe is skipped and counted under `skipped`.
+  - If `strided.js` returns but the wrapper does not, that is reported.
   - The length audit's trials get a tight budget (100 ms, or 10 × the recorded call), and the first timeout ends that parameter's audit: a timeout there can only mean "unknown", never a finding.
 - **Bug class**: a check whose own failure mode (hang → whole-module timeout) hides all of its results. It is a check that can fail silently in the coarsest possible unit.
 - **What allowed it**:
@@ -2761,7 +2761,7 @@ Keep entries short. Newest first.
   - **dseupd**: `select` is documented as a `Uint8Array`, but the code stored `true`/`false` and tested `select[ r ] === false`. A `Uint8Array` stores `false` as `0`, and `0 === false` is false, so the reorder loop swapped columns it should have skipped. The Fortran is `.NOT.SELECT(RGHTPTR)`. Every test passed a plain boolean `Array`, which hid it. With a `Uint8Array`, none of the 9 reorders in the fixtures reaches the divergent step (both ends unselected), so no fixture shows it; the type check is the enforcer. The tests now run every case with both array kinds.
   - **zgges**: the `ztgsen` status was wrapped in `{ info, m, pl, pr }` and then compared `=== 1`. So a failed reordering never set `INFO = N+3` and returned success. dgges was correct. Shown by a test that substitutes a failing ztgsen (new `importWithDependencies`, test/harness/constants.js, the module substitution ticket 0051 anticipated). It fails before the fix.
 - **Checks that could not work**:
-  - **ztgsen ndarray.js** sized WORK/IWORK from `M * ( N - M )` with `M` the output array. A length-1 array coerces to its element, so this read whatever the caller left in `M[ 0 ]` (usually 0), and the size check almost never applied. It now counts `SELECT`, as the wrapper does, and only for `IJOB > 0`. A new test rejects WORK/IWORK one element short.
+  - **ztgsen strided.js** sized WORK/IWORK from `M * ( N - M )` with `M` the output array. A length-1 array coerces to its element, so this read whatever the caller left in `M[ 0 ]` (usually 0), and the size check almost never applied. It now counts `SELECT`, as the wrapper does, and only for `IJOB > 0`. A new test rejects WORK/IWORK one element short.
   - **dtgsen, ztgevc wrappers**: `M < 0` on an `Int32Array` output, plus two tests that passed `M = -1`, a number, where the contract is an array. Test files are outside lint and the type check (tickets 0081, 0004), which is how those tests got in.
 - **Latent, right only by coercion**:
   - **dlasq3 wrapper**: `stride2offset( 4 * n0, strideZ )` with `n0` an `Int32Array`: `4 * new Int32Array( [ 4 ] )` is `16`. The root cause is `bin/codemod-vector-lengths.mjs` (ticket 0068), which copied the spec length `4 * n0` without the name map the generated prologue uses (`n0[ 0 ]` for an output or input/output scalar, S10). The codemod now shares `lint/lib/prologue.cjs`'s `nameMap`/`rename`. A scan of every wrapper's `stride2offset` lengths found no other such case.
@@ -2776,7 +2776,7 @@ Keep entries short. Newest first.
 - **Replay gaps found on the way** (the changed modules must pass the replay gate):
   - dgees, zgees and zgges recorded no calls, because their callback argument could not be serialized. Callbacks are now recorded as source and rebuilt (ticket 0075).
   - `null-work` passed `null` for dseupd's WORKL, which carries dsaupd's state. A workspace with intent `in`/`inout` now keeps its contents (ticket 0082).
-  - The replay exposed a real wrapper bug: dtgsna allocated `max(1, N)` WORK for every `job`, but `job` = `'eigenvectors'`/`'both'` needs `2*N*(N+2)+16`. `s` and `DIF` came back 0. ndarray.js already checked the right size; the wrapper now allocates it, and a test compares it with the reference fixture (ticket 0072).
+  - The replay exposed a real wrapper bug: dtgsna allocated `max(1, N)` WORK for every `job`, but `job` = `'eigenvectors'`/`'both'` needs `2*N*(N+2)+16`. `s` and `DIF` came back 0. strided.js already checked the right size; the wrapper now allocates it, and a test compares it with the reference fixture (ticket 0072).
 
 ## 2026-11-25 — Array types tightened: zlag2c threw on its documented output type, and zlatrz's wrapper allocated the wrong array kind (ticket 0023)
 
@@ -2798,7 +2798,7 @@ Keep entries short. Newest first.
 - **Replay, ARPACK**: the recorder encoded only arrays, numbers, strings and callbacks, so every call taking ARPACK's plain-object state was dropped. dgetv0, dsaitr, dsaup2 and dsaupd were never checked. Plain objects are now encoded property by property.
   - dsaup2 then failed `null-work`: its spec gave WORKL intent `out`, but WORKL carries the Lanczos state between calls. Fixed by a spec override (ticket 0082).
 - **dlaqr4**: its tests passed a stale trailing `lwork` in 16 calls, which JS ignores. The replay skipped every call because the argument count differed from the spec. Without the stale argument, the replay found the wrapper sizing the negative-stride offsets of WR/WI from `N`, where the reference length is `IHI` (ticket 0068 class).
-- **dlamch**: `test.ndarray.js` imported `index.js`, so `ndarray.js` was untested.
+- **dlamch**: `test.strided.js` imported `index.js`, so `strided.js` was untested.
 - **Bug class**: a check that silently skips what it cannot encode ("untested" is reported, but whole families sat there), and test files that nothing checks (ticket 0004).
 - **What allowed it**: the gate fails on "untested", but only for changed modules, and these modules had not changed since the replay existed.
 
@@ -2831,7 +2831,7 @@ Keep entries short. Newest first.
   - The codemod skips any variable compared with `undefined` or tested with `typeof`.
   - About 360 variables in 130 files. All unit tests pass unchanged.
 - **Real bugs the remaining reports showed**:
-  - dlasyf/zlasyf `ndarray.js` returned `undefined` for N = 0. The reference returns INFO = 0 with KB = 0, and the replay had listed it under ticket 0074.
+  - dlasyf/zlasyf `strided.js` returned `undefined` for N = 0. The reference returns INFO = 0 with KB = 0, and the replay had listed it under ticket 0074.
   - The dseupd and dsaup2 wrappers did not require `workl`/`workd`. Those arrays carry dsaupd's state, so a `null` reached base.js and failed there (ticket 0082).
 - **False alarms resolved structurally, not by casts**:
   - the geev drivers compute the eigenvector side from the two flags;
@@ -2877,7 +2877,7 @@ Keep entries short. Newest first.
 ## 2026-11-25 — dlasq1 left E(N) stale when dlasq2 does not converge (INFO = 2)
 
 - **Found by**: a coverage agent for the ticket 0089 gate. It stubbed dlasq2 to return 2 via `importWithDependencies` and compared the result with dlasq1.f's INFO.EQ.2 branch.
-- **Root cause**: dlasq1.f copies `D(I) = SQRT(WORK(2I-1))` and `E(I) = SQRT(WORK(2I))` for I = 1..N, then rescales N elements of each. The JS skipped `E(N)` (`if ( i < N - 1 )`) but still rescaled N elements, so the caller's stale `e[N-1]` was scaled by SIGMX/SCALE instead of being replaced with 0. `ndarray.js` also documented `e` as length N−1, where the reference and spec/dlasq1.json say N.
+- **Root cause**: dlasq1.f copies `D(I) = SQRT(WORK(2I-1))` and `E(I) = SQRT(WORK(2I))` for I = 1..N, then rescales N elements of each. The JS skipped `E(N)` (`if ( i < N - 1 )`) but still rescaled N elements, so the caller's stale `e[N-1]` was scaled by SIGMX/SCALE instead of being replaced with 0. `strided.js` also documented `e` as length N−1, where the reference and spec/dlasq1.json say N.
 - **Why the first test missed it**: the stale value 99 was scaled to about 1.6e-145, which an absolute tolerance of 1e-14 accepts as 0. A test of a value that should be exactly zero has to assert it exactly.
 - **Bug class**: a loop bound taken from the input contract (E(1:N−1) holds the off-diagonal) rather than from the output contract (E has dimension N and is overwritten). It hides on rarely reached failure branches.
 - **Where else**: other routines whose E argument is dimension N but carries N−1 values (dlasq2's callers, dbdsqr, the d/zstein family) on their failure or non-convergence paths.
@@ -2885,7 +2885,7 @@ Keep entries short. Newest first.
 ## 2026-11-25 — Option strings: dtgsja's validator and dispatch disagreed; dgges asked dlascl for a type it doesn't have (ticket 0022)
 
 - **Found by**: `tsc`, once every option parameter was typed as the literal union of its values. Neither came from a test or the harness.
-- **dtgsja/ztgsja**: spec/options.json mapped JOBU/JOBV/JOBQ = 'U'/'V'/'Q' to `'compute-vectors'`, so the generated `ndarray.js` accepted only that. `base.js` (and its callers dggsvd3/zggsvd3) dispatch on `'update'`. `dtgsja( 'compute-vectors', ... )` therefore passed validation and computed `wantu = false`: U, V and Q came back untouched. tsc reported `jobu === 'update'` as a comparison with no overlap.
+- **dtgsja/ztgsja**: spec/options.json mapped JOBU/JOBV/JOBQ = 'U'/'V'/'Q' to `'compute-vectors'`, so the generated `strided.js` accepted only that. `base.js` (and its callers dggsvd3/zggsvd3) dispatch on `'update'`. `dtgsja( 'compute-vectors', ... )` therefore passed validation and computed `wantu = false`: U, V and Q came back untouched. tsc reported `jobu === 'update'` as a comparison with no overlap.
 - **dgges**: it undid the scaling of A with `dlascl( 'hessenberg', ... )`. dlascl knows `'upper-hessenberg'` and returns -1 for anything else, and dgges ignored the return value. For an input with norm below SMLNUM or above BIGNUM, the Schur form S came back at the scaled magnitude. Two tests ran that branch, but asserted only `info`.
 - **Bug class**: an option string that is valid at one layer and unknown at another. A misspelled option fails silently, because the routine either falls through to a default branch or returns an error code nobody reads. Tests miss it unless they assert the output of the exact branch.
 - **Where else**: nowhere now in code that `tsc` checks. Every remaining mismatch would be a type error. Plain-JS callers still depend on the runtime validators, and options the reference doesn't validate have none (ticket 0092).
@@ -2893,7 +2893,7 @@ Keep entries short. Newest first.
 
 ## 2026-11-25 — dpbstf/zpbstf clamped a signed diagonal stride, so the row-major layout gave wrong factors (ticket 0069)
 
-- **Found by**: a coverage agent for ticket 0069. It compared the dpbstf wrapper with `ndarray.js` and with the column-major factor in row-major.
+- **Found by**: a coverage agent for ticket 0069. It compared the dpbstf wrapper with `strided.js` and with the column-major factor in row-major.
 - **Reproduce**: a diagonally dominant positive definite band matrix: N = 6, kd = 2, upper; diagonal 10+j, off-diagonals `1/(d+1+0.5j) - 0.1d`. Run `dpbstf( 'row-major', 'upper', 6, 2, AB, 7 )`. Band entry (r=0, j=2) stays at its input 0.05, where the column-major call (fixture-checked against Fortran) gives 0.015811388300841892. zpbstf fails the same way at (r=0, j=4).
 - **Root cause**: dpbstf.f has `KLD = MAX( 1, LDAB-1 )`, the step along a band anti-diagonal (one column right, one row up). The JS wrote it as `max( 1, sa2 - sa1 )`. In column-major that is LDAB-1 ≥ 1, as in Fortran. In row-major (sa1 = LDAB, sa2 = 1) it is 1-LDAB < 0, so the clamp replaced it with 1, and the dscal/dsyr/zher/zlacgv calls on the anti-diagonal walked the wrong elements. dpbtf2 has the same KLD, but its translation used the signed `sa2 - sa1` and was correct.
 - **Bug class**: a Fortran guard on a leading-dimension expression, translated literally into a stride expression that can be negative. `MAX(1, ...)` exists only for LDAB = 1; on a signed stride it changes the stride itself.
@@ -2928,16 +2928,16 @@ Keep entries short. Newest first.
 - **Wrong `stride2offset` length that hangs instead of failing**: dlarrb's LLD and dlarrj's E2 have N-1 elements, but the wrapper offset them by N. With a negative stride the routine reads one element past the end. In these bisection routines the NaN it reads makes the loop run forever, so the old code hangs rather than throwing. The regression tests wrap the array in a guard that throws on an out-of-bounds read.
 - **A spec length that copied the reference's docs, not its code**: dlarrb's WGAP is documented as (N-1), but `RGAP = WGAP( II )` reaches WGAP(N) on a valid call (ILAST = N, OFFSET = 0). The caller dlarrv documents it as (N). `spec/overrides/dlarrb.json` now records N. Where a reference's argument docs and its code disagree on a length, the code (and the caller's docs) decide.
 - **A nullable WORK that was never allocated**: dstqrb documented `WORK` as `(Float64Array|null)`, but it only validated the length and threw on null. This is the dsapps/dseigt class from the ticket 0022 PR.
-- **A stale zero-size output**: dlarfg, zlarfg and zlarfgp (`tau`), and dgelss (`rank`), repeated the quick return in `ndarray.js` (and zlarfgp's wrapper) without the reference's `TAU = ZERO` / `RANK = 0`. A caller's previous value came back.
+- **A stale zero-size output**: dlarfg, zlarfg and zlarfgp (`tau`), and dgelss (`rank`), repeated the quick return in `strided.js` (and zlarfgp's wrapper) without the reference's `TAU = ZERO` / `RANK = 0`. A caller's previous value came back.
 - **What allowed it**:
   - Both checks ran only on modules a PR touched, so these modules' wrapper paths had never been replayed.
   - The replay compares the two entry points with each other, so a quick return both share is invisible to it (ticket 0099).
   - The existing zero-size tests started `tau` and `rank` at 0, so a skipped write of 0 passed them.
-- **Where else**: ticket 0099's reproduce lists five more `ndarray.js` quick returns whose spec says the reference sets an output.
+- **Where else**: ticket 0099's reproduce lists five more `strided.js` quick returns whose spec says the reference sets an output.
 
 ## 2026-11-25 — Declared workspace minimums too small for what base.js uses, in 32 modules (ticket 0096)
 
-- **Found by**: the new `min-work` replay variant, which replays every recorded `ndarray.js` call with each workspace cut to the minimum `ndarray.js` itself demands. dggsvd3 was found first, while its example was being written (ticket 0094). Then direct tests at sizes past the blocking threshold, which the replay cannot reach. Each fix has a regression test that fails, or hangs, on the old code.
+- **Found by**: the new `min-work` replay variant, which replays every recorded `strided.js` call with each workspace cut to the minimum `strided.js` itself demands. dggsvd3 was found first, while its example was being written (ticket 0094). Then direct tests at sizes past the blocking threshold, which the replay cannot reach. Each fix has a regression test that fails, or hangs, on the old code.
 - **Reproduce** (dggsvd3): M = N = P = 3, A = [1,2,3,4,5,6,7,8,10], B = [2,0,1,1,3,0,0,1,4] column-major. With WORK of 6 it returned info = 0, L = 1 and alpha = 0; with WORK of 11 or more, L = 3.
 - **Bug classes**:
   - **A callee assumed to allocate its own workspace**: dggsvp3 and zggsvp3 believed xGEQP3 allocates internally, and checked only max(1, M, N, p).
@@ -2948,7 +2948,7 @@ Keep entries short. Newest first.
     - dgeev, dgees, zgees, dgeevx, zgeevx and zgeev (through dgehrd/zgehrd), dgelss and zgelss, dormlq, the dlaqr2/3 family, the dlaqr0/4 family (whose AED window cap assumes a 2·nw callee), and dhseqr/zhseqr, which forward WORK to dlaqr0/zlaqr0;
     - the overrun reads `undefined`, which becomes NaN, and the QR iteration then spins to itmax, so zgeev showed up as a replay timeout.
 - **What allowed it**:
-  - `workspace-guard` checks only that the wrapper allocates at least the `ndarray.js` minimum;
+  - `workspace-guard` checks only that the wrapper allocates at least the `strided.js` minimum;
   - `harness:assertWorkspaceSufficient` ran only where a test called it;
   - a typed array silently drops writes past its end, so a short WORK never throws.
 - **Where else**: the `min-work` variant now gates every module, but only at the sizes its tests reach. Blocked paths start past about 33, where most tests don't go (ticket 0100).
@@ -2972,13 +2972,13 @@ Keep entries short. Newest first.
 - **Bug classes**:
   - **A block size fixed where the reference shrinks it**: the dgeqrf, dorgqr, dormqr, dgehrd, dgeqp3 and dsytrf_rk/rook/aa families, and dtzrzf, all partitioned WORK on NB = 32 whatever its length.
   - **A WORK layout of the JS's own**: dgeqrf, dgeqlf, dgerqf and their z twins kept T after `LDWORK*NB` (needing `+ NB*NB`); dgelqf and dtzrzf allocated T inside base.js on every call; zgeqp3 placed F at a fixed offset (needing `(N+2)*NB`). The reference keeps T in `WORK(1:IB,1:IB)` at LDWORK; the dormqr family and dgehrd keep it in a TSIZE part.
-  - **Only the large-workspace branch translated**: dgesvd had only its fast branches (and NaN at the reference's minimum, hidden by an inflated `ndarray.js` minimum); zgesvd lacked 16 of its 20 paths.
+  - **Only the large-workspace branch translated**: dgesvd had only its fast branches (and NaN at the reference's minimum, hidden by an inflated `strided.js` minimum); zgesvd lacked 16 of its 20 paths.
   - **A reference sizing bug**: DGEQP3 sizes its blocked path with `2*SN + (SN+1)*NB` and shrinks NB with `(LWORK-2*SN)/(SN+1)`, but DLAQPS uses `2N + (SN+1)*JB`, so with NFXD fixed columns a WORK near that bound is overrun by 2·NFXD (200x200, 10 fixed columns, LWORK = 6492: NaN). The JS uses 2N.
   - **Found alongside**: zgeqp3 used NX = 0 where ILAENV(3) is 128 (ticket 0049 for the rest); dtrevc3 hoisted SMLNUM to module scope as if N = 1 (the reference scales by N); dsysv returned before factoring when NRHS = 0; the rook-pivot panels' miscopy (ticket 0102, entry above); workspace-guard matched only an upper-case `WORK`, so 16 wrappers whose parameter is `work` (dgeev, dgels, dgesvd, dhseqr, ...) were never guarded. Lowering minimums to the reference's exposed two layout bugs the raised minimums had hidden: zggev handed zhgeqz and ztgevc WORK from N (short of ztgevc's 2N), and dgeevx without vectors asked dhseqr for eigenvalues only where the reference asks for the Schur form whenever SENSE needs dtrsna, so RCONDV was wrong for SENSE = right-vectors (0.170 for 0.187). The replay harness's `describe()` crashed on a recorded callback (zgees's `select`), so a mismatch there was reported as an ERROR; it now describes callbacks and option objects (`test/harness/test.harness.js`).
 - **What allowed it**:
   - nothing compared a base.js with the reference's path selection; the spec had no record that the reference adapts (now spec `adaptive`, generated, and `lint:workspace-adaptive`, CONVENTIONS W6);
   - the `min-work` replay only reaches the sizes tests use, and blocked paths start past 32 (dgeqp3: past 128);
-  - `ndarray.js` minimums inflated to the always-blocked need made a short WORK throw instead of exposing the overrun.
+  - `strided.js` minimums inflated to the always-blocked need made a short WORK throw instead of exposing the overrun.
 - **Testing notes**:
   - Blocked and unblocked runs differ by rounding, so the regression tests compare minimum and optimum WORK by tolerance or by property. dgeqrfp's Householder entries differ by about 6e-12 relative (dlarfgp's formula amplifies rounding) while both reconstruct A to 2e-14.
   - Pivoting routines (dsytrf_aa, xGEQP3 callers such as zggsvp3) can pick different pivots on near ties between paths. The reference does the same, so those outputs are spec `workDependent`, and tests compare residuals or invariants (generalized singular values).
@@ -3018,13 +3018,13 @@ Keep entries short. Newest first.
   - **The reference's own size too small for its callees**: DLAMTSQR's SIDE = 'R' LW = MB*NB, but DGEMQRT/DTPMQRT address M*NB (ZLAMTSQR has M*NB). The JS allocates the larger; the check, which compares with the reference's figure, cannot see this class.
   - **Validation the reference doesn't make**: dlamswlq/dlamtsqr rejected mb < 1 / nb < 1 and K > M for SIDE = 'L', and threw for SIDE = 'R', K > N even at N = 0 where the reference quick-returns; ztgsna demanded IWORK N+6 for N+2. SIDE = 'R', K > N still throws otherwise: the reference's callee rejects it or addresses outside C.
   - **The query's own coverage**: the generator first detected a query by an `LQUERY` variable, which missed dlaqr0/2/3/4, zlaqr0/2/3/4 and dlaqz4 (they test LWORK = -1 directly); it now detects the test itself. And it first skipped a routine it couldn't sweep, which `lint:escape-hatches` rejected: a routine with a query that can't be swept is now an error.
-- **What allowed it**: workspace-guard checked a null allocation against the `ndarray.js` minimum only, and the minimum was hand-written too; no per-routine optimum was recorded anywhere. The last two PRs found about twenty such wrappers only by reading code.
+- **What allowed it**: workspace-guard checked a null allocation against the `strided.js` minimum only, and the minimum was hand-written too; no per-routine optimum was recorded anywhere. The last two PRs found about twenty such wrappers only by reading code.
 - **Where else**: an optimum that depends on array contents beyond SELECT and 2x2 blocks would need its data swept; the generator's scan found only dtrsen, dtgsen, dtgsna, dtrevc3 and twins reading data before their query returns. Rows the reference's query accepts but the call itself rejects (DLAMSWLQ/DLAMTSQR SIDE = 'R', K > N) are reported as not run, not failed.
 
 ## 2026-11-26 — Hand-written workspace minimums disagreed with the reference's, in 46 modules (ticket 0016)
 
-- **Found by**: the new check `bin/workspace-minimum.mjs`, against the reference's minimum recorded by `bin/gen-lwmin.mjs` (compiled drivers, the lwkopt grid, LWORK bisected per workspace with the others ample). The minimum is the smallest length that neither the routine nor a callee rejects and past which nothing is written, on zero, seeded random and rank-deficient random data. The check replays each row through `ndarray.js` at that minimum and one below, with `base.js` stopped.
-- **Reproduce** (dtgsyl): M = N = 140, IJOB = 0, WORK of length 1: the old `ndarray.js` threw, demanding 2MN = 39200; the reference accepts 1 (only the two-round solve, IJOB 1/2 with TRANS = 'N', uses WORK).
+- **Found by**: the new check `bin/workspace-minimum.mjs`, against the reference's minimum recorded by `bin/gen-lwmin.mjs` (compiled drivers, the lwkopt grid, LWORK bisected per workspace with the others ample). The minimum is the smallest length that neither the routine nor a callee rejects and past which nothing is written, on zero, seeded random and rank-deficient random data. The check replays each row through `strided.js` at that minimum and one below, with `base.js` stopped.
+- **Reproduce** (dtgsyl): M = N = 140, IJOB = 0, WORK of length 1: the old `strided.js` threw, demanding 2MN = 39200; the reference accepts 1 (only the two-round solve, IJOB 1/2 with TRANS = 'N', uses WORK).
 - **Bug classes**:
   - **No check at all** on a workspace: d/z gsvj0/1, dlatrs3, zhetrd_he2hb past its quick return, the IWORK of dstevr/dsyevr/dsyevx/zheevx/ztgsyl/ztgsen, the RWORK of zheev/zheevx and the GSVD routines.
   - **A check skipped on an edge**: N = 1 (d/z sytrf_aa, zheev, zheevx, dtgexc), no reflectors (d/z orghr/unghr, d/z ormhr/unmhr).
@@ -3037,43 +3037,43 @@ Keep entries short. Newest first.
   - A sampled minimum is a lower bound, so a JS minimum that covers a worst case the samples miss is set from the reference's callees (ticket 0106).
 - **Where else**: reads past the minimum, and paths only structured input reaches, are not measured (ticket 0106). Wrappers still pass a caller's WORK to base.js unchecked (ticket 0077).
 
-## 2026-11-26 — Wrappers handed a caller's short workspace to base.js; ndarray.js quick returns skipped outputs (ticket 0077)
+## 2026-11-26 — Wrappers handed a caller's short workspace to base.js; strided.js quick returns skipped outputs (ticket 0077)
 
-- **Found by**: the wrapper replay's new `short-work` variant (`test/harness/replay.js`): each recorded call replayed through the WRAPPER with each workspace one element shorter than the minimum `ndarray.js` demands (read from its RangeError for an empty workspace) must throw that RangeError. Run before the fix, 394 of 915 modules failed it (1,177 findings reported; 1,060 of them the wrapper accepting the short buffer, the rest a TypeError or a timeout from base.js reading `undefined`, e.g. zgbcon's "Real component must be a number", dsytrf_aa not returning).
-- **Reproduce** (dormql): `dormql( 'column-major', 'left', 'no-transpose', 4, 3, 2, A, 4, TAU, 1, C, 4, new Float64Array( 2 ) )` returned 0 with C wrong; ndarray.js demands max( 1, N ) = 3. The fixture `test/harness/fixtures/short-work/dormql` keeps the old wrapper.
+- **Found by**: the wrapper replay's new `short-work` variant (`test/harness/replay.js`): each recorded call replayed through the WRAPPER with each workspace one element shorter than the minimum `strided.js` demands (read from its RangeError for an empty workspace) must throw that RangeError. Run before the fix, 394 of 915 modules failed it (1,177 findings reported; 1,060 of them the wrapper accepting the short buffer, the rest a TypeError or a timeout from base.js reading `undefined`, e.g. zgbcon's "Real component must be a number", dsytrf_aa not returning).
+- **Reproduce** (dormql): `dormql( 'column-major', 'left', 'no-transpose', 4, 3, 2, A, 4, TAU, 1, C, 4, new Float64Array( 2 ) )` returned 0 with C wrong; strided.js demands max( 1, N ) = 3. The fixture `test/harness/fixtures/short-work/dormql` keeps the old wrapper.
 - **Bug classes**:
-  - **Validation hand-copied into two layers**: 452 wrappers called base.js; 12 carried their own copy of a workspace check (dtbcon, zunmlq, …), the rest none. Fixed by D5d: the wrapper calls ndarray.js (`bin/codemod-wrapper-ndarray.mjs`, `lint:wrapper-calls-ndarray`).
-  - **An ndarray.js quick return that skips an output the reference writes**: dporfs and dptrfs returned 0 at N = 0 before base.js's quick return, which (as the reference) zeroes FERR(1:NRHS) and BERR(1:NRHS). Hidden while wrappers called base.js; found by a strengthened `zero-size` variant that compares ndarray.js with base.js at each zero dimension with every non-workspace float array filled with the same sentinel (a recorded FERR already 0 had hidden it).
-  - **ndarray.js demanding more than the reference at a zero dimension**: d/z sytri_rook, zhetri_rook required max( 1, N ) for WORK( N ) (W3 forbids it).
-  - **Null-branch allocations below ndarray.js's minimum at N = 0**: d/z lansb, lansf, lansp, lantb, lantp, zlanhp, zlansp and d orgtsqr(_row) allocated 0 elements where ndarray.js (the reference's MAX(1,LWORK) extent) wants 1; invisible while the wrapper called base.js.
+  - **Validation hand-copied into two layers**: 452 wrappers called base.js; 12 carried their own copy of a workspace check (dtbcon, zunmlq, …), the rest none. Fixed by D5d: the wrapper calls strided.js (`bin/codemod-wrapper-strided.mjs`, `lint:wrapper-calls-strided`).
+  - **An strided.js quick return that skips an output the reference writes**: dporfs and dptrfs returned 0 at N = 0 before base.js's quick return, which (as the reference) zeroes FERR(1:NRHS) and BERR(1:NRHS). Hidden while wrappers called base.js; found by a strengthened `zero-size` variant that compares strided.js with base.js at each zero dimension with every non-workspace float array filled with the same sentinel (a recorded FERR already 0 had hidden it).
+  - **strided.js demanding more than the reference at a zero dimension**: d/z sytri_rook, zhetri_rook required max( 1, N ) for WORK( N ) (W3 forbids it).
+  - **Null-branch allocations below strided.js's minimum at N = 0**: d/z lansb, lansf, lansp, lantb, lantp, zlanhp, zlansp and d orgtsqr(_row) allocated 0 elements where strided.js (the reference's MAX(1,LWORK) extent) wants 1; invisible while the wrapper called base.js.
   - **Callers sizing workspaces below the reference's minimum**: tests of dsbgv (WORK 8 for 3N = 9), ztgsna (WORK 1 for 2N² = 2), dtgsen (98 for its 99 at IJOB = 1), the examples/READMEs of d/z sytri_3x, zhetri_3x (6 for (N+NB+1)(NB+3) = 12), the dorbdb3/zunbdb3 benchmarks (max(P,Q) for max(P, M-P-1, Q-1)+1).
-- **Testing notes**: the recorder (`replay-record.mjs`) wraps ndarray.js, so once the wrapper calls it, the wrapper's own calls were recorded too and crowded the tests' calls out of the sample; it now skips a call whose caller frame is the module's wrapper. The `zero-size` wrapper-vs-ndarray comparison no longer reaches base.js, hence the added ndarray-vs-base comparison.
-- **Where else**: 263 ndarray.js files return early at a zero dimension; the `zero-size` variant samples only the first four recorded calls and their positive dimensions, so a skipped output on another path is not seen. The ARPACK wrappers (dsaupd, dseupd, dsaup2, …) kept their own checks on `workd`/`workl`, two of which ndarray.js lacked (dsaup2 `workl`, dseupd `workd`); both are now in ndarray.js. 75 declared-extent workspaces (IWORK, RWORK, BWORK) have no ndarray.js check at all, so `short-work` cannot reach them (ticket 0107).
+- **Testing notes**: the recorder (`replay-record.mjs`) wraps strided.js, so once the wrapper calls it, the wrapper's own calls were recorded too and crowded the tests' calls out of the sample; it now skips a call whose caller frame is the module's wrapper. The `zero-size` wrapper-vs-strided comparison no longer reaches base.js, hence the added strided-vs-base comparison.
+- **Where else**: 263 strided.js files return early at a zero dimension; the `zero-size` variant samples only the first four recorded calls and their positive dimensions, so a skipped output on another path is not seen. The ARPACK wrappers (dsaupd, dseupd, dsaup2, …) kept their own checks on `workd`/`workl`, two of which strided.js lacked (dsaup2 `workl`, dseupd `workd`); both are now in strided.js. 75 declared-extent workspaces (IWORK, RWORK, BWORK) have no strided.js check at all, so `short-work` cannot reach them (ticket 0107).
 
 ## 2026-11-26 — The replay timed out a valid call whose cost depends on its workspace (dlaqr0, ticket 0077 PR)
 
 - **Found by**: CI's `Wrapper replay (changed modules)` on the D5d PR: `REJECTED dlaqr0 null-work column-major: did not return within 2000 ms`. Locally it passed at 1.4 s, so it timed out only on the slower runner.
 - **Reproduce**: `REPLAY_CALL_MS=300 node bin/wrapper-replay.mjs dlaqr0 --check --no-cache` on the old `replay.js`; or the self-test "a routine that does more work with more workspace" in `test/harness/test.harness.js`, with `budgetFloorMs: 50`. Real scalar, dense storage, wantt = wantz = true, N = 300 cyclic shift, recorded WORK of length 1.
-- **Root cause**: every call made from a recorded call had a watchdog budget of max(2 s, 50 × the recorded call's time). The recorded call was dlaqr0's ticket 0016 test with WORK = 1, where it, like the reference, makes no progress and returns INFO = N in about 16 ms. The null-work variant gives it the wrapper's optimal WORK, and it then solves the problem, which takes about 100 times longer. That is legitimate (W6, spec `returns.workDependent`). It was hidden until this PR's recorder change stopped the wrapper's own ndarray.js calls from crowding that test call out of the sample.
+- **Root cause**: every call made from a recorded call had a watchdog budget of max(2 s, 50 × the recorded call's time). The recorded call was dlaqr0's ticket 0016 test with WORK = 1, where it, like the reference, makes no progress and returns INFO = N in about 16 ms. The null-work variant gives it the wrapper's optimal WORK, and it then solves the problem, which takes about 100 times longer. That is legitimate (W6, spec `returns.workDependent`). It was hidden until this PR's recorder change stopped the wrapper's own strided.js calls from crowding that test call out of the sample.
 - **Bug class**: harness assumption. A variant's cost was assumed to track the recorded call's, but a variant that changes only a workspace can change how much work the routine does.
-- **Fix**: null-work (the wrapper call and its sized ndarray.js comparison) and min-work keep the recorded valid inputs, so they get the recorded call's own cap (60 s). The tight budget stays for the domain probes it exists for (ticket 0070).
+- **Fix**: null-work (the wrapper call and its sized strided.js comparison) and min-work keep the recorded valid inputs, so they get the recorded call's own cap (60 s). The tight budget stays for the domain probes it exists for (ticket 0070).
 - **Where else**: any routine whose algorithm or blocking depends on the workspace size (d/z laqr0/laqr4, the blocked drivers that fall back to unblocked code under W6). The `exact` and `zero-size` budgets are unchanged; `exact` repeats the recorded call, so its cost does match.
 
 ## 2026-11-26 — 75 workspaces had no length check, 7 more only on some paths (ticket 0107)
 
-- **Found by**: the new lint rule `workspace-length-guard` (every spec workspace whose `minLength.js` is known has a guard in `ndarray.js` that throws `RangeError`) and `bin/workspace-minimum.mjs` with `below declared` made a failure (accepting less than a declared extent at non-zero dimensions).
-- **Reproduce** (zpbsvx, complex, dense band storage, FACT = 'N', UPLO = 'U', N = 3, KD = 1, NRHS = 1, AB = [ 0, 4; 1+i, 4; 1-i, 4 ], B = [ 1, 2, 3 ]): with `RWORK = new Float64Array( 1 )` the old `ndarray.js` (and base.js) returned INFO = 0 with RCOND = 0.3246 instead of 0.2574, and FERR = BERR = NaN; RWORK( N ) was never checked. Now RangeError `RWORK array must have at least 3 elements from offset 0`.
+- **Found by**: the new lint rule `workspace-length-guard` (every spec workspace whose `minLength.js` is known has a guard in `strided.js` that throws `RangeError`) and `bin/workspace-minimum.mjs` with `below declared` made a failure (accepting less than a declared extent at non-zero dimensions).
+- **Reproduce** (zpbsvx, complex, dense band storage, FACT = 'N', UPLO = 'U', N = 3, KD = 1, NRHS = 1, AB = [ 0, 4; 1+i, 4; 1-i, 4 ], B = [ 1, 2, 3 ]): with `RWORK = new Float64Array( 1 )` the old `strided.js` (and base.js) returned INFO = 0 with RCOND = 0.3246 instead of 0.2574, and FERR = BERR = NaN; RWORK( N ) was never checked. Now RangeError `RWORK array must have at least 3 elements from offset 0`.
 - **Bug classes**:
   - **No check at all** on a declared workspace with no length argument: 74 workspaces in 69 modules (plus dsband's IWORK, declared `IWORK( * )` and so with no spec minimum; its doc's N is now an override), IWORK( N ) in the d `*con`/`*rfs`/`*svx` routines, RWORK( N )/( 2*N ) in the z siblings, BWORK( N ) in d/z gees, IWORK( 5*N ) in the d `*evx`/`*gvx` and z `*evx`/`*gvx`, zlacrm/zlarcm RWORK( 2*M*N ), dlaebz IWORK( MMAX ), dtgsna IWORK( N+6 ). Fixed by `bin/codemod-workspace-guard.mjs` from the spec's `minLength.js`.
   - **A check only on the paths that reference the workspace**, below the declared extent elsewhere: dggevx IWORK/BWORK and zggevx IWORK/BWORK (only for the SENSE values that use them), dtrsna and ztgsna IWORK (only for JOB = 'V'/'B'), dsyevx IWORK (none at N = 1). Now each demands the declared extent on every path but N = 0.
   - **Callers sized to the old checks**: tests of dgbrfs and zpprfs (NRHS = 0 with IWORK/RWORK of 1 for N = 4 / 3), dggevx (asserted the old `Iwork`/`Bwork` messages), dsyevx (asserted that N = 1 needs no IWORK), zggevx (IWORK/BWORK of 1 with SENSE = 'N'), ztgsna (IWORK `null` and of length 1 at N = 1).
-- **What allowed it**: `conf:work-assert` required a guard for `WORK` only. W3 let `workspace-minimum` accept less than a declared extent as "reported", and most of these routines have no row in `data/fortran-lwmin.json` anyway. The replay's `short-work` variant reads the minimum from ndarray.js's own RangeError, so with no guard it had no minimum and skipped the workspace: over the 69 modules it now runs 2,095 more variants (7,103 to 9,198), with no mismatch.
+- **What allowed it**: `conf:work-assert` required a guard for `WORK` only. W3 let `workspace-minimum` accept less than a declared extent as "reported", and most of these routines have no row in `data/fortran-lwmin.json` anyway. The replay's `short-work` variant reads the minimum from strided.js's own RangeError, so with no guard it had no minimum and skipped the workspace: over the 69 modules it now runs 2,095 more variants (7,103 to 9,198), with no mismatch.
 - **Where else**: zggevx's four guards used a message (`` `WORK` must have at least ... (stride ``) the replay cannot parse, so `min-work`/`short-work` skipped them; now canonical. 23 other modules still have such messages (ticket 0108). A workspace whose spec `minLength` is null (zggevx RWORK) is outside the rule. The guard is only as right as the spec's `minLength`, and modules without a `data/fortran-lwmin.json` row are checked against nothing behavioral but the replay.
 
 ## 2026-11-27 — zlahef's upper row-max skipped row K; found once zhetrf's guard message became readable (ticket 0108)
 
 - **Found by**: the wrapper replay's `min-work` variant on zhetrf. It had always skipped zhetrf, because the guard's message (`` `WORK` must have at least 1 element starting at offset %d ``) gave it no minimum. Once the 24 guards were made canonical, it reported `zhetrf min-work WORK=1 (of 490): ... argument 6[4] -5 vs 4`, and the same at WORK 140.
-- **Reproduce**: zhetrf, complex, dense, UPLO = 'U', N = 66, the seeded LCG Hermitian matrix of `test/fortran/test_zhetrf.f90` (seed 1, entries in [-0.5, 0.5)), WORK = 66×64 or 66×2. Tests `zhetrf: upper_66_blocked_nb64/nb2 ...` in `lib/lapack/zhetrf/test/test.ndarray.js` fail on the old zlahef. The recorded calls came from `test.validate.js`'s random Hermitian N = 70 at WORK 490 and 140 (NB = 7 and 2).
+- **Reproduce**: zhetrf, complex, dense, UPLO = 'U', N = 66, the seeded LCG Hermitian matrix of `test/fortran/test_zhetrf.f90` (seed 1, entries in [-0.5, 0.5)), WORK = 66×64 or 66×2. Tests `zhetrf: upper_66_blocked_nb64/nb2 ...` in `lib/lapack/zhetrf/test/test.strided.js` fail on the old zlahef. The recorded calls came from `test.validate.js`'s random Hermitian N = 70 at WORK 490 and 140 (NB = 7 and 2).
 - **Root cause**: in the upper branch, `lib/lapack/zlahef/lib/base.js:163` searched the row max with `izamax( k - imax - 1, ... )`. The reference's `IZAMAX( K-IMAX, W( IMAX+1, KW-1 ), 1 )` covers rows IMAX+1..K, i.e. `k - imax` elements 0-based. Row K was never compared, so a pivot decision could differ from the reference's. The reference gives the same pivots at every LWORK on these matrices. The old JS differed from it in 49 of 70 pivots at every NB ≥ 2, and nearly every random upper matrix with N > 64 triggers it. The factorization stayed valid (residual tests pass), but its pivots were not the reference's. dlasyf, zlasyf and every `_rook`/`_rk` sibling had it right; the copy two lines up (`zcopy( k - imax, ... )`) did too.
 - **Bug class**: 0-based off-by-one in a count, in a branch whose tests compared only with themselves.
 - **What allowed it**:
@@ -3087,9 +3087,9 @@ Keep entries short. Newest first.
 
 ## 2026-11-27 — NaN-blind comparison helpers in 11 test files passed results that were NaN; found by the first value-mutants survey (ticket 0093)
 
-- **Found by**: `bin/value-mutants.mjs zsyr`. Deleting `tempR = ...` or `tempI = ...` in either branch of zsyr's base.js (so the update multiplies by `undefined`, and A fills with NaN) survived every test, although `test.ndarray.js` compares A with Fortran fixtures. 11 of zsyr's 14 mutants survived.
+- **Found by**: `bin/value-mutants.mjs zsyr`. Deleting `tempR = ...` or `tempI = ...` in either branch of zsyr's base.js (so the update multiplies by `undefined`, and A fills with NaN) survived every test, although `test.strided.js` compares A with Fortran fixtures. 11 of zsyr's 14 mutants survived.
 - **Reproduce**: complex and real, dense, no harness scheme: `node bin/value-mutants.mjs zsyr` on the old test file reports the 8 `delete-stmt` survivors at lines 74–98. Any of the fixture tests (e.g. `zsyr: upper alpha=1`, N = 3) passes on a mutant whose A is all NaN.
-- **Root cause**: the test's helper checked `if ( Math.abs( actual - expected ) > tol ) { assert.fail(...) }`. Every comparison with NaN is false, so a NaN result never failed. The same helper, or an inline copy of it, was in `dlamswlq`, `dlamtsqr`, `dorgtsqr`, `zhetrd_he2hb`, `zhetrs`, `zsyr`, `zsytf2`, `zsytrf` (`test.ndarray.js` helpers) and `dlarft`, `dlarfy`, `dlarzt` (inline checks). Each now fails unless `Math.abs( actual - expected ) <= tol` holds (`if ( !( … <= tol ) )`). All 11 suites still pass, so no current result was NaN; the defect was in what the tests could see.
+- **Root cause**: the test's helper checked `if ( Math.abs( actual - expected ) > tol ) { assert.fail(...) }`. Every comparison with NaN is false, so a NaN result never failed. The same helper, or an inline copy of it, was in `dlamswlq`, `dlamtsqr`, `dorgtsqr`, `zhetrd_he2hb`, `zhetrs`, `zsyr`, `zsytf2`, `zsytrf` (`test.strided.js` helpers) and `dlarft`, `dlarfy`, `dlarzt` (inline checks). Each now fails unless `Math.abs( actual - expected ) <= tol` holds (`if ( !( … <= tol ) )`). All 11 suites still pass, so no current result was NaN; the defect was in what the tests could see.
 - **Bug class**: a test assertion that is vacuous for NaN. `assert.ok( err <= tol )` is safe; `if ( err > tol ) fail` and `assert.ok( !( err > tol ) )` are not.
 - **Also found in the same survey**: zaxpy, dscal and zsyr's upper loop survived `i < N` -> `i <= N`: the extra iteration writes one element past the N the call owns, and every test sized its arrays exactly, so the write fell off the end of the typed array. Tests now give a longer buffer and check the tail is untouched.
 - **Where else**: any test helper of the form `if ( Math.abs( a - b ) > tol )`, `if ( diff > tol )`, or `if ( relErr > tol )` followed by a throw. Test files are not linted (ticket 0081), so nothing stops a new one; value-mutants finds them only where a mutant makes the result NaN. Tests that size every array exactly cannot see writes past the end; give at least one test a longer, poisoned buffer.
@@ -3106,7 +3106,7 @@ Keep entries short. Newest first.
 ## 2026-11-27 — dgsvj0/zgsvj0 wrote SVA(0), outside the array, at N = 0; found by value-mutants triage (ticket 0110)
 
 - **Found by**: triaging `bin/value-mutants.mjs dgsvj0` survivors. `M < 0` -> `M <= 0` and `N < 0` -> `N <= 0` survived, so the N = 0 path was examined against the reference.
-- **Reproduce**: real and complex, dense, no harness scheme. `dgsvj0( 'no-v', 2, 0, A, 1, 2, 0, d, 1, 1, sva = [7,7,7], 1, 2, 0, V, 1, 1, 0, eps, sfmin, 1e-10, 3, work, 1, 0 )` returns 0 and leaves `sva = [7, NaN, 7]`: it wrote `sva[ offsetSVA - strideSVA ]`. zgsvj0 the same with Complex128Array A/d/V. Base with M = N = 0 does the same. Tests `dgsvj0: N = 0 (also with M = 0) returns 0 and writes nothing ...` (`test/test.js`) and `ndarray: N = 0 returns 0 and writes nothing ...` / `base: M = 0 and N = 0 returns 0` (zgsvj0 `test/test.ndarray.js`) fail on the old code.
+- **Reproduce**: real and complex, dense, no harness scheme. `dgsvj0( 'no-v', 2, 0, A, 1, 2, 0, d, 1, 1, sva = [7,7,7], 1, 2, 0, V, 1, 1, 0, eps, sfmin, 1e-10, 3, work, 1, 0 )` returns 0 and leaves `sva = [7, NaN, 7]`: it wrote `sva[ offsetSVA - strideSVA ]`. zgsvj0 the same with Complex128Array A/d/V. Base with M = N = 0 does the same. Tests `dgsvj0: N = 0 (also with M = 0) returns 0 and writes nothing ...` (`test/test.js`) and `strided: N = 0 returns 0 and writes nothing ...` / `base: M = 0 and N = 0 returns 0` (zgsvj0 `test/test.strided.js`) fail on the old code.
 - **Root cause**: the reference has no N = 0 quick return; it computes KBL = MIN(8,N) = 0 and NBL = N/KBL, an integer division by zero, so N = 0 is outside what the reference defines (xGESVJ quick-returns before calling it). The JS computes `( 0 / 0 ) | 0 = 0` blocks, skips every loop, and then runs the end-of-sweep `SVA(N)` update with N = 0, i.e. at index `offsetSVA - strideSVA` (and reads column `offsetA - strideA2` and `d[ offsetD - strideD ]`). Fixed with `if ( N === 0 ) return 0;` after the argument checks (`lib/lapack/dgsvj0/lib/base.js:145`, `lib/lapack/zgsvj0/lib/base.js:102`).
 - **Bug class**: write outside the caller's array on an empty problem, where the reference itself is undefined (integer division by zero), so no fixture could exist.
 - **What allowed it**: every test sized `sva` exactly, so at offset 0 the write went to index -1 of the typed array and vanished; zgsvj0's existing N = 0 test asserted only `info`.
@@ -3116,7 +3116,7 @@ Keep entries short. Newest first.
 ## 2026-11-27 — dlarrd went on after DLAEBZ failed to converge, where the reference returns INFO = IINFO; found while triaging value mutants (ticket 0110)
 
 - **Found by**: comparing `lib/lapack/dlarrd/lib/base.js` with `data/lapack-3.12.0/SRC/dlarrd.f` while triaging dlarrd's surviving value mutants (the survivors at the non-convergence branch `j > iout - 1 - iinfo`).
-- **Reproduce**: real, tridiagonal, no harness scheme, no seed: D = [ 1, 2, -1, 3, 1, 0.5, 4 ], E = [ 0, 0.5, 0.7, 0, 0, 1, 0 ], ISPLIT = [ 1, 4, 5, 7 ] (four blocks, two 1x1), RANGE = 'all', ORDER = 'entire', RELTOL = 0, PIVMIN = SAFMIN, GERS the block Gershgorin intervals. Reference (`given_r_reltol0` in `test/fixtures/dlarrd.jsonl`): INFO = 3, M = 1 (only the first 1x1 block). Old JS: INFO = 1, M = 7, with the 3x3 and 2x2 blocks' eigenvalues stored and their IBLOCK negated. Test `ndarray: reltol=0 cannot converge below one ulp: as in the reference, DLAEBZ's IINFO is returned ...` in `lib/lapack/dlarrd/test/test.ndarray.js` fails on the old code.
+- **Reproduce**: real, tridiagonal, no harness scheme, no seed: D = [ 1, 2, -1, 3, 1, 0.5, 4 ], E = [ 0, 0.5, 0.7, 0, 0, 1, 0 ], ISPLIT = [ 1, 4, 5, 7 ] (four blocks, two 1x1), RANGE = 'all', ORDER = 'entire', RELTOL = 0, PIVMIN = SAFMIN, GERS the block Gershgorin intervals. Reference (`given_r_reltol0` in `test/fixtures/dlarrd.jsonl`): INFO = 3, M = 1 (only the first 1x1 block). Old JS: INFO = 1, M = 7, with the 3x3 and 2x2 blocks' eigenvalues stored and their IBLOCK negated. Test `strided: reltol=0 cannot converge below one ulp: as in the reference, DLAEBZ's IINFO is returned ...` in `lib/lapack/dlarrd/test/test.strided.js` fails on the old code.
 - **Root cause**: after the bisection call (DLAEBZ, IJOB = 2) the reference has `IF( IINFO .NE. 0 ) THEN INFO = IINFO; RETURN`. The JS tested `iinfo < 0` (lib/lapack/dlarrd/lib/base.js:323), apparently borrowing DSTEBZ's handling, where a positive IINFO marks unconverged eigenvalues and the routine carries on. With that, the reference's dead branch (`J.GT.IOUT-IINFO`: NCNVRG, IB = -JBLK, INFO + 1) became live in JS.
 - **Bug class**: error-return condition narrowed (`.NE. 0` translated as `< 0`), copying a sibling routine's convention instead of the reference's.
 - **What allowed it**: the test for this input was written against the JS output (it asserted INFO = 1 and negative IBLOCK entries), not against a Fortran fixture; no fixture had an unconverged bisection; DLARRE, the reference caller, treats any nonzero INFO as failure, so no caller-level test noticed.
@@ -3125,7 +3125,7 @@ Keep entries short. Newest first.
 ## 2026-11-27 — dgeevx's N = 1 shortcut returned RCONDV = 1 where the reference returns `|A(1,1)|`, and wrote condition numbers SENSE did not ask for; found by value-mutants triage (ticket 0110)
 
 - **Found by**: triaging `node bin/value-mutants.mjs dgeevx` (94 of 143 mutants survived). Deleting `WI = ZERO`, `SCALE = ONE` or `RCONDV = ONE` in base.js's `if ( N === 1 )` block survived every test. The reference has no such block: for N = 1 it runs the general path, where DTRSNA's N = 1 case sets `SEP(1) = ABS(T(1,1))` and `S(1) = ONE`, each only when SENSE asks for it. A new Fortran battery in `test/fortran/test_dgeevx.f90` compared every output and failed on the old code.
-- **Reproduce**: real, dense, no harness scheme, N = 1, any BALANC, A = [-2.5], JOBVL = JOBVR = 'compute-vectors'. SENSE = 'both' gave RCONDV = 1; the reference gives 2.5. SENSE = 'right-vectors' also wrote RCONDE = 1, which the reference leaves unchanged. SENSE = 'eigenvalues' also wrote RCONDV = 1. With |A| scaled to 1e-150 or 1e150, RCONDV = 1 where the reference gives ~5e-151 / 5e149. Failing tests on the old code: `dgeevx: N = 1 runs the reference's path: ...` and the `bat_n1_*` battery cases in `lib/lapack/dgeevx/test/test.ndarray.js` (49 failures).
+- **Reproduce**: real, dense, no harness scheme, N = 1, any BALANC, A = [-2.5], JOBVL = JOBVR = 'compute-vectors'. SENSE = 'both' gave RCONDV = 1; the reference gives 2.5. SENSE = 'right-vectors' also wrote RCONDE = 1, which the reference leaves unchanged. SENSE = 'eigenvalues' also wrote RCONDV = 1. With |A| scaled to 1e-150 or 1e150, RCONDV = 1 where the reference gives ~5e-151 / 5e149. Failing tests on the old code: `dgeevx: N = 1 runs the reference's path: ...` and the `bat_n1_*` battery cases in `lib/lapack/dgeevx/test/test.strided.js` (49 failures).
 - **Root cause**: `lib/lapack/dgeevx/lib/base.js` had a hand-written N = 1 early return (old lines 199–218) that is not in the reference. It hard-coded RCONDE = RCONDV = 1 whenever SENSE != 'none'. The fix deletes the block, so N = 1 takes the reference's path; the reference's minimum WORK (3 or 7) suffices there.
 - **Bug class**: an invented special case that is not in the reference, giving a plausible constant (1) for an output whose reference value depends on the data.
 - **What allowed it**:

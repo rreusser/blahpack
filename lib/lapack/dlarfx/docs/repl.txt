@@ -44,7 +44,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, M, N, v, strideV, offsetV, tau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( side, M, N, v, strideV, offsetV, tau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
     Applies an elementary reflector to a general rectangular matrix, with
     loop unrolling when the reflector has order ≤ 10, using alternative
     indexing semantics.

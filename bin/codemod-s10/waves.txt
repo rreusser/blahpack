@@ -1,7 +1,7 @@
 # S10 migration waves, in the order they were run (one wave per line).
 # run-waves.sh from 51e0c6a35 reproduces lib/ except these hand edits made
 # after the codemod: M computed in dtrevc, dtrevc3, dtgevc, ztrevc, ztrevc3
-# (base.js; their test.ndarray.js assert it), and the dlagts TOL test/fixtures.
+# (base.js; their test.strided.js assert it), and the dlagts TOL test/fixtures.
 dlartg dlartgp dlartgs dlaev2 dlae2
 dlas2 dlasv2 dladiv dlaic1 dlag2
 dlags2 dlagv2 dlanv2 dlaln2 dlaqtr

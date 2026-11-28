@@ -52,7 +52,7 @@ interface Routine {
 	* @param tol - desired relative accuracy for a Ritz value to be considered "converged"
 	* @returns number of "converged" Ritz values
 	*/
-	ndarray( N: number, ritz: Float64Array, strideRITZ: number, offsetRITZ: number, bounds: Float64Array, strideBOUNDS: number, offsetBOUNDS: number, tol: number ): number;
+	strided( N: number, ritz: Float64Array, strideRITZ: number, offsetRITZ: number, bounds: Float64Array, strideBOUNDS: number, offsetBOUNDS: number, tol: number ): number;
 }
 
 /**

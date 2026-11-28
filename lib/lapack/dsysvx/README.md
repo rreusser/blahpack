@@ -105,12 +105,12 @@ dsysvx(
 - `RangeError` fifteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsysvx.ndarray(
+dsysvx.strided(
     fact, uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -264,7 +264,7 @@ console.log( info ); // eslint-disable-line no-console
 console.log( X ); // eslint-disable-line no-console
 console.log( rcond[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 4.0, 1.0, 2.0, 1.0, 5.0, 3.0, 2.0, 3.0, 6.0 ] );
 B = new Float64Array( [ 7.0, 9.0, 11.0 ] );
 AF = new Float64Array( N * N );
@@ -275,7 +275,7 @@ FERR = new Float64Array( nrhs );
 BERR = new Float64Array( nrhs );
 WORK = new Float64Array( 3 * N );
 IWORK = new Int32Array( N );
-info = dsysvx.ndarray( 'not-factored', 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+info = dsysvx.strided( 'not-factored', 'upper', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( X ); // eslint-disable-line no-console
 ```

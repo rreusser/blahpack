@@ -105,7 +105,7 @@ interface Routine {
 	* @param lworkl - length of `workl`
 	* @returns info (0 on success; a negative error code otherwise)
 	*/
-	ndarray( rvec: boolean, howmny: string, select: Array<boolean> | Uint8Array, strideSelect: number, offsetSelect: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, sigma: number, bmat: string, N: number, which: string, nev: number, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, ncv: number, v: Float64Array, strideV1: number, strideV2: number, offsetV: number, iparam: Array<number> | Int32Array, strideIparam: number, offsetIparam: number, ipntr: Array<number> | Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, lworkl: number ): number;
+	strided( rvec: boolean, howmny: string, select: Array<boolean> | Uint8Array, strideSelect: number, offsetSelect: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, sigma: number, bmat: string, N: number, which: string, nev: number, tol: number, resid: Float64Array, strideResid: number, offsetResid: number, ncv: number, v: Float64Array, strideV1: number, strideV2: number, offsetV: number, iparam: Array<number> | Int32Array, strideIparam: number, offsetIparam: number, ipntr: Array<number> | Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number, lworkl: number ): number;
 }
 
 /**

@@ -40,12 +40,12 @@ zlarfg( N, alpha, x, strideX, tau ) → Complex128Array
 
 **Returns** `Complex128Array`: `x`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) → Complex128Array
+zlarfg.strided( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -108,11 +108,11 @@ let tau = new Complex128Array( 1 );
 zlarfg( N, alpha, x, 1, tau );
 console.log( reinterpret( alpha, 0 ), reinterpret( x, 0 ), reinterpret( tau, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 alpha = new Complex128Array( [ 3.0, 1.0 ] );
 x = new Complex128Array( [ 1.0, -2.0, 4.0, 0.5 ] );
 tau = new Complex128Array( 1 );
-zlarfg.ndarray( N, alpha, 0, x, 1, 0, tau, 0 );
+zlarfg.strided( N, alpha, 0, x, 1, 0, tau, 0 );
 console.log( reinterpret( alpha, 0 ), reinterpret( x, 0 ), reinterpret( tau, 0 ) ); // eslint-disable-line no-console
 ```
 

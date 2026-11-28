@@ -93,12 +93,12 @@ zggbal(
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggbal.ndarray(
+zggbal.strided(
     job,
     N,
     A, strideA1, strideA2, offsetA,
@@ -235,11 +235,11 @@ let out = {
 };
 console.log( out, LSCALE, RSCALE ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 B = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 out = {
-	'info': zggbal.ndarray( 'both', N, A, 1, N, 0, B, 1, N, 0, ilo, ihi, LSCALE, 1, 0, RSCALE, 1, 0, WORK, 1, 0 ),
+	'info': zggbal.strided( 'both', N, A, 1, N, 0, B, 1, N, 0, ilo, ihi, LSCALE, 1, 0, RSCALE, 1, 0, WORK, 1, 0 ),
 	'ilo': ilo[ 0 ],
 	'ihi': ihi[ 0 ]
 };

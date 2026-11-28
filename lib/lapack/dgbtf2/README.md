@@ -58,12 +58,12 @@ dgbtf2( order, M, N, kl, ku, AB, LDAB, IPIV, strideIPIV ) → integer
 - `RangeError` seventh argument must be greater than or equal to `kl + ( ku + kl ) + 1` (column-major)
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgbtf2.ndarray(
+dgbtf2.strided(
     M, N, kl, ku,
     AB, strideAB1, strideAB2, offsetAB,
     IPIV, strideIPIV, offsetIPIV
@@ -159,7 +159,7 @@ let IPIV = new Int32Array( N );
 let info = dgbtf2( 'column-major', N, N, kl, ku, AB, LDAB, IPIV, 1 );
 console.log( info, AB, IPIV ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 AB = new Float64Array( [
 	0.0, 0.0, 4.0, -1.0,
 	0.0, -1.0, 4.0, -1.0,
@@ -167,7 +167,7 @@ AB = new Float64Array( [
 	0.0, -1.0, 4.0, 0.0
 ] );
 IPIV = new Int32Array( N );
-info = dgbtf2.ndarray( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
+info = dgbtf2.strided( N, N, kl, ku, AB, 1, LDAB, 0, IPIV, 1, 0 );
 console.log( info, AB, IPIV ); // eslint-disable-line no-console
 ```
 

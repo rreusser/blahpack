@@ -77,7 +77,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns result
 	*/
-	ndarray( uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	strided( uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

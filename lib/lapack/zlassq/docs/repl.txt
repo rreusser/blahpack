@@ -28,7 +28,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, x, stride, offset, scale, sumsq )
+{{alias}}.strided( N, x, stride, offset, scale, sumsq )
     Updates a sum of squares represented in scaled form using alternative
     indexing semantics.
 

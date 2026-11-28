@@ -54,12 +54,12 @@ dorgl2( order, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorgl2.ndarray(
+dorgl2.strided(
     M, N, K,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,
@@ -148,8 +148,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dorgl2( 'row-major', N, N, N, A, N, TAU, 1, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dorgl2.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dorgl2.strided( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

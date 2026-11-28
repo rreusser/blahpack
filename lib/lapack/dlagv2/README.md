@@ -68,12 +68,12 @@ dlagv2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlagv2.ndarray(
+dlagv2.strided(
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,
     alphar, strideALPHAR, offsetALPHAR,
@@ -166,7 +166,7 @@ const alphai = new Float64Array( 2 );
 const beta = new Float64Array( 2 );
 
 // Compute the Generalized Schur factorization:
-dlagv2.ndarray( A, 1, 2, 0, B, 1, 2, 0, alphar, 1, 0, alphai, 1, 0, beta, 1, 0, csl, snl, csr, snr ); // eslint-disable-line max-len
+dlagv2.strided( A, 1, 2, 0, B, 1, 2, 0, alphar, 1, 0, alphai, 1, 0, beta, 1, 0, csl, snl, csr, snr ); // eslint-disable-line max-len
 
 console.log( 'CSL:', csl[ 0 ] ); // eslint-disable-line no-console
 console.log( 'SNL:', snl[ 0 ] ); // eslint-disable-line no-console

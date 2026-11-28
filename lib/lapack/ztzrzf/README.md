@@ -58,12 +58,12 @@ Reduces a complex M-by-N (M <= N) upper trapezoidal matrix `A` to upper triangul
 - `RangeError` `N` must be greater than or equal to `M`
 - `RangeError` `LDA` must satisfy the layout constraint
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztzrzf.ndarray(
+ztzrzf.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,

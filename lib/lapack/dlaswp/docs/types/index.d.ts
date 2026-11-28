@@ -58,7 +58,7 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, inck: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	strided( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, inck: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
 }
 
 /**

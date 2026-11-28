@@ -91,12 +91,12 @@ Overwrites a real `M`-by-`N` matrix `C` with `op(Q)*C` or `C*op(Q)`, where `Q` i
 - `RangeError` fourteenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` `K` must satisfy `K <= N` when `side = 'right'` and `N > 0` (the reference's DGEMLQT rejects it)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlamswlq.ndarray(
+dlamswlq.strided(
     side, trans,
     M, N, K,
     mb, nb,
@@ -226,11 +226,11 @@ const T = new Float64Array( MB * 2 * K );
 const WORK = new Float64Array( MB * NB );
 const C = new Float64Array( X );
 
-dlaswlq.ndarray( K, X, MB, NB, A, 1, K, 0, T, 1, MB, 0, WORK, 1, 0 );
+dlaswlq.strided( K, X, MB, NB, A, 1, K, 0, T, 1, MB, 0, WORK, 1, 0 );
 
 // Apply Q from the left to a 6-by-1 vector e1 (Q is X-by-X = 6-by-6).
 C[ 0 ] = 1.0;
-dlamswlq.ndarray( 'left', 'no-transpose', X, 1, K, MB, NB, A, 1, K, 0, T, 1, MB, 0, C, 1, X, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+dlamswlq.strided( 'left', 'no-transpose', X, 1, K, MB, NB, A, 1, K, 0, T, 1, MB, 0, C, 1, X, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 console.log( C ); // eslint-disable-line no-console
 ```
 

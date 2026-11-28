@@ -94,12 +94,12 @@ dgeev(
 - `RangeError` fourteenth argument is invalid (rejected when `LDVR < 1 \|\| ( jobvr === "compute-vectors" && LDVR < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeev.ndarray(
+dgeev.strided(
     jobvl, jobvr,
     N,
     A, strideA1, strideA2, offsetA,
@@ -234,9 +234,9 @@ const WORK = new Float64Array( 4 * N );
 let out = dgeev( 'column-major', 'compute-vectors', 'compute-vectors', N, A, N, WR, 1, WI, 1, VL, N, VR, N, null );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = discreteUniform( N * N, -10, 10, opts );
-out = dgeev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, WR, 1, 0, WI, 1, 0, VL, N, 1, 0, VR, N, 1, 0, WORK, 1, 0 );
+out = dgeev.strided( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, WR, 1, 0, WI, 1, 0, VL, N, 1, 0, VR, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

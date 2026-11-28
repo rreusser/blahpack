@@ -63,12 +63,12 @@ ztpcon( order, norm, uplo, diag, N, AP, RCOND, WORK, RWORK ) → info: integer
 - `RangeError` fifth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztpcon.ndarray(
+ztpcon.strided(
     norm, uplo, diag,
     N,
     AP, strideAP, offsetAP,

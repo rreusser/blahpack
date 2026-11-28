@@ -43,12 +43,12 @@ dlabad( small, large ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlabad.ndarray( small, large ) → void
+dlabad.strided( small, large ) → void
 ```
 
 | Parameter | Type | Description |
@@ -100,10 +100,10 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 small[ 0 ] = 1;
 large[ 0 ] = 1;
-dlabad.ndarray( small, large );
+dlabad.strided( small, large );
 out = {
 	'small': small[ 0 ],
 	'large': large[ 0 ]

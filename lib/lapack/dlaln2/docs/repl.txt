@@ -59,7 +59,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ltrans, na, nw, smin, ca, A, strideA1, strideA2, offsetA, d1, d2, B, strideB1, strideB2, offsetB, wr, wi, X, strideX1, strideX2, offsetX, scale, xnorm )
+{{alias}}.strided( ltrans, na, nw, smin, ca, A, strideA1, strideA2, offsetA, d1, d2, B, strideB1, strideB2, offsetB, wr, wi, X, strideX1, strideX2, offsetX, scale, xnorm )
     Solves a 1-by-1 or 2-by-2 linear system of equations of the specified
     form, using alternative indexing semantics.
 

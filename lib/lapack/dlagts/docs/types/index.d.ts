@@ -70,7 +70,7 @@ interface Routine {
 	* @param tol - `tol`
 	* @returns result
 	*/
-	ndarray( job: string, N: number, a: Float64Array, strideA: number, offsetA: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number, y: Float64Array, strideY: number, offsetY: number, tol: number ): Float64Array;
+	strided( job: string, N: number, a: Float64Array, strideA: number, offsetA: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number, y: Float64Array, strideY: number, offsetY: number, tol: number ): Float64Array;
 }
 
 /**

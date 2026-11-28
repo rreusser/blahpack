@@ -14,12 +14,12 @@ import { extractAll } from '../docs/extract.js';
 
 const routines = extractAll();
 
-test( 'every routine has a layout signature called by its name and an offset signature called by name.ndarray', () => {
+test( 'every routine has a layout signature called by its name and an offset signature called by name.strided', () => {
 	const bad = [];
 	for ( const r of routines ) {
 		const kinds = Object.fromEntries( ( r.signatures || [] ).map( ( s ) => [ s.kind, s.call ] ) );
 		const name = r.name || r.routine;
-		if ( kinds.layout !== name || kinds.ndarray !== `${name}.ndarray` ) {
+		if ( kinds.layout !== name || kinds.strided !== `${name}.strided` ) {
 			bad.push( `${name}: ${JSON.stringify( kinds )}` );
 		}
 	}

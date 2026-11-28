@@ -63,7 +63,7 @@
   to already be sized correctly.
 
 - dgemlqt.js wrapper has 72.92% line coverage because most LD-validator
-  branches aren't exercised by the ndarray.js-routed tests. Adding a
+  branches aren't exercised by the strided.js-routed tests. Adding a
   test.dgemlqt.js LD-validator suite would close this, but the routine is
-  primarily consumed via the ndarray API and the wrapper logic mirrors
+  primarily consumed via the strided API and the wrapper logic mirrors
   dgemqrt's already-validated wrapper.

@@ -81,7 +81,7 @@ interface Routine {
 	* @param offsetWH - starting index for `WH`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, SR: Float64Array, strideSR: number, offsetSR: number, SI: Float64Array, strideSI: number, offsetSI: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, nh: number, WH: Float64Array, strideWH1: number, strideWH2: number, offsetWH: number ): Float64Array;
+	strided( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, SR: Float64Array, strideSR: number, offsetSR: number, SI: Float64Array, strideSI: number, offsetSI: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, nh: number, WH: Float64Array, strideWH1: number, strideWH2: number, offsetWH: number ): Float64Array;
 }
 
 /**

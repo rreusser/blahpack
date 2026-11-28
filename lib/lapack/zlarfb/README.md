@@ -85,12 +85,12 @@ zlarfb(
 - `TypeError` fourth argument must be one of the following: "forward", "backward"
 - `TypeError` fifth argument must be one of the following: "columnwise", "rowwise"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlarfb.ndarray(
+zlarfb.strided(
     side, trans, direct, storev,
     M, N, K,
     V, strideV1, strideV2, offsetV,
@@ -209,9 +209,9 @@ const WORK = new Complex128Array( N * K );
 zlarfb( 'column-major', 'left', 'no-transpose', 'forward', 'columnwise', M, N, K, V, M, T, K, C, M, WORK, N );
 console.log( reinterpret( C, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Complex128Array( [ 1.0, 2.0, 3.0, -1.0, 0.5, 0.0, -2.0, 1.0, 4.0, 0.5, 1.0, -1.5, 0.0, 3.0, 2.0, 2.0, -1.0, -1.0, 1.5, 0.5, 2.5, -0.5, 1.0, 1.0 ] );
-zlarfb.ndarray( 'left', 'no-transpose', 'forward', 'columnwise', M, N, K, V, 1, M, 0, T, 1, K, 0, C, 1, M, 0, WORK, 1, N, 0 );
+zlarfb.strided( 'left', 'no-transpose', 'forward', 'columnwise', M, N, K, V, 1, M, 0, T, 1, K, 0, C, 1, M, 0, WORK, 1, N, 0 );
 console.log( reinterpret( C, 0 ) );
 ```
 

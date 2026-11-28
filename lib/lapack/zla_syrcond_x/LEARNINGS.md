@@ -16,7 +16,7 @@
 
 ## Dependency interface surprises
 
-- `zsytrs` exists only in ndarray form (no layout wrapper needed here because
+- `zsytrs` exists only in strided form (no layout wrapper needed here because
   we already pass strides via the base entry point).
 - `zlacn2` uses the shared WORK vector for both `V` (at `offset + N`) and `X`
   (at `offset`), same pattern as `zla_gercond_x` and `zla_gercond_c`.

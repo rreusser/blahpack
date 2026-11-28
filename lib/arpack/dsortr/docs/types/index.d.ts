@@ -52,7 +52,7 @@ interface Routine {
 	* @param strideX2 - stride length for `x2`
 	* @param offsetX2 - starting index for `x2`
 	*/
-	ndarray( which: string, apply: boolean, N: number, x1: Float64Array, strideX1: number, offsetX1: number, x2: Float64Array, strideX2: number, offsetX2: number ): void;
+	strided( which: string, apply: boolean, N: number, x1: Float64Array, strideX1: number, offsetX1: number, x2: Float64Array, strideX2: number, offsetX2: number ): void;
 }
 
 /**

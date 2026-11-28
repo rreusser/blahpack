@@ -27,7 +27,7 @@ With no argument (full audit): `node bin/conformance.js --all --fast 2>&1 | tail
 Never run `npm test` or `npm run check` unpiped.
 
 `bin/lint-fix.sh <module>` applies the mechanical fixes. `bin/fix_wrapper_docs.py`
-propagates `base.js` `@param` docs to `ndarray.js` and the wrapper.
+propagates `base.js` `@param` docs to `strided.js` and the wrapper.
 
 ## 2. Rules with no gate yet: check by eye
 
@@ -35,19 +35,19 @@ These are marked (warn) or (unbuilt) in CONVENTIONS.md. Until their enforcer
 exists, a reviewer checks them:
 
 - **V2**: `base.js` validates nothing and imports no validators.
-- **V4** (ndarray side): `ndarray.js` checks every dimension `≥ 0`.
+- **V4** (strided side): `strided.js` checks every dimension `≥ 0`.
 - **V7**: zero-stride rejection matches the reference's `INCX = 0` checks.
 - **V8**: error messages use stdlib wording through `format()`.
 - **V9**: validator binding names (`isTransposeOperation`, not `isMatrixTranspose`).
 - **N4**: ESM, deep `lib/index.js` imports, `const`/`let`.
 - **F4**: `@license MIT` header.
 - **J2**: `@param`/`@returns`/`@throws` per validation; types match actual usage.
-- **J3**: runnable `@example` in `base.js` and `ndarray.js`.
+- **J3**: runnable `@example` in `base.js` and `strided.js`.
 - **C1**: complex data typed `Complex128Array`; stride/offset docs say "in complex elements".
 - **C3**: complex division/`abs`/`sqrt` through `lib/cmplx.js` (the gate only warns).
 - **S10**: output scalars are length-1 typed arrays of the right kind.
 - **S11**: return value convention.
-- **T3**: `test.ndarray.js` imports `ndarray.js` (never `base.js`) and covers each
+- **T3**: `test.strided.js` imports `strided.js` (never `base.js`) and covers each
   throw; `test.<routine>.js` covers both `order`s. Direct `base.js` tests go in
   `test.base.js`.
 
@@ -73,7 +73,7 @@ Compare `base.js` against the Fortran (`python bin/fortran_body.py data/.../<rou
 This is the silent-corruption trap that hides behind passing tests:
 
 ```js
-// ndarray.js
+// strided.js
 if ( jobu !== 'all' && jobu !== 'some' && ... ) throw ...;
 return base( jobu, ... );    // BUG: passes 'all' through
 

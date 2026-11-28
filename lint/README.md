@@ -51,11 +51,11 @@ lint/
     require-eslint.cjs         ← resolves eslint locally or globally
   rules/
     spec-signature/            ← the three signatures equal the spec projections
-    spec-prologue/             ← ndarray.js / <routine>.js prologue equals the generated one
+    spec-prologue/             ← strided.js / <routine>.js prologue equals the generated one
     spec-messages/             ← prologue error messages are the canonical ones
     spec-jsdoc/                ← @param / @throws / @returns agree with the spec
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
-    module-exports/            ← index.js exposes the default + ndarray surface
+    module-exports/            ← index.js exposes the default + strided surface
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
     <name>/                    ← every other rule, same shape
 ```
@@ -78,24 +78,24 @@ the `blahpack/` namespace, so the rules also run as part of normal linting.
 ## Rules
 
 The `spec-*` rules compare every signature-bearing file of a module (`base.js`,
-`ndarray.js`, `<routine>.js`) with what [`spec/<routine>.json`](../spec/README.md)
+`strided.js`, `<routine>.js`) with what [`spec/<routine>.json`](../spec/README.md)
 plus CONVENTIONS.md produce — exact, derived, no heuristics. `module-exports`
 covers `index.js`; the rest enforce the workspace strategy and catch
 scaffolding/convention defects:
 
 | Rule | Files | Enforces |
 | --- | --- | --- |
-| [`spec-signature`](rules/spec-signature/) | `base.js`, `ndarray.js`, `<routine>.js` | Parameter lists equal the spec projections (`bin/spec show`; CONVENTIONS S1–S5, S7, S10, D1–D3, D5c, W2). |
-| [`spec-prologue`](rules/spec-prologue/) | `ndarray.js`, `<routine>.js` | The validation prologue is the generated one: one check per reference `INFO = -k` check, in reference order (V1, V3–V7). Fix: `bin/codemod-spec/prologue.cjs`. |
-| [`spec-messages`](rules/spec-messages/) | `ndarray.js`, `<routine>.js` | Each prologue error carries its canonical message (V8). |
+| [`spec-signature`](rules/spec-signature/) | `base.js`, `strided.js`, `<routine>.js` | Parameter lists equal the spec projections (`bin/spec show`; CONVENTIONS S1–S5, S7, S10, D1–D3, D5c, W2). |
+| [`spec-prologue`](rules/spec-prologue/) | `strided.js`, `<routine>.js` | The validation prologue is the generated one: one check per reference `INFO = -k` check, in reference order (V1, V3–V7). Fix: `bin/codemod-spec/prologue.cjs`. |
+| [`spec-messages`](rules/spec-messages/) | `strided.js`, `<routine>.js` | Each prologue error carries its canonical message (V8). |
 | [`spec-ld-bounds`](rules/spec-ld-bounds/) | `<routine>.js` | Every LD bound thrown on is a spec check or `max( 1, <spec rows or cols> )` of the array (V5, V11). |
-| [`wrapper-calls-ndarray`](rules/wrapper-calls-ndarray/) | `<routine>.js` | A wrapper whose routine takes a workspace calls `ndarray.js`, not `base.js`, so a caller's workspace is validated (D5d). Fix: `bin/codemod-wrapper-ndarray.mjs`. |
-| [`workspace-length-guard`](rules/workspace-length-guard/) | `ndarray.js` | Every workspace whose spec minimum is known (`minLength.js`) has a length guard that throws `RangeError`, after the zero-dimension quick returns (W3). Fix: `bin/codemod-workspace-guard.mjs`. |
-| [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `ndarray.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
-| [`module-exports`](rules/module-exports/) | `index.js` | The module exposes both entry points — the layout-form default and its `ndarray` variant — with the default typed (there is no `main.js`; ticket 0124). |
-| [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
+| [`wrapper-calls-strided`](rules/wrapper-calls-strided/) | `<routine>.js` | A wrapper whose routine takes a workspace calls `strided.js`, not `base.js`, so a caller's workspace is validated (D5d). Fix: `bin/codemod-wrapper-strided.mjs`. |
+| [`workspace-length-guard`](rules/workspace-length-guard/) | `strided.js` | Every workspace whose spec minimum is known (`minLength.js`) has a length guard that throws `RangeError`, after the zero-dimension quick returns (W3). Fix: `bin/codemod-workspace-guard.mjs`. |
+| [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `strided.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
+| [`module-exports`](rules/module-exports/) | `index.js` | The module exposes both entry points — the layout-form default and its `strided` variant — with the default typed (there is no `main.js`; ticket 0124). |
+| [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `strided.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
-| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `ndarray.js` | CONVENTIONS D5a/D5b (workspace offset honored; stride rejected unless honored). |
+| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `strided.js` | CONVENTIONS D5a/D5b (workspace offset honored; stride rejected unless honored). |
 | [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
 | [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |

@@ -46,12 +46,12 @@ dsgets(
 
 - `TypeError` second argument must be one of the following: "LM", "SM", "LA", "SA", "BE"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsgets.ndarray(
+dsgets.strided(
     ishift,
     which,
     kev, np,

@@ -98,12 +98,12 @@ dtprfb(
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (row-major)
 - `RangeError` thirteenth argument must be greater than or equal to `max( 1, K )` (column-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtprfb.ndarray(
+dtprfb.strided(
     side, trans, direct, storev,
     M, N, K, l,
     V, strideV1, strideV2, offsetV,
@@ -227,8 +227,8 @@ const A = discreteUniform( 2 * 3, -10, 10, opts );
 const B = discreteUniform( 4 * 3, -10, 10, opts );
 const WORK = discreteUniform( 2 * 3, 0, 0, opts );
 
-// Apply the pentagonal reflector from the left using the ndarray interface:
-dtprfb.ndarray( 'left', 'no-transpose', 'forward', 'columnwise', 4, 3, 2, 1, V, 1, 4, 0, T, 1, 2, 0, A, 1, 2, 0, B, 1, 4, 0, WORK, 1, 2, 0 );
+// Apply the pentagonal reflector from the left using the strided interface:
+dtprfb.strided( 'left', 'no-transpose', 'forward', 'columnwise', 4, 3, 2, 1, V, 1, 4, 0, T, 1, 2, 0, A, 1, 2, 0, B, 1, 4, 0, WORK, 1, 2, 0 );
 console.log( A );
 console.log( B );
 ```

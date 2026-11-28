@@ -1,10 +1,10 @@
 # `workspace-addressing-honored`
 
 Caller-owned workspace contract (`CONVENTIONS.md` D5): `base.js` honors
-the declared offset; a declared stride is either rejected by `ndarray.js` or
+the declared offset; a declared stride is either rejected by `strided.js` or
 honored by `base.js`.
 
-**Files:** `base.js`, `ndarray.js`
+**Files:** `base.js`, `strided.js`
 
 Workspace is unobservable scratch, so its two addressing parameters have
 different jobs:
@@ -27,7 +27,7 @@ Reported in `base.js`, only when the array itself is referenced:
 Rebasing once (`WORK = WORK.subarray( offsetWork );`) honors the offset, and
 `reinterpret( W, 0 )` builds a view rather than forwarding.
 
-Reported in `ndarray.js`: a workspace whose `strideX` is neither compared
+Reported in `strided.js`: a workspace whose `strideX` is neither compared
 against `1` (the rejection) nor honored by the sibling `base.js`. Honored
 means the stride is read, the array is never forwarded with a literal stride,
 and every varying element index is scaled by a value derived from the stride.

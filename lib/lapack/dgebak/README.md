@@ -70,12 +70,12 @@ dgebak( order, job, side, N, ilo, ihi, SCALE, strideSCALE, M, V, LDV ) → integ
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgebak.ndarray(
+dgebak.strided(
     job, side,
     N,
     ilo, ihi,
@@ -189,8 +189,8 @@ const SCALE = discreteUniform( N, -10, 10, opts );
 let out = dgebak( 'column-major', 'both', 'left', N, N, N, SCALE, 1, N, V, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dgebak.ndarray( 'both', 'left', N, N, N, SCALE, 1, 0, N, V, N, 1, 0 );
+// Using the strided interface:
+out = dgebak.strided( 'both', 'left', N, N, N, SCALE, 1, 0, N, V, N, 1, 0 );
 console.log( out );
 ```
 

@@ -123,12 +123,12 @@ zggsvp3(
 - `RangeError` nineteenth argument is invalid (rejected when `LDV < 1 \|\| ( jobv === "compute-V" && LDV < p )`)
 - `RangeError` twenty-first argument is invalid (rejected when `LDQ < 1 \|\| ( jobq === "compute-Q" && LDQ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zggsvp3.ndarray(
+zggsvp3.strided(
     jobu, jobv, jobq,
     M, p, N,
     A, strideA1, strideA2, offsetA,
@@ -298,7 +298,7 @@ const WORK = new Complex128Array( 200 );
 const K = new Int32Array( 1 );
 const L = new Int32Array( 1 );
 
-const info = zggsvp3.ndarray( 'compute-U', 'compute-V', 'compute-Q', 2, 2, 2, A, 1, 2, 0, B, 1, 2, 0, 1e-8, 1e-8, K, L, U, 1, 2, 0, V, 1, 2, 0, Q, 1, 2, 0, IWORK, 1, 0, RWORK, 1, 0, TAU, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+const info = zggsvp3.strided( 'compute-U', 'compute-V', 'compute-Q', 2, 2, 2, A, 1, 2, 0, B, 1, 2, 0, 1e-8, 1e-8, K, L, U, 1, 2, 0, V, 1, 2, 0, Q, 1, 2, 0, IWORK, 1, 0, RWORK, 1, 0, TAU, 1, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info: %d, K: %d, L: %d', info, K[ 0 ], L[ 0 ] ); // eslint-disable-line no-console
 ```

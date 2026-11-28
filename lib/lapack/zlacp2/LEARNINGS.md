@@ -12,7 +12,7 @@
 
 ## Automation opportunities
 
-- The scaffold generator assumes both A and B have the same type (both Float64Array in the JSDoc). For mixed real/complex routines like zlacp2, the JSDoc types in ndarray.js and base.js needed manual correction (B should be Complex128Array).
+- The scaffold generator assumes both A and B have the same type (both Float64Array in the JSDoc). For mixed real/complex routines like zlacp2, the JSDoc types in strided.js and base.js needed manual correction (B should be Complex128Array).
 
 ## Coverage gaps
 

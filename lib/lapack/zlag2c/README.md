@@ -52,12 +52,12 @@ Converts a complex double precision matrix `A` to a complex single precision mat
 - `RangeError` fifth argument must be greater than or equal to max(1,M) (column-major) or max(1,N) (row-major)
 - `RangeError` seventh argument must be greater than or equal to max(1,M) (column-major) or max(1,N) (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlag2c.ndarray(
+zlag2c.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     SA, strideSA1, strideSA2, offsetSA

@@ -1,12 +1,12 @@
 /**
-* Wrapper replay (tickets 0065, 0068): every valid `ndarray.js` call a
+* Wrapper replay (tickets 0065, 0068): every valid `strided.js` call a
 * module's own tests make becomes a test of its `<routine>.js` wrapper.
 *
 * 1.  Record: the module's tests (except `test.replay.js`) run in a child
 *     process with `test/harness/replay-record.mjs` preloaded, which records
-*     the entry arguments of every `ndarray.js` call that returns normally.
+*     the entry arguments of every `strided.js` call that returns normally.
 * 2.  Map: `lint/lib/spec.cjs` projects the spec into both signatures
-*     (`baseGroups`), so each `ndarray` argument group (matrix: A, s1, s2,
+*     (`baseGroups`), so each `strided` argument group (matrix: A, s1, s2,
 *     o; vector: x, s, o; workspace) maps onto its wrapper arguments
 *     (A, LDA; x, stride; WORK). `order` comes from the matrix strides.
 * 3.  Replay each sampled call through the wrapper:
@@ -24,7 +24,7 @@
 *         this variant checks structure only: the same NaN pattern and return
 *         value (integer outputs too may differ, by pivot ties). Numeric cross-order agreement is the
 *         property harness's job (CONVENTIONS T7).
-*     -   `min-work`: each workspace cut to the minimum `ndarray.js` itself
+*     -   `min-work`: each workspace cut to the minimum `strided.js` itself
 *         demands (read from the RangeError it throws for an empty
 *         workspace), keeping the recorded leading elements. Results must
 *         agree as for `null-work`: a declared minimum below what base.js
@@ -38,15 +38,15 @@
 *         through the WRAPPER with that workspace one element shorter than
 *         the minimum (the recorded leading elements, other workspaces as
 *         recorded) must throw a RangeError naming the workspace: a wrapper
-*         that skips ndarray.js's check hands the short buffer to base.js,
+*         that skips strided.js's check hands the short buffer to base.js,
 *         which drops writes past its end and returns NaN. Skipped where the
-*         minimum is 0 (nothing shorter exists) or unknown (ndarray.js
+*         minimum is 0 (nothing shorter exists) or unknown (strided.js
 *         accepts an empty workspace for the call), and for calls whose
 *         recorded LDs the wrapper cannot express.
 *     -   `zero-size`: for the first few calls, each dimension set to 0 in
-*         turn; the wrapper and ndarray.js must agree (quick returns), and
-*         ndarray.js must agree with base.js where base.js returns (an
-*         ndarray.js quick return that skips an output the reference writes,
+*         turn; the wrapper and strided.js must agree (quick returns), and
+*         strided.js must agree with base.js where base.js returns (an
+*         strided.js quick return that skips an output the reference writes,
 *         as dptrfs's FERR/BERR at N = 0, ticket 0077).
 *     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of
 *         both forms (generated prologue checks and hand-written ones), a
@@ -60,7 +60,7 @@
 *         address the wrong elements. A wrapper length that differs from the
 *         spec's is reported as a disagreement.
 *
-* A wrapper that throws on a call `ndarray` accepted is `rejected`, unless
+* A wrapper that throws on a call `strided` accepted is `rejected`, unless
 * the recorded leading dimension is below the spec's row count (a storage
 * the wrapper cannot express, e.g. a one-column matrix with LD 1).
 */
@@ -125,7 +125,7 @@ class CallTimeout extends Error {
 
 // Fortran SAVE state (dlacon, zlacon): a base.js that keeps it exports it as
 // `SAVE`. Each call made from one recorded call starts from the state
-// snapshotted before that record's first call, so ndarray.js and the wrapper
+// snapshotted before that record's first call, so strided.js and the wrapper
 // see the same state (ticket 0074).
 let SAVED = null;
 let SAVED_AT = null;
@@ -155,7 +155,7 @@ const SAME = Symbol( 'same-storage return' );
 
 // A recorded callback (replay-record.mjs) rebuilt from its source. One that
 // cannot be rebuilt, or needs its closure, throws when called, so the call
-// counts as rejected by ndarray.js and is skipped.
+// counts as rejected by strided.js and is skipped.
 const CALLBACKS = new Map();
 function callback( src ) {
 	if ( !CALLBACKS.has( src ) ) {
@@ -251,7 +251,7 @@ function record( dir, routine ) {
 	const out = fs.mkdtempSync( path.join( os.tmpdir(), 'replay-' ) );
 	const env = Object.assign( {}, process.env, {
 		'NODE_OPTIONS': ( ( process.env.NODE_OPTIONS || '' ).replace( /--experimental-test-coverage/g, '' ) + ' --import=' + pathToFileURL( RECORDER ).href ).trim(),
-		'REPLAY_TARGET': pathToFileURL( path.join( dir, 'lib', 'ndarray.js' ) ).href,
+		'REPLAY_TARGET': pathToFileURL( path.join( dir, 'lib', 'strided.js' ) ).href,
 		'REPLAY_OUT': out
 	});
 	delete env.NODE_TEST_CONTEXT;
@@ -882,7 +882,7 @@ function validate( fn, names, args, checks, fns, done, optionValues ) {
 // --- replay --------------------------------------------------------------
 
 /**
-* Replays a module's recorded ndarray calls through its wrapper. Must run in
+* Replays a module's recorded strided calls through its wrapper. Must run in
 * a process where test/harness/replay-offsets.mjs instruments the wrapper
 * (see runReplay), or the length audit is skipped.
 *
@@ -903,12 +903,12 @@ async function replayModule( dir, options ) {
 		report.unmapped = 'no spec or no wrapper';
 		return report;
 	}
-	const nd = ( await import( pathToFileURL( path.join( dir, 'lib', 'ndarray.js' ) ).href ) ).default;
+	const nd = ( await import( pathToFileURL( path.join( dir, 'lib', 'strided.js' ) ).href ) ).default;
 	const baseNs = await import( pathToFileURL( path.join( dir, 'lib', 'base.js' ) ).href );
 	SAVED = ( baseNs.SAVE && typeof baseNs.SAVE === 'object' ) ? baseNs.SAVE : null;
 	SAVED_AT = null;
 	const wrapper = ( await import( pathToFileURL( wrapperFile ).href ) ).default;
-	const want = specLib.strided( spec ).map( ( s ) => s.toLowerCase() );
+	const want = specLib.wrapper( spec ).map( ( s ) => s.toLowerCase() );
 	const have = paramNames( wrapper ).map( ( s ) => s.toLowerCase() );
 	if ( want.join( ',' ) !== have.join( ',' ) ) {
 		report.unmapped = 'wrapper parameters (' + have.join( ', ' ) + ') differ from the spec projection (' + want.join( ', ' ) + ')';
@@ -925,7 +925,7 @@ async function replayModule( dir, options ) {
 	const lens = globalThis.__replayLens;
 	const ndNames = paramNames( nd );
 	const wNames = paramNames( wrapper );
-	const ndImports = await moduleImports( path.join( dir, 'lib', 'ndarray.js' ) );
+	const ndImports = await moduleImports( path.join( dir, 'lib', 'strided.js' ) );
 	const wImports = await moduleImports( wrapperFile );
 	const ndChecks = codeChecks( nd );
 	const wChecks = codeChecks( wrapper );
@@ -960,7 +960,7 @@ async function replayModule( dir, options ) {
 		try {
 			expRet = bounded( nd, expArgs );
 		} catch ( e ) {
-			skip( ( e instanceof CallTimeout ) ? 'ndarray did not return on replay' : 'ndarray threw on replay' );
+			skip( ( e instanceof CallTimeout ) ? 'strided did not return on replay' : 'strided threw on replay' );
 			continue;
 		}
 		budgetMs = Math.max( opts.budgetFloorMs, 50 * ( Date.now() - t0 ) );
@@ -1021,7 +1021,7 @@ async function replayModule( dir, options ) {
 		// null-work: workspaces allocated by the wrapper. A routine may choose
 		// its algorithm by workspace size (dgelss's paths), so when the wrapper's
 		// allocation sizes are known (instrumented run), the expected result is
-		// ndarray.js given workspaces of exactly those sizes.
+		// strided.js given workspaces of exactly those sizes.
 		if ( workspaceIdx.size ) {
 			const allocs = globalThis.__replayAllocs;
 			if ( allocs ) {
@@ -1072,9 +1072,9 @@ async function replayModule( dir, options ) {
 			}
 		}
 
-		// min-work: each workspace cut to the minimum ndarray.js itself
+		// min-work: each workspace cut to the minimum strided.js itself
 		// demands (ticket 0096). The minimum is read from the RangeError
-		// ndarray.js throws for an empty workspace; the call is replayed with
+		// strided.js throws for an empty workspace; the call is replayed with
 		// the recorded workspace's leading `min` elements (a workspace can
 		// carry state: ARPACK's workd/workl, ticket 0082). Results must agree
 		// as for `null-work`: a minimum too small for what base.js touches
@@ -1127,7 +1127,7 @@ async function replayModule( dir, options ) {
 					}
 					const sm = sThrew && /\b(\w+) array must have at least (\d+) elements/.exec( String( sThrew.message ) );
 					if ( !( sThrew instanceof RangeError ) || !sm || sm[ 1 ].toLowerCase() !== g.param.name.toLowerCase() ) {
-						report.mismatches.push( { 'variant': 'short-work ' + g.param.name + '=' + ( min - 1 ) + ' (minimum ' + min + ')', 'detail': ( sThrew ? 'the wrapper threw ' + ( sThrew.constructor && sThrew.constructor.name ) + ' (' + String( sThrew.message ).slice( 0, 120 ) + '), not the workspace RangeError' : 'the wrapper accepted a workspace shorter than the minimum ndarray.js demands' ), 'call': describe( rec, baseNames ) } );
+						report.mismatches.push( { 'variant': 'short-work ' + g.param.name + '=' + ( min - 1 ) + ' (minimum ' + min + ')', 'detail': ( sThrew ? 'the wrapper threw ' + ( sThrew.constructor && sThrew.constructor.name ) + ' (' + String( sThrew.message ).slice( 0, 120 ) + '), not the workspace RangeError' : 'the wrapper accepted a workspace shorter than the minimum strided.js demands' ), 'call': describe( rec, baseNames ) } );
 					}
 				}
 			}
@@ -1144,7 +1144,7 @@ async function replayModule( dir, options ) {
 			try {
 				mRet = bounded( nd, mArgs, RECORDED_MS );
 			} catch ( e ) {
-				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'ndarray.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
+				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'strided.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
 				return;
 			}
 			// An output the reference itself makes depend on the workspace
@@ -1277,7 +1277,7 @@ async function replayModule( dir, options ) {
 		}
 
 		// zero-size: each dimension set to 0 in turn (first few calls only);
-		// the wrapper and ndarray.js must agree, including on quick returns.
+		// the wrapper and strided.js must agree, including on quick returns.
 		if ( ldCoversRows && report.replayed <= 4 ) {
 			groups.forEach( function eachDim( g ) {
 				if ( g.param.role !== 'dim' || g.names.length !== 1 || !( plain[ g.at ] > 0 ) ) {
@@ -1294,11 +1294,11 @@ async function replayModule( dir, options ) {
 				}
 				if ( zThrew instanceof CallTimeout ) {
 					// The reference does not return: outside the routine's domain.
-					skip( 'zero-size probe outside the domain (ndarray did not return)' );
+					skip( 'zero-size probe outside the domain (strided did not return)' );
 					return;
 				}
-				// ndarray.js's quick returns against base.js's (the reference's):
-				// since the wrapper calls ndarray.js (D5d), the wrapper-vs-ndarray
+				// strided.js's quick returns against base.js's (the reference's):
+				// since the wrapper calls strided.js (D5d), the wrapper-vs-strided
 				// comparison below no longer reaches base.js at a zero dimension.
 				// Every floating-point array that is not a workspace is filled
 				// with the same sentinel for both calls, so an output the one
@@ -1330,7 +1330,7 @@ async function replayModule( dir, options ) {
 						const ber = sameStorageReturn( bArgs, bRet, pArgs, pRet ) ? SAME : bRet;
 						const bd = diff( snapshot( bArgs, workspaceIdx ), snapshot( pArgs, workspaceIdx ), ber, pRet, baseNames );
 						if ( bd ) {
-							report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0 (ndarray.js vs base.js)', 'detail': bd, 'call': describe( rec, baseNames ) } );
+							report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0 (strided.js vs base.js)', 'detail': bd, 'call': describe( rec, baseNames ) } );
 						}
 					}
 				}
@@ -1350,7 +1350,7 @@ async function replayModule( dir, options ) {
 				}
 				if ( zThrew || aThrew ) {
 					if ( Boolean( zThrew ) !== Boolean( aThrew ) ) {
-						report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0', 'detail': ( zThrew ? 'ndarray.js threw (' + zThrew.message.slice( 0, 80 ) + ') but the wrapper did not' : 'the wrapper threw (' + aThrew.message.slice( 0, 80 ) + ') but ndarray.js did not' ), 'call': describe( rec, baseNames ) } );
+						report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0', 'detail': ( zThrew ? 'strided.js threw (' + zThrew.message.slice( 0, 80 ) + ') but the wrapper did not' : 'the wrapper threw (' + aThrew.message.slice( 0, 80 ) + ') but strided.js did not' ), 'call': describe( rec, baseNames ) } );
 					}
 					return;
 				}
@@ -1368,7 +1368,7 @@ async function replayModule( dir, options ) {
 			const fns = Object.assign( {}, await validators(), ndImports );
 			const wFns = Object.assign( {}, await validators(), wImports );
 			const ndArgs = rec.map( decode );
-			valFindings.push( ...validate( nd, ndNames, ndArgs, ndChecks, fns, ndDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'ndarray' }, f ) ) );
+			valFindings.push( ...validate( nd, ndNames, ndArgs, ndChecks, fns, ndDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'strided' }, f ) ) );
 			// Recorded workspaces (not null), so a workspace can be the
 			// argument made invalid.
 			const wArgs = toWrapper( spec, groups, rec.map( decode ), order, null, true ) || toWrapper( spec, groups, rec.map( decode ), order, null, false );
@@ -1412,8 +1412,8 @@ async function replayModule( dir, options ) {
 	}
 	report.validation = valFindings;
 	const reached = ( done, list ) => list.filter( ( c, i ) => done.has( 'check:' + i ) ).length;
-	report.validationCovered = { 'ndarray': reached( ndDone, ndChecks ) + '/' + ndChecks.length, 'wrapper': reached( wDone, wChecks ) + '/' + wChecks.length };
-	report.validationUnreached = ndChecks.filter( ( c, i ) => !ndDone.has( 'check:' + i ) ).map( ( c ) => 'ndarray: ' + c.test ).concat( wChecks.filter( ( c, i ) => !wDone.has( 'check:' + i ) ).map( ( c ) => 'wrapper: ' + c.test ) );
+	report.validationCovered = { 'strided': reached( ndDone, ndChecks ) + '/' + ndChecks.length, 'wrapper': reached( wDone, wChecks ) + '/' + wChecks.length };
+	report.validationUnreached = ndChecks.filter( ( c, i ) => !ndDone.has( 'check:' + i ) ).map( ( c ) => 'strided: ' + c.test ).concat( wChecks.filter( ( c, i ) => !wDone.has( 'check:' + i ) ).map( ( c ) => 'wrapper: ' + c.test ) );
 	return report;
 }
 

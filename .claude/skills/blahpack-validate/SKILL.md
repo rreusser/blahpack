@@ -132,9 +132,9 @@ row-major layout families **separately** for bit-exactness, and verify cross-ord
 agreement with the correctness *property* (Step 2), not bit-equality. A real
 row/col bug still fails the property. (See `LEARNINGS.md`, dgels.)
 
-## Step 4b — Leading-dimension conformance (drives `<routine>.js`, not `ndarray.js`)
+## Step 4b — Leading-dimension conformance (drives `<routine>.js`, not `strided.js`)
 
-Steps 2–4 drive `ndarray.js` with buffers sized to each operand's full shape, so
+Steps 2–4 drive `strided.js` with buffers sized to each operand's full shape, so
 they **never exercise the `order`+`LDA`/`LDB` wrapper** in `<routine>.js`, and
 never stress a routine whose OUTPUT region exceeds its INPUT region in a shared
 buffer (e.g. `dgels` `M<N`: `B` grows from `M` to `N` rows in place). A wrong `LD`
@@ -148,7 +148,7 @@ cols`. For `dgels`'s `B` that is `max(M,N) × nrhs` (not `M`/`N`).
 
 ```js
 import { realizeLD, requiredLD, assertLeadingDimGuard } from '../../../../../test/harness/leadingdim.js';
-import wrap from './../lib/<routine>.js';   // the LDA/LDB wrapper, not ndarray
+import wrap from './../lib/<routine>.js';   // the LDA/LDB wrapper, not strided
 
 // For each order ∈ {column-major,row-major}, each flag combo, and shapes that
 // make the output grow (e.g. M<N): the wrapper must REJECT required-1 and ACCEPT
@@ -186,7 +186,7 @@ application-workspace branch separately from factorization):
 ```js
 import { assertWorkspaceSufficient, poisonedWork } from '../../../../../test/harness/workspace.js';
 
-// run(workLen): build a poisoned WORK of that length, drive the ndarray form
+// run(workLen): build a poisoned WORK of that length, drive the strided form
 // (must THROW when WORK is too small), and return the flat output components.
 assertWorkspaceSufficient( ( workLen ) => {
   const R = schemes.dense.realize( sc, A, spec, layout );

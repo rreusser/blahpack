@@ -55,7 +55,7 @@ interface Routine {
 	* @param KASE - `KASE`
 	* @returns result
 	*/
-	ndarray( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number ): void;
+	strided( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number ): void;
 }
 
 /**

@@ -27,7 +27,7 @@
     "algebra",
     "subroutines",
     "array",
-    "ndarray",
+    "strided",
     "float64",
     "double",
     "float64array"

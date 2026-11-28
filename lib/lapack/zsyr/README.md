@@ -62,12 +62,12 @@ zsyr( order, uplo, N, alpha, x, strideX, A, LDA ) → Complex128Array
 - `RangeError` sixth argument must be non-zero
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsyr.ndarray(
+zsyr.strided(
     uplo,
     N,
     alpha,
@@ -156,9 +156,9 @@ const alpha = new Complex128( 1.0, 0.0 );
 let out = zsyr( 'column-major', 'upper', N, alpha, x, 1, A, N );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( dataA );
-out = zsyr.ndarray( 'upper', N, alpha, x, 1, 0, A, 1, N, 0 );
+out = zsyr.strided( 'upper', N, alpha, x, 1, 0, A, 1, N, 0 );
 console.log( out );
 ```
 

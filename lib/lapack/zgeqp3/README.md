@@ -56,12 +56,12 @@ zgeqp3( order, M, N, A, LDA, JPVT, strideJPVT, TAU, strideTAU, WORK, RWORK ) →
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgeqp3.ndarray(
+zgeqp3.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     JPVT, strideJPVT, offsetJPVT,
@@ -166,10 +166,10 @@ const RWORK = new Float64Array( 2 * N );
 let out = zgeqp3( 'row-major', N, N, A, N, JPVT, 1, TAU, 1, null, null );
 console.log( out, JPVT );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
 JPVT.fill( 0 );
-out = zgeqp3.ndarray( N, N, A, N, 1, 0, JPVT, 1, 0, TAU, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+out = zgeqp3.strided( N, N, A, N, 1, 0, JPVT, 1, 0, TAU, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( out, JPVT );
 ```
 

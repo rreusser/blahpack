@@ -8,41 +8,41 @@ var ID = 'implementation';
 function check( mod ) {
 	var results = [];
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var baseContent = util.readFile( basePath );
-	var ndarrayContent = util.readFile( ndarrayPath );
+	var stridedContent = util.readFile( stridedPath );
 
-	if ( !ndarrayContent ) {
-		// ndarray.js doesn't exist — all checks skip
-		results.push( util.skip( ID + '.ndarray-early-return', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-not-private', 'No ndarray.js' ) );
+	if ( !stridedContent ) {
+		// strided.js doesn't exist — all checks skip
+		results.push( util.skip( ID + '.strided-early-return', 'No strided.js' ) );
+		results.push( util.skip( ID + '.strided-not-private', 'No strided.js' ) );
 	} else {
-		// 3. ndarray.js has early return
+		// 3. strided.js has early return
 		if ( baseContent && /if\s*\(\s*[MNK]\s*===\s*0/i.test( baseContent ) ) {
-			if ( /if\s*\(\s*[MNK]\s*===\s*0/i.test( ndarrayContent ) || /return\s/.test( ndarrayContent ) ) {
-				results.push( util.pass( ID + '.ndarray-early-return', 'ndarray.js has early return' ) );
+			if ( /if\s*\(\s*[MNK]\s*===\s*0/i.test( stridedContent ) || /return\s/.test( stridedContent ) ) {
+				results.push( util.pass( ID + '.strided-early-return', 'strided.js has early return' ) );
 			} else {
 				results.push( util.warn(
-					ID + '.ndarray-early-return',
-					'ndarray.js has early return',
-					1, [ 'ndarray.js' ],
-					'base.js has early return but ndarray.js may not'
+					ID + '.strided-early-return',
+					'strided.js has early return',
+					1, [ 'strided.js' ],
+					'base.js has early return but strided.js may not'
 				));
 			}
 		} else {
-			results.push( util.skip( ID + '.ndarray-early-return', 'No early return in base.js' ) );
+			results.push( util.skip( ID + '.strided-early-return', 'No early return in base.js' ) );
 		}
 
-		// 4. ndarray.js is NOT @private
-		if ( /@private/.test( ndarrayContent ) ) {
+		// 4. strided.js is NOT @private
+		if ( /@private/.test( stridedContent ) ) {
 			results.push( util.fail(
-				ID + '.ndarray-not-private',
-				'ndarray.js is NOT @private',
-				1, [ 'ndarray.js' ],
-				'ndarray.js should be public API (not @private)'
+				ID + '.strided-not-private',
+				'strided.js is NOT @private',
+				1, [ 'strided.js' ],
+				'strided.js should be public API (not @private)'
 			));
 		} else {
-			results.push( util.pass( ID + '.ndarray-not-private', 'ndarray.js is NOT @private' ) );
+			results.push( util.pass( ID + '.strided-not-private', 'strided.js is NOT @private' ) );
 		}
 	}
 

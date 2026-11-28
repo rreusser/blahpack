@@ -56,12 +56,12 @@ zsytri( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytri.ndarray(
+zsytri.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -149,7 +149,7 @@ const IPIV = new Int32Array( [ 0 ] );
 const WORK = new Complex128Array( 1 );
 const Av = reinterpret( A, 0 );
 
-const info = zsytri.ndarray( 'upper', 1, A, 1, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
+const info = zsytri.strided( 'upper', 1, A, 1, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 // => 0

@@ -56,12 +56,12 @@ ztgex2( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1 ) → integer
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgex2.ndarray(
+ztgex2.strided(
     wantq, wantz,
     N,
     A, strideA1, strideA2, offsetA,

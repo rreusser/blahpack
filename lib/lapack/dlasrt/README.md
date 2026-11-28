@@ -47,12 +47,12 @@ dlasrt( id, N, d, strideD ) → integer
 - `RangeError` second argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasrt.ndarray( id, N, d, strideD, offsetD ) → integer
+dlasrt.strided( id, N, d, strideD, offsetD ) → integer
 ```
 
 | Parameter | Type | Description |
@@ -120,8 +120,8 @@ const N = d.length;
 dlasrt( 'increasing', N, d, 1 );
 console.log( d ); // eslint-disable-line no-console
 
-// Using the ndarray interface (sort in decreasing order):
-dlasrt.ndarray( 'decreasing', N, d, 1, 0 );
+// Using the strided interface (sort in decreasing order):
+dlasrt.strided( 'decreasing', N, d, 1, 0 );
 console.log( d ); // eslint-disable-line no-console
 ```
 

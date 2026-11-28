@@ -23,7 +23,7 @@
 
 - `zlarfb_gett` accepts `'identity'` / `'not-identity'` (canonical long
   forms), not the Fortran `'I'` / `'N'`. Already documented in its
-  ndarray validator.
+  strided validator.
 - `zlarfb_gett` treats WORK as a 2D `K`-by-(K or N-K) buffer with its
   own (strideWORK1, strideWORK2). When passing a 1D WORK from
   `zungtsqr_row`, set `strideWORK1 = strideWORK` and

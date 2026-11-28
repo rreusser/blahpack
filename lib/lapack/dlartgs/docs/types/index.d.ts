@@ -53,10 +53,10 @@ interface Routine {
 	* var Float64Array = require( '@stdlib/array/float64' );
 	*
 	* var out = new Float64Array( 2 );
-	* dlartgs.ndarray( 3.0, 4.0, 1.5, out );
+	* dlartgs.strided( 3.0, 4.0, 1.5, out );
 	* // returns <Float64Array>[ ~0.4903, ~0.8716 ]
 	*/
-	ndarray( x: number, y: number, sigma: number, out: Float64Array ): Float64Array;
+	strided( x: number, y: number, sigma: number, out: Float64Array ): Float64Array;
 }
 
 /**

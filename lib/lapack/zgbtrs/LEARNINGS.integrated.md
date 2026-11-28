@@ -2,7 +2,7 @@
 
 ## Translation Pitfalls
 - IPIV arrays are 0-based in base.js (Fortran uses 1-based). Fixture comparisons must subtract 1 from Fortran IPIV values.
-- String parameters (`trans`, `type`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`trans`, `type`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 
 ## Dependency Interface Surprises
 - No BLAS/LAPACK dependencies — this is a leaf routine.

@@ -82,12 +82,12 @@ zhbtrd(
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` thirteenth argument is invalid (rejected when `LDQ < max( 1, N ) && ( vect === "initialize" \|\| vect === "update" )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhbtrd.ndarray(
+zhbtrd.strided(
     vect, uplo,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,

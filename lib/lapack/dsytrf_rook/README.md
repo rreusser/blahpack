@@ -70,12 +70,12 @@ dsytrf_rook( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsytrf_rook.ndarray(
+dsytrf_rook.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -183,10 +183,10 @@ console.log( out ); // eslint-disable-line no-console
 console.log( A ); // eslint-disable-line no-console
 console.log( IPIV ); // eslint-disable-line no-console
 
-// Using the ndarray interface (a workspace is required only on the blocked path, N > 64):
+// Using the strided interface (a workspace is required only on the blocked path, N > 64):
 IPIV = new Int32Array( 4 );
 A = new Float64Array( [ 0, 1, 2, 3, 0, 0, 4, 5, 0, 0, 0, 6, 0, 0, 0, 0 ] );
-out = dsytrfRook.ndarray( 'lower', 4, A, 1, 4, 0, IPIV, 1, 0, new Float64Array( 1 ), 1, 0 );
+out = dsytrfRook.strided( 'lower', 4, A, 1, 4, 0, IPIV, 1, 0, new Float64Array( 1 ), 1, 0 );
 console.log( out ); // eslint-disable-line no-console
 console.log( A ); // eslint-disable-line no-console
 console.log( IPIV ); // eslint-disable-line no-console

@@ -15,7 +15,7 @@
 - The `n_zero` fixture asserts `tau == 0` after the `N <= 0` quick return
   because the Fortran source unconditionally writes `TAU = ZERO` before
   returning. Initially added `if (N === 0) return;` short-circuits to
-  `ndarray.js` / the BLAS-style wrapper; these must be removed so that
+  `strided.js` / the BLAS-style wrapper; these must be removed so that
   `base.js` actually runs and zero-sets `tau`. Caught by the `n_zero`
   fixture.
 
@@ -42,7 +42,7 @@
 - `init_routine.py` overwrites `test/test.js` with the `gen_test.py`
   TODO-stub scaffold (one stub per fixture case) even though the scaffold
   already produces the standard "main export is a function" template. For
-  routines where the fixture is keyed to `test/test.ndarray.js` (which is
+  routines where the fixture is keyed to `test/test.strided.js` (which is
   the norm), this forces a manual rewrite back to the export-check
   template. Consider making `init_routine.py` skip `test.js` regeneration
   when the file already contains the export-check template.
@@ -54,7 +54,7 @@
   leading `/* eslint-disable */` comment). Consider patching the codemod
   to look back past `'use strict';` and emit a single blank line in that
   case.
-- The scaffolded benchmark `benchmark.js` / `benchmark.ndarray.js` use
+- The scaffolded benchmark `benchmark.js` / `benchmark.strided.js` use
   the wrong call signature (`dlarfgp(N, 1.0, x, N, N)` — scalar `alpha`,
   `stride=N`, etc.) which would silently allocate a degenerate work
   array. Had to rewrite them to match the `(N, alphaArr, oAlpha, x,

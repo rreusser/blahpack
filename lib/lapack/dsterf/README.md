@@ -43,12 +43,12 @@ dsterf( N, d, strideD, e, strideE ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsterf.ndarray( N, d, strideD, offsetD, e, strideE, offsetE ) → info: integer
+dsterf.strided( N, d, strideD, offsetD, e, strideE, offsetE ) → info: integer
 ```
 
 | Parameter | Type | Description |
@@ -120,8 +120,8 @@ const e = discreteUniform( N, -10, 10, opts );
 let out = dsterf( N, d, 1, e, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dsterf.ndarray( N, d, 1, 0, e, 1, 0 );
+// Using the strided interface:
+out = dsterf.strided( N, d, 1, 0, e, 1, 0 );
 console.log( out );
 ```
 

@@ -55,12 +55,12 @@ dlacon( N, v, strideV, x, strideX, ISGN, strideISGN, EST, KASE ) → Int32Array
 
 **Returns** `Int32Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlacon.ndarray(
+dlacon.strided(
     N,
     v, strideV, offsetV,
     x, strideX, offsetX,
@@ -147,7 +147,7 @@ let tmp, i;
 // Reverse-communication loop:
 KASE[ 0 ] = 0;
 while ( true ) { // eslint-disable-line no-constant-condition
-	dlacon.ndarray( n, v, 1, 0, x, 1, 0, ISGN, 1, 0, EST, KASE );
+	dlacon.strided( n, v, 1, 0, x, 1, 0, ISGN, 1, 0, EST, KASE );
 	if ( KASE[ 0 ] === 0 ) {
 		break;
 	}

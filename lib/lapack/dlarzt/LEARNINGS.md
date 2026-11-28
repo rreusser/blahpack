@@ -8,5 +8,5 @@
 
 ## Dependency interface surprises
 
-- `dgemv` in ndarray form takes: `(trans, M, N, alpha, A, sa1, sa2, oa, x, sx, ox, beta, y, sy, oy)`. The x vector uses a single stride (not 2D strides), so when x is a row of V, pass `strideV2` as the stride.
-- `dtrmv` ndarray: `(uplo, trans, diag, N, A, sa1, sa2, oa, x, sx, ox)`. The x vector (column of T) uses `strideT1` as its stride.
+- `dgemv` in strided form takes: `(trans, M, N, alpha, A, sa1, sa2, oa, x, sx, ox, beta, y, sy, oy)`. The x vector uses a single stride (not 2D strides), so when x is a row of V, pass `strideV2` as the stride.
+- `dtrmv` strided: `(uplo, trans, diag, N, A, sa1, sa2, oa, x, sx, ox)`. The x vector (column of T) uses `strideT1` as its stride.

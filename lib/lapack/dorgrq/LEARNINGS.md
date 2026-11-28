@@ -47,7 +47,7 @@
   dorglq similarly drops LWORK.
 - `gen_test.py` writes its scaffold to `test/test.js`, which clobbers
   the export-check scaffold. Had to manually move generated content
-  to `test/test.ndarray.js` and restore the export-check `test.js`.
+  to `test/test.strided.js` and restore the export-check `test.js`.
   This is a recurring scaffold/gen-test mismatch.
 - The scaffolded benchmark and example files needed full license
   headers and reordering of var declarations (longest first). The
@@ -56,6 +56,6 @@
 
 ## Coverage gaps
 
-- base.js `M <= 0` early return is unreachable through the ndarray
+- base.js `M <= 0` early return is unreachable through the strided
   wrapper (which short-circuits on `M === 0` earlier). Added a direct
   `test.base.js` to cover this branch and bring base.js to 100%.

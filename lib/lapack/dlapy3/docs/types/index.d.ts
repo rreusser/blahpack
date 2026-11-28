@@ -40,7 +40,7 @@ interface Routine {
 	* @param z - `z`
 	* @returns result
 	*/
-	ndarray( x: number, y: number, z: number ): number;
+	strided( x: number, y: number, z: number ): number;
 }
 
 /**

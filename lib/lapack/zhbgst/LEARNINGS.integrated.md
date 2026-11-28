@@ -33,7 +33,7 @@
 ## Coverage gaps
 
 - No tests for error returns (invalid vect/uplo/N/ka/kb) since the Fortran
-  XERBLA path is not translated (validation in ndarray.js).
+  XERBLA path is not translated (validation in strided.js).
 - Large KA/KB ratios not extensively tested.
 
 ## Complex number handling

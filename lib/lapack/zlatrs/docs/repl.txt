@@ -19,7 +19,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, trans, diag, normin, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX, scale, CNORM, strideCNORM, offsetCNORM )
+{{alias}}.strided( uplo, trans, diag, normin, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX, scale, CNORM, strideCNORM, offsetCNORM )
     CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
 
     Parameters

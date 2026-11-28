@@ -63,7 +63,7 @@ interface Routine {
 	* @param offsetWorkl - starting index for `workl`
 	* @returns IERR (0 if successful, otherwise the `dstqrb` error code)
 	*/
-	ndarray( rnorm: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, eig: Float64Array, strideEig: number, offsetEig: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number ): number;
+	strided( rnorm: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, eig: Float64Array, strideEig: number, offsetEig: number, bounds: Float64Array, strideBounds: number, offsetBounds: number, workl: Float64Array, strideWorkl: number, offsetWorkl: number ): number;
 }
 
 /**

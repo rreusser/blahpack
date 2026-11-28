@@ -35,12 +35,12 @@ dnrm2( N, x, strideX ) → number
 
 **Returns** `number`: Euclidean norm
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dnrm2.ndarray( N, x, strideX, offsetX ) → number
+dnrm2.strided( N, x, strideX, offsetX ) → number
 ```
 
 | Parameter | Type | Description |

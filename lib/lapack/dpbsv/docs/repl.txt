@@ -40,7 +40,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
     Computes the solution to system of linear equations A·X = B, using
     alternative indexing semantics.
 

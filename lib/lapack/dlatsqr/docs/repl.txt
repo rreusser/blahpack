@@ -50,7 +50,7 @@
     0
 
 
-{{alias}}.ndarray( M, N, mb, nb, A, sa1, sa2, oa, T, st1, st2, ot, WORK, sw, ow )
+{{alias}}.strided( M, N, mb, nb, A, sa1, sa2, oa, T, st1, st2, ot, WORK, sw, ow )
     Computes a blocked Tall-Skinny QR (TSQR) factorization of a real M-by-N
     matrix (with M >= N), using alternative indexing semantics.
 
@@ -111,7 +111,7 @@
     > var A = new {{alias:@stdlib/array/float64}}( [ 5.0, 1.0, 0.5, 0.3, 1.0, 6.0, 0.5, 0.5 ] );
     > var T = new {{alias:@stdlib/array/float64}}( 4 );
     > var W = new {{alias:@stdlib/array/float64}}( 4 );
-    > {{alias}}.ndarray( 4, 2, 8, 2, A, 1, 4, 0, T, 1, 2, 0, W, 1, 0 )
+    > {{alias}}.strided( 4, 2, 8, 2, A, 1, 4, 0, T, 1, 2, 0, W, 1, 0 )
     0
 
     See Also

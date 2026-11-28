@@ -94,12 +94,12 @@ dtpmlqt(
 - `RangeError` fourth, fifth, sixth, seventh arguments must satisfy nonnegativity constraints
 - `RangeError` fourteenth argument (LDA) must be >= max(1,K) (left) or max(1,M) (right)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtpmlqt.ndarray(
+dtpmlqt.strided(
     side, trans,
     M, N, K, l,
     mb,
@@ -267,8 +267,8 @@ const B = new Float64Array([
 ]);
 const WORK = new Float64Array( 3 * 2 );
 
-// dtpmlqt.ndarray( side, trans, M, N, K, l, mb, V, sV1, sV2, oV, T, sT1, sT2, oT, A, sA1, sA2, oA, B, sB1, sB2, oB, WORK, sW, oW )
-dtpmlqt.ndarray( 'left', 'no-transpose', 4, 3, 3, 2, 2, V, 1, 3, 0, T, 1, 2, 0, A, 1, 3, 0, B, 1, 4, 0, WORK, 1, 0 );
+// dtpmlqt.strided( side, trans, M, N, K, l, mb, V, sV1, sV2, oV, T, sT1, sT2, oT, A, sA1, sA2, oA, B, sB1, sB2, oB, WORK, sW, oW )
+dtpmlqt.strided( 'left', 'no-transpose', 4, 3, 3, 2, 2, V, 1, 3, 0, T, 1, 2, 0, A, 1, 3, 0, B, 1, 4, 0, WORK, 1, 0 );
 
 console.log( A ); // eslint-disable-line no-console
 console.log( B ); // eslint-disable-line no-console

@@ -59,12 +59,12 @@ zlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY ) → Complex128
 - `RangeError` tenth argument must be a valid leading dimension
 - `RangeError` twelfth argument must be a valid leading dimension
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlahr2.ndarray(
+zlahr2.strided(
     N, K, nb,
     A, strideA1, strideA2, offsetA,
     tau, strideTAU, offsetTAU,
@@ -152,9 +152,9 @@ const Y = new Complex128Array( N * nb );
 zlahr2( 'column-major', N, K, nb, A, N, tau, 1, T, nb, Y, N );
 console.log( tau );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( discreteUniform( 2 * N * N, -10, 10, opts ) );
-zlahr2.ndarray( N, K, nb, A, 1, N, 0, tau, 1, 0, T, 1, nb, 0, Y, 1, N, 0 );
+zlahr2.strided( N, K, nb, A, 1, N, 0, tau, 1, 0, T, 1, nb, 0, Y, 1, N, 0 );
 console.log( tau );
 ```
 

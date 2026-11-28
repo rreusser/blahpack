@@ -31,7 +31,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE )
+{{alias}}.strided( norm, N, d, strideD, offsetD, e, strideE, offsetE )
     Computes the norm of a complex Hermitian tridiagonal matrix A using
     alternative indexing semantics.
 

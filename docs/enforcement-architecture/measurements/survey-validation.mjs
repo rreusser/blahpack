@@ -8,9 +8,9 @@ const stats={}; const inc=(k,n=1)=>stats[k]=(stats[k]||0)+n; const ex={}; const 
 const msgShapes={};
 for (const pkg of ['blas','lapack']) for (const r of fs.readdirSync(path.join(ROOT,pkg))) {
   const dir=path.join(ROOT,pkg,r,'lib');
-  for (const f of ['ndarray.js', r+'.js', 'base.js']) {
-    const p=path.join(dir,f); if(!fs.existsSync(p)) {inc('missing:'+(f==='base.js'?'base':f==='ndarray.js'?'ndarray':'routine'));continue;}
-    const kind=f==='base.js'?'base':f==='ndarray.js'?'ndarray':'routine';
+  for (const f of ['strided.js', r+'.js', 'base.js']) {
+    const p=path.join(dir,f); if(!fs.existsSync(p)) {inc('missing:'+(f==='base.js'?'base':f==='strided.js'?'strided':'routine'));continue;}
+    const kind=f==='base.js'?'base':f==='strided.js'?'strided':'routine';
     let ast; try{ast=acorn.parse(fs.readFileSync(p,'utf8'),{ecmaVersion:'latest',sourceType:'module'})}catch(e){inc('parsefail:'+kind);continue;}
     const fn=ast.body.find(n=>n.type==='FunctionDeclaration'&&n.id.name===r) || ast.body.find(n=>n.type==='FunctionDeclaration');
     if(!fn){inc('nofn:'+kind);continue;}

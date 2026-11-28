@@ -60,12 +60,12 @@ dtrexc( order, compq, N, T, LDT, Q, LDQ, ifst, ilst, WORK ) → integer
 - `RangeError` ninth argument is invalid (rejected when `( ilst[ 0 ] < 1 \|\| ilst[ 0 ] > N ) && N > 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrexc.ndarray(
+dtrexc.strided(
     compq,
     N,
     T, strideT1, strideT2, offsetT,
@@ -189,11 +189,11 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 ifst[ 0 ] = 1;
 ilst[ 0 ] = 1;
 out = {
-	'info': dtrexc.ndarray( 'update', N, T, N, 1, 0, Q, N, 1, 0, ifst, ilst, WORK, 1, 0 ),
+	'info': dtrexc.strided( 'update', N, T, N, 1, 0, Q, N, 1, 0, ifst, ilst, WORK, 1, 0 ),
 	'ifst': ifst[ 0 ],
 	'ilst': ilst[ 0 ]
 };

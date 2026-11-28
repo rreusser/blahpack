@@ -139,12 +139,12 @@ zgtsvx(
 - `RangeError` twenty-fifth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` twenty-fifth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgtsvx.ndarray(
+zgtsvx.strided(
     fact, trans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -321,7 +321,7 @@ const berr = new Float64Array( 1 );
 const work = new Complex128Array( 6 );
 const rwork = new Float64Array( 3 );
 
-const info = zgtsvx.ndarray( 'not-factored', 'no-transpose', 3, 1, dl, 1, 0, d, 1, 0, du, 1, 0, dlf, 1, 0, df, 1, 0, duf, 1, 0, du2, 1, 0, ipiv, 1, 0, b, 1, 3, 0, x, 1, 3, 0, rcond, ferr, 1, 0, berr, 1, 0, work, 1, 0, rwork, 1, 0 ); // eslint-disable-line max-len
+const info = zgtsvx.strided( 'not-factored', 'no-transpose', 3, 1, dl, 1, 0, d, 1, 0, du, 1, 0, dlf, 1, 0, df, 1, 0, duf, 1, 0, du2, 1, 0, ipiv, 1, 0, b, 1, 3, 0, x, 1, 3, 0, rcond, ferr, 1, 0, berr, 1, 0, work, 1, 0, rwork, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'rcond:', rcond[ 0 ] ); // eslint-disable-line no-console

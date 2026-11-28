@@ -7,9 +7,9 @@
 //
 // Order of work per wave:
 //   1. every call site in lib/, test/, bench/, examples/ (calls.mjs), including
-//      each routine's own ndarray.js / <r>.js calls to base;
+//      each routine's own strided.js / <r>.js calls to base;
 //   2. each routine's base.js (base.mjs);
-//   3. ndarray.js / <r>.js parameter lists, JSDoc, argument ordinals;
+//   3. strided.js / <r>.js parameter lists, JSDoc, argument ordinals;
 //   4. signature lines in README.md and docs/repl.txt.
 // Anything the codemod cannot rewrite is reported as a problem and the wave
 // is not written (unless --force).
@@ -72,9 +72,9 @@ const idx = new Map();
 for ( const P of plans ) {
 	const lib = path.join( P.dir, 'lib' );
 	idx.set( path.join( lib, 'base.js' ), { P, kind: 'base' } );
-	idx.set( path.join( lib, 'ndarray.js' ), { P, kind: 'ndarray' } );
-	idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'strided' } );
-	idx.set( path.join( lib, 'index.js' ), { P, kind: 'strided', hasNdarray: true } );
+	idx.set( path.join( lib, 'strided.js' ), { P, kind: 'strided' } );
+	idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'wrapper' } );
+	idx.set( path.join( lib, 'index.js' ), { P, kind: 'wrapper', hasStrided: true } );
 }
 for ( const f of allSources() ) {
 	const src = fs.readFileSync( f, 'utf8' );
@@ -136,7 +136,7 @@ function remapOrdinals( src, oldL, newL ) {
 	});
 }
 for ( const P of plans ) {
-	for ( const [ file, oldL, newL ] of [ [ 'ndarray.js', P.oldNd, P.newNd ], [ P.routine + '.js', P.oldStrided, P.newStrided ] ] ) {
+	for ( const [ file, oldL, newL ] of [ [ 'strided.js', P.oldNd, P.newNd ], [ P.routine + '.js', P.oldStrided, P.newStrided ] ] ) {
 		const f = path.join( P.dir, 'lib', file );
 		if ( !fs.existsSync( f ) || !oldL ) {
 			continue;
@@ -199,7 +199,7 @@ for ( const P of plans ) {
 			if ( !oldL ) {
 				continue;
 			}
-			const re = new RegExp( '((?:' + esc( P.routine ) + '|\\{\\{alias\\}\\})(?:\\.ndarray)?\\(\\s*)' + oldL.map( esc ).join( ',\\s*' ) + '(\\s*\\))', 'g' );
+			const re = new RegExp( '((?:' + esc( P.routine ) + '|\\{\\{alias\\}\\})(?:\\.strided)?\\(\\s*)' + oldL.map( esc ).join( ',\\s*' ) + '(\\s*\\))', 'g' );
 			src = src.replace( re, '$1' + newL.join( ', ' ) + '$2' );
 		}
 		if ( src !== before ) {

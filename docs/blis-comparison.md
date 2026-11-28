@@ -37,8 +37,8 @@ BLIS exposes three API layers. Blahpack has analogues for two of them.
 |---|---|---|
 | **Object API** | `bli_gemm(alpha, a, b, beta, c)` — type-polymorphic, all metadata in `obj_t` | No equivalent |
 | **Typed API** | `bli_dgemm(transa, transb, m, n, k, alpha, a, rs_a, cs_a, ...)` | `base.js` (same idea, with offsets added) |
-| **Validation** | (none) | `ndarray.js` — validates params, delegates to base.js |
-| **BLAS compat** | `dgemm_(transa, transb, m, n, k, alpha, a, lda, ...)` | `<routine>.js` (stdlib BLAS-classic strided form) |
+| **Validation** | (none) | `strided.js` — validates params, delegates to base.js |
+| **BLAS compat** | `dgemm_(transa, transb, m, n, k, alpha, a, lda, ...)` | `<routine>.js` (stdlib BLAS-classic wrapper form) |
 
 ### The object API
 
@@ -178,7 +178,7 @@ cache-hierarchy concerns.
 | Offset mechanism | Pointer arithmetic / `obj_t.off[]` | Explicit `offset` parameter |
 | Type dispatch | Object API (polymorphic) or name prefix | Name prefix only |
 | Conjugation | Independent `conj_t` parameter | Folded into `trans` |
-| Validation | None in typed API | `ndarray.js` layer |
+| Validation | None in typed API | `strided.js` layer |
 | Threading | Per-call `rntm_t` control | None |
 | Performance model | Register tiling, cache blocking, packing, SIMD | JIT-friendly patterns, allocation reduction |
 | Microkernel framework | Core architecture | Not applicable |

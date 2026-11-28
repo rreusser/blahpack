@@ -33,7 +33,7 @@
 
 - Fortran fixtures (`test/fixtures/dlaein.jsonl`) cover the four
   combinations of right/left eigenvector × real/complex eigenvalue,
-  plus supplied-initial-vector variants. The ndarray tests also
+  plus supplied-initial-vector variants. The strided tests also
   verify row-major reshuffles and strided/offset layouts.
 - Machine constants `EPS3`, `SMLNUM`, `BIGNUM` are normally derived
   from `DLAMCH` inside `DHSEIN`. Tests hard-code the IEEE-754 double

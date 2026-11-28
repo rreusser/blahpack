@@ -62,12 +62,12 @@ def main():
     print("var assert = require( 'node:assert/strict' );")
     print("var readFileSync = require( 'fs' ).readFileSync;")
     print("var path = require( 'path' );")
-    # Tests must target the public ndarray interface, not lib/base.js. Going
-    # through ndarray.js exercises the string-validator layer; bypassing it
+    # Tests must target the public strided interface, not lib/base.js. Going
+    # through strided.js exercises the string-validator layer; bypassing it
     # to base.js has hidden silent-correctness bugs (validator disagreeing
     # with base dispatch keys). If you need a base-only test, put it in a
     # dedicated test.base.js.
-    print(f"var {routine} = require( './../lib/ndarray.js' );")
+    print(f"var {routine} = require( './../lib/strided.js' );")
     print()
     print()
     print("// FIXTURES //")

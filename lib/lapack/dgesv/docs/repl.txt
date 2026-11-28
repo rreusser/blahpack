@@ -47,7 +47,7 @@
     <Float64Array>[ 1.0, 2.0 ]
 
 
-{{alias}}.ndarray( N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
     Computes the solution to a real system of linear equations `A * X = B`,
     using alternative indexing semantics.
 
@@ -102,7 +102,7 @@
     > var A = new {{alias:@stdlib/array/float64}}( [ 1.0, 3.0, 2.0, 4.0 ] );
     > var IPIV = new {{alias:@stdlib/array/int32}}( 2 );
     > var B = new {{alias:@stdlib/array/float64}}( [ 5.0, 11.0 ] );
-    > var info = {{alias}}.ndarray( 2, 1, A, 1, 2, 0, IPIV, 1, 0, B, 1, 2, 0 )
+    > var info = {{alias}}.strided( 2, 1, A, 1, 2, 0, IPIV, 1, 0, B, 1, 2, 0 )
     0
     > B
     <Float64Array>[ 1.0, 2.0 ]

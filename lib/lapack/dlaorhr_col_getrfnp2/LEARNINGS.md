@@ -10,7 +10,7 @@
   trailing zeros for wide (M < N) cases; the fixture for 3x4 reflects this.
 - The recursive call passes a sub-matrix offset (`offsetA + n1*sa1 + n1*sa2`)
   and sub-D offset (`offsetD + n1*strideD`) without re-slicing — keep the
-  full ndarray strides intact so dgemm/dtrsm see the parent leading dim.
+  full strided strides intact so dgemm/dtrsm see the parent leading dim.
 - Integer division: use `(minMN / 2) | 0`, matching Fortran `MIN(M,N)/2`.
 
 ## Dependency interface surprises

@@ -10,9 +10,9 @@ Usage:
 
 Generates all boilerplate files that do NOT depend on the algorithm:
   - package.json
-  - lib/index.js (attaches .ndarray; there is no main.js)
+  - lib/index.js (attaches .strided; there is no main.js)
   - lib/<routine>.js (BLAS-style wrapper — stub for LAPACK)
-  - lib/ndarray.js (validation wrapper — stub body, correct signature)
+  - lib/strided.js (validation wrapper — stub body, correct signature)
   - lib/base.js (stub with correct signature)
   - test/test.js (scaffold)
   - README.md (scaffold)
@@ -20,7 +20,7 @@ Generates all boilerplate files that do NOT depend on the algorithm:
   - docs/types/index.d.ts (scaffold)
   - examples/index.js (scaffold)
 
-The base.js and ndarray.js stubs have the correct function signature
+The base.js and strided.js stubs have the correct function signature
 (from signature.py) but a TODO body. The human/AI fills in the algorithm.
 """
 
@@ -60,7 +60,7 @@ def indent(text, prefix='\t'):
 
 
 def build_blas_args(sig):
-    """Build BLAS/LAPACK-style args (order + LDs) from the ndarray signature.
+    """Build BLAS/LAPACK-style args (order + LDs) from the strided signature.
 
     Returns (blas_args, blas_arg_meta, array_ld_map) where array_ld_map maps
     array names to their LD param names.
@@ -183,8 +183,8 @@ export default {routine};
 """
 
 
-def gen_ndarray_js(routine, sig, package, description):
-    """Generate lib/ndarray.js — validation wrapper with string param checks."""
+def gen_strided_js(routine, sig, package, description):
+    """Generate lib/strided.js — validation wrapper with string param checks."""
     args = ', '.join(sig['js_args'])
     base_args = ', '.join(sig['js_args'])
     eslint = ' // eslint-disable-line max-len, max-params' if len(sig['js_args']) > 6 else ''
@@ -416,7 +416,7 @@ def gen_routine_js(routine, sig, package, description):
     offset_lines = []
     base_call_args = []
 
-    # Map from ndarray args to what we pass in the base call
+    # Map from strided args to what we pass in the base call
     i = 0
     while i < len(js_args):
         name = js_args[i]
@@ -528,7 +528,7 @@ export default {routine};
 
 
 def gen_index_js(routine, package, description):
-    """Generate lib/index.js — entry point: attaches .ndarray to the routine
+    """Generate lib/index.js — entry point: attaches .strided to the routine
     (there is no main.js; ticket 0124)."""
     return f"""{LICENSE_HEADER}
 
@@ -536,18 +536,18 @@ def gen_index_js(routine, package, description):
 
 import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
 import {routine} from './{routine}.js';
-import ndarray from './ndarray.js';
+import strided from './strided.js';
 
 
 // MAIN //
 
-setReadOnly( {routine}, 'ndarray', ndarray );
+setReadOnly( {routine}, 'strided', strided );
 
 
 // EXPORTS //
 
-export default /** @type {{typeof {routine} & {{ ndarray: typeof ndarray }}}} */ ( {routine} );
-export {{ ndarray }};
+export default /** @type {{typeof {routine} & {{ strided: typeof strided }}}} */ ( {routine} );
+export {{ strided }};
 """
 
 
@@ -559,7 +559,7 @@ def gen_package_json(routine, package, description, sig):
         'stdlib', 'stdmath', 'mathematics', 'math',
         package, blas_level, routine,
         'linear', 'algebra', 'subroutines',
-        'array', 'ndarray',
+        'array', 'strided',
     ] + type_kw
 
     pkg = {
@@ -585,7 +585,7 @@ def gen_package_json(routine, package, description, sig):
         },
         "types": "./docs/types",
         "scripts": {
-            "test": f"node --test test/test.js test/test.{routine}.js test/test.ndarray.js"
+            "test": f"node --test test/test.js test/test.{routine}.js test/test.strided.js"
         },
         "homepage": "https://github.com/stdlib-js/stdlib",
         "repository": {
@@ -629,8 +629,8 @@ test( 'main export is a function', function t() {{
 \tassert.strictEqual( typeof {routine}, 'function', 'main export is a function' );
 }});
 
-test( 'main export has an ndarray method', function t() {{
-\tassert.strictEqual( typeof {routine}.ndarray, 'function', 'has ndarray method' );
+test( 'main export has an strided method', function t() {{
+\tassert.strictEqual( typeof {routine}.strided, 'function', 'has strided method' );
 }});
 """
 
@@ -704,10 +704,10 @@ import {routine} from './../lib/{routine}.js';
 """
 
 
-def gen_test_ndarray_js(routine, package, sig, description):
-    """Generate test/test.ndarray.js — scaffold for ndarray-interface tests.
+def gen_test_strided_js(routine, package, sig, description):
+    """Generate test/test.strided.js — scaffold for strided-interface tests.
 
-    IMPORTANT: this file requires lib/ndarray.js (the public ndarray
+    IMPORTANT: this file requires lib/strided.js (the public strided
     surface), not lib/base.js. Tests must exercise the validator —
     bypassing it has hidden silent-correctness bugs in the past
     (validator strings disagreeing with base.js dispatch keys).
@@ -723,16 +723,16 @@ def gen_test_ndarray_js(routine, package, sig, description):
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import {routine} from './../lib/ndarray.js';
+import {routine} from './../lib/strided.js';
 
 
 // TESTS //
 
-test( '{routine} ndarray is a function', function t() {{
+test( '{routine} strided is a function', function t() {{
 \tassert.strictEqual( typeof {routine}, 'function', 'is a function' );
 }});
 
-test( 'TODO: implement ndarray tests with fixtures', function t() {{
+test( 'TODO: implement strided tests with fixtures', function t() {{
 \tassert.ok( true, 'scaffold — implement real tests with fixtures' );
 }});
 """
@@ -771,7 +771,7 @@ def _build_dummy_blas_args(blas_args, blas_arg_meta, override=None):
 def gen_readme(routine, package, description, sig):
     """Generate README.md — stdlib-style scaffold with both APIs documented."""
     mod_path = f'@rreusser/blahpack/{package}/{routine}'
-    ndarray_args = ', '.join(sig['js_args'])
+    strided_args = ', '.join(sig['js_args'])
     blas_args, blas_arg_meta, array_ld_map = build_blas_args(sig)
     blas_args_str = ', '.join(blas_args)
 
@@ -790,8 +790,8 @@ def gen_readme(routine, package, description, sig):
 
     blas_params_str = '\n'.join(blas_param_lines)
 
-    # Generate parameter list for ndarray section (only stride/offset params)
-    ndarray_param_lines = []
+    # Generate parameter list for strided section (only stride/offset params)
+    strided_param_lines = []
     for meta in sig.get('js_arg_meta', []):
         name = meta['name']
         desc = meta['desc']
@@ -800,19 +800,19 @@ def gen_readme(routine, package, description, sig):
             if arr_ref and arr_ref[-1] in ('1', '2'):
                 arr_name = arr_ref[:-1]
                 dim = arr_ref[-1]
-                ndarray_param_lines.append(f'-   **{name}**: stride of dimension {dim} of `{arr_name}`.')
+                strided_param_lines.append(f'-   **{name}**: stride of dimension {dim} of `{arr_name}`.')
             else:
-                ndarray_param_lines.append(f'-   **{name}**: {desc}.')
+                strided_param_lines.append(f'-   **{name}**: {desc}.')
         elif name.startswith('offset'):
             arr_ref = name.replace('offset', '')
-            ndarray_param_lines.append(f'-   **{name}**: starting index for `{arr_ref}`.')
+            strided_param_lines.append(f'-   **{name}**: starting index for `{arr_ref}`.')
         else:
             typed = meta['type']
             if typed in ('Float64Array', 'Float32Array', 'Int32Array'):
                 typed = f'[`{typed}`][mdn-{typed.lower()}]'
-            ndarray_param_lines.append(f'-   **{name}**: {desc}.')
+            strided_param_lines.append(f'-   **{name}**: {desc}.')
 
-    ndarray_params_str = '\n'.join(ndarray_param_lines)
+    strided_params_str = '\n'.join(strided_param_lines)
 
     license_header = """<!--
 
@@ -862,7 +862,7 @@ The function has the following parameters:
 
 {blas_params_str}
 
-#### {routine}.ndarray( {ndarray_args} )
+#### {routine}.strided( {strided_args} )
 
 {description}, using alternative indexing semantics.
 
@@ -874,7 +874,7 @@ import Float64Array from '@stdlib/array/float64/lib/index.js';
 
 The function has the following additional parameters:
 
-{ndarray_params_str}
+{strided_params_str}
 
 </section>
 
@@ -926,10 +926,10 @@ The function has the following additional parameters:
 
 
 def gen_repl_txt(routine, sig, description):
-    """Generate docs/repl.txt — stdlib-style with both layout and ndarray sections."""
+    """Generate docs/repl.txt — stdlib-style with both layout and strided sections."""
     blas_args, blas_arg_meta, array_ld_map = build_blas_args(sig)
     blas_args_str = ', '.join(blas_args)
-    ndarray_args = ', '.join(sig['js_args'])
+    strided_args = ', '.join(sig['js_args'])
 
     returns_type = sig.get('returns_jsdoc', 'void')
 
@@ -953,27 +953,27 @@ def gen_repl_txt(routine, sig, description):
 
     blas_params_str = '\n'.join('    ' + line if line.strip() else '' for line in blas_param_lines)
 
-    # Generate ndarray parameter docs
-    ndarray_param_lines = []
+    # Generate strided parameter docs
+    strided_param_lines = []
     for meta in sig.get('js_arg_meta', []):
         repl_type = meta['type']
         if repl_type == 'NonNegativeInteger':
             repl_type = 'integer'
         elif repl_type == 'PositiveInteger':
             repl_type = 'integer'
-        ndarray_param_lines.append(f'    {meta["name"]}: {repl_type}')
+        strided_param_lines.append(f'    {meta["name"]}: {repl_type}')
         if meta['name'].startswith('stride') and meta['name'][-1] in ('1', '2'):
             arr_ref = meta['name'].replace('stride', '')[:-1]
             dim = meta['name'][-1]
-            ndarray_param_lines.append(f'        stride of dimension {dim} of `{arr_ref}`.')
+            strided_param_lines.append(f'        stride of dimension {dim} of `{arr_ref}`.')
         elif meta['name'].startswith('offset'):
             arr_ref = meta['name'].replace('offset', '')
-            ndarray_param_lines.append(f'        starting index for `{arr_ref}`.')
+            strided_param_lines.append(f'        starting index for `{arr_ref}`.')
         else:
-            ndarray_param_lines.append(f'        {meta["desc"]}.')
-        ndarray_param_lines.append('')
+            strided_param_lines.append(f'        {meta["desc"]}.')
+        strided_param_lines.append('')
 
-    ndarray_params_str = '\n'.join('    ' + line if line.strip() else '' for line in ndarray_param_lines)
+    strided_params_str = '\n'.join('    ' + line if line.strip() else '' for line in strided_param_lines)
 
     return f"""
 {{{{alias}}}}( {blas_args_str} )
@@ -992,12 +992,12 @@ def gen_repl_txt(routine, sig, description):
     // TODO: Add examples
 
 
-{{{{alias}}}}.ndarray( {ndarray_args} )
+{{{{alias}}}}.strided( {strided_args} )
     {description}, using alternative indexing semantics.
 
     Parameters
     ----------
-{ndarray_params_str}
+{strided_params_str}
     Returns
     -------
     out: {returns_type}
@@ -1068,8 +1068,8 @@ def gen_types_dts(routine, package, sig, description):
     blas_ts_params_str = ', '.join(f'{name}: {ts_type}' for name, ts_type in
         [(meta['name'], ts_string_type_map.get(meta['name'], ts_type_map.get(meta['type'], 'any'))) for meta in blas_arg_meta])
 
-    # Generate ndarray TS params
-    ndarray_ts_params_str = ', '.join(f'{meta["name"]}: {ts_string_type_map.get(meta["name"], ts_type_map.get(meta["type"], "any"))}' for meta in sig.get('js_arg_meta', []))
+    # Generate strided TS params
+    strided_ts_params_str = ', '.join(f'{meta["name"]}: {ts_string_type_map.get(meta["name"], ts_type_map.get(meta["type"], "any"))}' for meta in sig.get('js_arg_meta', []))
 
     # Determine return type
     returns_ts = 'number' if sig.get('returns_jsdoc') else 'void'
@@ -1092,21 +1092,21 @@ def gen_types_dts(routine, package, sig, description):
     if returns_ts != 'void':
         blas_jsdoc_params += '\n\t* @returns result'
 
-    # Build JSDoc for ndarray
-    ndarray_jsdoc_lines = []
+    # Build JSDoc for strided
+    strided_jsdoc_lines = []
     for meta in sig.get('js_arg_meta', []):
         name = meta['name']
         if name.startswith('stride') and name[-1] in ('1', '2'):
             arr_ref = name.replace('stride', '')[:-1]
-            ndarray_jsdoc_lines.append(f'\t* @param {name} - stride of `{arr_ref}`')
+            strided_jsdoc_lines.append(f'\t* @param {name} - stride of `{arr_ref}`')
         elif name.startswith('offset'):
             arr_ref = name.replace('offset', '')
-            ndarray_jsdoc_lines.append(f'\t* @param {name} - starting index for `{arr_ref}`')
+            strided_jsdoc_lines.append(f'\t* @param {name} - starting index for `{arr_ref}`')
         else:
-            ndarray_jsdoc_lines.append(f'\t* @param {name} - {meta["desc"]}')
-    ndarray_jsdoc_params = '\n'.join(ndarray_jsdoc_lines)
+            strided_jsdoc_lines.append(f'\t* @param {name} - {meta["desc"]}')
+    strided_jsdoc_params = '\n'.join(strided_jsdoc_lines)
     if returns_ts != 'void':
-        ndarray_jsdoc_params += '\n\t* @returns result'
+        strided_jsdoc_params += '\n\t* @returns result'
 
     license = """/*
 * @license Apache-2.0
@@ -1148,9 +1148,9 @@ interface Routine {{
 \t/**
 \t* {description}, using alternative indexing semantics.
 \t*
-{ndarray_jsdoc_params}
+{strided_jsdoc_params}
 \t*/
-\tndarray( {ndarray_ts_params_str} ): {returns_ts};
+\tndarray( {strided_ts_params_str} ): {returns_ts};
 }}
 
 /**
@@ -1276,7 +1276,7 @@ def generate_benchmarks(root_dir, out_dir, routine, package):
     re-scaffolding an existing module, since base.js is never overwritten).
     """
     rel = os.path.relpath(out_dir, root_dir)
-    for kind, name in (('strided', 'benchmark.js'), ('ndarray', 'benchmark.ndarray.js')):
+    for kind, name in (('wrapper', 'benchmark.js'), ('strided', 'benchmark.strided.js')):
         res = subprocess.run(
             ['node', 'bin/gen-benchmark.mjs', rel, f'--kind={kind}', '--write'],
             cwd=root_dir, capture_output=True, text=True, timeout=120,
@@ -1322,23 +1322,23 @@ def gen_test_ts(routine, package, sig, description):
             blas_dummy_parts.append('2')
     blas_call = ', '.join(blas_dummy_parts)
 
-    # Build dummy call for ndarray
-    ndarray_dummy_parts = []
+    # Build dummy call for strided
+    strided_dummy_parts = []
     for meta in sig.get('js_arg_meta', []):
         name = meta['name']
         if name in ('trans', 'transa', 'transb'):
-            ndarray_dummy_parts.append("'no-transpose'")
+            strided_dummy_parts.append("'no-transpose'")
         elif name == 'uplo':
-            ndarray_dummy_parts.append("'upper'")
+            strided_dummy_parts.append("'upper'")
         elif name == 'diag':
-            ndarray_dummy_parts.append("'non-unit'")
+            strided_dummy_parts.append("'non-unit'")
         elif name == 'side':
-            ndarray_dummy_parts.append("'left'")
+            strided_dummy_parts.append("'left'")
         elif meta['type'] in ('Float64Array', 'Float32Array'):
-            ndarray_dummy_parts.append(f'new {meta["type"]}( 4 )')
+            strided_dummy_parts.append(f'new {meta["type"]}( 4 )')
         else:
-            ndarray_dummy_parts.append('2')
-    ndarray_call = ', '.join(ndarray_dummy_parts)
+            strided_dummy_parts.append('2')
+    strided_call = ', '.join(strided_dummy_parts)
 
     license = """/*
 * @license Apache-2.0
@@ -1375,14 +1375,14 @@ import {routine} from './index';
 \t{routine}(); // $ExpectError
 }}
 
-// The ndarray method returns a {returns_ts}...
+// The strided method returns a {returns_ts}...
 {{
-\t{routine}.ndarray( {ndarray_call} ); // $ExpectType {returns_ts}
+\t{routine}.strided( {strided_call} ); // $ExpectType {returns_ts}
 }}
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {{
-\t{routine}.ndarray(); // $ExpectError
+\t{routine}.strided(); // $ExpectError
 }}
 """
 
@@ -1474,12 +1474,12 @@ def main():
     files = {
         'package.json': gen_package_json(args.routine, args.package, description, sig),
         'lib/base.js': gen_base_js(args.routine, sig, description),
-        'lib/ndarray.js': gen_ndarray_js(args.routine, sig, args.package, description),
+        'lib/strided.js': gen_strided_js(args.routine, sig, args.package, description),
         f'lib/{args.routine}.js': gen_routine_js(args.routine, sig, args.package, description),
         'lib/index.js': gen_index_js(args.routine, args.package, description),
         'test/test.js': gen_test_js(args.routine, args.package, sig),
         f'test/test.{args.routine}.js': gen_test_routine_js(args.routine, args.package, sig, description),
-        'test/test.ndarray.js': gen_test_ndarray_js(args.routine, args.package, sig, description),
+        'test/test.strided.js': gen_test_strided_js(args.routine, args.package, sig, description),
         'README.md': gen_readme(args.routine, args.package, description, sig),
         'docs/repl.txt': gen_repl_txt(args.routine, sig, description),
         'docs/types/index.d.ts': gen_types_dts(args.routine, args.package, sig, description),

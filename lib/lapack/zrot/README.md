@@ -48,12 +48,12 @@ zrot( N, x, strideX, y, strideY, c, s ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zrot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
+zrot.strided( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -124,8 +124,8 @@ const s = new Complex128( 0.0, 0.8 );
 let out = zrot( N, cx, 1, cy, 1, 0.6, s );
 console.log( out );
 
-// Using the ndarray interface:
-out = zrot.ndarray( N, cx, 1, 0, cy, 1, 0, 0.6, s );
+// Using the strided interface:
+out = zrot.strided( N, cx, 1, 0, cy, 1, 0, 0.6, s );
 console.log( out );
 ```
 

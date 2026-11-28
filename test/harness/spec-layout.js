@@ -3,7 +3,7 @@
 * layouts and require bit-exact results (CONVENTIONS S13, T7).
 *
 * The routine's spec (spec/<routine>.json, via lint/lib/spec.cjs) says which
-* `ndarray.js` arguments are arrays and which follow them as strides and
+* `strided.js` arguments are arrays and which follow them as strides and
 * offset. Given one canonical call (every array column-major / unit-stride /
 * zero-offset, as fixture tests are written), this helper realizes each
 * non-workspace array again under each layout below, NaN-poisons every slot
@@ -260,7 +260,7 @@ function sameValue( a, b ) {
 * Asserts that `fn( ...args )` is layout-invariant.
 *
 * @param {string} routine - routine name (its spec is `spec/<routine>.json`)
-* @param {Function} fn - the routine's `ndarray.js` export
+* @param {Function} fn - the routine's `strided.js` export
 * @param {Array} args - a canonical call: arrays column-major, positive stride
 * @param {Object} [opts] - options
 * @param {Array<string>} [opts.layouts] - layouts to check (default: all)
@@ -271,7 +271,7 @@ function specLayoutInvariant( routine, fn, args, opts ) {
 	const o = opts || {};
 	const spec = specLib.load( routine );
 	assert.ok( spec, 'no spec for ' + routine );
-	assert.equal( fn.length, specLib.base( spec ).length, routine + ': fn does not take the spec\'s ndarray signature' );
+	assert.equal( fn.length, specLib.base( spec ).length, routine + ': fn does not take the spec\'s strided signature' );
 	const arrays = arraysOf( spec, args ).filter( function f( a ) {
 		return !( o.skip || [] ).includes( a.name );
 	});

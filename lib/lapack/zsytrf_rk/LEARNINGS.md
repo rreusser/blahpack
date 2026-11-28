@@ -37,7 +37,7 @@
 ## Coverage gaps
 
 - The `N === 0` quick return in `base.js` (lines 82-83) is unreachable
-  via `ndarray.js` because the wrapper short-circuits N=0 first. Final
+  via `strided.js` because the wrapper short-circuits N=0 first. Final
   base.js coverage: 98.97% line / 90.91% branch (both above gate
   threshold of 90/85).
 

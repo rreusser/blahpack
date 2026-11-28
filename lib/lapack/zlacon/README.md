@@ -53,12 +53,12 @@ zlacon( N, V, strideV, X, strideX, EST, KASE ) → Complex128Array
 
 **Returns** `Complex128Array`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacon.ndarray( N, V, strideV, offsetV, X, strideX, offsetX, EST, KASE ) → Complex128Array
+zlacon.strided( N, V, strideV, offsetV, X, strideX, offsetX, EST, KASE ) → Complex128Array
 ```
 
 Estimates the 1-norm of a square complex matrix A using reverse communication.
@@ -140,7 +140,7 @@ const KASE = new Int32Array( 1 );
 KASE[ 0 ] = 0;
 
 // First call initializes X and requests A*X (KASE=1):
-zlacon.ndarray( N, V, 1, 0, X, 1, 0, EST, KASE );
+zlacon.strided( N, V, 1, 0, X, 1, 0, EST, KASE );
 console.log( 'After init: KASE =', KASE[ 0 ] ); // 1
 ```
 

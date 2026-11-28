@@ -4,7 +4,7 @@ Generate <routine>.js BLAS/LAPACK-style API wrappers from base.js signatures.
 
 Reads the base.js function signature and @param JSDoc to determine parameter
 roles, then generates the appropriate wrapper that converts from the classic
-BLAS/LAPACK API (order + LDA) to the ndarray API (strides + offsets).
+BLAS/LAPACK API (order + LDA) to the strided API (strides + offsets).
 
 Usage:
     python3 bin/gen_routine_js.py <pkg> <routine>          # Generate one

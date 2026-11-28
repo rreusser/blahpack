@@ -28,7 +28,7 @@ COLUMNS = [
     ('test', 'test/test.js exists'),
     ('strings', 'Single-char string params (not full-word)'),
     ('main', 'index.js uses setReadOnly (no main.js; ticket 0124)'),
-    ('ndarray', 'ndarray.js has validation (TypeError/RangeError)'),
+    ('strided', 'strided.js has validation (TypeError/RangeError)'),
     ('routine', 'routine.js implemented (no "not implemented")'),
     ('learnings', 'LEARNINGS.md exists and filled in'),
     ('license', 'base.js has Apache-2.0 license header'),
@@ -144,7 +144,7 @@ def audit_module(pkg, routine):
     str_result = has_string_params(base_js)
     results['strings'] = str_result  # None means N/A
 
-    # 4. index.js attaches .ndarray with setReadOnly (main.js was folded into
+    # 4. index.js attaches .strided with setReadOnly (main.js was folded into
     # index.js; ticket 0124)
     index_js = os.path.join(lib_dir, 'index.js')
     if os.path.isfile(index_js):
@@ -152,15 +152,15 @@ def audit_module(pkg, routine):
     else:
         results['main'] = None  # no index.js
 
-    # 5. ndarray.js has validation
-    ndarray_js = os.path.join(lib_dir, 'ndarray.js')
-    if os.path.isfile(ndarray_js):
-        has_throws = file_contains(ndarray_js, [
+    # 5. strided.js has validation
+    strided_js = os.path.join(lib_dir, 'strided.js')
+    if os.path.isfile(strided_js):
+        has_throws = file_contains(strided_js, [
             r'throw\s+new\s+TypeError',
             r'throw\s+new\s+RangeError',
         ])
         if has_throws:
-            results['ndarray'] = True
+            results['strided'] = True
         else:
             # Check if validation is actually needed (has string params or dimensions)
             needs_validation = False
@@ -176,9 +176,9 @@ def audit_module(pkg, routine):
                     needs_validation = True
             except FileNotFoundError:
                 pass
-            results['ndarray'] = None if not needs_validation else False
+            results['strided'] = None if not needs_validation else False
     else:
-        results['ndarray'] = None  # no ndarray.js
+        results['strided'] = None  # no strided.js
 
     # 6. routine.js implemented (no "not implemented" strings)
     routine_js = os.path.join(lib_dir, routine + '.js')
@@ -210,7 +210,7 @@ def audit_module(pkg, routine):
     results['license'] = file_starts_with_license(base_js)
 
     # 9. eslint — file-level disable (not inline eslint-disable-line)
-    js_files = [base_js, ndarray_js, routine_js]
+    js_files = [base_js, strided_js, routine_js]
     has_inline = False
     has_any_eslint = False
     for jf in js_files:
@@ -297,7 +297,7 @@ def main():
         all_results.append((pkg, routine, results))
 
     col_keys = [c[0] for c in COLUMNS]
-    col_headers = ['base', 'test', 'strings', 'main', 'ndarray', 'routine',
+    col_headers = ['base', 'test', 'strings', 'main', 'strided', 'routine',
                    'learnings', 'license', 'eslint', 'example']
 
     # Compute column widths
@@ -345,7 +345,7 @@ def main():
         'test': 'test.js',
         'strings': 'strings',
         'main': 'main.js',
-        'ndarray': 'ndarray',
+        'strided': 'strided',
         'routine': 'routine.js',
         'learnings': 'learnings',
         'license': 'license',

@@ -48,12 +48,12 @@ dgetri( order, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` second argument must be a nonnegative integer
 - `RangeError` fourth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetri.ndarray(
+dgetri.strided(
     N,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV,
@@ -139,11 +139,11 @@ dgetrf( 'column-major', N, N, A, N, IPIV, 1 );
 let out = dgetri( 'column-major', N, A, N, IPIV, 1, null );
 console.log( out, A ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( A0 );
-dgetrf.ndarray( N, N, A, 1, N, 0, IPIV, 1, 0 );
+dgetrf.strided( N, N, A, 1, N, 0, IPIV, 1, 0 );
 const WORK = new Float64Array( N );
-out = dgetri.ndarray( N, A, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
+out = dgetri.strided( N, A, 1, N, 0, IPIV, 1, 0, WORK, 1, 0 );
 console.log( out, A ); // eslint-disable-line no-console
 ```
 

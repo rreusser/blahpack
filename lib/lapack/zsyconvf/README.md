@@ -95,12 +95,12 @@ zsyconvf( order, uplo, way, N, A, LDA, e, strideE, IPIV, strideIPIV ) → intege
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsyconvf.ndarray(
+zsyconvf.strided(
     uplo, way,
     N,
     A, strideA1, strideA2, offsetA,
@@ -232,8 +232,8 @@ const IPIV = new Int32Array( [ 0, 1, 2 ] );
 let out = zsyconvf( 'column-major', 'upper', 'convert', N, A, N, E, 1, IPIV, 1 );
 console.log( out ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-out = zsyconvf.ndarray( 'upper', 'convert', N, A, 1, N, 0, E, 1, 0, IPIV, 1, 0 );
+// Using the strided interface:
+out = zsyconvf.strided( 'upper', 'convert', N, A, 1, N, 0, E, 1, 0, IPIV, 1, 0 );
 console.log( out ); // eslint-disable-line no-console
 ```
 

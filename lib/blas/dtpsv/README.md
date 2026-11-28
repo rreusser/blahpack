@@ -77,12 +77,12 @@ dtpsv( order, uplo, trans, diag, N, AP, x, strideX ) → Float64Array
 - `RangeError` eighth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtpsv.ndarray(
+dtpsv.strided(
     uplo, trans, diag,
     N,
     AP, strideAP, offsetAP,

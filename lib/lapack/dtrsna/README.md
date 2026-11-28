@@ -98,12 +98,12 @@ dtrsna(
 - `RangeError` twelfth argument is invalid (column-major: rejected when `LDVR < 1 \|\| ( ( job === "eigenvalues" \|\| job === "both" ) && LDVR < N )`)
 - `RangeError` twelfth argument is invalid (row-major: rejected when `LDVR < 1 \|\| ( ( job === "eigenvalues" \|\| job === "both" ) && LDVR < max( 1, mm ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrsna.ndarray(
+dtrsna.strided(
     job, howmny,
     SELECT, strideSELECT, offsetSELECT,
     N,

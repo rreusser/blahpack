@@ -15,7 +15,7 @@
 ## Dependency interface surprises
 
 - `dsytrs_rook` has the canonical `(uplo, N, nrhs, A, sa1, sa2, oa, IPIV,
-  sIPIV, oIPIV, B, sB1, sB2, oB)` ndarray signature; passing the WORK
+  sIPIV, oIPIV, B, sB1, sB2, oB)` strided signature; passing the WORK
   vector as a 1-column matrix uses `strideB1=strideWORK`,
   `strideB2=N*strideWORK`.
 - `dlacn2`'s V vector lives at `WORK[N..2N-1]` and X at `WORK[0..N-1]`.

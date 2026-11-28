@@ -53,7 +53,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns result
 	*/
-	ndarray( norm: string, N: number, KL: number, KU: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	strided( norm: string, N: number, KL: number, KU: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

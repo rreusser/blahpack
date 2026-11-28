@@ -119,12 +119,12 @@ dpbsvx(
 - `RangeError` seventeenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpbsvx.ndarray(
+dpbsvx.strided(
     fact, uplo,
     N, kd, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
@@ -280,7 +280,7 @@ const BERR = new Float64Array( 1 );
 const WORK = new Float64Array( 9 );
 const IWORK = new Int32Array( 3 );
 
-const info = dpbsvx.ndarray( 'not-factored', 'lower', 3, 2, 1, AB, 1, 3, 0, AFB, 1, 3, 0, equed, S, 1, 0, B, 1, 3, 0, X, 1, 3, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
+const info = dpbsvx.strided( 'not-factored', 'lower', 3, 2, 1, AB, 1, 3, 0, AFB, 1, 3, 0, equed, S, 1, 0, B, 1, 3, 0, X, 1, 3, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info );
 console.log( 'X:', X );

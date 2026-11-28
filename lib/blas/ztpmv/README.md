@@ -77,12 +77,12 @@ ztpmv( order, uplo, trans, diag, N, AP, x, strideX ) → Complex128Array
 - `RangeError` eighth argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztpmv.ndarray(
+ztpmv.strided(
     uplo, trans, diag,
     N,
     AP, strideAP, offsetAP,
@@ -183,9 +183,9 @@ let x = new Complex128Array( [ 1.0, 0.0, 1.0, 0.0 ] );
 ztpmv( 'column-major', 'upper', 'no-transpose', 'non-unit', 2, AP, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Complex128Array( [ 1.0, 0.0, 1.0, 0.0 ] );
-ztpmv.ndarray( 'upper', 'no-transpose', 'non-unit', 2, AP, 1, 0, x, 1, 0 );
+ztpmv.strided( 'upper', 'no-transpose', 'non-unit', 2, AP, 1, 0, x, 1, 0 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 ```
 

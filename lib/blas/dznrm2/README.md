@@ -40,12 +40,12 @@ dznrm2( N, x, strideX ) → number
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dznrm2.ndarray( N, x, strideX, offsetX ) → number
+dznrm2.strided( N, x, strideX, offsetX ) → number
 ```
 
 | Parameter | Type | Description |
@@ -99,8 +99,8 @@ let out = dznrm2( 3, x, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => ~11.180
 
-// Using the ndarray interface (last two elements only):
-out = dznrm2.ndarray( 2, x, 1, 1 );
+// Using the strided interface (last two elements only):
+out = dznrm2.strided( 2, x, 1, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => 10.0
 ```

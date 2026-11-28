@@ -102,12 +102,12 @@ dlarzb(
 - `RangeError` thirteenth argument must be greater than or equal to max(1,K)
 - `RangeError` fifteenth argument must be greater than or equal to max(1,M)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarzb.ndarray(
+dlarzb.strided(
     side, trans, direct, storev,
     M,
     N, K, l,

@@ -31,12 +31,12 @@ import dlarmm = require( './index' );
 	dlarmm(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dlarmm.ndarray( 2, 2, 2 ); // $ExpectType number
+	dlarmm.strided( 2, 2, 2 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dlarmm.ndarray(); // $ExpectError
+	dlarmm.strided(); // $ExpectError
 }

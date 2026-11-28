@@ -61,12 +61,12 @@ zhegs2( order, itype, uplo, N, A, LDA, B, LDB ) → integer
 - `RangeError` eighth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhegs2.ndarray(
+zhegs2.strided(
     itype,
     uplo,
     N,
@@ -174,9 +174,9 @@ zpotrf( 'column-major', 'upper', N, B, N );
 let info = zhegs2( 'column-major', itype, 'upper', N, A, N, B, N );
 console.log( 'info:', info, 'A:', reinterpret( A, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( [ 4.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, -1.0, 5.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0, 2.0, 6.0, 0.0 ] ); // eslint-disable-line max-len
-info = zhegs2.ndarray( itype, 'upper', N, A, 1, N, 0, B, 1, N, 0 );
+info = zhegs2.strided( itype, 'upper', N, A, 1, N, 0, B, 1, N, 0 );
 console.log( 'info:', info, 'A:', reinterpret( A, 0 ) );
 ```
 

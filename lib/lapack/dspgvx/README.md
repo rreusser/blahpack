@@ -125,12 +125,12 @@ dspgvx(
 - `RangeError` eighteenth argument is invalid (column-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 - `RangeError` eighteenth argument is invalid (row-major: rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < max( 1, range === "index" ? iu - il + 1 : N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dspgvx.ndarray(
+dspgvx.strided(
     itype,
     jobz, range, uplo,
     N,

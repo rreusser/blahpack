@@ -12,7 +12,7 @@
 - The Frobenius norm counts off-diagonal elements twice (`SUM = 2*SUM`) before
   adding the diagonal via a separate DLASSQ call. The diagonal is located at
   row K (upper) or row 0 (lower) in band storage, and DLASSQ walks it with
-  stride = LDAB (i.e. strideAB2 in ndarray convention).
+  stride = LDAB (i.e. strideAB2 in strided convention).
 - When K=0, the off-diagonal loop is skipped entirely and `l` is set to 0
   (lower convention row) regardless of uplo, since for a diagonal matrix both
   storage formats have the diagonal at `AB(1,j)` (Fortran) = row 0 (0-indexed).

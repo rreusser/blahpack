@@ -72,12 +72,12 @@ zunm22( order, side, trans, M, N, n1, n2, Q, LDQ, C, LDC, WORK ) → integer
 - `RangeError` LDQ must be greater than or equal to max(1,N/M)
 - `RangeError` LDC must be greater than or equal to max(1,N/M)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zunm22.ndarray(
+zunm22.strided(
     side, trans,
     M, N,
     n1,

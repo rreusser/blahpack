@@ -140,12 +140,12 @@ zgbsvx(
 - `RangeError` twenty-second argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgbsvx.ndarray(
+zgbsvx.strided(
     fact, trans,
     N, kl, ku, nrhs,
     AB, strideAB1, strideAB2, offsetAB,
@@ -374,7 +374,7 @@ const WORK = new Complex128Array( 2 * N );
 const RWORK = new Float64Array( N );
 
 const equed = [ 'none' ];
-const info = zgbsvx.ndarray( 'not-factored', 'no-transpose', N, KL, KU, nrhs, AB, 1, nRows, 0, AFB, 1, (2 * KL) + KU + 1, 0, IPIV, 1, 0, equed, r, 1, 0, c, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+const info = zgbsvx.strided( 'not-factored', 'no-transpose', N, KL, KU, nrhs, AB, 1, nRows, 0, AFB, 1, (2 * KL) + KU + 1, 0, IPIV, 1, 0, equed, r, 1, 0, c, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info );
 console.log( 'rcond:', rcond[ 0 ] );

@@ -47,12 +47,12 @@ dlasv2( f, g, h, ssmin, ssmax, snr, csr, snl, csl ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasv2.ndarray( f, g, h, ssmin, ssmax, snr, csr, snl, csl ) → void
+dlasv2.strided( f, g, h, ssmin, ssmax, snr, csr, snl, csl ) → void
 ```
 
 Computes the singular value decomposition of a 2-by-2 triangular matrix, using alternative indexing semantics.
@@ -124,8 +124,8 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
-dlasv2.ndarray( 1, 1, 1, ssmin, ssmax, snr, csr, snl, csl );
+// Using the strided interface:
+dlasv2.strided( 1, 1, 1, ssmin, ssmax, snr, csr, snl, csl );
 out = {
 	'ssmin': ssmin[ 0 ],
 	'ssmax': ssmax[ 0 ],

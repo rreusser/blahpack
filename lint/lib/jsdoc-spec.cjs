@@ -2,7 +2,7 @@
 
 // The JSDoc a spec implies for each form (CONVENTIONS J2, C1, C4, W5, S10,
 // S11): one `@param {Type} name` per parameter, in order; the `@throws` of the
-// generated validation prologue (ndarray.js, <routine>.js); and the `@returns`
+// generated validation prologue (strided.js, <routine>.js); and the `@returns`
 // type.
 
 var fs = require( 'fs' );
@@ -90,7 +90,7 @@ function leadType( p, form, g, spec ) {
 	case 'state':
 		return 'Object';
 	case 'workspace':
-		return ( form === 'strided' ) ? '(' + arrayType( p ) + '|null)' : arrayType( p );
+		return ( form === 'wrapper' ) ? '(' + arrayType( p ) + '|null)' : arrayType( p );
 	case 'scalar':
 		if ( g.names.length === 2 ) {
 			return arrayType( p );
@@ -113,7 +113,7 @@ function params( spec, form, actual ) {
 		if ( !g.names.length ) {
 			return;
 		}
-		if ( form !== 'strided' ) {
+		if ( form !== 'wrapper' ) {
 			g.names.forEach( function each( n, i ) {
 				var t;
 				if ( i === 0 ) {
@@ -134,7 +134,7 @@ function params( spec, form, actual ) {
 			out.push( { 'name': g.names[ 1 ], 'type': 'integer' } );
 		}
 	});
-	if ( form === 'strided' && specLib.takesOrder( spec ) ) {
+	if ( form === 'wrapper' && specLib.takesOrder( spec ) ) {
 		out.unshift( { 'name': 'order', 'type': 'Layout' } );
 	}
 	if ( actual && actual.length === out.length ) {

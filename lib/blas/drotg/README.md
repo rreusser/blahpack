@@ -39,12 +39,12 @@ drotg( a, b, c, s ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-drotg.ndarray( a, b, c, s ) → void
+drotg.strided( a, b, c, s ) → void
 ```
 
 Constructs a Givens plane rotation.

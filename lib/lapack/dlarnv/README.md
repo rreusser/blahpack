@@ -45,12 +45,12 @@ dlarnv( idist, iseed, strideISEED, N, x, strideX ) → Float64Array
 
 **Returns** `Float64Array`: `x`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarnv.ndarray(
+dlarnv.strided(
     idist,
     iseed, strideISEED, offsetISEED,
     N,
@@ -118,8 +118,8 @@ const x = new Float64Array( N );
 dlarnv( 1, iseed, 1, N, x, 1 );
 console.log( x ); // eslint-disable-line no-console
 
-// Using the ndarray interface (normal (0,1) distribution):
-dlarnv.ndarray( 3, iseed, 1, 0, N, x, 1, 0 );
+// Using the strided interface (normal (0,1) distribution):
+dlarnv.strided( 3, iseed, 1, 0, N, x, 1, 0 );
 console.log( x ); // eslint-disable-line no-console
 ```
 

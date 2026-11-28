@@ -41,12 +41,12 @@ dlae2( a, b, c, rt1, rt2 ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlae2.ndarray( a, b, c, rt1, rt2 ) → void
+dlae2.strided( a, b, c, rt1, rt2 ) → void
 ```
 
 | Parameter | Type | Description |

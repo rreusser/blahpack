@@ -33,12 +33,12 @@ disnan( din ) → boolean
 
 **Returns** `boolean`: result
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-disnan.ndarray( din ) → boolean
+disnan.strided( din ) → boolean
 ```
 
 | Parameter | Type | Description |
@@ -79,8 +79,8 @@ import disnan from '@rreusser/blahpack/lapack/disnan';
 let out = disnan( 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = disnan.ndarray( 1 );
+// Using the strided interface:
+out = disnan.strided( 1 );
 console.log( out );
 ```
 

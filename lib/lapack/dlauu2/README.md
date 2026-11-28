@@ -49,12 +49,12 @@ dlauu2( order, uplo, N, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlauu2.ndarray( uplo, N, A, strideA1, strideA2, offsetA ) → info: integer
+dlauu2.strided( uplo, N, A, strideA1, strideA2, offsetA ) → info: integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -129,8 +129,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = dlauu2( 'row-major', 'upper', N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlauu2.ndarray( 'upper', N, A, N, 1, 0 );
+// Using the strided interface:
+out = dlauu2.strided( 'upper', N, A, N, 1, 0 );
 console.log( out );
 ```
 

@@ -119,12 +119,12 @@ of size `N` elements. Only used when `sort='sort'`.
 - `RangeError` nineteenth argument is invalid (rejected when `LDVSL < 1 \|\| ( ( jobvsl === "compute-vectors" ) && LDVSL < N )`)
 - `RangeError` twenty-first argument is invalid (rejected when `LDVSR < 1 \|\| ( ( jobvsr === "compute-vectors" ) && LDVSR < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgges.ndarray(
+dgges.strided(
     jobvsl, jobvsr, sort,
     selctg,
     N,

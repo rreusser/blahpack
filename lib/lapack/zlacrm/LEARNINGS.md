@@ -15,14 +15,14 @@ LDA used by the caller for A.
 - The Fortran scratch layout is independent of A's leading dimension —
   RWORK is always packed M×N column-major. We pass `1, M` as the strides
   for both the input and output halves of RWORK to DGEMM.
-- DGEMM dependency calling convention is `dgemm.ndarray(transA, transB,
+- DGEMM dependency calling convention is `dgemm.strided(transA, transB,
   M, N, K, alpha, A, sa1, sa2, oA, B, sb1, sb2, oB, beta, C, sc1, sc2,
-  oC)`; the wrapper exposes `.ndarray` which is what the base routine
+  oC)`; the wrapper exposes `.strided` which is what the base routine
   uses (no row-major flag needed).
 - The scaffolded `zlacrm.js` wrapper had `LDB < max(1,M)` for
   column-major, which is wrong: B is N-by-N, so LDB must be `>= max(1,N)`
   for both layouts.
-- `RWORK` is documented as a strided real array in the ndarray API
+- `RWORK` is documented as a strided real array in the strided API
   (`strideRWORK`, `offsetRWORK`), but the base routine assumes the M*N
   scratch is contiguous because DGEMM is invoked with stride 1 on the
   first dimension. The contract is that callers pass `strideRWORK = 1`

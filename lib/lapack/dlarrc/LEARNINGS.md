@@ -2,7 +2,7 @@
 
 ## Translation pitfalls
 
-- JOBT parameter maps to `'tridiagonal'` (Fortran `'T'`) and `'ldl'` (Fortran `'L'`). These are non-standard long-form strings since JOBT is not one of the standard parameter types (uplo, trans, side, etc.). The ndarray.js wrapper includes explicit whitelist validation for these two values.
+- JOBT parameter maps to `'tridiagonal'` (Fortran `'T'`) and `'ldl'` (Fortran `'L'`). These are non-standard long-form strings since JOBT is not one of the standard parameter types (uplo, trans, side, etc.). The strided.js wrapper includes explicit whitelist validation for these two values.
 - The routine returns multiple scalar outputs (eigcnt, lcnt, rcnt) plus info. These are output-only params, so they are returned as an object `{ info, eigcnt, lcnt, rcnt }` rather than passed as mutable parameters.
 - The signature generator listed eigcnt/lcnt/rcnt as input parameters, but they are pure outputs in Fortran. Had to manually adjust the signature to return an object instead.
 

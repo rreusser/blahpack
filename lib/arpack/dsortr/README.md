@@ -37,12 +37,12 @@ dsortr( which, apply, N, x1, strideX1, x2, strideX2 ) → Float64Array
 - `TypeError` first argument must be one of the following: "LM", "SM", "LA", "SA"
 - `RangeError` third argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsortr.ndarray(
+dsortr.strided(
     which,
     apply,
     N,

@@ -90,7 +90,7 @@ test( 'every input option is typed as the literal union of its values (tickets 0
 			return;
 		}
 		spec = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', f ), 'utf8' ) );
-		J.params( spec, 'ndarray', specLib.strided( spec ) ).forEach( function each( p ) {
+		J.params( spec, 'strided', specLib.wrapper( spec ) ).forEach( function each( p ) {
 			types[ p.name ] = p.type;
 		});
 		( spec.params || [] ).forEach( function each( p ) {
@@ -112,7 +112,7 @@ test( 'every input option is typed as the literal union of its values (tickets 0
 });
 
 test( 'every input option is checked at runtime against the values of its type (ticket 0092)', function t() {
-	// A plain-JS caller has no tsc, so the generated prologue of ndarray.js
+	// A plain-JS caller has no tsc, so the generated prologue of strided.js
 	// and <routine>.js (lint/lib/prologue.cjs, kept in lib/ by spec-prologue)
 	// must reject exactly the strings the type rejects. An option the
 	// reference checks itself keeps that check; every other option gets an
@@ -129,7 +129,7 @@ test( 'every input option is checked at runtime against the values of its type (
 			return;
 		}
 		spec = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', f ), 'utf8' ) );
-		checks = P.prologue( spec, 'ndarray', specLib.base( spec ) );
+		checks = P.prologue( spec, 'strided', specLib.base( spec ) );
 		( spec.params || [] ).forEach( function each( p ) {
 			var c;
 			if ( p.role !== 'flag' || p.intent !== 'in' || specLib.base( spec ).indexOf( p.name ) < 0 ) {

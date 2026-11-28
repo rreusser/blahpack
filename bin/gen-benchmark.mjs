@@ -3,8 +3,8 @@
 /**
 * Probe-driven benchmark generator.
 *
-* Reads the JSDoc signature of a module's strided wrapper (`lib/<r>.js`) and
-* offset form (`lib/ndarray.js`), picks an argument expression for every
+* Reads the JSDoc signature of a module's wrapper (`lib/<r>.js`) and
+* offset form (`lib/strided.js`), picks an argument expression for every
 * parameter, and then *probes* the real routine at a small size: whenever a
 * call throws, the error message is used to identify the offending argument
 * (`invalid argument. Fifth argument ...`) and that argument advances to its
@@ -12,7 +12,7 @@
 * list that runs (repeatedly, without throwing) is emitted as a benchmark.
 *
 * Usage:
-*   node bin/gen-benchmark.mjs <module-dir>... [--write] [--kind=strided|ndarray]
+*   node bin/gen-benchmark.mjs <module-dir>... [--write] [--kind=wrapper|strided]
 *
 * Without --write, prints the probe outcome only. Exit code 1 if any probe
 * failed to find a working argument list.
@@ -179,7 +179,7 @@ function parseSignature( src, fname ) {
 */
 function harvestStrings( dir ) {
 	const out = new Set();
-	for ( const f of [ 'base.js', 'ndarray.js', basename( dir ) + '.js' ] ) {
+	for ( const f of [ 'base.js', 'strided.js', basename( dir ) + '.js' ] ) {
 		const p = join( dir, 'lib', f );
 		if ( !existsSync( p ) ) {
 			continue;
@@ -996,7 +996,7 @@ function emit( o ) {
 		imports.push( "import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';" );
 	}
 	for ( const n of ( setup ) ? specs.producers : [] ) {
-		let rel = relative( resolve( o.dir, 'benchmark' ), join( specs.producerDirs[ n ], 'lib', 'ndarray.js' ) );
+		let rel = relative( resolve( o.dir, 'benchmark' ), join( specs.producerDirs[ n ], 'lib', 'strided.js' ) );
 		rel = ( rel.startsWith( '.' ) ) ? rel : './' + rel;
 		imports.push( `import ${n} from '${rel.replace( /^\.\.\//, './../' )}';` );
 	}
@@ -1237,15 +1237,15 @@ function licenseHeader( src ) {
 * Processes one benchmark of one module.
 *
 * @param {string} dir - module dir
-* @param {string} kind - 'strided' or 'ndarray'
+* @param {string} kind - 'wrapper' or 'strided'
 * @param {boolean} write - whether to write
 * @returns {Promise<Object>} result
 */
 async function processOne( dir, kind, write ) {
 	const routine = basename( dir );
-	const libFile = ( kind === 'ndarray' ) ? 'ndarray.js' : `${routine}.js`;
+	const libFile = ( kind === 'strided' ) ? 'strided.js' : `${routine}.js`;
 	const libPath = join( dir, 'lib', libFile );
-	const benchPath = join( dir, 'benchmark', ( kind === 'ndarray' ) ? 'benchmark.ndarray.js' : 'benchmark.js' );
+	const benchPath = join( dir, 'benchmark', ( kind === 'strided' ) ? 'benchmark.strided.js' : 'benchmark.js' );
 	if ( !existsSync( libPath ) ) {
 		return { 'ok': false, 'error': `missing ${libPath}` };
 	}
@@ -1257,7 +1257,7 @@ async function processOne( dir, kind, write ) {
 		return { 'ok': false, 'error': `cannot parse signature in ${libPath}` };
 	}
 	// Fill missing/unhelpful JSDoc types from the sibling files' JSDoc:
-	for ( const f of [ 'base.js', 'ndarray.js', `${routine}.js` ] ) {
+	for ( const f of [ 'base.js', 'strided.js', `${routine}.js` ] ) {
 		const p = join( dir, 'lib', f );
 		if ( f === libFile || !existsSync( p ) ) {
 			continue;
@@ -1315,11 +1315,11 @@ async function processOne( dir, kind, write ) {
 		if ( built ) {
 			const producers = {};
 			for ( const n of built.producers ) {
-				const pdir = [ 'lapack', 'blas' ].map( ( pk ) => resolve( 'lib', pk, n ) ).find( ( d ) => existsSync( join( d, 'lib', 'ndarray.js' ) ) );
+				const pdir = [ 'lapack', 'blas' ].map( ( pk ) => resolve( 'lib', pk, n ) ).find( ( d ) => existsSync( join( d, 'lib', 'strided.js' ) ) );
 				if ( !pdir ) {
 					return { 'ok': false, 'error': `recipe "${recipe.name}": no producer ${n}` };
 				}
-				producers[ n ] = ( await import( pathToFileURL( join( pdir, 'lib', 'ndarray.js' ) ).href ) ).default;
+				producers[ n ] = ( await import( pathToFileURL( join( pdir, 'lib', 'strided.js' ) ).href ) ).default;
 				producers[ n ].dir = pdir;
 			}
 			why = installRecipe( mod.default, specs, res.tier, recipe, built, producers );
@@ -1341,7 +1341,7 @@ async function processOne( dir, kind, write ) {
 			'is2d': is2d,
 			'ret': sig.returns,
 			'header': header,
-			'label': ( kind === 'ndarray' ) ? 'ndarray:' : ''
+			'label': ( kind === 'strided' ) ? 'strided:' : ''
 		});
 		writeFileSync( benchPath, out );
 	}
@@ -1354,7 +1354,7 @@ async function processOne( dir, kind, write ) {
 const argv = process.argv.slice( 2 );
 const write = argv.includes( '--write' );
 const km = argv.find( ( a ) => a.startsWith( '--kind=' ) );
-const kinds = ( km ) ? [ km.slice( 7 ) ] : [ 'strided', 'ndarray' ];
+const kinds = ( km ) ? [ km.slice( 7 ) ] : [ 'wrapper', 'strided' ];
 let failed = 0;
 for ( const dir of argv.filter( ( a ) => !a.startsWith( '--' ) ) ) {
 	for ( const kind of kinds ) {

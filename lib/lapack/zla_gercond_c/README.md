@@ -78,12 +78,12 @@ zla_gercond_c(
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 - `RangeError` leading dimensions must be valid
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_gercond_c.ndarray(
+zla_gercond_c.strided(
     trans,
     N,
     A, strideA1, strideA2, offsetA,

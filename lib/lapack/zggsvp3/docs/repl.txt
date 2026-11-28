@@ -107,7 +107,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( jobu, jobv, jobq, M, p, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, tola, tolb, K, l, U, strideU1, strideU2, offsetU, V, strideV1, strideV2, offsetV, Q, strideQ1, strideQ2, offsetQ, IWORK, strideIWORK, offsetIWORK, RWORK, strideRWORK, offsetRWORK, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.strided( jobu, jobv, jobq, M, p, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, tola, tolb, K, l, U, strideU1, strideU2, offsetU, V, strideV1, strideV2, offsetV, Q, strideQ1, strideQ2, offsetQ, IWORK, strideIWORK, offsetIWORK, RWORK, strideRWORK, offsetRWORK, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
     Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair, using alternative indexing semantics.
 
     Parameters

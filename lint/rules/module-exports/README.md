@@ -1,7 +1,7 @@
 # `module-exports`
 
 **Every module must expose both entry points: the layout-form default and its
-`ndarray` (offset-form) variant.**
+`strided` (offset-form) variant.**
 
 `index.js` declares no parameter list of its own: it is the plumbing that
 defines how the module is consumed. Its "signature" is the export surface, and a
@@ -11,19 +11,19 @@ module missing either entry point is a broken public API. There is no
 
 | Requirement | Form |
 | --- | --- |
-| Attach the offset form | `setReadOnly( <routine>, 'ndarray', ndarray );` |
-| Typed default export | `export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );` `tsc` cannot see a property a call adds, so without the type no caller's `<routine>.ndarray( … )` is checked (ticket 0094). |
-| Named export | `export { ndarray };` |
+| Attach the offset form | `setReadOnly( <routine>, 'strided', strided );` |
+| Typed default export | `export default /** @type {typeof <routine> & { strided: typeof strided }} */ ( <routine> );` `tsc` cannot see a property a call adds, so without the type no caller's `<routine>.strided( … )` is checked (ticket 0094). |
+| Named export | `export { strided };` |
 
 ```js
 import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
 import ddot from './ddot.js';
-import ndarray from './ndarray.js';
+import strided from './strided.js';
 
-setReadOnly( ddot, 'ndarray', ndarray );
+setReadOnly( ddot, 'strided', strided );
 
-export default /** @type {typeof ddot & { ndarray: typeof ndarray }} */ ( ddot );
-export { ndarray };
+export default /** @type {typeof ddot & { strided: typeof strided }} */ ( ddot );
+export { strided };
 ```
 
 ## Files
@@ -32,7 +32,7 @@ export { ndarray };
 | --- | --- |
 | `rule.cjs` | AST checks over the `index.js` export surface. |
 | `fixtures/pass/*.js` | The canonical `index.js`. |
-| `fixtures/fail/*.js` | No attachment, an untyped default, no named `ndarray`, and the retired re-export of `main.js`. |
+| `fixtures/fail/*.js` | No attachment, an untyped default, no named `strided`, and the retired re-export of `main.js`. |
 | `test.cjs` | Runs the rule over every fixture (`node --test`). |
 
 ## Changing the rule

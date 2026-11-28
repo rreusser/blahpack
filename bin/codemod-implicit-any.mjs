@@ -146,7 +146,7 @@ function main() {
 		};
 		harvest( src );
 		const dir = path.dirname( file );
-		[ 'ndarray.js', 'base.js' ].forEach( ( f ) => {
+		[ 'strided.js', 'base.js' ].forEach( ( f ) => {
 			const other = path.join( dir, f );
 			if ( other !== file && fs.existsSync( other ) ) {
 				harvest( fs.readFileSync( other, 'utf8' ) );

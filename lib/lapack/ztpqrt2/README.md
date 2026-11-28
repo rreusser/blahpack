@@ -61,12 +61,12 @@ Computes a QR factorization of a complex triangular-pentagonal matrix `C = [A; B
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )`
 - `RangeError` `LDA`, `LDB`, and `LDT` must satisfy the layout-dependent leading-dimension constraints
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztpqrt2.ndarray(
+ztpqrt2.strided(
     M, N, l,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,

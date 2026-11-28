@@ -76,12 +76,12 @@ dlaein(
 - `RangeError` sixth argument must be greater than or equal to max(1,N)
 - `RangeError` fourteenth argument must be greater than or equal to max(1,N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaein.ndarray(
+dlaein.strided(
     rightv, noinit,
     N,
     H, strideH1, strideH2, offsetH,
@@ -196,8 +196,8 @@ let info = dlaein( 'column-major', true, true, 3, H, 3, 3.0, 0.0, VR, 1, VI, 1, 
 console.log( 'info = %d', info );
 console.log( VR );
 
-// Using the ndarray interface:
-info = dlaein.ndarray( true, true, 3, H, 1, 3, 0, 3.0, 0.0, VR, 1, 0, VI, 1, 0, B, 1, 4, 0, WORK, 1, 0, EPS3, SMLNUM, BIGNUM );
+// Using the strided interface:
+info = dlaein.strided( true, true, 3, H, 1, 3, 0, 3.0, 0.0, VR, 1, 0, VI, 1, 0, B, 1, 4, 0, WORK, 1, 0, EPS3, SMLNUM, BIGNUM );
 console.log( 'info = %d', info );
 console.log( VR );
 ```

@@ -63,7 +63,7 @@ interface Routine {
 	* @param offsetJPIV - starting index for `JPIV`
 	* @returns result
 	*/
-	ndarray( ijob: number, N: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): Float64Array;
+	strided( ijob: number, N: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): Float64Array;
 }
 
 /**

@@ -91,12 +91,12 @@ dlatps(
 - `RangeError` sixth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlatps.ndarray(
+dlatps.strided(
     uplo, trans, diag, normin,
     N,
     AP, strideAP, offsetAP,

@@ -59,7 +59,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( trans, N, nrhs, alpha, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, X, strideX1, strideX2, offsetX, beta, B, strideB1, strideB2, offsetB )
+{{alias}}.strided( trans, N, nrhs, alpha, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, X, strideX1, strideX2, offsetX, beta, B, strideB1, strideB2, offsetB )
     Perform a matrix-vector product of the form C := alpha*A*B + beta*C
     where A is a complex tridiagonal matrix using alternative indexing
     semantics.

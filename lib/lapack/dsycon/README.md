@@ -70,12 +70,12 @@ dsycon(
 - `RangeError` eighth argument is invalid (rejected when `anorm < 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsycon.ndarray(
+dsycon.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -194,8 +194,8 @@ const anorm = 6.0;
 let info = dsycon( 'column-major', 'upper', N, A, N, IPIV, 1, anorm, rcond, WORK, IWORK );
 console.log( info, rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = dsycon.ndarray( 'upper', N, A, 1, N, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dsycon.strided( 'upper', N, A, 1, N, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, rcond[ 0 ] );
 ```
 

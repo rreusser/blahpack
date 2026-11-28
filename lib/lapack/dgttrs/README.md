@@ -80,12 +80,12 @@ dgttrs(
 - `RangeError` sixteenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgttrs.ndarray(
+dgttrs.strided(
     trans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -210,9 +210,9 @@ let B = new Float64Array( [ 6.0, 12.0, 18.0, 19.0 ] );
 dgttrs( 'column-major', 'no-transpose', N, nrhs, DL, 1, d, 1, DU, 1, DU2, 1, IPIV, 1, B, N );
 console.log( 'X:', B );
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Float64Array( [ 6.0, 12.0, 18.0, 19.0 ] );
-dgttrs.ndarray( 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
+dgttrs.strided( 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( 'X:', B );
 ```
 

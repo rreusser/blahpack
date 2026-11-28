@@ -81,18 +81,18 @@ function hasValidatorImport( content, validatorName ) {
 function check( mod ) {
 	var results = [];
 	var routinePath = path.join( mod.dir, 'lib', mod.routine + '.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+	var stridedPath = path.join( mod.dir, 'lib', 'strided.js' );
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
 	var indexPath = path.join( mod.dir, 'lib', 'index.js' );
 
 	var routineContent = util.readFile( routinePath );
-	var ndarrayContent = util.readFile( ndarrayPath );
+	var stridedContent = util.readFile( stridedPath );
 	var baseContent = util.readFile( basePath );
 	var indexContent = util.readFile( indexPath );
 
 	var baseParams = extractParams( baseContent );
 	var routineParams = extractParams( routineContent );
-	var ndarrayParams = extractParams( ndarrayContent );
+	var stridedParams = extractParams( stridedContent );
 
 	// ──────────────────────────────────────────
 	// index.js checks
@@ -104,34 +104,34 @@ function check( mod ) {
 	// index.js attaches the offset form (ticket 0124: there is no main.js).
 	if ( indexContent ) {
 		var hasRoutineImport = indexContent.indexOf( "'./" + mod.routine + ".js'" ) >= 0;
-		var hasNdarrayImport = indexContent.indexOf( "'./ndarray.js'" ) >= 0;
-		if ( hasRoutineImport && hasNdarrayImport ) {
-			results.push( util.pass( ID + '.index-imports-both', 'index.js imports routine.js and ndarray.js' ) );
+		var hasStridedImport = indexContent.indexOf( "'./strided.js'" ) >= 0;
+		if ( hasRoutineImport && hasStridedImport ) {
+			results.push( util.pass( ID + '.index-imports-both', 'index.js imports routine.js and strided.js' ) );
 		} else {
 			var missing = [];
 			if ( !hasRoutineImport ) {
 				missing.push( mod.routine + '.js' );
 			}
-			if ( !hasNdarrayImport ) {
-				missing.push( 'ndarray.js' );
+			if ( !hasStridedImport ) {
+				missing.push( 'strided.js' );
 			}
 			results.push( util.fail(
 				ID + '.index-imports-both',
-				'index.js imports routine.js and ndarray.js',
+				'index.js imports routine.js and strided.js',
 				missing.length, [ 'index.js' ],
 				'index.js missing import of: ' + missing.join( ', ' )
 			));
 		}
 
-		// index.js should use setReadOnly to attach .ndarray
-		if ( /setReadOnly\(\s*[\w$]+\s*,\s*'ndarray'/.test( indexContent ) ) {
-			results.push( util.pass( ID + '.index-setreadonly', 'index.js uses setReadOnly for .ndarray' ) );
+		// index.js should use setReadOnly to attach .strided
+		if ( /setReadOnly\(\s*[\w$]+\s*,\s*'strided'/.test( indexContent ) ) {
+			results.push( util.pass( ID + '.index-setreadonly', 'index.js uses setReadOnly for .strided' ) );
 		} else {
 			results.push( util.fail(
 				ID + '.index-setreadonly',
-				'index.js uses setReadOnly for .ndarray',
+				'index.js uses setReadOnly for .strided',
 				1, [ 'index.js' ],
-				'index.js should use setReadOnly to attach the .ndarray property'
+				'index.js should use setReadOnly to attach the .strided property'
 			));
 		}
 	} else {
@@ -144,18 +144,18 @@ function check( mod ) {
 	// ──────────────────────────────────────────
 
 	if ( routineContent && routineParams ) {
-		// Calls base.js (not ndarray.js), unless the routine takes a
-		// workspace: then ndarray.js, so a caller's workspace is checked
-		// against the minimum (S8, D5d; lint:wrapper-calls-ndarray).
+		// Calls base.js (not strided.js), unless the routine takes a
+		// workspace: then strided.js, so a caller's workspace is checked
+		// against the minimum (S8, D5d; lint:wrapper-calls-strided).
 		if ( takesWorkspace( mod.routine ) ) {
-			if ( /\bndarray\(/.test( routineContent ) && /import ndarray from '\.\/ndarray\.js'/.test( routineContent ) ) {
-				results.push( util.pass( ID + '.routine-calls-base', mod.routine + '.js calls ndarray.js (the routine takes a workspace)' ) );
+			if ( /\bstrided\(/.test( routineContent ) && /import strided from '\.\/strided\.js'/.test( routineContent ) ) {
+				results.push( util.pass( ID + '.routine-calls-base', mod.routine + '.js calls strided.js (the routine takes a workspace)' ) );
 			} else {
 				results.push( util.fail(
 					ID + '.routine-calls-base',
-					mod.routine + '.js calls ndarray.js',
+					mod.routine + '.js calls strided.js',
 					1, [ mod.routine + '.js' ],
-					mod.routine + '.js should call ndarray.js: the routine takes a workspace (CONVENTIONS D5d)'
+					mod.routine + '.js should call strided.js: the routine takes a workspace (CONVENTIONS D5d)'
 				));
 			}
 		} else if ( /base\(/.test( routineContent ) || /require.*base\.js/.test( routineContent ) ) {
@@ -165,7 +165,7 @@ function check( mod ) {
 				ID + '.routine-calls-base',
 				mod.routine + '.js calls base.js',
 				1, [ mod.routine + '.js' ],
-				mod.routine + '.js should call base.js directly (not ndarray.js)'
+				mod.routine + '.js should call base.js directly (not strided.js)'
 			));
 		}
 
@@ -174,24 +174,24 @@ function check( mod ) {
 	}
 
 	// ──────────────────────────────────────────
-	// ndarray.js checks
+	// strided.js checks
 	// ──────────────────────────────────────────
 
-	if ( ndarrayContent && ndarrayParams ) {
+	if ( stridedContent && stridedParams ) {
 		// Should call base.js
-		if ( /base\(/.test( ndarrayContent ) || /require.*base\.js/.test( ndarrayContent ) ) {
-			results.push( util.pass( ID + '.ndarray-calls-base', 'ndarray.js calls base.js' ) );
+		if ( /base\(/.test( stridedContent ) || /require.*base\.js/.test( stridedContent ) ) {
+			results.push( util.pass( ID + '.strided-calls-base', 'strided.js calls base.js' ) );
 		} else {
 			results.push( util.fail(
-				ID + '.ndarray-calls-base',
-				'ndarray.js calls base.js',
-				1, [ 'ndarray.js' ],
-				'ndarray.js should call base.js directly'
+				ID + '.strided-calls-base',
+				'strided.js calls base.js',
+				1, [ 'strided.js' ],
+				'strided.js should call base.js directly'
 			));
 		}
 
-	} else if ( !ndarrayContent ) {
-		results.push( util.skip( ID + '.ndarray-calls-base', 'No ndarray.js' ) );
+	} else if ( !stridedContent ) {
+		results.push( util.skip( ID + '.strided-calls-base', 'No strided.js' ) );
 	}
 
 	// ──────────────────────────────────────────
@@ -216,7 +216,7 @@ function check( mod ) {
 				ID + '.base-no-param-validation',
 				'base.js has no parameter validation',
 				1, [ 'base.js' ],
-				'base.js imports a string validator — validation should be in ndarray.js/' + mod.routine + '.js instead'
+				'base.js imports a string validator — validation should be in strided.js/' + mod.routine + '.js instead'
 			));
 		} else {
 			results.push( util.pass( ID + '.base-no-param-validation', 'base.js has no parameter validation' ) );

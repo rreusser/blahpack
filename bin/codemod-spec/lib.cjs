@@ -10,7 +10,7 @@ var eslintScope = require( 'eslint-scope' );
 
 var ROOT = path.join( __dirname, '..', '..' );
 
-// Every module: { routine, pkg, dir (…/lib), files: { base, ndarray, strided } }.
+// Every module: { routine, pkg, dir (…/lib), files: { base, strided, strided } }.
 function modules( only ) {
 	var out = [];
 	fs.readdirSync( path.join( ROOT, 'lib' ) ).forEach( function each( pkg ) {
@@ -32,8 +32,8 @@ function modules( only ) {
 				'dir': dir,
 				'files': {
 					'base': path.join( dir, 'base.js' ),
-					'ndarray': path.join( dir, 'ndarray.js' ),
-					'strided': path.join( dir, r + '.js' )
+					'strided': path.join( dir, 'strided.js' ),
+					'wrapper': path.join( dir, r + '.js' )
 				}
 			});
 		});

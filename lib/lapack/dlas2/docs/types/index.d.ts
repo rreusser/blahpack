@@ -42,7 +42,7 @@ interface Routine {
 	* @param out - `out`
 	* @returns result
 	*/
-	ndarray( f: number, g: number, h: number, out: number ): void;
+	strided( f: number, g: number, h: number, out: number ): void;
 }
 
 /**

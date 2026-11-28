@@ -18,7 +18,7 @@
   not a shared block index).
 - Hardcoded `NB = 32` (Fortran uses ILAENV); LWORK workspace queries
   are dropped entirely, so the JS signature drops `WORK`, `strideWORK`,
-  `lwork` from both the BLAS-style wrapper and `ndarray.js`. The base
+  `lwork` from both the BLAS-style wrapper and `strided.js`. The base
   allocates its own `Float64Array(N * NB)` per panel.
 
 ## Dependency interface surprises
@@ -42,9 +42,9 @@
 - `python bin/init_routine.py` overwrites `test/test.js` with the
   fixture-driven scaffold from `gen_test.py`, but the conformance gate
   expects `test/test.js` to be the export-checks file and computation
-  tests to live in `test/test.ndarray.js`. After `init_routine.py`,
+  tests to live in `test/test.strided.js`. After `init_routine.py`,
   rewrite `test/test.js` as the export-checks file and fold the
-  fixture cases into `test/test.ndarray.js`.
+  fixture cases into `test/test.strided.js`.
 - The auto-fixer (`bin/lint-fix.sh` / `eslint --fix`) reorders `var`
   declarations by length and can move `var X = expression( ..., X, ...)`
   declarations above their dependencies, producing invalid code.

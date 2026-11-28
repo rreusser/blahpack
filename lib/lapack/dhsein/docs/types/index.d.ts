@@ -101,7 +101,7 @@ interface Routine {
 	* @param offsetIFAILR - starting index for `IFAILR`
 	* @returns result
 	*/
-	ndarray( side: string, eigsrc: string, initv: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IFAILL: Int32Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Int32Array, strideIFAILR: number, offsetIFAILR: number ): Float64Array;
+	strided( side: string, eigsrc: string, initv: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IFAILL: Int32Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Int32Array, strideIFAILR: number, offsetIFAILR: number ): Float64Array;
 }
 
 /**

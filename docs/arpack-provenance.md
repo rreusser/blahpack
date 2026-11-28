@@ -10,7 +10,7 @@ structure tracks which upstream package a routine derives from.
 - **License**: BSD-3-Clause, Copyright (c) 1996-2008 Rice University (Sorensen,
   Lehoucq, Yang, Maschhoff). Derived modules carry the Rice notice in their
   headers; see `LICENSE.txt` and `data/arpack-ng-3.9.1/COPYING`.
-- **Layout**: `lib/arpack/<routine>/lib/{base,ndarray,main,index}.js`,
+- **Layout**: `lib/arpack/<routine>/lib/{base,strided,main,index}.js`,
   mirroring `lib/lapack/`. ARPACK routines call BLAS/LAPACK leaves already
   present under `lib/blas/` and `lib/lapack/`.
 - **Plan**: [docs/arpack-translation.md](arpack-translation.md) —

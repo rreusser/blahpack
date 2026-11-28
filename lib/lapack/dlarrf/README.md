@@ -92,12 +92,12 @@ Finds a new relatively robust representation (RRR) for a tridiagonal cluster.
 
 - `RangeError` `N` must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarrf.ndarray(
+dlarrf.strided(
     N,
     d, strideD, offsetD,
     l, strideL, offsetL,

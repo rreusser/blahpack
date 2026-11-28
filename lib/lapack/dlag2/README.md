@@ -54,12 +54,12 @@ dlag2( order, A, LDA, B, LDB, safmin, scale1, scale2, wr1, wr2, wi ) → void
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlag2.ndarray(
+dlag2.strided(
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,
     safmin,
@@ -159,8 +159,8 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
-dlag2.ndarray( A, N, 1, 0, B, N, 1, 0, 1.0, scale1, scale2, wr1, wr2, wi );
+// Using the strided interface:
+dlag2.strided( A, N, 1, 0, B, N, 1, 0, 1.0, scale1, scale2, wr1, wr2, wi );
 out = {
 	'scale1': scale1[ 0 ],
 	'scale2': scale2[ 0 ],

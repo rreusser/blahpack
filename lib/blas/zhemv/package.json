@@ -28,7 +28,7 @@
     "algebra",
     "subroutines",
     "array",
-    "ndarray",
+    "strided",
     "complex128",
     "complex",
     "complex128array"

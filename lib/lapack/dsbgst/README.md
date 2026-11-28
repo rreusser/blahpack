@@ -75,12 +75,12 @@ dsbgst( order, vect, uplo, N, ka, kb, AB, LDAB, BB, LDBB, X, LDX, WORK ) → inf
 - `RangeError` twelfth argument is invalid (rejected when `LDX < 1 \|\| ( vect === "update" && LDX < max( 1, N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsbgst.ndarray(
+dsbgst.strided(
     vect, uplo,
     N, ka, kb,
     AB, strideAB1, strideAB2, offsetAB,
@@ -187,7 +187,7 @@ const BB = new Float64Array( [ 2, 3, 4 ] );
 const X = new Float64Array( 1 );
 const WORK = new Float64Array( 6 );
 
-const info = dsbgst.ndarray( 'none', 'upper', 3, 1, 0, AB, 1, 2, 0, BB, 1, 1, 0, X, 1, 1, 0, WORK, 1, 0 );
+const info = dsbgst.strided( 'none', 'upper', 3, 1, 0, AB, 1, 2, 0, BB, 1, 1, 0, X, 1, 1, 0, WORK, 1, 0 );
 console.log( 'info = %d', info );
 console.log( 'AB =', AB );
 ```

@@ -57,12 +57,12 @@ zhetrf( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetrf.ndarray(
+zhetrf.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -162,10 +162,10 @@ let info = zhetrf( 'column-major', 'upper', N, A, N, IPIV, 1, null );
 console.log( info, IPIV );
 console.log( reinterpret( A, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( Avals );
 IPIV = new Int32Array( N );
-info = zhetrf.ndarray( 'upper', N, A, 1, N, 0, IPIV, 1, 0, new Complex128Array( N ), 1, 0 );
+info = zhetrf.strided( 'upper', N, A, 1, N, 0, IPIV, 1, 0, new Complex128Array( N ), 1, 0 );
 console.log( info, IPIV );
 console.log( reinterpret( A, 0 ) );
 ```

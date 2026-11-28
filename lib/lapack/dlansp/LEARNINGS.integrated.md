@@ -29,7 +29,7 @@
 ## Coverage gaps
 
 - The `else` fallback branch (invalid norm string, returns 0.0) is not tested
-  because the ndarray wrapper validates inputs. This matches dlansy behavior.
+  because the strided wrapper validates inputs. This matches dlansy behavior.
 - Lines 173-174 in the Frobenius diagonal loop (`scale >= absa` branch) may
   appear uncovered in some coverage tools but are exercised by multi-element
   diagonal matrices where later diagonals are smaller.

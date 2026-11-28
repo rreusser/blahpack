@@ -56,7 +56,7 @@
 
 ## Coverage gaps
 
-- 100% line/branch/function coverage on `base.js`, `ndarray.js`,
+- 100% line/branch/function coverage on `base.js`, `strided.js`,
   `zunbdb1.js`, `main.js`, `index.js`. Four fixture cases plus the
   layout-wrapper validation tests exercise every branch:
   - `basic_8x4x2` — real-valued path, exercises one PHI iteration

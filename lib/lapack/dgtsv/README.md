@@ -62,12 +62,12 @@ dgtsv( order, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB ) → inte
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgtsv.ndarray(
+dgtsv.strided(
     N, nrhs,
     DL, strideDL, offsetDL,
     d, strideD, offsetD,
@@ -170,8 +170,8 @@ const DU = discreteUniform( N, -10, 10, opts );
 let out = dgtsv( 'column-major', N, N, DL, 1, d, 1, DU, 1, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dgtsv.ndarray( N, N, DL, 1, 0, d, 1, 0, DU, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dgtsv.strided( N, N, DL, 1, 0, d, 1, 0, DU, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

@@ -69,17 +69,20 @@
 			"kind": "tool",
 			"why": "codemod: one-time move of the hand-written README intro/notes into the module JSDoc (ticket 0037)"
 		},
+		"bin/codemod-strided.mjs": {
+			"kind": "gate"
+		},
 		"bin/codemod-tests.js": {
 			"kind": "tool",
 			"why": "codemod: mechanical test-file fixes"
 		},
-		"bin/codemod-wrapper-ndarray.mjs": {
+		"bin/codemod-wrapper-strided.mjs": {
 			"kind": "tool",
-			"why": "codemod (ticket 0077): a wrapper whose routine takes a workspace calls ndarray.js instead of base.js (CONVENTIONS D5d); its result is checked by lint:wrapper-calls-ndarray and bin/wrapper-replay.mjs (short-work)"
+			"why": "codemod (ticket 0077): a wrapper whose routine takes a workspace calls strided.js instead of base.js (CONVENTIONS D5d); its result is checked by lint:wrapper-calls-strided and bin/wrapper-replay.mjs (short-work)"
 		},
 		"bin/codemod-workspace-guard.mjs": {
 			"kind": "tool",
-			"why": "codemod (ticket 0107): inserts into ndarray.js the length guard of each workspace whose spec minLength is known (CONVENTIONS W3); its result is checked by lint:workspace-length-guard, bin/workspace-minimum.mjs and bin/wrapper-replay.mjs (short-work)"
+			"why": "codemod (ticket 0107): inserts into strided.js the length guard of each workspace whose spec minLength is known (CONVENTIONS W3); its result is checked by lint:workspace-length-guard, bin/workspace-minimum.mjs and bin/wrapper-replay.mjs (short-work)"
 		},
 		"bin/codemod-vector-lengths.mjs": {
 			"kind": "tool",
@@ -507,7 +510,7 @@
 				"npm:mutants:value"
 			]
 		},
-		"lib/ndarray.js": {
+		"lib/strided.js": {
 			"kind": "gate",
 			"by": [
 				"npm:test:unit",

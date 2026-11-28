@@ -21,7 +21,7 @@
 //       addresses the wrong elements whenever offsetA ≠ 0.
 //
 //   P3  When base.js passes one of its arrays A to a callee whose spec is
-//       known (an import of …/base/<routine>/lib/{base,ndarray}.js, or a
+//       known (an import of …/base/<routine>/lib/{base,strided}.js, or a
 //       recursive call), the callee's spec says which following arguments
 //       are A's strides and offset (lint/lib/spec.cjs baseGroups). Each
 //       stride argument must be computed from a stride of A (never a literal,
@@ -40,7 +40,7 @@ var path = require( 'path' );
 var specLib = require( './../../lib/spec.cjs' );
 var specTarget = require( './../../lib/spec-target.cjs' );
 
-var CALLEE_RE = /^\.{1,2}\/(?:.*\/)?([a-z0-9_]+)\/lib\/(?:base|ndarray)\.js$/;
+var CALLEE_RE = /^\.{1,2}\/(?:.*\/)?([a-z0-9_]+)\/lib\/(?:base|strided)\.js$/;
 
 
 // FUNCTIONS //
@@ -179,7 +179,7 @@ var rule = {
 				fn = info.fn;
 				arrays = arraysOf( info.spec, info.params );
 
-				// Callee specs: imports of other modules' base/ndarray, plus recursion.
+				// Callee specs: imports of other modules' base/strided, plus recursion.
 				program.body.forEach( function each( n ) {
 					var m;
 					if ( n.type === 'ImportDeclaration' && ( m = CALLEE_RE.exec( n.source.value ) ) ) {

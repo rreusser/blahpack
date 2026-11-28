@@ -62,12 +62,12 @@ dppcon( order, uplo, N, AP, anorm, rcond, WORK, IWORK ) → info: integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument is invalid (rejected when `anorm < 0`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dppcon.ndarray(
+dppcon.strided(
     uplo,
     N,
     AP, strideAP, offsetAP,
@@ -163,10 +163,10 @@ const WORK = new Float64Array( 9 );
 const IWORK = new Int32Array( 3 );
 
 // Factorize with dpptrf:
-dpptrf.ndarray( 'upper', 3, AP, 1, 0 );
+dpptrf.strided( 'upper', 3, AP, 1, 0 );
 
 // Estimate reciprocal condition number (anorm = 6.0, the 1-norm of A):
-const info = dppcon.ndarray( 'upper', 3, AP, 1, 0, 6.0, rcond, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
+const info = dppcon.strided( 'upper', 3, AP, 1, 0, 6.0, rcond, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'rcond:', rcond[ 0 ] ); // eslint-disable-line no-console

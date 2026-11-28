@@ -60,7 +60,7 @@ interface Routine {
 	* @param offsetISAVE - starting index for `ISAVE`
 	* @returns result
 	*/
-	ndarray( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number, offsetISAVE: number ): Float64Array;
+	strided( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number, offsetISAVE: number ): Float64Array;
 }
 
 /**

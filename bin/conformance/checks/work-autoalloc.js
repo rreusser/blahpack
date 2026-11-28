@@ -5,7 +5,7 @@
  *
  * The three-layer convention:
  *   base.js        — raw impl, no allocation, no validation
- *   ndarray.js     — validates WORK.length, throws RangeError on undersize
+ *   strided.js     — validates WORK.length, throws RangeError on undersize
  *   <routine>.js   — LAPACKE-style convenience wrapper; accepts workspace as
  *                    `null` and auto-allocates so callers don't need to know
  *                    the size formula

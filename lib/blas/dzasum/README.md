@@ -35,12 +35,12 @@ dzasum( N, x, strideX ) → number
 
 **Returns** `number`: sum of absolute values
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dzasum.ndarray( N, x, strideX, offsetX ) → number
+dzasum.strided( N, x, strideX, offsetX ) → number
 ```
 
 Computes the sum of the absolute values of the real and imaginary components of a complex vector.
@@ -93,8 +93,8 @@ let out = dzasum( 3, x, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => 21.0
 
-// Using the ndarray interface (last two elements only):
-out = dzasum.ndarray( 2, x, 1, 1 );
+// Using the strided interface (last two elements only):
+out = dzasum.strided( 2, x, 1, 1 );
 console.log( out ); // eslint-disable-line no-console
 // => 18.0
 ```

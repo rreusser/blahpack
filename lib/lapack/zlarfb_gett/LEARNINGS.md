@@ -24,11 +24,11 @@
 
 ## Scaffold issues encountered
 
-- The init scaffold generates `@param {Float64Array}` for all matrix args; must be manually changed to `Complex128Array` in base.js, ndarray.js, and `zlarfb_gett.js`.
+- The init scaffold generates `@param {Float64Array}` for all matrix args; must be manually changed to `Complex128Array` in base.js, strided.js, and `zlarfb_gett.js`.
 - The scaffold's benchmark.js uses the wrong signature (13 args, `'row-major'`, all-`N`) — replace with a valid call using `Complex128Array` and correct parameters.
 - Scaffold's examples/index.js has a `TODO: Adjust call to match...` comment and wrong-shape call — replace entirely.
-- For underscore-named routines, `camelcase` must be added to the file-level eslint-disable in base.js, ndarray.js, zlarfb_gett.js, main.js, index.js, test files, benchmark files.
-- Scaffold's zlarfb_gett.js (layout wrapper) doesn't validate the `ident` string — must be added manually to both the layout wrapper and `ndarray.js`.
+- For underscore-named routines, `camelcase` must be added to the file-level eslint-disable in base.js, strided.js, zlarfb_gett.js, main.js, index.js, test files, benchmark files.
+- Scaffold's zlarfb_gett.js (layout wrapper) doesn't validate the `ident` string — must be added manually to both the layout wrapper and `strided.js`.
 
 ## Process improvements
 

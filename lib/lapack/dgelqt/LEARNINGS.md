@@ -16,7 +16,7 @@
 
 ## Coverage gaps
 
-- 100% line and 100% branch coverage achieved on `base.js`, `ndarray.js`, `dgelqt.js`, `index.js`, and `main.js`. The `if (i + ib < M)` branch (skip trailing update for the final block) is exercised by the `m3_n5_mb3` and `m1_n4_mb1` cases.
+- 100% line and 100% branch coverage achieved on `base.js`, `strided.js`, `dgelqt.js`, `index.js`, and `main.js`. The `if (i + ib < M)` branch (skip trailing update for the final block) is exercised by the `m3_n5_mb3` and `m1_n4_mb1` cases.
 
 ## Process improvements
 

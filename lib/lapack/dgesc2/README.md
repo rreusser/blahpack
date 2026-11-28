@@ -60,12 +60,12 @@ dgesc2(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgesc2.ndarray(
+dgesc2.strided(
     N,
     A, strideA1, strideA2, offsetA,
     RHS, strideRHS, offsetRHS,
@@ -156,9 +156,9 @@ let RHS = new Float64Array( [ 7.0, 7.0, 9.0 ] );
 dgesc2( 'column-major', N, A, N, RHS, 1, IPIV, 1, JPIV, 1, scale );
 console.log( RHS, scale ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 RHS = new Float64Array( [ 7.0, 7.0, 9.0 ] );
-dgesc2.ndarray( N, A, 1, N, 0, RHS, 1, 0, IPIV, 1, 0, JPIV, 1, 0, scale );
+dgesc2.strided( N, A, 1, N, 0, RHS, 1, 0, IPIV, 1, 0, JPIV, 1, 0, scale );
 console.log( RHS, scale ); // eslint-disable-line no-console
 ```
 

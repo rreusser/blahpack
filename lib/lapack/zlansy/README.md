@@ -53,12 +53,12 @@ zlansy( order, norm, uplo, N, A, LDA, WORK ) → number
 - `TypeError` third argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlansy.ndarray(
+zlansy.strided(
     norm, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -142,8 +142,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = zlansy( 'column-major', 'one-norm', 'upper', N, A, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = zlansy.ndarray( 'one-norm', 'upper', N, A, 1, N, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = zlansy.strided( 'one-norm', 'upper', N, A, 1, N, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

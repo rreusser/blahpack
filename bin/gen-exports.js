@@ -3,8 +3,8 @@
  *
  * For each module under lib/{blas,lapack}/<routine>/:
  *   - Emits `export { default as <routine> }` in the barrel
- *   - If the module index has a named `ndarray` export, also emits
- *     `export { ndarray as <routine>Ndarray }` in the barrel
+ *   - If the module index has a named `strided` export, also emits
+ *     `export { strided as <routine>Strided }` in the barrel
  *   - Adds a subpath entry to the exports map
  *
  * Usage:
@@ -44,16 +44,16 @@ const modules = [
 
 console.log( `Found ${modules.length} modules` );
 
-// --- Determine which modules expose a named ndarray export ------------------
+// --- Determine which modules expose a named strided export ------------------
 
-// Modules with `export { ... ndarray ... }` in their index.js have ndarray as
+// Modules with `export { ... strided ... }` in their index.js have strided as
 // a proper named export. Modules with `export default main` only expose
-// ndarray as an attached property (main.ndarray); those still work for callers
+// strided as an attached property (main.strided); those still work for callers
 // but don't need a separate barrel line.
-function hasNamedNdarrayExport( indexPath ) {
+function hasNamedStridedExport( indexPath ) {
 	try {
 		const src = readFileSync( indexPath, 'utf8' );
-		return /export\s*\{[^}]*\bndarray\b/.test( src );
+		return /export\s*\{[^}]*\bstrided\b/.test( src );
 	} catch {
 		return false;
 	}
@@ -67,10 +67,10 @@ const barrelLines = [
 ];
 
 for ( const m of modules ) {
-	const hasNdarray = hasNamedNdarrayExport( m.indexPath );
-	if ( hasNdarray ) {
+	const hasStrided = hasNamedStridedExport( m.indexPath );
+	if ( hasStrided ) {
 		barrelLines.push(
-			`export { default as ${m.name}, ndarray as ${m.name}Ndarray } from '${m.relIndex}';`
+			`export { default as ${m.name}, strided as ${m.name}Strided } from '${m.relIndex}';`
 		);
 	} else {
 		barrelLines.push( `export { default as ${m.name} } from '${m.relIndex}';` );

@@ -17,7 +17,7 @@
 - **`SIGN(SAFE1, Y(IY))` vs ternary.** Fortran `SIGN(a, 0.0)` returns
   `+|a|`. A `(y >= 0 ? safe1 : -safe1)` matches; using `> 0` would
   misroute zero to `-safe1`.
-- **Negative stride offsets are caller-supplied.** In the ndarray API
+- **Negative stride offsets are caller-supplied.** In the strided API
   we do NOT recompute `KX = 1 - (LENX-1)*INCX` inside `base.js`. The
   layout wrapper (`dla_geamv.js`) uses `stride2offset(lenx, strideX)`
   to supply the initial offset; `base.js` just iterates `offset +=
@@ -53,7 +53,7 @@
   the cycle (matches the `dla_lin_berr` convention).
 - The `camelcase` rule flags identifiers with underscores (`dla_geamv`).
   Every file that names a `dla_*` variable needs
-  `/* eslint-disable camelcase */` — `base.js`, `ndarray.js`,
+  `/* eslint-disable camelcase */` — `base.js`, `strided.js`,
   `dla_geamv.js`, `main.js`, and all test files.
 - The generated `examples/index.js` scaffold had a generic
   `TODO: Adjust call` plus a stale `A/B/C` triple intended for Level-3

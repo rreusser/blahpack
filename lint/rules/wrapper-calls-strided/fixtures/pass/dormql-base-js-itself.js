@@ -1,5 +1,5 @@
 // target: lib/lapack/dormql/lib/base.js
-// The rule applies to the layout wrapper only; base.js and ndarray.js are other forms.
+// The rule applies to the layout wrapper only; base.js and strided.js are other forms.
 /* eslint-disable max-len, max-params */
 
 import dorm2l from '../../dorm2l/lib/base.js';

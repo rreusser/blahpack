@@ -77,12 +77,12 @@ dla_porcond(
 - `RangeError` fifth argument must be greater than or equal to max(1,N)
 - `RangeError` seventh argument must be greater than or equal to max(1,N)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_porcond.ndarray(
+dla_porcond.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -199,7 +199,7 @@ const IWORK = new Int32Array( 3 );
 dpotrf( 'upper', 3, AF, 1, 3, 0 );
 
 // Estimate the Skeel condition number:
-const result = dla_porcond.ndarray( 'upper', 3, A, 1, 3, 0, AF, 1, 3, 0, 1, C, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
+const result = dla_porcond.strided( 'upper', 3, A, 1, 3, 0, AF, 1, 3, 0, 1, C, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'Condition number estimate:', result ); // eslint-disable-line no-console
 ```
 

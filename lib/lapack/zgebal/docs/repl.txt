@@ -31,7 +31,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( job, N, A, strideA1, strideA2, offsetA, ilo, ihi, SCALE, strideSCALE, offsetSCALE )
+{{alias}}.strided( job, N, A, strideA1, strideA2, offsetA, ilo, ihi, SCALE, strideSCALE, offsetSCALE )
     Balances a general complex matrix A using alternative indexing
     semantics.
 

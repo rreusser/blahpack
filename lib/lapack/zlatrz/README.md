@@ -60,12 +60,12 @@ zlatrz( order, M, N, l, A, LDA, TAU, strideTAU, work ) → Complex128Array
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max(1,M)` (column-major) or `max(1,N)` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatrz.ndarray(
+zlatrz.strided(
     M, N, l,
     A, strideA1, strideA2, offsetA,
     TAU, strideTAU, offsetTAU,

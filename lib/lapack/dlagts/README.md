@@ -77,12 +77,12 @@ dlagts(
 - `RangeError` first argument is invalid (rejected when `abs( job ) > 2 \|\| job === 0`)
 - `RangeError` second argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlagts.ndarray(
+dlagts.strided(
     job,
     N,
     a, strideA, offsetA,
@@ -203,9 +203,9 @@ let info = dlagts( 1, N, a, 1, b, 1, c, 1, d, 1, IN, 1, y, 1, tol );
 console.log( 'info = %d', info );
 console.log( y );
 
-// Using the ndarray interface:
+// Using the strided interface:
 y = new Float64Array( [ 1.0, 2.0, 3.0, 4.0 ] );
-info = dlagts.ndarray( 1, N, a, 1, 0, b, 1, 0, c, 1, 0, d, 1, 0, IN, 1, 0, y, 1, 0, tol );
+info = dlagts.strided( 1, N, a, 1, 0, b, 1, 0, c, 1, 0, d, 1, 0, IN, 1, 0, y, 1, 0, tol );
 console.log( 'info = %d', info );
 console.log( y );
 ```

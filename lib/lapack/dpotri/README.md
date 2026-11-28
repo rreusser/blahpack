@@ -49,12 +49,12 @@ dpotri( order, uplo, N, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpotri.ndarray( uplo, N, A, strideA1, strideA2, offsetA ) → integer
+dpotri.strided( uplo, N, A, strideA1, strideA2, offsetA ) → integer
 ```
 
 Computes the inverse of a real symmetric positive definite matrix `A` using its Cholesky factorization.
@@ -132,8 +132,8 @@ const A = discreteUniform( N * N, -10, 10, opts );
 let out = dpotri( 'row-major', 'upper', N, A, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dpotri.ndarray( 'upper', N, A, N, 1, 0 );
+// Using the strided interface:
+out = dpotri.strided( 'upper', N, A, N, 1, 0 );
 console.log( out );
 ```
 

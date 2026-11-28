@@ -61,12 +61,12 @@ dlarft( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Float6
 - `TypeError` second argument must be one of the following: "forward", "backward"
 - `TypeError` third argument must be one of the following: "columnwise", "rowwise"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarft.ndarray(
+dlarft.strided(
     direct, storev,
     N, K,
     V, strideV1, strideV2, offsetV,
@@ -158,8 +158,8 @@ const TAU = discreteUniform( N, -10, 10, opts );
 let out = dlarft( 'row-major', 'forward', 'columnwise', N, N, V, N, TAU, 1, T, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlarft.ndarray( 'forward', 'columnwise', N, N, V, N, 1, 0, TAU, 1, 0, T, N, 1, 0 );
+// Using the strided interface:
+out = dlarft.strided( 'forward', 'columnwise', N, N, V, N, 1, 0, TAU, 1, 0, T, N, 1, 0 );
 console.log( out );
 ```
 

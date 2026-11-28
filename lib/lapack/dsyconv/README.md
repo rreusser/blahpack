@@ -62,12 +62,12 @@ dsyconv( order, uplo, way, N, A, LDA, IPIV, strideIPIV, E, strideE ) → integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyconv.ndarray(
+dsyconv.strided(
     uplo, way,
     N,
     A, strideA1, strideA2, offsetA,
@@ -177,10 +177,10 @@ console.log( info, A, E );
 info = dsyconv( 'column-major', 'upper', 'revert', N, A, N, IPIV, 1, E, 1 );
 console.log( info, A );
 
-// Using the ndarray interface:
-info = dsyconv.ndarray( 'upper', 'convert', N, A, 1, N, 0, IPIV, 1, 0, E, 1, 0 );
+// Using the strided interface:
+info = dsyconv.strided( 'upper', 'convert', N, A, 1, N, 0, IPIV, 1, 0, E, 1, 0 );
 console.log( info, A, E );
-info = dsyconv.ndarray( 'upper', 'revert', N, A, 1, N, 0, IPIV, 1, 0, E, 1, 0 );
+info = dsyconv.strided( 'upper', 'revert', N, A, 1, N, 0, IPIV, 1, 0, E, 1, 0 );
 console.log( info, A );
 ```
 

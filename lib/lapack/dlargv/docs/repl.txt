@@ -34,7 +34,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, strideC, offsetC )
+{{alias}}.strided( N, x, strideX, offsetX, y, strideY, offsetY, c, strideC, offsetC )
     Generates a vector of real plane rotations (Givens rotations) using
     alternative indexing semantics.
 

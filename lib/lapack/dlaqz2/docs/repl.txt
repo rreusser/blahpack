@@ -71,7 +71,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ilq, ilz, K, istartm, istopm, ihi, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, nq, qstart, Q, strideQ1, strideQ2, offsetQ, nz, zstart, Z, strideZ1, strideZ2, offsetZ )
+{{alias}}.strided( ilq, ilz, K, istartm, istopm, ihi, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, nq, qstart, Q, strideQ1, strideQ2, offsetQ, nz, zstart, Z, strideZ1, strideZ2, offsetZ )
     chases a 2x2 shift bulge in a matrix pencil down a single position, using alternative indexing semantics.
 
     Parameters

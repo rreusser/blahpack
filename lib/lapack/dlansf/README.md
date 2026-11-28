@@ -56,12 +56,12 @@ dlansf( norm, transr, uplo, N, A, strideA, WORK ) → number
 - `TypeError` second argument must be one of the following: "no-transpose", "transpose"
 - `TypeError` third argument must be a valid matrix triangle
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlansf.ndarray(
+dlansf.strided(
     norm, transr, uplo,
     N,
     A, strideA, offsetA,

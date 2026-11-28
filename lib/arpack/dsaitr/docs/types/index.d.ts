@@ -81,7 +81,7 @@ interface Routine {
 	* @param offsetWorkd - starting index for `workd`
 	* @returns INFO
 	*/
-	ndarray( state: State, ido: Int32Array, bmat: string, N: number, k: number, np: number, mode: number, resid: Float64Array, strideResid: number, offsetResid: number, rnorm: Float64Array, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): number;
+	strided( state: State, ido: Int32Array, bmat: string, N: number, k: number, np: number, mode: number, resid: Float64Array, strideResid: number, offsetResid: number, rnorm: Float64Array, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, ipntr: Int32Array, strideIpntr: number, offsetIpntr: number, workd: Float64Array, strideWorkd: number, offsetWorkd: number ): number;
 }
 
 /**

@@ -44,7 +44,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, trans, diag, N, K, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
+{{alias}}.strided( uplo, trans, diag, N, K, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
     Performs one of the matrix-vector operations `x := A*x` or `x := A**T*x`
     using alternative indexing semantics.
 

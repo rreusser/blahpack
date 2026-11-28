@@ -130,12 +130,12 @@ zgesvx(
 - `RangeError` twentieth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgesvx.ndarray(
+zgesvx.strided(
     fact, trans,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -343,9 +343,9 @@ console.log( info );
 
 console.log( equed[ 0 ], rcond[ 0 ], RWORK[ 0 ] ); // equilibration, reciprocal condition number, reciprocal pivot growth
 
-// Using the ndarray interface:
+// Using the strided interface:
 equed[ 0 ] = 'none';
-info = zgesvx.ndarray( 'not-factored', 'no-transpose', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, equed, r, 1, 0, c, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
+info = zgesvx.strided( 'not-factored', 'no-transpose', N, nrhs, A, 1, N, 0, AF, 1, N, 0, IPIV, 1, 0, equed, r, 1, 0, c, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 console.log( info );
 // => 0
 ```

@@ -67,7 +67,7 @@
 
 ## Coverage gaps
 
-- 100% line, branch, function coverage on `base.js`, `ndarray.js`,
+- 100% line, branch, function coverage on `base.js`, `strided.js`,
   `main.js`, `index.js`, and `zunbdb4.js` (the layout wrapper). Five
   fixture cases plus six layout-wrapper validation tests cover every
   branch:

@@ -31,12 +31,12 @@ import dlaswlq = require( './index' );
 	dlaswlq(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dlaswlq.ndarray( 2, 4, 2, 8, new Float64Array( 8 ), 1, 2, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 4 ), 1, 0 ); // $ExpectType number
+	dlaswlq.strided( 2, 4, 2, 8, new Float64Array( 8 ), 1, 2, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 4 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dlaswlq.ndarray(); // $ExpectError
+	dlaswlq.strided(); // $ExpectError
 }

@@ -89,12 +89,12 @@ zlabrd(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlabrd.ndarray(
+zlabrd.strided(
     M, N, nb,
     A, strideA1, strideA2, offsetA,
     d, strideD, offsetD,
@@ -221,7 +221,7 @@ let Y = new Complex128Array( N * nb );
 zlabrd( 'row-major', M, N, nb, A, N, d, 1, e, 1, TAUQ, 1, TAUP, 1, X, nb, Y, nb );
 console.log( d, e ); // eslint-disable-line no-console
 
-// Using the ndarray interface (column-major):
+// Using the strided interface (column-major):
 A = new Complex128Array( discreteUniform( 2 * M * N, -10, 10, opts ) );
 d = new Float64Array( nb );
 e = new Float64Array( nb );
@@ -229,7 +229,7 @@ TAUQ = new Complex128Array( nb );
 TAUP = new Complex128Array( nb );
 X = new Complex128Array( M * nb );
 Y = new Complex128Array( N * nb );
-zlabrd.ndarray( M, N, nb, A, 1, M, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, X, 1, M, 0, Y, 1, N, 0 );
+zlabrd.strided( M, N, nb, A, 1, M, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, X, 1, M, 0, Y, 1, N, 0 );
 console.log( d, e ); // eslint-disable-line no-console
 ```
 

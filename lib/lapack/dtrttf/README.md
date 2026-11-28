@@ -58,12 +58,12 @@ dtrttf( order, transr, uplo, N, A, LDA, ARF, strideARF ) → integer
 - `RangeError` fourth argument must be a nonnegative integer
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrttf.ndarray(
+dtrttf.strided(
     transr, uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -156,8 +156,8 @@ const ARF = discreteUniform( N, -10, 10, opts );
 let out = dtrttf( 'row-major', 'no-transpose', 'upper', N, A, N, ARF, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
+// Using the strided interface:
+out = dtrttf.strided( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
 console.log( out );
 ```
 

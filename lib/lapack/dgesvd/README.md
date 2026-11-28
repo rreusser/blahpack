@@ -100,12 +100,12 @@ dgesvd(
 - `RangeError` eleventh argument is invalid (row-major: rejected when `LDU < 1 \|\| ( ( jobu === "all-columns" \|\| jobu === "economy" ) && LDU < max( 1, jobu === "all-columns" ? M : min( M, N ) ) )`)
 - `RangeError` thirteenth argument is invalid (rejected when `( LDVT < 1 \|\| ( jobvt === "all-rows" && LDVT < N ) ) \|\| ( jobvt === "economy" && LDVT < min( M, N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgesvd.ndarray(
+dgesvd.strided(
     jobu, jobvt,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -245,7 +245,7 @@ let info = dgesvd( 'row-major', 'all-columns', 'all-rows', N, N, A, N, s, 1, U, 
 console.log( 'info: %d', info );
 console.log( 's: %s', s.toString() );
 
-// Using the ndarray interface (column-major strides):
+// Using the strided interface (column-major strides):
 A = new Float64Array([
 	1.0,
 	4.0,
@@ -263,7 +263,7 @@ VT = new Float64Array( N * N );
 
 // Workspace of at least max( 5*N, 2*N*N + 4*N ) elements for a square matrix:
 const work = new Float64Array( ( 2 * N * N ) + ( 4 * N ) );
-info = dgesvd.ndarray( 'all-columns', 'all-rows', N, N, A, 1, N, 0, s, 1, 0, U, 1, N, 0, VT, 1, N, 0, work, 1, 0 );
+info = dgesvd.strided( 'all-columns', 'all-rows', N, N, A, 1, N, 0, s, 1, 0, U, 1, N, 0, VT, 1, N, 0, work, 1, 0 );
 console.log( 'info: %d', info );
 console.log( 's: %s', s.toString() );
 ```

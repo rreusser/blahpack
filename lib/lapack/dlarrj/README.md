@@ -71,12 +71,12 @@ dlarrj(
 
 **Returns** `info: integer`: 0 on success
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarrj.ndarray(
+dlarrj.strided(
     N,
     d, strideD, offsetD,
     E2, strideE2, offsetE2,
@@ -190,10 +190,10 @@ const IWORK = new Int32Array( 2 * N );
 let info = dlarrj( N, d, 1, E2, 1, 1, N, 1.0e-14, 0, w, 1, WERR, 1, WORK, IWORK, PIVMIN, SPDIAM );
 console.log( info, w, WERR ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 w = new Float64Array( [ 0.6, 2.0, 3.4 ] );
 WERR = new Float64Array( [ 0.1, 0.1, 0.1 ] );
-info = dlarrj.ndarray( N, d, 1, 0, E2, 1, 0, 1, N, 1.0e-14, 0, w, 1, 0, WERR, 1, 0, WORK, 1, 0, IWORK, 1, 0, PIVMIN, SPDIAM );
+info = dlarrj.strided( N, d, 1, 0, E2, 1, 0, 1, N, 1.0e-14, 0, w, 1, 0, WERR, 1, 0, WORK, 1, 0, IWORK, 1, 0, PIVMIN, SPDIAM );
 console.log( info, w, WERR ); // eslint-disable-line no-console
 ```
 

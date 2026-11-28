@@ -10,11 +10,11 @@ import { PACKAGES } from '../taxonomy.js';
 
 const SIG_TITLES = {
 	'layout': 'Layout API',
-	'ndarray': 'Strided (ndarray) API'
+	'strided': 'Strided (strided) API'
 };
 const SIG_BLURBS = {
 	'layout': 'Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.',
-	'ndarray': 'Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.'
+	'strided': 'Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.'
 };
 const RETURN_KINDS = {
 	'info': 'An `info` status code: `0` on success. A positive value reports a numerical condition such as a singular pivot or a failure to converge (see the description).',
@@ -69,7 +69,7 @@ function norm( s ) {
 
 function signatureSection( sig, routineDescription ) {
 	const id = 'sig-' + sig.kind;
-	const prefix = sig.kind === 'ndarray' ? 'nd-' : 'p-';
+	const prefix = sig.kind === 'strided' ? 'nd-' : 'p-';
 	const rows = groupParams( sig.params ).map( ( g ) => '<tbody class="p-group">' + g.map( ( p ) => paramRow( p, prefix ) ).join( '' ) + '</tbody>' ).join( '' );
 	let html = '<section class="signature" id="' + id + '">';
 	html += '<h2><a class="anchor" href="#' + id + '">' + SIG_TITLES[ sig.kind ] + '</a></h2>';
@@ -79,7 +79,7 @@ function signatureSection( sig, routineDescription ) {
 		html += '<div class="sig-desc">' + markdown( sig.description ) + '</div>';
 	}
 	html += '<h3>Parameters</h3>';
-	if ( sig.kind === 'ndarray' && sig.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
+	if ( sig.kind === 'strided' && sig.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
 		html += '<p class="sig-note">Matrix shapes are logical (rows × columns). The reference\'s leading dimension (<code>LDA</code>, …) is replaced by the two strides and the offset.</p>';
 	}
 	if ( sig.params.some( ( p ) => p.reference ) ) {
@@ -277,7 +277,7 @@ function markdownParts( r, opts ) {
 		if ( s.description && norm( s.description ) !== norm( r.description ) ) {
 			out.push( s.description.trim(), '' );
 		}
-		if ( s.kind === 'ndarray' && s.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
+		if ( s.kind === 'strided' && s.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
 			out.push( 'Matrix shapes are logical (rows × columns). The reference\'s leading dimension (`LDA`, …) is replaced by the two strides and the offset.', '' );
 		}
 		out.push( '| Parameter | Type | Description |' );

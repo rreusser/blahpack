@@ -88,7 +88,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns `info` (0 = success)
 	*/
-	ndarray( M: number, P: number, Q: number, X11: Complex128Array, strideX111: number, strideX112: number, offsetX11: number, X21: Complex128Array, strideX211: number, strideX212: number, offsetX21: number, THETA: Float64Array, strideTHETA: number, offsetTHETA: number, PHI: Float64Array, stridePHI: number, offsetPHI: number, TAUP1: Complex128Array, strideTAUP1: number, offsetTAUP1: number, TAUP2: Complex128Array, strideTAUP2: number, offsetTAUP2: number, TAUQ1: Complex128Array, strideTAUQ1: number, offsetTAUQ1: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
+	strided( M: number, P: number, Q: number, X11: Complex128Array, strideX111: number, strideX112: number, offsetX11: number, X21: Complex128Array, strideX211: number, strideX212: number, offsetX21: number, THETA: Float64Array, strideTHETA: number, offsetTHETA: number, PHI: Float64Array, stridePHI: number, offsetPHI: number, TAUP1: Complex128Array, strideTAUP1: number, offsetTAUP1: number, TAUP2: Complex128Array, strideTAUP2: number, offsetTAUP2: number, TAUQ1: Complex128Array, strideTAUQ1: number, offsetTAUQ1: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
 }
 
 /**

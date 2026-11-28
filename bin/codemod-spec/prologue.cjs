@@ -2,7 +2,7 @@
 'use strict';
 
 // Codemod: write the generated validation prologue (lint/lib/prologue.cjs)
-// into ndarray.js and <routine>.js — the fix for the `spec-prologue` and
+// into strided.js and <routine>.js — the fix for the `spec-prologue` and
 // `spec-messages` rules.
 //
 // 1. Every top-level argument check that a generated check replaces is
@@ -220,7 +220,7 @@ function rewriteBody( src, spec, form ) {
 		return null;
 	}
 	actual = lib.params( fn );
-	if ( !sameNames( actual, ( form === 'strided' ) ? specLib.strided( spec ) : specLib.base( spec ) ) ) {
+	if ( !sameNames( actual, ( form === 'wrapper' ) ? specLib.wrapper( spec ) : specLib.base( spec ) ) ) {
 		return null;
 	}
 	gen = P.prologue( spec, form, actual );
@@ -346,7 +346,7 @@ function main() {
 		if ( !spec ) {
 			return;
 		}
-		[ 'ndarray', 'strided' ].forEach( function each( form ) {
+		[ 'strided', 'wrapper' ].forEach( function each( form ) {
 			var file = mod.files[ form ];
 			var src;
 			var r;

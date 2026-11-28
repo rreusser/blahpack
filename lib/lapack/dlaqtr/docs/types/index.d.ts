@@ -69,7 +69,7 @@ interface Routine {
 	* @param offsetWORK - starting index for `WORK`
 	* @returns result
 	*/
-	ndarray( ltran: boolean, lreal: boolean, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, b: Float64Array, strideB: number, offsetB: number, w: number, scale: number, x: Float64Array, strideX: number, offsetX: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	strided( ltran: boolean, lreal: boolean, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, b: Float64Array, strideB: number, offsetB: number, w: number, scale: number, x: Float64Array, strideX: number, offsetX: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

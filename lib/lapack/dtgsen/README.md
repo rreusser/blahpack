@@ -109,12 +109,12 @@ dtgsen(
 - `RangeError` nineteenth argument is invalid (rejected when `LDQ < 1 \|\| ( wantq && LDQ < N )`)
 - `RangeError` twenty-first argument is invalid (rejected when `LDZ < 1 \|\| ( wantz && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgsen.ndarray(
+dtgsen.strided(
     ijob, wantq, wantz,
     SELECT, strideSELECT, offsetSELECT,
     N,
@@ -274,7 +274,7 @@ const WORK = new Float64Array( 200 );
 const IWORK = new Int32Array( 200 );
 
 // Reorder so that the selected eigenvalue (the third) moves to the top-left (ijob = 0: reorder only):
-const info = dtgsen.ndarray( 0, true, true, SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, Q, 1, N, 0, Z, 1, N, 0, M, pl, pr, DIF, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
+const info = dtgsen.strided( 0, true, true, SELECT, 1, 0, N, A, 1, N, 0, B, 1, N, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, Q, 1, N, 0, Z, 1, N, 0, M, pl, pr, DIF, 1, 0, WORK, 1, 0, IWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'M:', M[ 0 ] ); // eslint-disable-line no-console

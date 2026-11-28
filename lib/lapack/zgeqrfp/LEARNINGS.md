@@ -40,6 +40,6 @@
 
 - Covered the unblocked path (3x3, 4x3, 3x4), the blocked path with
   cleanup step (40x35 and 65x65), quick-return edge cases (M=0, N=0),
-  WORK=null internal allocation, and M/N range validation in ndarray.js.
+  WORK=null internal allocation, and M/N range validation in strided.js.
 - 65x65 specifically exercises NB=32 blocked iterations plus the final
   unblocked cleanup call on the last (65 - 64 = 1)-column block.

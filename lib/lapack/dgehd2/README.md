@@ -52,12 +52,12 @@ dgehd2( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 - `RangeError` fourth argument is invalid (rejected when `ihi < min( ilo, N ) \|\| ihi > N`)
 - `RangeError` sixth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgehd2.ndarray(
+dgehd2.strided(
     N,
     ilo, ihi,
     A, strideA1, strideA2, offsetA,
@@ -147,9 +147,9 @@ const WORK = new Float64Array( N );
 let out = dgehd2( 'row-major', N, 1, N, A, N, TAU, 1, null );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = discreteUniform( N * N, -10, 10, opts );
-out = dgehd2.ndarray( N, 1, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+out = dgehd2.strided( N, 1, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

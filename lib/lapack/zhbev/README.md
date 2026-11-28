@@ -70,12 +70,12 @@ zhbev( order, jobz, uplo, N, kd, AB, LDAB, w, strideW, Z, LDZ, WORK, RWORK ) →
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )` (row-major)
 - `RangeError` eleventh argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhbev.ndarray(
+zhbev.strided(
     jobz, uplo,
     N, kd,
     AB, strideAB1, strideAB2, offsetAB,

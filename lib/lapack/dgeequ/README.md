@@ -59,12 +59,12 @@ dgeequ( order, M, N, A, LDA, r, strideR, c, strideC, rowcnd, colcnd, amax ) → 
 - `RangeError` fifth argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeequ.ndarray(
+dgeequ.strided(
     M, N,
     A, strideA1, strideA2, offsetA,
     r, strideR, offsetR,
@@ -177,8 +177,8 @@ const amax = new Float64Array( 1 );
 let info = dgeequ( 'column-major', M, N, A, M, r, 1, c, 1, rowcnd, colcnd, amax );
 console.log( info, r, c, rowcnd[ 0 ], colcnd[ 0 ], amax[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-info = dgeequ.ndarray( M, N, A, 1, M, 0, r, 1, 0, c, 1, 0, rowcnd, colcnd, amax );
+// Using the strided interface:
+info = dgeequ.strided( M, N, A, 1, M, 0, r, 1, 0, c, 1, 0, rowcnd, colcnd, amax );
 console.log( info, r, c, rowcnd[ 0 ], colcnd[ 0 ], amax[ 0 ] ); // eslint-disable-line no-console
 ```
 

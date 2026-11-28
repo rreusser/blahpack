@@ -37,12 +37,12 @@ zcopy( N, x, strideX, y, strideY ) → Complex128Array
 
 **Returns** `Complex128Array`: output array
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zcopy.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
+zcopy.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
 ```
 
 | Parameter | Type | Description |
@@ -99,8 +99,8 @@ const zy = new Complex128Array( 2 );
 zcopy( 2, zx, 1, zy, 1 );
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-zcopy.ndarray( 2, zx, 1, 0, zy, 1, 0 );
+// Using the strided interface:
+zcopy.strided( 2, zx, 1, 0, zy, 1, 0 );
 console.log( reinterpret( zy, 0 ) ); // eslint-disable-line no-console
 ```
 

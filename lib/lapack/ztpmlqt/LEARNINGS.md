@@ -16,7 +16,7 @@
   is `i * strideV1` (row stride), not `i * strideV2`. This mirrors
   dtpmlqt and is opposite the QR appliers. The wrapper validator must
   enforce LDV >= K (column-major).
-- **Reject plain `'transpose'`** in both `ndarray.js` and `ztpmlqt.js`
+- **Reject plain `'transpose'`** in both `strided.js` and `ztpmlqt.js`
   validators (Q is unitary, only `'no-transpose'` and
   `'conjugate-transpose'` are valid). Modeled on `zgemlqt`/`zgemqrt`
   pattern: `!isTransposeOperation(trans) || trans === 'transpose'`.

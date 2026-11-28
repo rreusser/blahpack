@@ -68,12 +68,12 @@ zla_syamv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Flo
 - `RangeError` eighth argument must be non-zero
 - `RangeError` eleventh argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_syamv.ndarray(
+zla_syamv.strided(
     uplo,
     N,
     alpha,

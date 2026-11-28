@@ -64,12 +64,12 @@ ztgexc( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, ifst, ilst ) →
 - `RangeError` thirteenth argument is invalid (rejected when `( ifst + 1 ) < 1 \|\| ( ifst + 1 ) > N`)
 - `RangeError` fourteenth argument is invalid (rejected when `( ilst[ 0 ] + 1 ) < 1 \|\| ( ilst[ 0 ] + 1 ) > N`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztgexc.ndarray(
+ztgexc.strided(
     wantq, wantz,
     N,
     A, strideA1, strideA2, offsetA,
@@ -177,7 +177,7 @@ const Z = new Complex128Array( 9 );
 
 // Move diagonal element from position 0 to position 2 (0-based):
 ilst[ 0 ] = 2;
-const result = ztgexc.ndarray( true, true, 3, A, 1, 3, 0, B, 1, 3, 0, Q, 1, 3, 0, Z, 1, 3, 0, 0, ilst );
+const result = ztgexc.strided( true, true, 3, A, 1, 3, 0, B, 1, 3, 0, Q, 1, 3, 0, Z, 1, 3, 0, 0, ilst );
 const Av = reinterpret( A, 0 );
 
 console.log( 'info:', result ); // eslint-disable-line no-console

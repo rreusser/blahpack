@@ -42,7 +42,7 @@
     32
 
 
-{{alias}}.ndarray( ispec, name, opts, n1, n2, n3, n4 )
+{{alias}}.strided( ispec, name, opts, n1, n2, n3, n4 )
     Returns problem-dependent parameters for the local environment, using alternative indexing
     semantics (the routine takes no arrays).
 
@@ -83,7 +83,7 @@
 
     Examples
     --------
-    > var v = {{alias}}.ndarray( 1, 'DGEQRF', ' ', 100, 100, -1, -1 )
+    > var v = {{alias}}.strided( 1, 'DGEQRF', ' ', 100, 100, -1, -1 )
     32
 
     See Also

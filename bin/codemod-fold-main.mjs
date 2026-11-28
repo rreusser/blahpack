@@ -4,13 +4,13 @@
 * Codemod: fold each module's `lib/main.js` into its `lib/index.js` and delete
 * `main.js` (ticket 0124).
 *
-* `main.js` only attaches `ndarray.js` to the `<routine>.js` function as
-* `.ndarray` and default-exports the result. stdlib keeps that in a separate
+* `main.js` only attaches `strided.js` to the `<routine>.js` function as
+* `.strided` and default-exports the result. stdlib keeps that in a separate
 * file because its `index.js` chooses between a native addon and `main.js`;
 * there are no native addons here. The new `index.js` is the old `index.js`
 * license header, then `main.js`'s body unchanged (the imports, the
-* `setReadOnly` call and the typed default export that gives `.ndarray` its
-* type for tsc), then `export { ndarray };` so every module has the named
+* `setReadOnly` call and the typed default export that gives `.strided` its
+* type for tsc), then `export { strided };` so every module has the named
 * export.
 *
 * A module is changed only when both files have exactly the known shape;
@@ -57,12 +57,12 @@ function code( src ) {
 const MAIN_SHAPE = new RegExp( '^' + [
 	"import setReadOnly from '@stdlib/utils/[\\w-]+/lib/index\\.js';",
 	"import ([\\w$]+) from '\\./([\\w]+)\\.js';",
-	"import ndarray from '\\./ndarray\\.js';",
-	"setReadOnly\\( \\1, 'ndarray', ndarray \\);",
+	"import strided from '\\./strided\\.js';",
+	"setReadOnly\\( \\1, 'strided', strided \\);",
 	'export default \\( \\1 \\);'
 ].join( ' ' ) + '$' );
 const INDEX_SHAPES = [
-	"export { default } from './main.js'; export { default as ndarray } from './ndarray.js';",
+	"export { default } from './main.js'; export { default as strided } from './strided.js';",
 	"import main from './main.js'; export default main;"
 ];
 
@@ -100,8 +100,8 @@ for ( const m of modules() ) {
 		skipped.push( `${at}: main.js has an unexpected shape` );
 		continue;
 	}
-	if ( !main.includes( `/** @type {typeof ${shape[ 1 ]} & { ndarray: typeof ndarray }} */ ( ${shape[ 1 ]} )` ) ) {
-		skipped.push( `${at}: main.js default export lacks the .ndarray type cast` );
+	if ( !main.includes( `/** @type {typeof ${shape[ 1 ]} & { strided: typeof strided }} */ ( ${shape[ 1 ]} )` ) ) {
+		skipped.push( `${at}: main.js default export lacks the .strided type cast` );
 		continue;
 	}
 	if ( shape[ 2 ] !== m.routine ) {
@@ -121,7 +121,7 @@ for ( const m of modules() ) {
 		continue;
 	}
 	const body = main.slice( start ).trimEnd();
-	const out = `${header}\n\n${body}\nexport { ndarray };\n`;
+	const out = `${header}\n\n${body}\nexport { strided };\n`;
 	if ( !DRY ) {
 		fs.writeFileSync( indexPath, out );
 		fs.unlinkSync( mainPath );

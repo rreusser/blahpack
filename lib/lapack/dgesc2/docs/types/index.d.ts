@@ -59,7 +59,7 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number, scale: number ): Float64Array;
+	strided( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number, scale: number ): Float64Array;
 }
 
 /**

@@ -54,12 +54,12 @@ dgesv( order, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB ) → info: integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgesv.ndarray(
+dgesv.strided(
     N, nrhs,
     A, strideA1, strideA2, offsetA,
     IPIV, strideIPIV, offsetIPIV,
@@ -150,11 +150,11 @@ console.log( 'info:', info );
 console.log( 'solution X:', B );
 // => solution X: Float64Array [ 1.0, 1.0, 1.0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 2.0, 4.0, 8.0, 1.0, 3.0, 7.0, 1.0, 3.0, 9.0 ] );
 IPIV = new Int32Array( 3 );
 B = new Float64Array( [ 4.0, 10.0, 24.0 ] );
-info = dgesv.ndarray( 3, 1, A, 1, 3, 0, IPIV, 1, 0, B, 1, 3, 0 );
+info = dgesv.strided( 3, 1, A, 1, 3, 0, IPIV, 1, 0, B, 1, 3, 0 );
 console.log( 'info:', info );
 // => info: 0
 console.log( 'solution X:', B );

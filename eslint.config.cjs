@@ -44,18 +44,18 @@ var SOURCE_RULES = {
 	'no-nary-stdlib-minmax': 'error',
 	'z-prefix-reinterpret': 'error',
 
-	// Workspace strategy: base.js/ndarray.js never allocate a problem-sized
+	// Workspace strategy: base.js/strided.js never allocate a problem-sized
 	// workspace (the caller owns it), and there is no workspace-length param
 	// (a typed array carries its own `.length`).
 	'no-internal-workspace-alloc': 'error',
 	'no-lwork-param': 'error',
 
-	// A layout wrapper whose routine takes a workspace calls ndarray.js, not
+	// A layout wrapper whose routine takes a workspace calls strided.js, not
 	// base.js, so a caller's workspace is checked against the minimum (D5d;
 	// ticket 0077).
-	'wrapper-calls-ndarray': 'error',
+	'wrapper-calls-strided': 'error',
 
-	// ndarray.js checks the length of every workspace whose minimum the spec
+	// strided.js checks the length of every workspace whose minimum the spec
 	// knows, after the zero-dimension quick returns (W3; ticket 0107).
 	'workspace-length-guard': 'error',
 

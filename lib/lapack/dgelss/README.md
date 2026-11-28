@@ -64,12 +64,12 @@ dgelss( order, M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK ) → i
 - `RangeError` eighth argument must be greater than or equal to `max( 1, max( M, N ) )` (column-major)
 - `RangeError` eighth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgelss.ndarray(
+dgelss.strided(
     M, N, nrhs,
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,
@@ -179,10 +179,10 @@ let out = dgelss( 'row-major', N, N, N, A, N, B, N, S, 1, -1.0, rank, null );
 console.log( rank[ 0 ] );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = discreteUniform( N * N, -10, 10, opts );
 B = discreteUniform( N * N, -10, 10, opts );
-out = dgelss.ndarray( N, N, N, A, N, 1, 0, B, N, 1, 0, S, 1, 0, -1.0, rank, WORK, 1, 0 );
+out = dgelss.strided( N, N, N, A, N, 1, 0, B, N, 1, 0, S, 1, 0, -1.0, rank, WORK, 1, 0 );
 console.log( rank[ 0 ] );
 console.log( out );
 ```

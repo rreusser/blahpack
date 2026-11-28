@@ -1,4 +1,4 @@
-// target: lib/lapack/zunhr_col/lib/ndarray.js
+// target: lib/lapack/zunhr_col/lib/strided.js
 // expect: scaffold placeholder
 /**
 * TODO: Add description for ZUNHR_COL.

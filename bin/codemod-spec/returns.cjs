@@ -4,7 +4,7 @@
 // Codemod (CONVENTIONS S11): a routine whose spec returns its primary output
 // array (`returns: { kind: 'array', param }`, the BLAS-style return of a
 // subroutine without INFO) returns that array from every exit of base.js,
-// ndarray.js and <routine>.js:
+// strided.js and <routine>.js:
 //
 // - a bare `return;` becomes `return <array>;`
 // - a final `base( … );` statement becomes `return base( … );`
@@ -113,7 +113,7 @@ function main() {
 		if ( !spec || spec.returns.kind !== 'array' ) {
 			return;
 		}
-		[ 'base', 'ndarray', 'strided' ].forEach( function each( form ) {
+		[ 'base', 'strided', 'wrapper' ].forEach( function each( form ) {
 			if ( fs.existsSync( mod.files[ form ] ) ) {
 				fix( mod.files[ form ], spec, form, report );
 			}

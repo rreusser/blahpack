@@ -37,12 +37,12 @@ zdotu( N, x, strideX, y, strideY ) → Complex128
 
 **Returns** `Complex128`: unconjugated dot product
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zdotu.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128
+zdotu.strided( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128
 ```
 
 Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y, using alternative indexing semantics.
@@ -96,8 +96,8 @@ const y = new Complex128Array( [ 1.0, 0.0, 0.0, 1.0 ] );
 let result = zdotu( 2, x, 1, y, 1 );
 console.log( result ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-result = zdotu.ndarray( 2, x, 1, 0, y, 1, 0 );
+// Using the strided interface:
+result = zdotu.strided( 2, x, 1, 0, y, 1, 0 );
 console.log( result ); // eslint-disable-line no-console
 ```
 

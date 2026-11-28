@@ -62,12 +62,12 @@ zlaqhe( order, uplo, N, A, LDA, s, strideS, scond, amax, equed ) → Complex128A
 - `TypeError` second argument must be a valid matrix triangle
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqhe.ndarray(
+zlaqhe.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -166,8 +166,8 @@ const equed = [ '' ];
 let out = zlaqhe( 'column-major', 'upper', N, A, N, s, 1, 1, 1, equed );
 console.log( out, equed[ 0 ] );
 
-// Using the ndarray interface:
-out = zlaqhe.ndarray( 'upper', N, A, N, 1, 0, s, 1, 0, 1, 1, equed );
+// Using the strided interface:
+out = zlaqhe.strided( 'upper', N, A, N, 1, 0, s, 1, 0, 1, 1, equed );
 console.log( out, equed[ 0 ] );
 ```
 

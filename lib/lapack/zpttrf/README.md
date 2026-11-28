@@ -43,12 +43,12 @@ zpttrf( N, d, strideD, e, strideE ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpttrf.ndarray( N, d, strideD, offsetD, e, strideE, offsetE ) → integer
+zpttrf.strided( N, d, strideD, offsetD, e, strideE, offsetE ) → integer
 ```
 
 Computes the L_D_L^H factorization of a complex Hermitian positive definite tridiagonal matrix.
@@ -130,10 +130,10 @@ let info = zpttrf( N, d, 1, e, 1 );
 console.log( info, d, reinterpret( e, 0 ) );
 // => 0, ...
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 5.0, 6.0 ] );
 e = new Complex128Array( [ 1.0, 1.0, 0.0, -2.0 ] );
-info = zpttrf.ndarray( N, d, 1, 0, e, 1, 0 );
+info = zpttrf.strided( N, d, 1, 0, e, 1, 0 );
 console.log( info, d, reinterpret( e, 0 ) );
 ```
 

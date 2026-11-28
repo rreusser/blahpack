@@ -54,12 +54,12 @@ dla_gbrpvgrw( order, N, kl, ku, ncols, AB, LDAB, AFB, LDAFB ) → number
 - `RangeError` ninth argument must be greater than or equal to `max( 1, 2 * kl + ku + 1 )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dla_gbrpvgrw.ndarray(
+dla_gbrpvgrw.strided(
     N, kl, ku, ncols,
     AB, strideAB1, strideAB2, offsetAB,
     AFB, strideAFB1, strideAFB2, offsetAFB
@@ -133,8 +133,8 @@ const AFB = discreteUniform( N * N, -10, 10, opts );
 let out = dla_gbrpvgrw( 'row-major', N, N, N, 1, AB, N, AFB, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dla_gbrpvgrw.ndarray( N, N, N, 1, AB, N, 1, 0, AFB, N, 1, 0 );
+// Using the strided interface:
+out = dla_gbrpvgrw.strided( N, N, N, 1, AB, N, 1, 0, AFB, N, 1, 0 );
 console.log( out );
 ```
 

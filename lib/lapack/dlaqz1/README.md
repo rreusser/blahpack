@@ -58,12 +58,12 @@ dlaqz1( order, A, LDA, B, LDB, sr1, sr2, si, beta1, beta2, v, strideV ) → Floa
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqz1.ndarray(
+dlaqz1.strided(
     A, strideA1, strideA2, offsetA,
     B, strideB1, strideB2, offsetB,
     sr1, sr2, si, beta1, beta2,
@@ -134,9 +134,9 @@ let v = new Float64Array( 3 );
 dlaqz1( 'column-major', A, 3, B, 3, 1.0, 2.0, 0.0, 1.0, 1.0, v, 1 );
 console.log( v );
 
-// ndarray interface:
+// strided interface:
 v = new Float64Array( 3 );
-dlaqz1.ndarray( A, 1, 3, 0, B, 1, 3, 0, 1.0, 2.0, 0.0, 1.0, 1.0, v, 1, 0 );
+dlaqz1.strided( A, 1, 3, 0, B, 1, 3, 0, 1.0, 2.0, 0.0, 1.0, 1.0, v, 1, 0 );
 console.log( v );
 ```
 

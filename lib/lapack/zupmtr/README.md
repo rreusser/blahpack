@@ -72,12 +72,12 @@ zupmtr( order, side, uplo, trans, M, N, AP, TAU, strideTAU, C, LDC, WORK ) → i
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, M )` (column-major)
 - `RangeError` eleventh argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zupmtr.ndarray(
+zupmtr.strided(
     side, uplo, trans,
     M, N,
     AP, strideAP, offsetAP,
@@ -191,7 +191,7 @@ const AP = new Complex128Array( 10 );
 const TAU = new Complex128Array( 3 );
 const WORK = new Complex128Array( 4 );
 
-const info = zupmtr.ndarray( 'left', 'upper', 'no-transpose', 4, 4, AP, 1, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 ); // eslint-disable-line max-len
+const info = zupmtr.strided( 'left', 'upper', 'no-transpose', 4, 4, AP, 1, 0, TAU, 1, 0, C, 1, 4, 0, WORK, 1, 0 ); // eslint-disable-line max-len
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'C (interleaved re/im):', reinterpret( C, 0 ) ); // eslint-disable-line no-console
 ```

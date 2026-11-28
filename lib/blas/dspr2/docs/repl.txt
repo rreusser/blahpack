@@ -41,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, AP, strideAP, offsetAP )
+{{alias}}.strided( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, AP, strideAP, offsetAP )
     Performs the symmetric rank-2 operation `A := alpha*x*y^T + alpha*y*x^T
     + A` using alternative indexing semantics.
 

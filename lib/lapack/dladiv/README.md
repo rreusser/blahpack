@@ -39,12 +39,12 @@ dladiv( a, b, c, d, p, q ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dladiv.ndarray( a, b, c, d, p, q ) → void
+dladiv.strided( a, b, c, d, p, q ) → void
 ```
 
 Performs complex division in real arithmetic, avoiding unnecessary overflow, using alternative indexing semantics.
@@ -97,8 +97,8 @@ dladiv( 1, 1, 1.0, 1, p, q );
 let out = new Float64Array( [ p[ 0 ], q[ 0 ] ] );
 console.log( out );
 
-// Using the ndarray interface:
-dladiv.ndarray( 1, 1, 1.0, 1, p, q );
+// Using the strided interface:
+dladiv.strided( 1, 1, 1.0, 1, p, q );
 out = new Float64Array( [ p[ 0 ], q[ 0 ] ] );
 console.log( out );
 ```

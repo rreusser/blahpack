@@ -73,12 +73,12 @@ zhseqr( order, job, compz, N, ilo, ihi, H, LDH, w, strideW, Z, LDZ, WORK ) → i
 - `RangeError` twelfth argument is invalid (rejected when `LDZ < 1 \|\| ( ( compz === "initialize" \|\| compz === "update" ) && LDZ < max( 1, N ) )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhseqr.ndarray(
+zhseqr.strided(
     job, compz,
     N,
     ilo, ihi,
@@ -247,12 +247,12 @@ let info = zhseqr( 'column-major', 'schur', 'initialize', N, 1, N, H, N, w, 1, Z
 console.log( info );
 console.log( reinterpret( w, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Complex128Array( Hvals );
 w = new Complex128Array( N );
 Z = new Complex128Array( N * N );
 const WORK = new Complex128Array( N );
-info = zhseqr.ndarray( 'schur', 'initialize', N, 1, N, H, 1, N, 0, w, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
+info = zhseqr.strided( 'schur', 'initialize', N, 1, N, H, 1, N, 0, w, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
 console.log( info );
 console.log( reinterpret( w, 0 ) );
 ```

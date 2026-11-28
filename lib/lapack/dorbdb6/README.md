@@ -81,12 +81,12 @@ Orthogonalizes the column vector `X = [X1; X2]` against the columns of `Q = [Q1;
 - `RangeError` `LDQ1` must satisfy the leading-dimension constraint
 - `RangeError` `LDQ2` must satisfy the leading-dimension constraint
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorbdb6.ndarray(
+dorbdb6.strided(
     m1, m2, N,
     X1, strideX1, offsetX1,
     X2, strideX2, offsetX2,

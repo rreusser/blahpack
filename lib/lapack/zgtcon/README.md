@@ -75,12 +75,12 @@ zgtcon(
 - `RangeError` thirteenth argument is invalid (rejected when `anorm < 0`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgtcon.ndarray(
+zgtcon.strided(
     norm,
     N,
     DL, strideDL, offsetDL,
@@ -207,8 +207,8 @@ const WORK = new Complex128Array( 2 * N );
 let info = zgtcon( 'one-norm', N, DL, 1, d, 1, DU, 1, DU2, 1, IPIV, 1, anorm, rcond, WORK );
 console.log( 'info:', info, 'rcond:', rcond[ 0 ] );
 
-// Using the ndarray interface:
-info = zgtcon.ndarray( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0 );
+// Using the strided interface:
+info = zgtcon.strided( 'one-norm', N, DL, 1, 0, d, 1, 0, DU, 1, 0, DU2, 1, 0, IPIV, 1, 0, anorm, rcond, WORK, 1, 0 );
 console.log( 'info:', info, 'rcond:', rcond[ 0 ] );
 ```
 

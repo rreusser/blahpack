@@ -10,7 +10,7 @@ reassigned to several arrays) and local helper functions. Then:
 
 - **P1** `A[ i ]` must be computed from `offsetA`.
 - **P3** When `A` is passed to a callee with a spec (an import of
-  `…/<routine>/lib/{base,ndarray}.js`, or a recursive call), the callee's spec
+  `…/<routine>/lib/{base,strided}.js`, or a recursive call), the callee's spec
   (`lint/lib/spec.cjs` `baseGroups`) says which following arguments are `A`'s
   strides and offset.
   - Each stride argument must be computed from a stride of `A`. Never a

@@ -80,12 +80,12 @@ Generates an `M`-by-`N` real matrix `Q` with orthonormal columns from a Tall-Ski
 - `RangeError` ninth argument must be greater than or equal to `max( 1, min( nb, N ) )` (column-major)
 - `RangeError` `LDA` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dorgtsqr.ndarray(
+dorgtsqr.strided(
     M, N,
     mb, nb,
     A, strideA1, strideA2, offsetA,

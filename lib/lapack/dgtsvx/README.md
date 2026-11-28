@@ -129,12 +129,12 @@ dgtsvx(
 - `RangeError` twenty-fifth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgtsvx.ndarray(
+dgtsvx.strided(
     fact, trans,
     N, nrhs,
     DL, strideDL, offsetDL,
@@ -322,8 +322,8 @@ const IWORK = new Int32Array( N );
 let info = dgtsvx( 'column-major', 'not-factored', 'no-transpose', N, nrhs, DL, 1, d, 1, DU, 1, DLF, 1, DF, 1, DUF, 1, DU2, 1, IPIV, 1, B, N, X, N, rcond, FERR, 1, BERR, 1, WORK, IWORK );
 console.log( 'info:', info, 'X:', X, 'rcond:', rcond[ 0 ] );
 
-// Using the ndarray interface (reusing the factorization computed above):
-info = dgtsvx.ndarray( 'factored', 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DLF, 1, 0, DF, 1, 0, DUF, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface (reusing the factorization computed above):
+info = dgtsvx.strided( 'factored', 'no-transpose', N, nrhs, DL, 1, 0, d, 1, 0, DU, 1, 0, DLF, 1, 0, DF, 1, 0, DUF, 1, 0, DU2, 1, 0, IPIV, 1, 0, B, 1, N, 0, X, 1, N, 0, rcond, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( 'info:', info, 'X:', X, 'rcond:', rcond[ 0 ] );
 ```
 

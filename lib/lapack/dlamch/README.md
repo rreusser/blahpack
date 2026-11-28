@@ -37,12 +37,12 @@ dlamch( cmach ) → number
 
 - `TypeError` first argument must be one of the following: "epsilon", "safe-minimum", "precision", "base", "digits", "rounding", "min-exponent", "underflow", "max-exponent", "overflow"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlamch.ndarray( cmach ) → number
+dlamch.strided( cmach ) → number
 ```
 
 | Parameter | Type | Description |

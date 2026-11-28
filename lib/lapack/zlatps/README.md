@@ -91,12 +91,12 @@ zlatps(
 - `RangeError` sixth argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlatps.ndarray(
+zlatps.strided(
     uplo, trans, diag, normin,
     N,
     AP, strideAP, offsetAP,
@@ -214,7 +214,7 @@ const x = new Complex128Array( [ 4.0, 2.0, 6.0, 0.0 ] );
 const scale = new Float64Array( 1 );
 const cnorm = new Float64Array( 2 );
 
-const info = zlatps.ndarray( 'upper', 'no-transpose', 'non-unit', 'no', 2, AP, 1, 0, x, 1, 0, scale, cnorm, 1, 0 );
+const info = zlatps.strided( 'upper', 'no-transpose', 'non-unit', 'no', 2, AP, 1, 0, x, 1, 0, scale, cnorm, 1, 0 );
 
 const xv = reinterpret( x, 0 );
 console.log( 'info: %d', info );

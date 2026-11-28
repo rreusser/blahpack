@@ -38,7 +38,7 @@ interface Routine {
 	* @param large - `large`
 	* @returns result
 	*/
-	ndarray( small: number, large: number ): void;
+	strided( small: number, large: number ): void;
 }
 
 /**

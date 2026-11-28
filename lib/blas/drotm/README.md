@@ -40,12 +40,12 @@ drotm( N, x, strideX, y, strideY, param, strideParam ) → Float64Array
 
 **Returns** `Float64Array`: `y`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-drotm.ndarray(
+drotm.strided(
     N,
     x, strideX, offsetX,
     y, strideY, offsetY,

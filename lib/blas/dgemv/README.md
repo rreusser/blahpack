@@ -74,12 +74,12 @@ dgemv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Flo
 - `RangeError` ninth argument must be non-zero
 - `RangeError` twelfth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgemv.ndarray(
+dgemv.strided(
     trans,
     M, N,
     alpha,

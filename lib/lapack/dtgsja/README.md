@@ -164,12 +164,12 @@ dtgsja(
 - `RangeError` twenty-fifth argument is invalid (rejected when `LDQ < 1 \|\| ( ( jobq === "initialize" \|\| jobq === "update" ) && LDQ < N )`)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgsja.ndarray(
+dtgsja.strided(
     jobu, jobv, jobq,
     M, p, N,
     K, l,
@@ -389,10 +389,10 @@ console.log( info ); // eslint-disable-line no-console
 console.log( ALPHA ); // eslint-disable-line no-console
 console.log( BETA ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( [ 2.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.5, 1.0, 4.0 ] );
 B = new Float64Array( [ 1.0, 0.0, 0.0, 0.5, 2.0, 0.0, 0.2, 0.3, 1.5 ] );
-info = dtgsja.ndarray( 'initialize', 'initialize', 'initialize', M, p, N, K, l, A, 1, M, 0, B, 1, p, 0, tola, tolb, ALPHA, 1, 0, BETA, 1, 0, U, 1, M, 0, V, 1, p, 0, Q, 1, N, 0, WORK, 1, 0, ncycle );
+info = dtgsja.strided( 'initialize', 'initialize', 'initialize', M, p, N, K, l, A, 1, M, 0, B, 1, p, 0, tola, tolb, ALPHA, 1, 0, BETA, 1, 0, U, 1, M, 0, V, 1, p, 0, Q, 1, N, 0, WORK, 1, 0, ncycle );
 console.log( info ); // eslint-disable-line no-console
 console.log( ALPHA ); // eslint-disable-line no-console
 console.log( BETA ); // eslint-disable-line no-console

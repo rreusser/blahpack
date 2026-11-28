@@ -65,12 +65,12 @@ dsysv( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → intege
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsysv.ndarray(
+dsysv.strided(
     uplo,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -193,10 +193,10 @@ const WORK = new Float64Array( N );
 let info = dsysv( 'column-major', 'upper', N, NRHS, A, N, IPIV, 1, B, N, WORK );
 console.log( info, B );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Float64Array( dataA );
 B = new Float64Array( dataB );
-info = dsysv.ndarray( 'upper', N, NRHS, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
+info = dsysv.strided( 'upper', N, NRHS, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0, WORK, 1, 0 );
 console.log( info, B );
 ```
 

@@ -36,11 +36,11 @@ import dgesvd = require( './index' );
 	dgesvd( 'row-major' ); // $ExpectError
 }
 
-// Attached to the main export is an `ndarray` method which returns a number...
+// Attached to the main export is an `strided` method which returns a number...
 {
 	const A = new Float64Array( 9 );
 	const s = new Float64Array( 3 );
 	const U = new Float64Array( 9 );
 	const VT = new Float64Array( 9 );
-	dgesvd.ndarray( 'all-columns', 'all-rows', 3, 3, A, 1, 3, 0, s, 1, 0, U, 1, 3, 0, VT, 1, 3, 0 ); // $ExpectType number
+	dgesvd.strided( 'all-columns', 'all-rows', 3, 3, A, 1, 3, 0, s, 1, 0, U, 1, 3, 0, VT, 1, 3, 0 ); // $ExpectType number
 }

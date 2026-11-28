@@ -31,12 +31,12 @@ import dgetv0 = require( './index' );
 	dgetv0(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dgetv0.ndarray( {}, new Int32Array( 1 ), 'standard', 1, false, 4, 1, new Float64Array( 4 ), 1, 4, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 1 ), new Int32Array( 3 ), 1, 0, new Float64Array( 8 ), 1, 0 ); // $ExpectType number
+	dgetv0.strided( {}, new Int32Array( 1 ), 'standard', 1, false, 4, 1, new Float64Array( 4 ), 1, 4, 0, new Float64Array( 4 ), 1, 0, new Float64Array( 1 ), new Int32Array( 3 ), 1, 0, new Float64Array( 8 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dgetv0.ndarray(); // $ExpectError
+	dgetv0.strided(); // $ExpectError
 }

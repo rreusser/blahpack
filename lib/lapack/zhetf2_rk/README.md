@@ -101,12 +101,12 @@ zhetf2_rk( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetf2_rk.ndarray(
+zhetf2_rk.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -236,7 +236,7 @@ NOTE: `INFO` only stores the first occurrence of a singularity, any subsequent o
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import { ndarray as zhetf2rk } from '@rreusser/blahpack/lapack/zhetf2_rk';
+import { strided as zhetf2rk } from '@rreusser/blahpack/lapack/zhetf2_rk';
 
 const A = new Complex128Array([
 	4,

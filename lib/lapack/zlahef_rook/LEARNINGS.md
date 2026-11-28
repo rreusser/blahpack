@@ -29,8 +29,8 @@
   The Fortran has `KB` as a writable scalar argument; in JS we drop it
   from the signature and return `{ info, kb }`. The scaffold's generated
   signature includes `kb` as a parameter — it must be removed from
-  `ndarray.js` and `zlahef_rook.js`. Keep arity at 9 for the layout
-  wrapper and 14 for the ndarray wrapper.
+  `strided.js` and `zlahef_rook.js`. Keep arity at 9 for the layout
+  wrapper and 14 for the strided wrapper.
 - **NaN-safe `IF(.NOT.(x.LT.y))` collapses to `x >= y`** for the lint —
   the codebase prefers the simpler form despite the slight NaN-handling
   difference (in Fortran `.NOT.(NaN < y) → .NOT.(false) → .true.`,
@@ -76,7 +76,7 @@
 
 ## Process notes
 
-- The scaffold's `test.ndarray.js` uses `tc.A` as the *expected* output
+- The scaffold's `test.strided.js` uses `tc.A` as the *expected* output
   but the fixture's `tc.A` is the post-factorization state, not the
   input. Constructing the input matrix from scratch in each test is
   necessary; `findCase()` only supplies the expected outputs.

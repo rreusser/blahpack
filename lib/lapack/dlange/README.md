@@ -48,12 +48,12 @@ dlange( order, norm, M, N, A, LDA, WORK ) → number
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlange.ndarray(
+dlange.strided(
     norm,
     M, N,
     A, strideA1, strideA2, offsetA,

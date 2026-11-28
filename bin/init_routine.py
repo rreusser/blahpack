@@ -136,7 +136,7 @@ def main():
     # Step 3: Generate JS test scaffold if fixture exists
     fixture = os.path.join(ROOT, 'test', 'fixtures', f'{routine}.jsonl')
     test_js = os.path.join(module_dir, 'test', 'test.js')
-    test_ndarray_js = os.path.join(module_dir, 'test', 'test.ndarray.js')
+    test_strided_js = os.path.join(module_dir, 'test', 'test.strided.js')
     if os.path.exists(fixture):
         print(f'\n3. JS test scaffold (from existing fixture):', file=sys.stderr)
         result = subprocess.run(
@@ -144,12 +144,12 @@ def main():
             capture_output=True, text=True
         )
         if result.returncode == 0:
-            # gen_test.py emits ndarray-targeted tests (require '../lib/ndarray.js').
-            # Write to test.ndarray.js — overwriting scaffold.py's stub there is
+            # gen_test.py emits strided-targeted tests (require '../lib/strided.js').
+            # Write to test.strided.js — overwriting scaffold.py's stub there is
             # intended. Do NOT clobber test.js (export-checks file the conformance check expects).
-            with open(test_ndarray_js, 'w') as f:
+            with open(test_strided_js, 'w') as f:
                 f.write(result.stdout)
-            print(f'  Written: {test_ndarray_js}', file=sys.stderr)
+            print(f'  Written: {test_strided_js}', file=sys.stderr)
     else:
         print(f'\n3. No fixture yet — write Fortran test first.', file=sys.stderr)
 
@@ -186,11 +186,11 @@ def main():
     if not os.path.exists(fixture):
         print(f'  2. Write Fortran test: test/fortran/test_{routine}.f90', file=sys.stderr)
         print(f'  3. Generate fixture: ./test/run_fortran.sh {package} {routine}', file=sys.stderr)
-        print(f'  4. Regenerate JS test: python bin/gen_test.py {package} {routine} > {test_ndarray_js}', file=sys.stderr)
+        print(f'  4. Regenerate JS test: python bin/gen_test.py {package} {routine} > {test_strided_js}', file=sys.stderr)
     print(f'  5. Implement: {base_js}', file=sys.stderr)
-    print(f'  6. Fill in test inputs: {test_ndarray_js}', file=sys.stderr)
-    print(f'  7. Verify: node --test {test_js} {test_ndarray_js}', file=sys.stderr)
-    print(f'  8. Coverage: node --test --experimental-test-coverage {test_js} {test_ndarray_js}', file=sys.stderr)
+    print(f'  6. Fill in test inputs: {test_strided_js}', file=sys.stderr)
+    print(f'  7. Verify: node --test {test_js} {test_strided_js}', file=sys.stderr)
+    print(f'  8. Coverage: node --test --experimental-test-coverage {test_js} {test_strided_js}', file=sys.stderr)
     print(f'  9. Lint: bin/lint.sh {base_js}', file=sys.stderr)
     print(f' 10. Benchmarks: node bin/gen-benchmark.mjs {module_dir} --write && bin/bench-smoke.sh <(ls {module_dir}/benchmark/*.js)', file=sys.stderr)
     print(f' 11. Write LEARNINGS.md (MANDATORY)', file=sys.stderr)

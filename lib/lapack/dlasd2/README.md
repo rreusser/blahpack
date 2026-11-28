@@ -116,12 +116,12 @@ dlasd2(
 - `RangeError` twenty-first argument must be greater than or equal to `NL + NR + 1 + SQRE` (column-major)
 - `RangeError` twenty-first argument must be greater than or equal to `max( 1, NL + NR + 1 )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasd2.ndarray(
+dlasd2.strided(
     nl, nr, sqre,
     K,
     d, strideD, offsetD,
@@ -309,13 +309,13 @@ const COLTYP = new Int32Array( Math.max( N, 4 ) );
 let info = dlasd2( 'column-major', NL, NR, SQRE, K, D, 1, Z, 1, 0.5, 0.7, U, N, VT, M, DSIGMA, 1, U2, N, VT2, M, IDXP, 1, IDX, 1, IDXC, 1, IDXQ, 1, COLTYP, 1 );
 console.log( info, K[ 0 ], DSIGMA, Z ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 D = new Float64Array( [ 1.0, 3.0, 0.0, 2.0, 4.0 ] );
 Z = new Float64Array( M );
 U = eye( N );
 VT = eye( M );
 IDXQ = new Int32Array( [ 1, 2, 0, 1, 2 ] );
-info = dlasd2.ndarray( NL, NR, SQRE, K, D, 1, 0, Z, 1, 0, 0.5, 0.7, U, 1, N, 0, VT, 1, M, 0, DSIGMA, 1, 0, U2, 1, N, 0, VT2, 1, M, 0, IDXP, 1, 0, IDX, 1, 0, IDXC, 1, 0, IDXQ, 1, 0, COLTYP, 1, 0 );
+info = dlasd2.strided( NL, NR, SQRE, K, D, 1, 0, Z, 1, 0, 0.5, 0.7, U, 1, N, 0, VT, 1, M, 0, DSIGMA, 1, 0, U2, 1, N, 0, VT2, 1, M, 0, IDXP, 1, 0, IDX, 1, 0, IDXC, 1, 0, IDXQ, 1, 0, COLTYP, 1, 0 );
 console.log( info, K[ 0 ], DSIGMA, Z ); // eslint-disable-line no-console
 ```
 

@@ -55,12 +55,12 @@ zhetri_rook( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → info: integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhetri_rook.ndarray(
+zhetri_rook.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,

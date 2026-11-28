@@ -38,12 +38,12 @@ dstqrb( N, d, strideD, e, strideE, Z, strideZ, WORK ) → INFO: integer
 - `RangeError` first argument must be a nonnegative integer
 - `RangeError` WORK array must have sufficient length
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dstqrb.ndarray(
+dstqrb.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,

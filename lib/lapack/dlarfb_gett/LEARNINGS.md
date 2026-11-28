@@ -24,7 +24,7 @@
 ## Dependency interface surprises
 
 - `dcopy`, `dgemm`, and `dtrmm` are required directly via
-  `.../lib/base.js` (the ndarray base) because the package-level
+  `.../lib/base.js` (the strided base) because the package-level
   `require('@stdlib/blas/base/dtrmm')` resolution is not available in the
   monorepo-style layout used here. Other LAPACK routines in this repo use
   the same pattern.

@@ -60,7 +60,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( itype, jobz, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
+{{alias}}.strided( itype, jobz, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
     Computes all the eigenvalues, and optionally, the eigenvectors of a
     complex generalized Hermitian-definite eigenproblem, of the form
     A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.

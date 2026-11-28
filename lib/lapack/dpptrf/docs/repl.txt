@@ -23,7 +23,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, AP, strideAP, offsetAP )
+{{alias}}.strided( uplo, N, AP, strideAP, offsetAP )
     Compute the Cholesky factorization of a real symmetric positive definite
     matrix stored in packed format using alternative indexing semantics.
 

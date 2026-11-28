@@ -116,12 +116,12 @@ Pre-processor for zgesvj performing Jacobi rotations.
 - `RangeError` `LDA` must be >= max(1,M) (column-major) or max(1,N) (row-major)
 - `RangeError` `LDV` must be >= max(1,N) (column-major) or max(1,M) (row-major) when `jobv` is not `'no-v'`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgsvj0.ndarray(
+zgsvj0.strided(
     jobv,
     M, N,
     A, strideA1, strideA2, offsetA,

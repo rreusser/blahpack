@@ -103,12 +103,12 @@ dhgeqz(
 - `RangeError` eleventh argument must be greater than or equal to `N`
 - `RangeError` leading dimension arguments must be valid
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dhgeqz.ndarray(
+dhgeqz.strided(
     job, compq, compz,
     N,
     ilo, ihi,
@@ -248,7 +248,7 @@ const Q = new Float64Array( 4 );
 const Z = new Float64Array( 4 );
 const WORK = new Float64Array( 10 );
 
-const info = dhgeqz.ndarray( 'eigenvalues', 'none', 'none', 2, 0, 1, H, 2, 1, 0, T, 2, 1, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, Q, 2, 1, 0, Z, 2, 1, 0, WORK, 1, 0 );
+const info = dhgeqz.strided( 'eigenvalues', 'none', 'none', 2, 0, 1, H, 2, 1, 0, T, 2, 1, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, Q, 2, 1, 0, Z, 2, 1, 0, WORK, 1, 0 );
 
 console.log( 'info:', info ); // eslint-disable-line no-console
 console.log( 'ALPHAR:', ALPHAR ); // eslint-disable-line no-console

@@ -103,12 +103,12 @@ Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1`
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlar1v.ndarray(
+dlar1v.strided(
     N,
     b1, bn, lambda,
     D, strideD, offsetD,

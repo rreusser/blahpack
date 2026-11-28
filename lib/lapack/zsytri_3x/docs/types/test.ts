@@ -31,12 +31,12 @@ import zsytri_3x = require( './index' );
 	zsytri_3x(); // $ExpectError
 }
 
-// The ndarray method returns a Float64Array...
+// The strided method returns a Float64Array...
 {
-	zsytri_3x.ndarray( 'upper', 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
+	zsytri_3x.strided( 'upper', 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	zsytri_3x.ndarray(); // $ExpectError
+	zsytri_3x.strided(); // $ExpectError
 }

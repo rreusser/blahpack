@@ -64,12 +64,12 @@ dsyr2( order, uplo, N, alpha, x, strideX, y, strideY, A, LDA ) → Float64Array
 - `RangeError` eighth argument must be non-zero
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsyr2.ndarray(
+dsyr2.strided(
     uplo,
     N,
     alpha,

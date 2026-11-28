@@ -56,7 +56,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
+{{alias}}.strided( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
     Multiplies a general matrix by the orthogonal matrix from a LQ
     factorization determined by sgelqf (unblocked algorithm), using
     alternative indexing semantics.

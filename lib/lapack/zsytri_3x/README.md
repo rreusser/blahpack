@@ -72,12 +72,12 @@ zsytri_3x( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV, WORK, nb ) → 
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsytri_3x.ndarray(
+zsytri_3x.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,

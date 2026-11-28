@@ -146,12 +146,12 @@ Merges two sets of singular values together into a single sorted set and deflate
 - `RangeError` `LDGIVCOL` must be greater than or equal to `max(1,N)` (column-major) or 2 (row-major)
 - `RangeError` `LDGIVNUM` must be greater than or equal to `max(1,N)` (column-major) or 2 (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasd7.ndarray(
+dlasd7.strided(
     icompq, nl, nr, sqre,
     k,
     d, strideD, offsetD,

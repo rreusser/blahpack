@@ -50,12 +50,12 @@ dlaqr1( order, N, H, LDH, sr1, si1, sr2, si2, v, strideV ) → Float64Array
 - `TypeError` first argument must be a valid order
 - `RangeError` fourth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaqr1.ndarray(
+dlaqr1.strided(
     N,
     H, strideH1, strideH2, offsetH,
     sr1, si1, sr2, si2,
@@ -130,8 +130,8 @@ const v = discreteUniform( N, -10, 10, opts );
 let out = dlaqr1( 'column-major', N, H, N, 1, 1, 1, 1, v, 1 );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlaqr1.ndarray( N, H, N, 1, 0, 1, 1, 1, 1, v, 1, 0 );
+// Using the strided interface:
+out = dlaqr1.strided( N, H, N, 1, 0, 1, 1, 1, 1, v, 1, 0 );
 console.log( out );
 ```
 

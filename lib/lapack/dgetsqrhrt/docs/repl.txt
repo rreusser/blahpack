@@ -57,7 +57,7 @@
     0
 
 
-{{alias}}.ndarray( M, N, mb1, nb1, nb2, A, sa1, sa2, oa, T, st1, st2, ot, W, sw, ow )
+{{alias}}.strided( M, N, mb1, nb1, nb2, A, sa1, sa2, oa, T, st1, st2, ot, W, sw, ow )
     Computes a column-blocked QR factorization of a real `M`-by-`N` matrix
     `A` (with `M >= N`) via TSQR followed by Householder reconstruction,
     using alternative indexing semantics.
@@ -122,7 +122,7 @@
     > var A = new {{alias:@stdlib/array/float64}}( [ 2.0, 1.0, 3.0, 1.0, 1.0, 4.0, 2.0, 3.0, 3.0, 2.0, 5.0, 1.0 ] );
     > var T = new {{alias:@stdlib/array/float64}}( 6 );
     > var W = new {{alias:@stdlib/array/float64}}( 256 );
-    > {{alias}}.ndarray( 4, 3, 4, 2, 2, A, 1, 4, 0, T, 1, 2, 0, W, 1, 0 )
+    > {{alias}}.strided( 4, 3, 4, 2, 2, A, 1, 4, 0, T, 1, 2, 0, W, 1, 0 )
     0
 
     See Also

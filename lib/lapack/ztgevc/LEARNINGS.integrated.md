@@ -3,7 +3,7 @@
 ## Translation Pitfalls
 - Complex arrays use `reinterpret()` at function entry for Float64Array views; strides and offsets are multiplied by 2 for Float64 indexing.
 - INFO return value remains 1-based (matching Fortran convention): 0 = success, k > 0 = algorithmic outcome at position k.
-- String parameters (`direct`, `howmny`, `side`) use single-char Fortran convention in base.js; ndarray.js normalizes from stdlib full-word strings.
+- String parameters (`direct`, `howmny`, `side`) use single-char Fortran convention in base.js; strided.js normalizes from stdlib full-word strings.
 - DLAMCH machine constants are replaced with JavaScript equivalents (Number.EPSILON, Number.MIN_VALUE, etc.) and hoisted to module scope.
 
 ## Dependency Interface Surprises

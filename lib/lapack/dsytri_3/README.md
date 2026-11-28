@@ -71,12 +71,12 @@ dsytri_3( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV, WORK ) → integ
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dsytri_3.ndarray(
+dsytri_3.strided(
     uplo,
     N,
     A, strideA1, strideA2, offsetA,
@@ -183,7 +183,7 @@ const e = new Float64Array( [ 0.0 ] );
 const ipiv = new Int32Array( [ 0 ] );
 const work = new Float64Array( 12 );
 
-const info = dsytri3.ndarray( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0 );
+const info = dsytri3.strided( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0 );
 console.log( info ); // eslint-disable-line no-console
 console.log( A ); // eslint-disable-line no-console
 ```

@@ -6,7 +6,7 @@
   same name `A`, because it only keys by Fortran array role and does not
   distinguish input/output matrices of different dtypes. Had to manually
   rename the output parameter to `SA` (with independent strides and
-  offset) in every scaffold file: `base.js`, `ndarray.js`, `zlat2c.js`,
+  offset) in every scaffold file: `base.js`, `strided.js`, `zlat2c.js`,
   `test.zlat2c.js`, README examples, benchmarks, and the TypeScript
   signature. Automation idea: extend `signature.py` to detect two
   `COMPLEX` / `COMPLEX*16` arrays in the same routine and assign

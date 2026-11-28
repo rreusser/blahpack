@@ -16,10 +16,10 @@ every public entry point still takes raw storage:
 | Layer | File | Takes |
 | --- | --- | --- |
 | kernel | `base.js` | data, strides, offsets, dimensions, workspace; no validation |
-| offset form | `ndarray.js` (exposed as `routine.ndarray`) | same parameters as `base.js`, validated (S3) |
+| offset form | `strided.js` (exposed as `routine.strided`) | same parameters as `base.js`, validated (S3) |
 | BLAS form | `<routine>.js` | `order`, leading dimensions, `null` workspace (D1, D5c) |
 
-zggbal's `ndarray.js` takes 21 positional arguments. Its ndarray-object form
+zggbal's `strided.js` takes 21 positional arguments. Its ndarray-object form
 needs 3: `zggbal( job, A, B )`.
 
 ## Naming and layout (decided 2026-11-27)
@@ -45,7 +45,7 @@ Source layout after the migration:
 lib/lapack/zggev/
   lib/index.js       default export: the layout form, with .strided attached
   lib/zggev.js       layout form (order, leading dimensions)
-  lib/strided.js     offset form (today's ndarray.js)
+  lib/strided.js     offset form (was ndarray.js)
   lib/base.js        kernel; never public
   lib/ndarray/…      ndarray-object form, where it fits
 dist/lapack/zggev.js, dist/lapack/zggev/ndarray.js   browser builds of the same subpaths
@@ -66,7 +66,7 @@ names. The package is unpublished, so no step keeps compatibility aliases.
 | 1 | Fold `main.js` into `index.js` in every module; update F1/F3, conformance, lint and the scaffold (done: `bin/codemod-fold-main.mjs`) | ticket 0124 |
 | 2 | Export ARPACK (done; conformance now covers it too, ticket 0043) | ticket 0123 |
 | 3 | Drop the `base` level from every module path, so modules live at `lib/<pkg>/<routine>` (done: `bin/codemod-flatten.mjs`, rerunnable; CI runs its `--check`) | ticket 0125 |
-| 4 | Rename the offset form: `ndarray.js` to `strided.js`, `.ndarray` to `.strided` | ticket 0126 |
+| 4 | Rename the offset form: `ndarray.js` to `strided.js`, `.ndarray` to `.strided`, and the tooling's name for `<routine>.js` from `strided` to `wrapper` (done: `bin/codemod-strided.mjs`, rerunnable; CI runs its `--check`) | ticket 0126 |
 | 5 | Generate the opt-in ndarray-object form from `spec/*.json` at `<pkg>/<routine>/ndarray`: pilot on zggev, zggbal, dgesv, dgeev and dstevx, then roll out in waves | ticket 0111 |
 | 6 | Publish this package and verify the `npm:` import in Observable, including the best-guess CDN layout | ticket 0112 |
 | — | Any time: inline option checks to cut about 17 KB from each browser bundle | ticket 0114 |
@@ -101,7 +101,7 @@ and enforcers when adopted.
    returned, not thrown: it is data (singular pivot, convergence failure
    count). Negative `info` cannot occur because the offset form validates first.
 7. **Allocate workspace internally.** Use the size the `<routine>.js` `null`
-   branch already computes (D5c, W6), then call `ndarray.js` so the workspace
+   branch already computes (D5c, W6), then call `strided.js` so the workspace
    guard (W3) still runs.
 8. **Options are unchanged.** Option strings stay positional, with the same
    vocabulary as the other two forms (N8).
@@ -132,7 +132,7 @@ function zggbal( job, A, B, out = {} ) {
 	const ilo = new Int32Array( 1 );
 	const ihi = new Int32Array( 1 );
 	const WORK = new Float64Array( Math.max( 1, 6 * N ) ); // rule 7
-	const info = zggbalNdarray( job, N, // lib/lapack/zggbal/lib/ndarray.js
+	const info = zggbalStrided( job, N, // lib/lapack/zggbal/lib/strided.js
 		A.data, A.strides[ 0 ], A.strides[ 1 ], A.offset,
 		B.data, B.strides[ 0 ], B.strides[ 1 ], B.offset,
 		ilo, ihi,
@@ -182,7 +182,7 @@ output count).
 
 ## Testing
 
-- **Replay:** every call the existing `test.ndarray.js` files make, rebuilt as
+- **Replay:** every call the existing `test.strided.js` files make, rebuilt as
   ndarray objects and run through the new layer, must give bit-identical
   results. This is the same mechanism as `bin/wrapper-replay.mjs`.
 - **Layout invariance:** ndarray views make the harness's layout fuzzing
@@ -231,7 +231,7 @@ checked against inline whitelists. That needs a decision against stdlib
 conformance, which is why ticket 0114 is open rather than fixed.
 
 The package also has no `"sideEffects": false`. Each module's only side
-effect is attaching `.ndarray` to its own function, so the flag looks safe,
+effect is attaching `.strided` to its own function, so the flag looks safe,
 but no one has checked that yet.
 
 ### Browser / CDN users

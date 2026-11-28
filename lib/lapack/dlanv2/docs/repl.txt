@@ -25,7 +25,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn )
+{{alias}}.strided( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn )
     @license Apache-2.0 using alternative indexing semantics.
 
     Parameters

@@ -100,12 +100,12 @@ zlaqr2(
 - `RangeError` twenty-second argument must be greater than or equal to `max( 1, nw )` (row-major)
 - `RangeError` twenty-fifth argument must be greater than or equal to `max( 1, nw )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqr2.ndarray(
+zlaqr2.strided(
     wantt, wantz,
     N,
     ktop,
@@ -261,7 +261,7 @@ zlaqr2( 'column-major', true, true, N, 1, N, NW, H, N, 1, N, Z, N, ns, nd, SH, 1
 console.log( 'ns = %d, nd = %d', ns[ 0 ], nd[ 0 ] );
 console.log( reinterpret( SH, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Complex128Array( [ 6.7, -0.9, -4.0, -0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.3, 8.6, 0.8, 0.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.4, -1.8, 3.2, 1.1, 7.0, 1.2, -0.9, -0.4, 0.0, 0.0, 0.0, 0.0, -3.2, 0.5, -3.5, -1.7, -2.3, -1.4, 1.7, -1.8, -4.0, -1.4, 0.0, 0.0, -3.2, -0.5, -3.8, 1.5, 0.9, -1.4, -2.0, -0.6, 0.8999999999999999, -1.5, 2.8, 2.0, -0.3, -0.1, -3.3, -1.6, -1.3, -0.9, 2.6, -1.4, -3.8, 1.8, 1.2, -1.4 ] );
 Z = new Complex128Array( N * N );
 setIdentity( reinterpret( Z, 0 ), N, 2 );
@@ -270,7 +270,7 @@ V = new Complex128Array( NW * NW );
 T = new Complex128Array( NW * NW );
 WV = new Complex128Array( N * NW );
 WORK = new Complex128Array( 2 * N * N );
-zlaqr2.ndarray( true, true, N, 1, N, NW, H, 1, N, 0, 1, N, Z, 1, N, 0, ns, nd, SH, 1, 0, V, 1, NW, 0, NW, T, 1, NW, 0, N, WV, 1, N, 0, WORK, 1, 0 );
+zlaqr2.strided( true, true, N, 1, N, NW, H, 1, N, 0, 1, N, Z, 1, N, 0, ns, nd, SH, 1, 0, V, 1, NW, 0, NW, T, 1, NW, 0, N, WV, 1, N, 0, WORK, 1, 0 );
 console.log( 'ns = %d, nd = %d', ns[ 0 ], nd[ 0 ] );
 console.log( reinterpret( SH, 0 ) );
 ```

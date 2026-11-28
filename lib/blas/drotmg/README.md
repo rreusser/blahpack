@@ -38,12 +38,12 @@ drotmg( dd1, dd2, dx1, dy1, param, strideParam ) → Float64Array
 
 **Returns** `Float64Array`: `param`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-drotmg.ndarray( dd1, dd2, dx1, dy1, param, strideParam, offsetParam ) → Float64Array
+drotmg.strided( dd1, dd2, dx1, dy1, param, strideParam, offsetParam ) → Float64Array
 ```
 
 Constructs a modified Givens plane rotation.

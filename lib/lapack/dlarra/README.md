@@ -59,12 +59,12 @@ dlarra(
 
 **Returns** `info: integer`: status code (0 = success)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarra.ndarray(
+dlarra.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -153,8 +153,8 @@ var ISPLIT = new Int32Array( N );
 var info = dlarra( N, d, 1, e, 1, E2, 1, -1.0e-10, 5.0, nsplit, ISPLIT, 1 );
 console.log( info, nsplit, ISPLIT ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
-info = dlarra.ndarray( N, d, 1, 0, e, 1, 0, E2, 1, 0, -1.0e-10, 5.0, nsplit, ISPLIT, 1, 0 );
+// Using the strided interface:
+info = dlarra.strided( N, d, 1, 0, e, 1, 0, E2, 1, 0, -1.0e-10, 5.0, nsplit, ISPLIT, 1, 0 );
 console.log( info, nsplit, ISPLIT ); // eslint-disable-line no-console
 ```
 

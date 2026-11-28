@@ -74,12 +74,12 @@ dgetsqrhrt( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT, WORK ) → integer
 - `RangeError` `LDA` must be valid for the chosen order
 - `RangeError` `LDT` must be valid for the chosen order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetsqrhrt.ndarray(
+dgetsqrhrt.strided(
     M, N,
     mb1, nb1, nb2,
     A, strideA1, strideA2, offsetA,

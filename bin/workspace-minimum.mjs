@@ -3,17 +3,17 @@
 /**
 * Workspace minimum check (CONVENTIONS W3, W5; ticket 0016).
 *
-* `ndarray.js` must throw `RangeError` for a workspace shorter than the
+* `strided.js` must throw `RangeError` for a workspace shorter than the
 * reference's minimum and accept one of exactly that length (W3). A minimum
 * above the reference's rejects valid calls; one below lets base.js read or
 * write past the end, which a typed array turns into NaN or lost writes.
-* This checks the size `ndarray.js` enforces, not the JSDoc text (W5).
+* This checks the size `strided.js` enforces, not the JSDoc text (W5).
 *
 * For each row of the committed cache data/fortran-lwmin.json (written by
 * bin/gen-lwmin.mjs from the reference: per row, each workspace's minimum,
 * the smallest length whose call the reference does not reject with
 * INFO = -k, or the extent it declares), this calls the module's
-* `ndarray.js` (the spec's ndarray projection, lint/lib/spec.cjs:
+* `strided.js` (the spec's strided projection, lint/lib/spec.cjs:
 * column-major, unit strides, offsets 0, zero-filled arrays, options
 * translated to the JS strings). Its import of `base.js` is replaced by a
 * sentinel thrower (bin/workspace-optimum-loader.mjs with `guard: false`), so
@@ -51,12 +51,12 @@
 *   fails the row (`too low`: base.js may overrun). Each failure reports the
 *   JS boundary (bisected over the same call) next to the reference's.
 * - Except: at a row where some dimension is 0, accepting less is reported
-*   and counted (`zero-dim`), not failed, whether ndarray.js returns early
+*   and counted (`zero-dim`), not failed, whether strided.js returns early
 *   or base.js is reached: an empty problem needs no workspace (W3, V10).
 *   For a `declared` minimum (which the reference cannot check), accepting
 *   less at non-zero dimensions fails the row (`below declared`), on a path
 *   that never references the workspace too: the reference declares the
-*   extent on every path (W3; ticket 0107). A quick return in ndarray.js at
+*   extent on every path (W3; ticket 0107). A quick return in strided.js at
 *   non-zero dimensions that accepts less is reported (`quick`).
 * - A row whose call throws for another reason on arguments the reference
 *   accepted, or whose reference callees reject at every length, is
@@ -168,9 +168,9 @@ async function analyze( r ) {
 		res.error = 'spec: ' + pl.error;
 		return res;
 	}
-	const nd = path.join( dir, 'lib', 'ndarray.js' );
+	const nd = path.join( dir, 'lib', 'strided.js' );
 	if ( !/^import\s+\w+\s*(,\s*\{[^}]*\}\s*)?\s+from\s+'\.\/base\.js';/m.test( fs.readFileSync( nd, 'utf8' ) ) ) {
-		res.error = 'ndarray.js has no default import of ./base.js to stop';
+		res.error = 'strided.js has no default import of ./base.js to stop';
 		return res;
 	}
 	register( pathToFileURL( LOADER ).href, { 'parentURL': import.meta.url, 'data': { 'target': pathToFileURL( nd ).href, 'guard': false } } );
@@ -231,7 +231,7 @@ async function analyze( r ) {
 			const slot = {};
 			let args;
 			try {
-				args = callArgs( spec, pl, vals, 'ndarray', ( p ) => {
+				args = callArgs( spec, pl, vals, 'strided', ( p ) => {
 					slot[ p.fortran ] = -1;
 					return { 'wsSlot': p.fortran };
 				}, ( p, arr ) => arrays.push( [ p, arr ] ) );
@@ -260,7 +260,7 @@ async function analyze( r ) {
 				continue;
 			}
 			res[ ( data === 'zero' ) ? 'checked' : 'checkedRandom' ] += 1;
-			// The smallest length ndarray.js does not reject (others ample).
+			// The smallest length strided.js does not reject (others ample).
 			const jsMin = ( W ) => {
 				let lo = -1;
 				let hi = ample;
@@ -277,7 +277,7 @@ async function analyze( r ) {
 			entry.workspaces.forEach( ( w, j ) => {
 				const W = w.name;
 				if ( !( W in slot ) ) {
-					res.unrun.push( { 'why': W + ': not a workspace argument of ndarray.js', 'args': where + tag } );
+					res.unrun.push( { 'why': W + ': not a workspace argument of strided.js', 'args': where + tag } );
 					return;
 				}
 				// The reference's minimum is the effective one: the smallest
@@ -318,7 +318,7 @@ async function analyze( r ) {
 				}
 				if ( zeroDim ) {
 					// An empty problem needs no workspace (W3): reported, not
-					// failed, whether ndarray.js returns early or base.js runs.
+					// failed, whether strided.js returns early or base.js runs.
 					push( res.quick, { 'ws': W, 'kind': w.kind, 'zeroDim': true, 'how': ( y.kind === 'early' ) ? 'returns early' : 'reaches base.js', 'ref': ref, 'args': where + tag } );
 				} else if ( w.kind === 'declared' && y.kind === 'accept' ) {
 					// The reference cannot check a declared extent, but it
@@ -374,7 +374,7 @@ async function main( argv ) {
 			const worst = list.reduce( ( a, b ) => ( Math.abs( b.js - b.ref ) > Math.abs( a.js - a.ref ) ? b : a ) );
 			const ref = ( worst.own !== void 0 && worst.own !== worst.ref ) ? worst.ref + ' (its own check: ' + worst.own + ')' : String( worst.ref );
 			const z = list.filter( ( s ) => s.zeroDim ).length;
-			console.log( TAGS[ worst.dir ] + x.routine + ' ' + worst.ws + ' (' + worst.kind + '): ' + list.length + '/' + x.checked + ' rows' + ( z ? ' (' + z + ' with a zero dimension)' : '' ) + '; e.g. ' + worst.args + ': ndarray.js demands ' + worst.js + ', reference ' + ref );
+			console.log( TAGS[ worst.dir ] + x.routine + ' ' + worst.ws + ' (' + worst.kind + '): ' + list.length + '/' + x.checked + ' rows' + ( z ? ' (' + z + ' with a zero dimension)' : '' ) + '; e.g. ' + worst.args + ': strided.js demands ' + worst.js + ', reference ' + ref );
 			if ( allRows ) {
 				list.forEach( ( s ) => console.log( '             ' + s.args + ': ' + s.js + ' vs ' + s.ref ) );
 			}

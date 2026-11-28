@@ -100,12 +100,12 @@ zlaqr5(
 
 - `TypeError` first argument must be a valid order
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlaqr5.ndarray(
+zlaqr5.strided(
     wantt, wantz, kacc22,
     N,
     ktop, kbot,
@@ -263,11 +263,11 @@ setIdentity( reinterpret( Z, 0 ), N, 2 );
 zlaqr5( 'column-major', true, true, 0, N, 1, N, NSHFTS, s, 1, H, N, 1, N, Z, N, V, 3, U, NU, N, WV, N, N, WH, NU );
 console.log( reinterpret( H, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 H = new Complex128Array( [ 7.3, -0.0, -0.7, -0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, -0.9, 6.9, -1.0, 1.0, 0.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.9, 0.6, -0.5, 0.2, 2.0, -0.9, -1.3, 0.9, 0.0, 0.0, 0.0, 0.0, -1.2, 0.5, 1.7, 0.9, -0.6, -0.3, 3.1, 0.6, -1.6, 0.5, 0.0, 0.0, 1.2, 0.7, -1.9, 0.9, -1.6, -0.3, 0.4, 0.8, 1.4, 0.8, 0.2, -0.4, -0.7, -0.6, -1.7, -0.7, 0.8, 1.0, -1.4, -0.9, 1.9, 0.1, 0.6, -0.5 ] );
 Z = new Complex128Array( N * N );
 setIdentity( reinterpret( Z, 0 ), N, 2 );
-zlaqr5.ndarray( true, true, 0, N, 1, N, NSHFTS, s, 1, 0, H, 1, N, 0, 1, N, Z, 1, N, 0, V, 1, 3, 0, U, 1, NU, 0, N, WV, 1, N, 0, N, WH, 1, NU, 0 );
+zlaqr5.strided( true, true, 0, N, 1, N, NSHFTS, s, 1, 0, H, 1, N, 0, 1, N, Z, 1, N, 0, V, 1, 3, 0, U, 1, NU, 0, N, WV, 1, N, 0, N, WH, 1, NU, 0 );
 console.log( reinterpret( H, 0 ) );
 ```
 

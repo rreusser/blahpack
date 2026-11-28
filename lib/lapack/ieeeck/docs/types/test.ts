@@ -60,13 +60,13 @@ import ieeeck = require( './index' );
 	ieeeck( 1, 1, 1, 1 ); // $ExpectError
 }
 
-// The `ndarray` method returns a number...
+// The `strided` method returns a number...
 {
-	ieeeck.ndarray( 1, 1, 1 ); // $ExpectType number
+	ieeeck.strided( 1, 1, 1 ); // $ExpectType number
 }
 
-// The compiler throws an error if the `ndarray` method is provided an unsupported number of arguments...
+// The compiler throws an error if the `strided` method is provided an unsupported number of arguments...
 {
-	ieeeck.ndarray(); // $ExpectError
-	ieeeck.ndarray( 1, 1, 1, 1 ); // $ExpectError
+	ieeeck.strided(); // $ExpectError
+	ieeeck.strided( 1, 1, 1, 1 ); // $ExpectError
 }

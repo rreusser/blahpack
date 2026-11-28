@@ -62,7 +62,7 @@ python bin/init_routine.py <package> <routine> -d "<one-line description>"
 ```
 
 This scaffolds the full file set (F1), generates `test/fortran/deps_<routine>.txt`,
-generates a `test.ndarray.js` scaffold if a fixture already exists, and prints
+generates a `test.strided.js` scaffold if a fixture already exists, and prints
 the remaining commands. Option params need validators that accept exactly the
 reference's values (V3, N1, N8, Appendix A). For a flag not in Appendix A,
 adopt the sister module's canonical values (real ↔ complex pair).
@@ -119,7 +119,7 @@ Generate the fixture and the JS test scaffold:
 
 ```bash
 ./test/run_fortran.sh <package> <routine>
-python bin/gen_test.py <package> <routine> > lib/<package>/<routine>/test/test.ndarray.js
+python bin/gen_test.py <package> <routine> > lib/<package>/<routine>/test/test.strided.js
 ```
 
 ### Step 3: Translate base.js (judgment)
@@ -157,7 +157,7 @@ and N4.
 
 ### Step 4: JS tests
 
-Fill in `test/test.ndarray.js` with computation tests from the fixture; the
+Fill in `test/test.strided.js` with computation tests from the fixture; the
 scaffolded `test.js` and `test.<routine>.js` cover exports and the wrapper.
 Requirements: T1–T4. Test-design advice is in [Test design](#test-design).
 
@@ -347,7 +347,7 @@ mirror reads, zeroed diagonal imaginary parts, and `'transpose'` →
 with 0-based loop variables, `A[offsetA + i*strideA1 + j*strideA2]`.
 
 - **IPIV is 0-based at the API** (S12). Fortran's 1-based values are converted
-  inside `base.js`; `ndarray.js` passes them through. Subtract 1 from Fortran
+  inside `base.js`; `strided.js` passes them through. Subtract 1 from Fortran
   fixture values when comparing.
 - **Negative IPIV (Bunch-Kaufman) is variant-dependent.** The `dsytrf`,
   `dsytrf_rk`, `dsytrf_rook` family (plus z and `_3` variants) encodes 2x2

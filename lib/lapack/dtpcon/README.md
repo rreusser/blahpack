@@ -62,12 +62,12 @@ dtpcon( order, norm, uplo, diag, N, AP, rcond, WORK, IWORK ) → info: integer
 - `TypeError` fourth argument must be a valid diagonal type
 - `RangeError` fifth argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtpcon.ndarray(
+dtpcon.strided(
     norm, uplo, diag,
     N,
     AP, strideAP, offsetAP,

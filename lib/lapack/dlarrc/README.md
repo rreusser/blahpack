@@ -70,12 +70,12 @@ dlarrc(
 - `TypeError` first argument must be one of the following: "tridiagonal", "ldl"
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarrc.ndarray(
+dlarrc.strided(
     jobt,
     N,
     vl, vu,
@@ -174,9 +174,9 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 out = {
-	'info': dlarrc.ndarray( 'tridiagonal', N, 0.0, 2.5, D, 1, 0, E, 1, 0, 1.0e-300, eigcnt, lcnt, rcnt ),
+	'info': dlarrc.strided( 'tridiagonal', N, 0.0, 2.5, D, 1, 0, E, 1, 0, 1.0e-300, eigcnt, lcnt, rcnt ),
 	'eigcnt': eigcnt[ 0 ],
 	'lcnt': lcnt[ 0 ],
 	'rcnt': rcnt[ 0 ]

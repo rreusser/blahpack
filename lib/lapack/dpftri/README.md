@@ -55,12 +55,12 @@ dpftri( transr, uplo, N, A, strideA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpftri.ndarray( transr, uplo, N, A, strideA, offsetA ) → integer
+dpftri.strided( transr, uplo, N, A, strideA, offsetA ) → integer
 ```
 
 Computes the inverse of A real symmetric positive definite matrix in Rectangular Full Packed format.
@@ -149,7 +149,7 @@ let info = dpftrf( 'no-transpose', 'lower', 3, A, 1, 0 );
 console.log( 'dpftrf info:', info ); // eslint-disable-line no-console
 
 // Now compute the inverse...
-info = dpftri.ndarray( 'no-transpose', 'lower', 3, A, 1, 0 );
+info = dpftri.strided( 'no-transpose', 'lower', 3, A, 1, 0 );
 
 console.log( 'dpftri info:', info ); // eslint-disable-line no-console
 console.log( 'A (inverse in RFP):', A ); // eslint-disable-line no-console

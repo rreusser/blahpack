@@ -70,12 +70,12 @@ dtrtrs( order, uplo, trans, diag, N, nrhs, A, LDA, B, LDB ) → integer
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtrtrs.ndarray(
+dtrtrs.strided(
     uplo, trans, diag,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -180,8 +180,8 @@ const B = discreteUniform( N * N, -10, 10, opts );
 let out = dtrtrs( 'row-major', 'upper', 'no-transpose', 'non-unit', N, N, A, N, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dtrtrs.ndarray( 'upper', 'no-transpose', 'non-unit', N, N, A, N, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dtrtrs.strided( 'upper', 'no-transpose', 'non-unit', N, N, A, N, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

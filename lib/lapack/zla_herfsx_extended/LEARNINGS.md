@@ -21,7 +21,7 @@
   declares `Y(LDY,*)` (matrix) and `DY(*)` (vector); the auto-generated
   stdlib signature emitted both as `Y / strideY / offsetY` because the
   scalarizer keyed on the first letter, producing a shadowed `y`. We
-  manually renamed `DY` in all four files (`base.js`, `ndarray.js`,
+  manually renamed `DY` in all four files (`base.js`, `strided.js`,
   layout wrapper, tests) plus added `nrhs` which the signature parser
   had elided as a "consumed" dimension. Watch for this on any routine
   with multiple arrays whose names start with the same letter.

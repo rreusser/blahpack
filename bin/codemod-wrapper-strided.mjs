@@ -2,19 +2,19 @@
 
 /**
 * Codemod (ticket 0077; CONVENTIONS D5c): a layout wrapper (`<routine>.js`)
-* whose routine takes a workspace calls `ndarray.js`, not `base.js`, so the
-* checks ndarray.js makes (workspace minimum, stride rules) apply to a
+* whose routine takes a workspace calls `strided.js`, not `base.js`, so the
+* checks strided.js makes (workspace minimum, stride rules) apply to a
 * caller's workspace passed through the wrapper too. Enforced by the lint
-* rule `wrapper-calls-ndarray`.
+* rule `wrapper-calls-strided`.
 *
 * For each wrapper that imports `./base.js` and whose spec has a param of role
-* `workspace`: when ndarray.js's parameter list equals base.js's, replace
-* `import base from './base.js';` with `import ndarray from './ndarray.js';`
-* and every `base(` call with `ndarray(`. Anything else is listed for
+* `workspace`: when strided.js's parameter list equals base.js's, replace
+* `import base from './base.js';` with `import strided from './strided.js';`
+* and every `base(` call with `strided(`. Anything else is listed for
 * hand-handling (`--list` prints the reason).
 *
 * Usage:
-*   node bin/codemod-wrapper-ndarray.mjs [--dry-run] [--list] [routine ...]
+*   node bin/codemod-wrapper-strided.mjs [--dry-run] [--list] [routine ...]
 */
 
 import fs from 'node:fs';
@@ -140,13 +140,13 @@ function main() {
 		if ( s.calls.length === 0 ) {
 			why.push( 'no `base(` call' );
 		}
-		if ( /\bndarray\b/.test( src.replace( /^\s*\*.*$/gm, '' ).replace( /\/\/.*$/gm, '' ) ) ) {
-			why.push( 'the name `ndarray` is already used' );
+		if ( /\bstrided\b/.test( src.replace( /^\s*\*.*$/gm, '' ).replace( /\/\/.*$/gm, '' ) ) ) {
+			why.push( 'the name `strided` is already used' );
 		}
 		const bp = exportedParams( path.join( m.dir, 'lib', 'base.js' ) );
-		const np = exportedParams( path.join( m.dir, 'lib', 'ndarray.js' ) );
+		const np = exportedParams( path.join( m.dir, 'lib', 'strided.js' ) );
 		if ( !bp || !np || bp.join( ',' ).toLowerCase() !== np.join( ',' ).toLowerCase() ) {
-			why.push( 'ndarray.js parameters (' + ( np || [] ).join( ', ' ) + ') differ from base.js (' + ( bp || [] ).join( ', ' ) + ')' );
+			why.push( 'strided.js parameters (' + ( np || [] ).join( ', ' ) + ') differ from base.js (' + ( bp || [] ).join( ', ' ) + ')' );
 		}
 		if ( why.length ) {
 			manual.push( { 'routine': m.routine, 'why': why } );
@@ -155,8 +155,8 @@ function main() {
 		// Replace from the end so earlier ranges stay valid.
 		// Named helpers base.js exports (computeOptimalWorkSize) stay imported.
 		const named = s.imp.specifiers.filter( ( x ) => x.type === 'ImportSpecifier' ).map( ( x ) => src.slice( x.range[ 0 ], x.range[ 1 ] ) );
-		const text = 'import ndarray from \'./ndarray.js\';' + ( named.length ? '\nimport { ' + named.join( ', ' ) + ' } from \'./base.js\';' : '' );
-		const edits = [ { 'range': s.imp.range, 'text': text } ].concat( s.calls.map( ( c ) => ( { 'range': c.range, 'text': 'ndarray' } ) ) );
+		const text = 'import strided from \'./strided.js\';' + ( named.length ? '\nimport { ' + named.join( ', ' ) + ' } from \'./base.js\';' : '' );
+		const edits = [ { 'range': s.imp.range, 'text': text } ].concat( s.calls.map( ( c ) => ( { 'range': c.range, 'text': 'strided' } ) ) );
 		edits.sort( ( a, b ) => b.range[ 0 ] - a.range[ 0 ] );
 		let out = src;
 		edits.forEach( ( e ) => {

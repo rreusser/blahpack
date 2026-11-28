@@ -29,7 +29,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE )
+{{alias}}.strided( N, d, strideD, offsetD, e, strideE, offsetE )
     Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy, using alternative indexing semantics.
 
     Parameters

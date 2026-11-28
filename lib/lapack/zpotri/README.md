@@ -49,12 +49,12 @@ zpotri( order, uplo, N, A, LDA ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zpotri.ndarray( uplo, N, A, strideA1, strideA2, offsetA ) → integer
+zpotri.strided( uplo, N, A, strideA1, strideA2, offsetA ) → integer
 ```
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
@@ -133,10 +133,10 @@ console.log( info );
 // => 0
 console.log( reinterpret( A, 0 ) );
 
-// Using the ndarray interface:
+// Using the strided interface:
 A = new Complex128Array( data );
-zpotrf.ndarray( 'upper', N, A, 1, N, 0 );
-info = zpotri.ndarray( 'upper', N, A, 1, N, 0 );
+zpotrf.strided( 'upper', N, A, 1, N, 0 );
+info = zpotri.strided( 'upper', N, A, 1, N, 0 );
 console.log( info );
 // => 0
 console.log( reinterpret( A, 0 ) );

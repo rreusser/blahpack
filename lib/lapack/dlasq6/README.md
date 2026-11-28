@@ -52,12 +52,12 @@ dlasq6( i0, n0, z, strideZ, pp, dmin, dmin1, dmin2, dn, dnm1, dnm2 ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlasq6.ndarray(
+dlasq6.strided(
     i0, n0,
     z, strideZ, offsetZ,
     pp,
@@ -146,8 +146,8 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
-dlasq6.ndarray( 1, 4, z, 1, 0, 0, dmin, dmin1, dmin2, dn, dnm1, dnm2 );
+// Using the strided interface:
+dlasq6.strided( 1, 4, z, 1, 0, 0, dmin, dmin1, dmin2, dn, dnm1, dnm2 );
 out = {
 	'dmin': dmin[ 0 ],
 	'dmin1': dmin1[ 0 ],

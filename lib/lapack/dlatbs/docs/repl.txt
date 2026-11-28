@@ -52,7 +52,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, trans, diag, normin, N, kd, AB, strideAB1, strideAB2, offsetAB, x, strideX, offsetX, scale, CNORM, strideCNORM, offsetCNORM )
+{{alias}}.strided( uplo, trans, diag, normin, N, kd, AB, strideAB1, strideAB2, offsetAB, x, strideX, offsetX, scale, CNORM, strideCNORM, offsetCNORM )
     Solves a triangular banded system with scaling to prevent overflow using
     alternative indexing semantics.
 

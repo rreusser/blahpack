@@ -53,12 +53,12 @@ zptsv( order, N, nrhs, d, strideD, e, strideE, B, LDB ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zptsv.ndarray(
+zptsv.strided(
     N, nrhs,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -168,11 +168,11 @@ console.log( info );
 console.log( reinterpret( B, 0 ) );
 // => <Float64Array>[ ~1, ~0, ~1, ~0, ~1, ~0 ]
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( diag );
 e = new Complex128Array( subdiag );
 B = new Complex128Array( rhs );
-info = zptsv.ndarray( N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
+info = zptsv.strided( N, 1, d, 1, 0, e, 1, 0, B, 1, N, 0 );
 console.log( info );
 // => 0
 console.log( reinterpret( B, 0 ) );

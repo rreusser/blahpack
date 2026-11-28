@@ -77,12 +77,12 @@ dlatdf(
 - `TypeError` first argument must be a valid order
 - `RangeError` fifth argument must be greater than or equal to `max( 1, N )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlatdf.ndarray(
+dlatdf.strided(
     ijob,
     N,
     Z, strideZ1, strideZ2, offsetZ,
@@ -197,11 +197,11 @@ let out = {
 };
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 RHS = new Float64Array( [ 1.0, 2.0, 3.0 ] );
 rdsum[ 0 ] = 1.0;
 rdscal[ 0 ] = 1.0;
-dlatdf.ndarray( 1, N, Z, 1, N, 0, RHS, 1, 0, rdsum, rdscal, IPIV, 1, 0, JPIV, 1, 0 );
+dlatdf.strided( 1, N, Z, 1, N, 0, RHS, 1, 0, rdsum, rdscal, IPIV, 1, 0, JPIV, 1, 0 );
 out = {
 	'RHS': RHS,
 	'rdsum': rdsum[ 0 ],

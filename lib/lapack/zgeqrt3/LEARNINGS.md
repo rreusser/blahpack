@@ -51,7 +51,7 @@
 ## Coverage
 
 - 100% line / 100% branch / 100% function on all five files
-  (`base.js`, `ndarray.js`, `zgeqrt3.js`, `main.js`, `index.js`) with
+  (`base.js`, `strided.js`, `zgeqrt3.js`, `main.js`, `index.js`) with
   the eight fixture cases (N=1 base case, N=1 degenerate, plus
   M=N=4 square, M>N rectangular splits at varying balance, plus the
   real-only sanity input) and stride/offset and row-major layout

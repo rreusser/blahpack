@@ -12,7 +12,7 @@ structural, not a lack of effort.
 **Every checker re-guesses each routine's shape from parameter names.** No
 artifact *declares* that `dgetrf` has a matrix `A` with `M` rows and a leading
 dimension that must be `>= max(1,M)`. `conventions.js`,
-`signature-conformance.cjs`, `gen_ndarray_validation.py`, `gen_wrapper.py`, and
+`signature-conformance.cjs`, `gen_strided_validation.py`, `gen_wrapper.py`, and
 the harness each infer that on their own, with their own regexes. A guess can't
 be strict, so the checks end up lenient:
 
@@ -20,10 +20,10 @@ be strict, so the checks end up lenient:
 |---|---|
 | `conventions.routine-dimension-validation` | the file contains *some* `RangeError` |
 | `conventions.routine-ld-validation` | a regex matches, **or** throw count ≥ expected (warn-only) |
-| `conventions.ndarray-string-validation` | the validator is *imported* (warn-only) |
+| `conventions.strided-string-validation` | the validator is *imported* (warn-only) |
 | `signature-conformance` | warn-only; flags 538 modules, mixing real and false hits |
 
-**The generators were one-shot.** `gen_ndarray_validation.py` and
+**The generators were one-shot.** `gen_strided_validation.py` and
 `gen_wrapper.py` ran at scaffold time. After that the code was hand-edited and
 drifted. Nothing checks that the code still matches what the generator would
 produce.
@@ -36,16 +36,16 @@ Error handling (`survey-validation.mjs`, `fortran-arg-checks.py`):
   check. For example, the LD check appears as "must be greater than or equal to
   max(..)", "(LDC) must be …", "`X` must satisfy LDX >= max(..)", and
   "max(..))" (with an unbalanced paren).
-- **49 `ndarray.js` and 39 `<routine>.js` throw nothing at all.**
+- **49 `strided.js` and 39 `<routine>.js` throw nothing at all.**
 - **Vector strides are checked for zero 218 times out of ~4,700 stride
   parameters.** There is no stated policy, so whether a check exists depends on
   who translated the routine.
-- **97 `ndarray.js` dimension params and 97 string params are never
+- **97 `strided.js` dimension params and 97 string params are never
   validated.** Examples: `dgebak.job` and `dgesvx.fact`.
 - **3 ordinals name the wrong argument** (`dlaswp.js` says "Fourth" for `N`,
   which is the 2nd argument; `dtrsna.js` ×2). Another **~72 are written in a
   non-canonical style** ("21th", "11th").
-- Quick returns are inconsistent. `dgetrf/ndarray.js` returns early on
+- Quick returns are inconsistent. `dgetrf/strided.js` returns early on
   `M===0||N===0`, but `dgetrf/dgetrf.js` does not.
 
 BLIS indexing (`stride-provenance.mjs`, a dataflow analysis over `base.js`):
@@ -76,7 +76,7 @@ that prose contradicted itself and the code. For example (all fixed in Step 1):
 - `blahpack-review/SKILL.md` and `docs/ndarray-conformance.md` still prescribe
   CJS `var x = require( … )` in an ESM codebase.
 - They also prescribe `isMatrixTranspose`, which stdlib is replacing.
-- `ndarray-conformance.md` puts quick returns in `ndarray.js`, while the
+- `ndarray-conformance.md` puts quick returns in `strided.js`, while the
   translate skill is silent.
 
 No module can be judged right or wrong objectively.
@@ -87,7 +87,7 @@ linters, skills, tests) is subordinate to them:
 | Artifact | Scope | Source | Who may edit |
 |---|---|---|---|
 | **Spec** (`spec/<routine>.json`) | one routine: params, roles, dtypes, intent, shapes, argument checks, quick return, return value, workspace | generated from Fortran | regenerated only; a hand **override** (`spec/overrides/<routine>.json`, with a reason) is the exceptional case |
-| **Conventions** (`CONVENTIONS.md`) | project-wide rules mapping spec → code: projections to base/ndarray/strided forms, naming, validation policy, message catalog, stdlib alignment | written | deliberate edits; each rule has an ID and names its enforcer |
+| **Conventions** (`CONVENTIONS.md`) | project-wide rules mapping spec → code: projections to base/ndarray/wrapper forms, naming, validation policy, message catalog, stdlib alignment | written | deliberate edits; each rule has an ID and names its enforcer |
 | **Message DB** | every permitted error message | stdlib DB + local supplement | append-only |
 
 The definition of done follows from these:
@@ -169,7 +169,7 @@ Example for `dgetrf`, generated from the Fortran signature plus its own
 ```
 
 From `params`, the tooling derives three signatures: base
-(`A, strideA1, strideA2, offsetA`), ndarray (identical), and layout
+(`A, strideA1, strideA2, offsetA`), strided (identical), and layout
 (`order, …, A, LDA`). Ordinals are computed per signature, so they can't be
 wrong.
 
@@ -189,7 +189,7 @@ in total:
 
 - **Error catalog** (`lint/lib/errors.cjs`): one message template per
   check `kind`, with the stdlib wording. The 184 shapes collapse to roughly 12.
-- **Generated prologue** between markers in `<routine>.js` and `ndarray.js`:
+- **Generated prologue** between markers in `<routine>.js` and `strided.js`:
 
   ```js
   // <validate:begin> generated from the spec — do not edit
@@ -204,7 +204,7 @@ in total:
   `conventions.*-validation`, the throw-count heuristics, and `jsdoc @throws`
   checking (the `@throws` lines are generated from the same spec).
 - **Policy is set once in the generator, not per routine**: which checks go in
-  ndarray vs layout wrapper, where quick-return lives, and the stride-zero
+  strided vs layout wrapper, where quick-return lives, and the stride-zero
   rule. Changing a policy is one generator edit plus `--fix --all`.
 - **Tests are generated too.** For each spec check, one test passes the
   violating value and asserts the error *class* and *message*. This turns the
@@ -288,7 +288,7 @@ and records the deviation here.
 
 The two codebases share 45 modules:
 
-- `ndarray.js` signatures match exactly in 22.
+- `strided.js` signatures match exactly in 22.
 - Strided signatures match exactly in 25.
 - Validation sets match in only 3.
 
@@ -301,12 +301,12 @@ Scripts: `docs/enforcement-architecture/measurements/stdlib-{extract,compare,mes
 | LD message | `max(1,%d)` with the value substituted | literal `max(1,N)` |
 | `uplo` message | "must specify whether to reference the lower or upper triangular matrix" | "must be a valid matrix triangle" (681 uses) |
 | Level-1 BLAS validation | none (`N<=0` is a no-op, as in Fortran) | throws on `N<0` |
-| LAPACK `ndarray.js` validation | ≈ only Fortran's own `INFO` checks (often none) | extra checks Fortran lacks (e.g. `dlacpy` M/N) and missing ones elsewhere |
+| LAPACK `strided.js` validation | ≈ only Fortran's own `INFO` checks (often none) | extra checks Fortran lacks (e.g. `dlacpy` M/N) and missing ones elsewhere |
 | LAPACK LD check | row-major only (`dlacpy`, `dlaswp`) | both orders |
 | Strided-form strides | exactly where Fortran has `INCx` (`dgttrf(N, DL, D, DU, DU2, IPIV)`) | 530 wrappers add 1,448 strides Fortran lacks (`lint/` D2) |
 | Packed routines | `order` in both forms, but **no** `strideAP` | `strideAP`, but **no** `order` |
 | Matrix-stride zero checks | inconsistent: `dtrmv`/`dsyr` check, `dgemv`/`dger` don't, `dgemm` checks C only | inconsistent, a different subset |
-| Quick-return location | inconsistent: ndarray 35, strided 20, base 14 | inconsistent |
+| Quick-return location | inconsistent: strided 35, strided 20, base 14 | inconsistent |
 | Names | `x`, `y`, `alpha` in z-routines; `D`, `E` uppercase; `transA` | `zx`, `za`, `cx`, `da` leak from Fortran; `d`, `e`; `transa` |
 
 ### Rulings
@@ -369,7 +369,7 @@ newest one never replaced the older ones. Audit date: 2026-11-17.
 | **Parse Fortran signatures / metadata** | `signature.py`, `extract_metadata.py` → `data/routines.json`, `gen_fortran_signatures.js` → `data/fortran-signatures.json` (+ `.supplemental.json`, `.supplemental.build.cjs`), `deps.py`, plus ad-hoc parsing in `scaffold.py`, `init_routine.py`, `report.js` | 3 metadata files, ≥6 parsers |
 | **Lint / conformance rules** | `tools/eslint/rules/` (11), `bin/conformance/checks/` (15 modules; CI job is `continue-on-error: true`, i.e. not a gate), `lint/` (3 rules + 2 verifiers; its rules run in CI via ESLint, but `verify-signatures.cjs` does not), `bin/conformance/no-work-alloc.mjs`, `bin/check-stubs.sh`, `bin/check-stub-tests.sh`, `bin/triage-test-bypass.sh`, `npm run lint:learnings` | 4 systems |
 | **Lint wrappers** | `bin/lint.sh`, `bin/lint-fix.sh`, `bin/fork-eslint-rule.sh`, `tools/eslint/{shims,find-jsdoc}.cjs`, `tools/eslint/config/*.json` (9 unused stdlib configs) | 5+ |
-| **Generate module files** | `scaffold.py` (1,791 lines), `init_routine.py`, `gen_wrapper.py`, `gen_ndarray_validation.py`, `gen_routine_js.py`, `gen_readme.js`, `gen_repl_txt.js`, `gen_index_dts.js`, `gen_test_ts.js`, `gen_examples.js`, `gen_index_examples.js`, `gen_benchmarks.js`, `gen-exports.js`, `gen-descriptions.js`, `gen_test.py` | 15, almost all one-shot (no `--check`) |
+| **Generate module files** | `scaffold.py` (1,791 lines), `init_routine.py`, `gen_wrapper.py`, `gen_strided_validation.py`, `gen_routine_js.py`, `gen_readme.js`, `gen_repl_txt.js`, `gen_index_dts.js`, `gen_test_ts.js`, `gen_examples.js`, `gen_index_examples.js`, `gen_benchmarks.js`, `gen-exports.js`, `gen-descriptions.js`, `gen_test.py` | 15, almost all one-shot (no `--check`) |
 | **Patch module files after the fact** | `fix-descriptions.js`, `fix-license-headers.js`, `fix-module-packages.js`, `fix_wrapper_docs.py`, `codemod-index.js`, `codemod-tests.js`, `codemod-work-assert.js`, `codemods/` (5 dated, already applied), `archive/bin/` (26, incl. `codemod-stride-checks`, `codemod-ld-validation`, `codemod-string-validation`, `codemod-routine-validation`, `add-throws-tags`) | ~40 |
 | **Status / progress** | `report.js` → tracked `progress.html`, `audit.py` + `audit.sh`, `gen-queue.js` → `QUEUE.md`, `validation-level.js`, `test-failures.sh`, `run-tests.sh`, `bin/conformance.js` report | 6 |
 | **Sandbox** | `.devcontainer/`, `Dockerfile.sandbox`, `bin/sandbox`, `bin/sandbox-worktree` (worktrees don't work here), `bin/claude-sandbox` | 5 |
@@ -446,7 +446,7 @@ records bugs the harness caught, which is a different kind of record.
 - One-shot, already-applied or duplicate scripts: `fix-descriptions.js`,
   `fix-license-headers.js`, `fix-module-packages.js`, `codemod-work-assert.js`,
   `triage-test-bypass.sh`, `conformance/no-work-alloc.mjs`,
-  `gen_ndarray_validation.py`, `gen_wrapper.py`, `gen_index_examples.js`,
+  `gen_strided_validation.py`, `gen_wrapper.py`, `gen_index_examples.js`,
   `gen_benchmarks.js`, `gen_index_dts.js` (duplicated inside `scaffold.py`),
   `profile.sh`, `fork-eslint-rule.sh`.
 - **All of `tools/eslint/`**: plugin, shims, `find-jsdoc`, 9 unused stdlib
@@ -486,7 +486,7 @@ records bugs the harness caught, which is a different kind of record.
 
 **Corrections to the audit above:**
 - The `lint/` rules *were* already gated in CI through ESLint. What wasn't
-  gated is `lint/verify-signatures.cjs` (the strided-projection worklist).
+  gated is `lint/verify-signatures.cjs` (the wrapper-projection worklist).
 - `bin/lint.sh` skipped `lib/arpack`. The single run covers it, and it's
   clean.
 
@@ -611,7 +611,7 @@ conformance checks that read them in Step 3.
 **Result:** four ESLint rules, all hard `error` gates, clean over all 912
 modules; `bin/spec xcheck` reports 912/912.
 
-- `spec-signature`: `base.js` / `ndarray.js` / `<routine>.js` parameter lists
+- `spec-signature`: `base.js` / `strided.js` / `<routine>.js` parameter lists
   equal the `lint/lib/spec.cjs` projections.
 - `spec-prologue` + `spec-messages`: the validation prologue equals the one
   `lint/lib/prologue.cjs` generates from `spec.checks` (stdlib validators,
@@ -634,7 +634,7 @@ modules; `bin/spec xcheck` reports 912/912.
 - **New override keys:** `base: 0` (dhgeqz, dtgexc, ztgexc), `element` on inputs
   (zladiv, zlarf, zlarz), `jsOrder` (dlaswp).
 - **Deleted:** `fortran-signature`, `wrapper-signature`,
-  `lint/verify-signatures.cjs`, `strided-projection.cjs`, `naming.cjs`, the
+  `lint/verify-signatures.cjs`, `wrapper-projection.cjs`, `naming.cjs`, the
   conformance checks `ld-rules`, `option-rules` and `option-parity` (with
   `data/fortran-{ld,option}-rules.json` and their generators), and the
   string/dimension/LD/order/parity sub-checks of conventions, implementation
@@ -648,7 +648,7 @@ modules; `bin/spec xcheck` reports 912/912.
 All of these live in `lint/`. Each compares code to what the spec plus
 conventions produce, with no heuristics:
 
-- **Signatures:** `base.js` / `ndarray.js` / `<routine>.js` parameter lists
+- **Signatures:** `base.js` / `strided.js` / `<routine>.js` parameter lists
   equal the projections of the spec. This subsumes `fortran-signature`,
   `wrapper-signature` and `signature-conformance`.
 - **Validation prologue:** equals the generated one (`--fix` rewrites it).

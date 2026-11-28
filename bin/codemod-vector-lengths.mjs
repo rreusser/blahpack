@@ -47,7 +47,7 @@ function wrapperPath( r ) {
 // dlasq3's `4 * n0` used the array itself, right only by coercion).
 // Null if it names anything the wrapper does not have.
 function inWrapperTerms( expr, spec, params ) {
-	const nm = prologueLib.nameMap( spec, 'strided', params );
+	const nm = prologueLib.nameMap( spec, 'wrapper', params );
 	return prologueLib.rename( expr, nm.expr );
 }
 

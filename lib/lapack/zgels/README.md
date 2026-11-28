@@ -66,12 +66,12 @@ zgels( order, trans, M, N, nrhs, A, LDA, B, LDB, WORK ) → integer
 - `RangeError` ninth argument must be greater than or equal to `max( max( 1, M ), N )` (column-major)
 - `RangeError` ninth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zgels.ndarray(
+zgels.strided(
     trans,
     M, N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -198,11 +198,11 @@ let B = new Complex128Array( discreteUniform( 2 * M * nrhs, -10, 10, opts ) );
 let out = zgels( 'column-major', 'no-transpose', M, N, nrhs, A, M, B, M, null );
 console.log( out );
 
-// Using the ndarray interface with a caller-owned workspace:
+// Using the strided interface with a caller-owned workspace:
 A = new Complex128Array( discreteUniform( 2 * M * N, -10, 10, opts ) );
 B = new Complex128Array( discreteUniform( 2 * M * nrhs, -10, 10, opts ) );
 const WORK = new Complex128Array( N + ( Math.max( N, nrhs ) * 32 ) );
-out = zgels.ndarray( 'no-transpose', M, N, nrhs, A, 1, M, 0, B, 1, M, 0, WORK, 1, 0 );
+out = zgels.strided( 'no-transpose', M, N, nrhs, A, 1, M, 0, B, 1, M, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

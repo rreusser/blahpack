@@ -14,13 +14,13 @@
     caller sizes `WORK` themselves. The `LWORK` parameter is therefore
     consumed (not exposed in JS), exactly like `LDA` and `INFO`.
 -   `ILAENV(1, 'ZHETRF', ...)` is called through the translated `ilaenv` module (64), in
-    `lib/base.js`, `lib/ndarray.js` (MINSIZE) and the wrapper's `null` allocation
+    `lib/base.js`, `lib/strided.js` (MINSIZE) and the wrapper's `null` allocation
     (CONVENTIONS X3; ticket 0049). It used to be a hardcoded `NBMAX = 32`, which took the
     blocked `zhetri2x` path for 33 <= N <= 64 where the reference takes `zhetri`.
 
 ## Dependency interface surprises
 
--   `zhetri` and `zhetri2x` accept the *same* ndarray-style argument list
+-   `zhetri` and `zhetri2x` accept the *same* strided-style argument list
     (`uplo, N, A, sa1, sa2, oA, IPIV, sI, oI, WORK, sW, oW`), except that
     `zhetri2x` has an extra trailing `nb` argument. This made the
     dispatcher essentially mechanical.
@@ -49,4 +49,4 @@
 -   With 21 tests covering both dispatch arms, both UPLO branches, 1x1
     and 2x2 pivot configurations, the N=0 quick return, N=1 trivial
     case, the singular-D guard, and all validator failure modes, the
-    base+ndarray+wrapper paths are exhaustively exercised.
+    base+strided+wrapper paths are exhaustively exercised.

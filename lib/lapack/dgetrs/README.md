@@ -61,12 +61,12 @@ dgetrs( order, trans, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB ) → info: inte
 - `RangeError` tenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` tenth argument must be greater than or equal to `max( 1, nrhs )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetrs.ndarray(
+dgetrs.strided(
     trans,
     N, nrhs,
     A, strideA1, strideA2, offsetA,
@@ -168,9 +168,9 @@ let B = new Float64Array( [ 7.0, 7.0, 9.0 ] );
 let out = dgetrs( 'column-major', 'no-transpose', N, 1, A, N, IPIV, 1, B, N );
 console.log( out, B ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 B = new Float64Array( [ 7.0, 7.0, 9.0 ] );
-out = dgetrs.ndarray( 'no-transpose', N, 1, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
+out = dgetrs.strided( 'no-transpose', N, 1, A, 1, N, 0, IPIV, 1, 0, B, 1, N, 0 );
 console.log( out, B ); // eslint-disable-line no-console
 ```
 

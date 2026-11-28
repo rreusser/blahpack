@@ -49,12 +49,12 @@ dlaneg( N, d, strideD, LLD, strideLLD, sigma, pivmin, r ) → integer
 
 - `RangeError` first argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaneg.ndarray(
+dlaneg.strided(
     N,
     d, strideD, offsetD,
     LLD, strideLLD, offsetLLD,

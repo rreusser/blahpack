@@ -50,12 +50,12 @@ zlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq ) → void
 
 **Returns** `void`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlags2.ndarray(
+zlags2.strided(
     upper, a1, a2, a3, b1, b2, b3,
     csu,
     snu, offsetSnu,

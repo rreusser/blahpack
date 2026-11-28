@@ -69,12 +69,12 @@ zsymv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Complex
 - `RangeError` eleventh argument must be non-zero
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsymv.ndarray(
+zsymv.strided(
     uplo,
     N,
     alpha,
@@ -182,9 +182,9 @@ let y = new Complex128Array( N );
 let out = zsymv( 'column-major', 'upper', N, alpha, A, N, x, 1, beta, y, 1 );
 console.log( out );
 
-// Using the ndarray interface:
+// Using the strided interface:
 y = new Complex128Array( N );
-out = zsymv.ndarray( 'upper', N, alpha, A, 1, N, 0, x, 1, 0, beta, y, 1, 0 );
+out = zsymv.strided( 'upper', N, alpha, A, 1, N, 0, x, 1, 0, beta, y, 1, 0 );
 console.log( out );
 ```
 

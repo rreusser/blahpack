@@ -1,6 +1,6 @@
 /**
 * Shared by bin/gen-lwmin.mjs (records the reference's workspace minimum)
-* and bin/workspace-minimum.mjs (checks the minimum each ndarray.js demands
+* and bin/workspace-minimum.mjs (checks the minimum each strided.js demands
 * against it): CONVENTIONS W3, ticket 0016.
 *
 * Reads only the specs, spec/options.json and data/fortran-checks.json

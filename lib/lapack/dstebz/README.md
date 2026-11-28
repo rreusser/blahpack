@@ -97,12 +97,12 @@ dstebz(
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dstebz.ndarray(
+dstebz.strided(
     range, order,
     N,
     vl, vu, il, iu, abstol,
@@ -244,8 +244,8 @@ const IWORK = new Int32Array( 3 * N );
 let info = dstebz( 'all', 'entire', N, 0.0, 0.0, 1, N, 0.0, d, 1, e, 1, M, nsplit, w, 1, IBLOCK, 1, ISPLIT, 1, WORK, IWORK );
 console.log( info, M[ 0 ], w );
 
-// Using the ndarray interface:
-info = dstebz.ndarray( 'all', 'entire', N, 0.0, 0.0, 1, N, 0.0, d, 1, 0, e, 1, 0, M, nsplit, w, 1, 0, IBLOCK, 1, 0, ISPLIT, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
+// Using the strided interface:
+info = dstebz.strided( 'all', 'entire', N, 0.0, 0.0, 1, N, 0.0, d, 1, 0, e, 1, 0, M, nsplit, w, 1, 0, IBLOCK, 1, 0, ISPLIT, 1, 0, WORK, 1, 0, IWORK, 1, 0 );
 console.log( info, M[ 0 ], w );
 ```
 

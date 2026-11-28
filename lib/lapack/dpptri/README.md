@@ -50,12 +50,12 @@ dpptri( order, uplo, N, AP ) → info: integer
 - `RangeError` third argument must be a nonnegative integer
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dpptri.ndarray( uplo, N, AP, strideAP, offsetAP ) → info: integer
+dpptri.strided( uplo, N, AP, strideAP, offsetAP ) → info: integer
 ```
 
 | Parameter | Type | Description |

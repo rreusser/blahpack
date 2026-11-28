@@ -31,12 +31,12 @@ import dorbdb5 = require( './index' );
 	dorbdb5(); // $ExpectError
 }
 
-// The ndarray method returns a number...
+// The strided method returns a number...
 {
-	dorbdb5.ndarray( 2, 2, 1, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 1 ), 1, 0 ); // $ExpectType number
+	dorbdb5.strided( 2, 2, 1, new Float64Array( 2 ), 1, 0, new Float64Array( 2 ), 1, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 4 ), 1, 2, 0, new Float64Array( 1 ), 1, 0 ); // $ExpectType number
 }
 
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
+// The compiler throws an error if the strided method is provided an unsupported number of arguments...
 {
-	dorbdb5.ndarray(); // $ExpectError
+	dorbdb5.strided(); // $ExpectError
 }

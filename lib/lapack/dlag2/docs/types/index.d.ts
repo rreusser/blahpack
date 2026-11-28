@@ -53,7 +53,7 @@ interface Routine {
 	* @param safmin - `safmin`
 	* @returns result
 	*/
-	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, safmin: number ): Float64Array;
+	strided( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, safmin: number ): Float64Array;
 }
 
 /**

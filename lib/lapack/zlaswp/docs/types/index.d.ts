@@ -58,7 +58,7 @@ interface Routine {
 	* @param incx - `incx`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, incx: number ): any;
+	strided( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, incx: number ): any;
 }
 
 /**

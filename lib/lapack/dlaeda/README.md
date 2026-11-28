@@ -93,12 +93,12 @@ Computes the Z vector determining the rank-one modification of the diagonal matr
 - `RangeError` thirteenth argument must be greater than or equal to 2
 - `RangeError` fifteenth argument must be greater than or equal to 2
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlaeda.ndarray(
+dlaeda.strided(
     N,
     tlvls, curlvl, curpbm,
     PRMPTR, stridePRMPTR, offsetPRMPTR,

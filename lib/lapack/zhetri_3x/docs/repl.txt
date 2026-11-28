@@ -53,7 +53,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, e, strideE, offsetE, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK, nb )
+{{alias}}.strided( uplo, N, A, strideA1, strideA2, offsetA, e, strideE, offsetE, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK, nb )
     Compute the inverse of a complex Hermitian indefinite matrix using the factorization computed by zhetrf_rk (worker routine called by zhetri_3), using alternative indexing semantics.
 
     Parameters

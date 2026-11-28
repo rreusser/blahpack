@@ -71,7 +71,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( jobv, M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, sva, strideSVA, offsetSVA, mv, V, strideV1, strideV2, offsetV, eps, sfmin, tol, nsweep, work, strideWORK, offsetWORK )
+{{alias}}.strided( jobv, M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, sva, strideSVA, offsetSVA, mv, V, strideV1, strideV2, offsetV, eps, sfmin, tol, nsweep, work, strideWORK, offsetWORK )
     Pre-processor for zgesvj performing Jacobi rotations, using alternative indexing semantics.
 
     Parameters

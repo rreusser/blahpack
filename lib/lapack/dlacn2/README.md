@@ -66,12 +66,12 @@ dlacn2(
 
 **Returns** `Int32Array`: `ISAVE`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlacn2.ndarray(
+dlacn2.strided(
     N,
     v, strideV, offsetV,
     x, strideX, offsetX,
@@ -189,7 +189,7 @@ do {
 } while ( KASE[ 0 ] !== 0 );
 console.log( EST[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 v = new Float64Array( N );
 x = new Float64Array( N );
 ISGN = new Int32Array( N );
@@ -197,7 +197,7 @@ EST = new Float64Array( 1 );
 KASE = new Int32Array( 1 );
 ISAVE = new Int32Array( 3 );
 do {
-	dlacn2.ndarray( N, v, 1, 0, x, 1, 0, ISGN, 1, 0, EST, KASE, ISAVE, 1, 0 );
+	dlacn2.strided( N, v, 1, 0, x, 1, 0, ISGN, 1, 0, EST, KASE, ISAVE, 1, 0 );
 	if ( KASE[ 0 ] !== 0 ) {
 		apply( x, KASE[ 0 ] === 2 );
 	}

@@ -4,7 +4,7 @@
 
 - **Quick-return and parameter validation**: The Fortran routine validates
   `MB1 > N` (not `MB1 >= 1`); below-N MB1 values are illegal. The wrapper
-  enforces this in `ndarray.js` and `zgetsqrhrt.js`. The base routine
+  enforces this in `strided.js` and `zgetsqrhrt.js`. The base routine
   assumes the contract is met (skipping all argument tests) — exactly
   per project convention.
 - **`LDT >= max(1, min(NB2, N))`**, NOT `>= max(1, N)`. The scaffolded

@@ -86,12 +86,12 @@ zhpgv(
 - `RangeError` fifth argument must be a nonnegative integer
 - `RangeError` eleventh argument is invalid (rejected when `LDZ < 1 \|\| ( jobz === "compute-vectors" && LDZ < N )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zhpgv.ndarray(
+zhpgv.strided(
     itype,
     jobz, uplo,
     N,
@@ -215,7 +215,7 @@ const Z = new Complex128Array( 9 );
 const WORK = new Complex128Array( 10 );
 const RWORK = new Float64Array( 10 );
 
-zhpgv.ndarray( 1, 'compute-vectors', 'lower', 3, AP, 1, 0, BP, 1, 0, W, 1, 0, Z, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
+zhpgv.strided( 1, 'compute-vectors', 'lower', 3, AP, 1, 0, BP, 1, 0, W, 1, 0, Z, 1, 3, 0, WORK, 1, 0, RWORK, 1, 0 ); // eslint-disable-line max-len
 
 console.log( 'eigenvalues:', W ); // eslint-disable-line no-console
 ```

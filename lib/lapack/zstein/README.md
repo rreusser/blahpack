@@ -80,12 +80,12 @@ zstein(
 - `RangeError` fifteenth argument must be greater than or equal to `max( 1, N )` (column-major)
 - `RangeError` fifteenth argument must be greater than or equal to `max( 1, M )` (row-major)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zstein.ndarray(
+zstein.strided(
     N,
     d, strideD, offsetD,
     e, strideE, offsetE,
@@ -214,9 +214,9 @@ let Z = new Complex128Array( N * M );
 let info = zstein( 'column-major', N, d, 1, e, 1, M, w, 1, IBLOCK, 1, ISPLIT, 1, Z, N, WORK, IWORK, IFAIL, 1 );
 console.log( info, Z );
 
-// Using the ndarray interface:
+// Using the strided interface:
 Z = new Complex128Array( N * M );
-info = zstein.ndarray( N, d, 1, 0, e, 1, 0, M, w, 1, 0, IBLOCK, 1, 0, ISPLIT, 1, 0, Z, 1, N, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 );
+info = zstein.strided( N, d, 1, 0, e, 1, 0, M, w, 1, 0, IBLOCK, 1, 0, ISPLIT, 1, 0, Z, 1, N, 0, WORK, 1, 0, IWORK, 1, 0, IFAIL, 1, 0 );
 console.log( info, Z );
 ```
 

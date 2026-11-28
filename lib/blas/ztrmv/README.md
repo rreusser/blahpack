@@ -78,12 +78,12 @@ ztrmv( order, uplo, trans, diag, N, A, LDA, x, strideX ) → Complex128Array
 - `RangeError` seventh argument must be greater than or equal to `max( 1, N )`
 - `RangeError` ninth argument must be non-zero
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-ztrmv.ndarray(
+ztrmv.strided(
     uplo, trans, diag,
     N,
     A, strideA1, strideA2, offsetA,
@@ -184,9 +184,9 @@ let x = new Complex128Array( [ 1.0, 0.0, 1.0, 0.0 ] );
 ztrmv( 'column-major', 'upper', 'no-transpose', 'non-unit', 2, A, 2, x, 1 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 x = new Complex128Array( [ 1.0, 0.0, 1.0, 0.0 ] );
-ztrmv.ndarray( 'upper', 'no-transpose', 'non-unit', 2, A, 1, 2, 0, x, 1, 0 );
+ztrmv.strided( 'upper', 'no-transpose', 'non-unit', 2, A, 1, 2, 0, x, 1, 0 );
 console.log( reinterpret( x, 0 ) ); // eslint-disable-line no-console
 ```
 

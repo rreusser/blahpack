@@ -62,7 +62,7 @@ interface Routine {
 	* @param offsetISPLIT - starting index for `ISPLIT`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number ): Float64Array;
+	strided( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number ): Float64Array;
 }
 
 /**

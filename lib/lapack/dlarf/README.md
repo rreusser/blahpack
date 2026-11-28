@@ -56,12 +56,12 @@ dlarf( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Float64Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be a valid operation side
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlarf.ndarray(
+dlarf.strided(
     side,
     M, N,
     v, strideV, offsetV,
@@ -149,8 +149,8 @@ const WORK = discreteUniform( N, -10, 10, opts );
 let out = dlarf( 'row-major', 'left', N, N, v, 1, 1.0, C, N, WORK );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlarf.ndarray( 'left', N, N, v, 1, 0, 1.0, C, N, 1, 0, WORK, 1, 0 );
+// Using the strided interface:
+out = dlarf.strided( 'left', N, N, v, 1, 0, 1.0, C, N, 1, 0, WORK, 1, 0 );
 console.log( out );
 ```
 

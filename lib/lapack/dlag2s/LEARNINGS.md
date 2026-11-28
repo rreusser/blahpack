@@ -4,7 +4,7 @@
 
 - `bin/signature.py` emitted two array parameters both named `A` (the input and
   output matrices collide when the Fortran names are `A` and `SA`). The
-  scaffolded `base.js`, `ndarray.js`, `dlag2s.js`, and `README.md` all had to
+  scaffolded `base.js`, `strided.js`, `dlag2s.js`, and `README.md` all had to
   be rewritten by hand to rename the second matrix to `SA` / `strideSA1` /
   `strideSA2` / `offsetSA` / `LDSA`. This is a tooling bug, not a per-routine
   quirk — the same issue affects every routine with two (or more) matrix
@@ -36,11 +36,11 @@
 
 - None. The branch count is tiny (one overflow check) and all branches are
   reachable with trivially constructed fixtures. Coverage is 100% line / 100%
-  branch for `base.js`, `ndarray.js`, and `dlag2s.js`.
+  branch for `base.js`, `strided.js`, and `dlag2s.js`.
 
 ## Process notes
 
-- The scaffolded `benchmark.js` and `benchmark.ndarray.js` both contained
+- The scaffolded `benchmark.js` and `benchmark.strided.js` both contained
   duplicated `var A = uniform(...)` declarations (another consequence of the
   signature-generator bug above) and needed to be rewritten to allocate a
   separate `SA` output buffer. The `N * N` allocation at `10^3` (default

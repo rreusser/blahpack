@@ -56,12 +56,12 @@ zlacn2( N, V, strideV, X, strideX, EST, KASE, ISAVE, strideISAVE ) → Int32Arra
 
 **Returns** `Int32Array`: `ISAVE`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zlacn2.ndarray(
+zlacn2.strided(
     N,
     V, strideV, offsetV,
     X, strideX, offsetX,
@@ -193,14 +193,14 @@ do {
 } while ( KASE[ 0 ] !== 0 );
 console.log( EST[ 0 ] ); // eslint-disable-line no-console
 
-// Using the ndarray interface:
+// Using the strided interface:
 V = new Complex128Array( N );
 X = new Complex128Array( N );
 EST = new Float64Array( 1 );
 KASE = new Int32Array( 1 );
 ISAVE = new Int32Array( 3 );
 do {
-	zlacn2.ndarray( N, V, 1, 0, X, 1, 0, EST, KASE, ISAVE, 1, 0 );
+	zlacn2.strided( N, V, 1, 0, X, 1, 0, EST, KASE, ISAVE, 1, 0 );
 	if ( KASE[ 0 ] !== 0 ) {
 		apply( X, KASE[ 0 ] === 2 );
 	}

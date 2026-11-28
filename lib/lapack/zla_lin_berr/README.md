@@ -52,12 +52,12 @@ zla_lin_berr( order, N, nz, nrhs, res, LDRES, ayb, LDAYB, berr, strideBERR ) →
 - `TypeError` first argument must be a valid order
 - `RangeError` second argument must be a nonnegative integer
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zla_lin_berr.ndarray(
+zla_lin_berr.strided(
     N,
     nz,
     nrhs,
@@ -151,7 +151,7 @@ const ayb = new Float64Array([ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ]);
 // Output backward error per RHS:
 const berr = new Float64Array( NRHS );
 
-zlaLinBerr.ndarray( N, N, NRHS, res, 1, N, 0, ayb, 1, N, 0, berr, 1, 0 );
+zlaLinBerr.strided( N, N, NRHS, res, 1, N, 0, ayb, 1, N, 0, berr, 1, 0 );
 console.log( berr ); // eslint-disable-line no-console
 ```
 

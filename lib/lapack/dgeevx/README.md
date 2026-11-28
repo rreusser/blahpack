@@ -137,12 +137,12 @@ When `work` is `null`, this wrapper allocates the reference's optimum (MAXWRK, w
 - `TypeError` must supply valid `balanc`, `jobvl`, `jobvr`, `sense`
 - `RangeError` `N` must be nonnegative; leading dimensions must be at least `max(1,N)`
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgeevx.ndarray(
+dgeevx.strided(
     balanc, jobvl, jobvr, sense,
     N,
     A, strideA1, strideA2, offsetA,

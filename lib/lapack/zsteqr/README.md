@@ -58,12 +58,12 @@ zsteqr( order, compz, N, d, strideD, e, strideE, Z, LDZ, WORK ) → integer
 - `RangeError` third argument must be a nonnegative integer
 - `RangeError` ninth argument is invalid (rejected when `LDZ < 1 \|\| ( ( compz === "none" ? 0 : ( compz === "update" ? 1 : 2 ) ) > 0 && LDZ < max( 1, N ) )`)
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-zsteqr.ndarray(
+zsteqr.strided(
     compz,
     N,
     d, strideD, offsetD,
@@ -160,11 +160,11 @@ const WORK = new Float64Array( 2 * ( N - 1 ) );
 let info = zsteqr( 'column-major', 'initialize', N, d, 1, e, 1, Z, N, WORK );
 console.log( info, d, Z );
 
-// Using the ndarray interface:
+// Using the strided interface:
 d = new Float64Array( [ 4.0, 4.0, 4.0 ] );
 e = new Float64Array( [ 1.0, 1.0 ] );
 Z = new Complex128Array( N * N );
-info = zsteqr.ndarray( 'initialize', N, d, 1, 0, e, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
+info = zsteqr.strided( 'initialize', N, d, 1, 0, e, 1, 0, Z, 1, N, 0, WORK, 1, 0 );
 console.log( info, d, Z );
 ```
 

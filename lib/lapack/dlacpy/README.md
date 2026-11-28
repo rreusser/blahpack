@@ -52,12 +52,12 @@ dlacpy( order, uplo, M, N, A, LDA, B, LDB ) → Float64Array
 - `TypeError` first argument must be a valid order
 - `TypeError` second argument must be one of the following: "upper", "lower", "all"
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dlacpy.ndarray(
+dlacpy.strided(
     uplo,
     M, N,
     A, strideA1, strideA2, offsetA,
@@ -137,8 +137,8 @@ const B = discreteUniform( N * N, -10, 10, opts );
 let out = dlacpy( 'row-major', 'upper', N, N, A, N, B, N );
 console.log( out );
 
-// Using the ndarray interface:
-out = dlacpy.ndarray( 'upper', N, N, A, N, 1, 0, B, N, 1, 0 );
+// Using the strided interface:
+out = dlacpy.strided( 'upper', N, N, A, N, 1, 0, B, N, 1, 0 );
 console.log( out );
 ```
 

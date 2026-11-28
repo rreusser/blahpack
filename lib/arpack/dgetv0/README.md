@@ -62,12 +62,12 @@ dgetv0(
 - `RangeError` seventh argument must be a nonnegative integer
 - `RangeError` workd array must have sufficient length
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dgetv0.ndarray(
+dgetv0.strided(
     state,
     ido,
     bmat,

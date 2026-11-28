@@ -67,7 +67,7 @@
 
 ## Coverage notes
 
-- 100% line + 100% branch on `base.js`, `dorbdb3.js`, and `ndarray.js`.
+- 100% line + 100% branch on `base.js`, `dorbdb3.js`, and `strided.js`.
   The two loops, both `i > 0` rotation branches (i=0 vs i>=1), the
   inner `i < M-P-1` PHI/TAUP2 branch, and the Q=0 quick-return are
   all exercised by the five fixture cases (`basic_8x5x4`, `m10_p6_q5`,

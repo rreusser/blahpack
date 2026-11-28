@@ -109,12 +109,12 @@ dtgsy2(
 - `RangeError` seventeenth argument must be greater than or equal to `max( 1, N )` (row-major)
 - `TypeError` if a string argument is not a valid option
 
-### Strided (ndarray) API
+### Strided (strided) API
 
 Takes explicit strides and offsets for every array. Use it for views, sub-matrices and non-unit strides.
 
 ```js
-dtgsy2.ndarray(
+dtgsy2.strided(
     trans,
     ijob,
     M, N,
@@ -282,10 +282,10 @@ let F = new Float64Array( F0 );
 let info = dtgsy2( 'column-major', 'no-transpose', 0, N, N, A, N, B, N, C, N, D, N, E, N, F, N, scale, rdsum, rdscal, IWORK, pq );
 console.log( info, scale[ 0 ], C, F );
 
-// Using the ndarray interface:
+// Using the strided interface:
 C = new Float64Array( C0 );
 F = new Float64Array( F0 );
-info = dtgsy2.ndarray( 'no-transpose', 0, N, N, A, 1, N, 0, B, 1, N, 0, C, 1, N, 0, D, 1, N, 0, E, 1, N, 0, F, 1, N, 0, scale, rdsum, rdscal, IWORK, 1, 0, pq );
+info = dtgsy2.strided( 'no-transpose', 0, N, N, A, 1, N, 0, B, 1, N, 0, C, 1, N, 0, D, 1, N, 0, E, 1, N, 0, F, 1, N, 0, scale, rdsum, rdscal, IWORK, 1, 0, pq );
 console.log( info, scale[ 0 ], C, F );
 ```
 
